@@ -36,6 +36,7 @@ import websiteLearnai from "@/assets/website-learnai.jpg";
 import taliterLogo from "@/assets/taliter-logo.jpg";
 import taliterMonogram from "@/assets/taliter-monogram.jpg";
 import taliterBrandingSet from "@/assets/taliter-branding-set.jpg";
+import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
 import taliterWallMockup from "@/assets/taliter-wall-mockup.jpg";
 import taliterBottleMockup from "@/assets/taliter-bottle-mockup.jpg";
 
@@ -43,6 +44,7 @@ import taliterBottleMockup from "@/assets/taliter-bottle-mockup.jpg";
 import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
 import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
 import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
+import mockupEbrider from "@/assets/mockup-ebrider.jpg";
 
 // ============ ADDITIONAL WORK ============
 
@@ -90,13 +92,13 @@ export const projects: Project[] = [
     description: 'Strength For Dancers - מיתוג מלא ועיצוב מוצרים',
     logo: sfdLogoTransparent,
     monogram: sfdMonogram,
-    heroImage: mockupSfdWhite, // Branding set - products together
+    heroImage: mockupSfdBandSystem, // Better hero - shows the band system clearly
     bgColor: '#F5F5F7',
     accentColor: '#1A1A1A',
     colors: ['#1A1A1A', '#FFFFFF', '#4A5568'],
     images: [
       mockupSfdBlack,      // Product mockup
-      mockupSfdBandSystem, // System display
+      mockupSfdWhite,      // White version
       mockupSfdBands,      // Product detail
       mockupTshirtAthlete, // Apparel
       websiteSfd,          // Website
@@ -114,6 +116,7 @@ export const projects: Project[] = [
     accentColor: '#4A7C3F',
     colors: ['#4A7C3F', '#8BC34A', '#F5F5DC'],
     images: [
+      meshek27Monogram,        // Monogram
       mockupMeshek27Wall,      // Environment mockup
       mockupMeshek27Box,       // Packaging
       mockupMeshek27Packaging, // More packaging
@@ -132,6 +135,8 @@ export const projects: Project[] = [
     accentColor: '#5CC8B5',
     colors: ['#5CC8B5', '#F68B1F', '#FDF6E3'],
     images: [
+      taliterMonogram,     // Monogram
+      mockupTaliterSet,    // Set mockup
       taliterWallMockup,   // Environment
       taliterBottleMockup, // Product
     ],
@@ -147,7 +152,10 @@ export const projects: Project[] = [
     bgColor: '#F5F8F5',
     accentColor: '#4A9F4A',
     colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
-    images: [], // Single hero only
+    images: [
+      ebriderSymbol,   // Symbol
+      mockupEbrider,   // Additional mockup
+    ],
   },
   {
     slug: 'sisenora',
@@ -170,14 +178,14 @@ export const projects: Project[] = [
     description: 'מיתוג ואנימציה לפלטפורמת לימוד AI',
     logo: learnaiLogoFull,
     monogram: dotaiMonogram,
-    heroImage: dotaiMascot, // Brand mascot/character
+    heroImage: websiteLearnai, // Website as hero - more impressive
     bgColor: '#F0FAFB',
     accentColor: '#00D4E5',
     colors: ['#00D4E5', '#1A365D', '#F8FAFC'],
     images: [
+      dotaiMascot,    // Mascot
       learnaiLogo,    // Logo variant
       dotaiMonogram,  // Symbol
-      websiteLearnai, // Website
     ],
     video: learnaiAnimation,
   },
