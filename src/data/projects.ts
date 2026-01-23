@@ -10,14 +10,16 @@ import mockupSfdBands from "@/assets/mockup-sfd-bands.jpg";
 import mockupSfdBandSystem from "@/assets/mockup-sfd-band-system.jpg";
 import mockupTshirtAthlete from "@/assets/mockup-tshirt-athlete.jpg";
 
-// Meshek 27
-import meshek27Logo from "@/assets/meshek27-logo.jpg";
-import meshek27Monogram from "@/assets/meshek27-monogram.jpg";
-import mockupMeshek27Branding from "@/assets/mockup-meshek27-branding.jpg";
-import mockupMeshek27Wall from "@/assets/mockup-meshek27-wall.jpg";
-import mockupMeshek27Box from "@/assets/mockup-meshek27-box.jpg";
-import mockupMeshek27Tshirt from "@/assets/mockup-meshek27-tshirt.jpg";
-import mockupMeshek27Packaging from "@/assets/mockup-meshek27-packaging.jpg";
+// Meshek 27 - New organized assets
+import meshek27WallLogo from '@/assets/meshek27/wall-logo.png';
+import meshek27LogoClean from '@/assets/meshek27/logo-clean.jpg';
+import meshek27BrandingFull from '@/assets/meshek27/branding-full.jpg';
+import meshek27AppIcons from '@/assets/meshek27/app-icons.jpg';
+import meshek27BoxVegetables from '@/assets/meshek27/box-vegetables.jpg';
+import meshek27TshirtMockup from '@/assets/meshek27/tshirt-mockup.jpg';
+import meshek27WallSignage from '@/assets/meshek27/wall-signage.jpg';
+import meshek27LogoGraphic from '@/assets/meshek27/logo-graphic.jpg';
+import meshek27BoxDesign from '@/assets/meshek27/box-design.jpg';
 
 // Si Señora
 import websiteSisenora from "@/assets/website-sisenora.png";
@@ -119,19 +121,21 @@ export const projects: Project[] = [
     slug: 'meshek27',
     name: 'משק 27',
     category: 'branding',
-    description: 'מיתוג ואריזות לחווה אורגנית',
-    logo: meshek27Logo,
-    monogram: meshek27Monogram,
-    heroImage: mockupMeshek27Branding, // Full branding set
+    description: 'מיתוג מלא לחווה אורגנית',
+    logo: meshek27LogoClean,
+    monogram: meshek27AppIcons,
+    heroImage: meshek27BrandingFull,
     bgColor: '#F5F8F3',
     accentColor: '#4A7C3F',
     colors: ['#4A7C3F', '#8BC34A', '#F5F5DC'],
     images: [
-      meshek27Monogram,
-      mockupMeshek27Wall,
-      mockupMeshek27Box,
-      mockupMeshek27Packaging,
-      mockupMeshek27Tshirt,
+      meshek27WallLogo,
+      meshek27WallSignage,
+      meshek27BoxVegetables,
+      meshek27BoxDesign,
+      meshek27TshirtMockup,
+      meshek27LogoGraphic,
+      meshek27AppIcons,
     ],
   },
   {
