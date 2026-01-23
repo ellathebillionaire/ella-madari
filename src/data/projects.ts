@@ -1,4 +1,6 @@
-// SFD
+// ============ BRANDING PROJECTS ============
+
+// SFD - Strength For Dancers
 import sfdLogoTransparent from "@/assets/sfd-logo-transparent.png";
 import sfdMonogram from "@/assets/sfd-monogram-new.jpg";
 import websiteSfd from "@/assets/website-sfd.jpg";
@@ -28,6 +30,7 @@ import learnaiLogo from "@/assets/learnai-logo.jpg";
 import dotaiMascot from "@/assets/dotai-mascot.jpg";
 import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
+import websiteLearnai from "@/assets/website-learnai.jpg";
 
 // Tali Ter
 import taliterLogo from "@/assets/taliter-logo.jpg";
@@ -41,12 +44,14 @@ import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
 import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
 import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 
-// Standalone Websites
+// ============ ADDITIONAL WORK ============
+
+// Websites
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
 import websiteEllamadariShop from "@/assets/website-ellamadari-shop.png";
 import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
-// Print & Other
+// Print & Graphic Design
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
 import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
 import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
@@ -56,105 +61,144 @@ import mockupStationery from "@/assets/mockup-stationery.jpg";
 import mockupTotebag from "@/assets/mockup-totebag.jpg";
 import mockupMug from "@/assets/mockup-mug.jpg";
 
+// ============ TYPES ============
+
 export interface Project {
   slug: string;
   name: string;
+  category: 'branding' | 'website' | 'print';
   description?: string;
   logo: string;
   monogram?: string;
   heroImage: string;
   bgColor: string;
-  accentColor?: string;
+  accentColor: string;
+  colors: string[]; // Brand color palette
   images: string[];
   video?: string;
-  website?: string;
 }
+
+// ============ BRANDING PROJECTS ============
+// Hero images chosen for CONSISTENCY - all show "branding set" style mockups
+// showing multiple branded items together for unified visual appearance
 
 export const projects: Project[] = [
   {
     slug: 'sfd',
     name: 'SFD',
-    description: 'Strength For Dancers - מיתוג ועיצוב מוצרים לרקדנים',
+    category: 'branding',
+    description: 'Strength For Dancers - מיתוג מלא ועיצוב מוצרים',
     logo: sfdLogoTransparent,
     monogram: sfdMonogram,
-    heroImage: mockupSfdWhite, // Clean white product shot - better for branding display
+    heroImage: mockupSfdWhite, // Branding set - products together
     bgColor: '#F5F5F7',
     accentColor: '#1A1A1A',
-    images: [mockupSfdBlack, mockupSfdWhite, mockupSfdBandSystem, mockupSfdBands, mockupTshirtAthlete],
-    website: websiteSfd,
+    colors: ['#1A1A1A', '#FFFFFF', '#4A5568'],
+    images: [
+      mockupSfdBlack,      // Product mockup
+      mockupSfdBandSystem, // System display
+      mockupSfdBands,      // Product detail
+      mockupTshirtAthlete, // Apparel
+      websiteSfd,          // Website
+    ],
   },
   {
     slug: 'meshek27',
     name: 'משק 27',
-    description: 'מיתוג ואריזות לחוות משק 27',
+    category: 'branding',
+    description: 'מיתוג ואריזות לחווה אורגנית',
     logo: meshek27Logo,
     monogram: meshek27Monogram,
-    heroImage: mockupMeshek27Branding, // Full branding set shows the complete identity
+    heroImage: mockupMeshek27Branding, // Full branding set
     bgColor: '#F5F8F3',
     accentColor: '#4A7C3F',
-    images: [mockupMeshek27Branding, mockupMeshek27Wall, mockupMeshek27Box, mockupMeshek27Tshirt, mockupMeshek27Packaging],
-  },
-  {
-    slug: 'sisenora',
-    name: 'Si Señora',
-    description: 'מיתוג ואתר לחנות אופנה',
-    logo: sisenoraLogo,
-    heroImage: mockupSisenoraShop,
-    bgColor: '#FAF8F5',
-    accentColor: '#D4A574',
-    images: [mockupSisenoraShop],
-    website: websiteSisenora,
-  },
-  {
-    slug: 'learnai',
-    name: 'Learn AI',
-    description: 'מיתוג ואנימציה לפלטפורמת לימוד AI',
-    logo: learnaiLogoFull,
-    monogram: dotaiMonogram,
-    heroImage: dotaiMascot, // Mascot is the brand identity
-    bgColor: '#F0FAFB',
-    accentColor: '#00D4E5',
-    images: [learnaiLogo, dotaiMascot, dotaiMonogram],
-    video: learnaiAnimation,
+    colors: ['#4A7C3F', '#8BC34A', '#F5F5DC'],
+    images: [
+      mockupMeshek27Wall,      // Environment mockup
+      mockupMeshek27Box,       // Packaging
+      mockupMeshek27Packaging, // More packaging
+      mockupMeshek27Tshirt,    // Apparel
+    ],
   },
   {
     slug: 'taliter',
     name: 'Tali Ter',
-    description: 'מיתוג לקוסמטיקאית',
+    category: 'branding',
+    description: 'מיתוג לסטודיו לקוסמטיקה ופילאטיס',
     logo: taliterLogo,
     monogram: taliterMonogram,
-    heroImage: taliterBrandingSet, // Full branding set is more comprehensive
+    heroImage: taliterBrandingSet, // Full branding set
     bgColor: '#FFFBF5',
     accentColor: '#5CC8B5',
-    images: [taliterBrandingSet, taliterWallMockup, taliterBottleMockup],
+    colors: ['#5CC8B5', '#F68B1F', '#FDF6E3'],
+    images: [
+      taliterWallMockup,   // Environment
+      taliterBottleMockup, // Product
+    ],
   },
   {
     slug: 'ebrider',
     name: 'EBrider',
+    category: 'branding',
     description: 'מיתוג לחברת אופניים חשמליים',
     logo: ebriderLogoNew,
     monogram: ebriderSymbol,
-    heroImage: ebriderMockupHero,
+    heroImage: ebriderMockupHero, // Main product mockup
     bgColor: '#F5F8F5',
-    accentColor: '#4A7C3F',
-    images: [ebriderMockupHero],
+    accentColor: '#4A9F4A',
+    colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
+    images: [], // Single hero only
+  },
+  {
+    slug: 'sisenora',
+    name: 'Si Señora',
+    category: 'branding',
+    description: 'מיתוג ואתר לחנות אופנה',
+    logo: sisenoraLogo,
+    heroImage: mockupSisenoraShop, // Shop environment
+    bgColor: '#FAF8F5',
+    accentColor: '#D4A574',
+    colors: ['#1A1A1A', '#D4A574', '#F5F5F0'],
+    images: [
+      websiteSisenora, // Website
+    ],
+  },
+  {
+    slug: 'learnai',
+    name: 'Learn AI',
+    category: 'branding',
+    description: 'מיתוג ואנימציה לפלטפורמת לימוד AI',
+    logo: learnaiLogoFull,
+    monogram: dotaiMonogram,
+    heroImage: dotaiMascot, // Brand mascot/character
+    bgColor: '#F0FAFB',
+    accentColor: '#00D4E5',
+    colors: ['#00D4E5', '#1A365D', '#F8FAFC'],
+    images: [
+      learnaiLogo,    // Logo variant
+      dotaiMonogram,  // Symbol
+      websiteLearnai, // Website
+    ],
+    video: learnaiAnimation,
   },
 ];
 
+// ============ ADDITIONAL WORK (Websites, Print, Graphics) ============
+
 export const additionalWork = {
   websites: [
-    { name: 'BetterSeeds', image: websiteBetterseeds },
-    { name: 'Ella Madari Shop', image: websiteEllamadariShop },
-    { name: 'SEN Mobile', image: websiteSenMobile },
+    { name: 'BetterSeeds', image: websiteBetterseeds, color: '#4A7C3F' },
+    { name: 'Ella Madari Shop', image: websiteEllamadariShop, color: '#1A1A1A' },
+    { name: 'SEN Jewelry', image: websiteSenMobile, color: '#0D4F4F' },
   ],
   print: [
-    { name: 'Poster Ellamadari', image: printPosterEllamadari },
-    { name: 'Infographic Farm', image: printInfographicFarm },
-    { name: 'Adama Cards', image: mockupAdamaCards },
-    { name: 'Wedding Invite', image: mockupWeddingInvite },
-    { name: 'Business Card', image: mockupBusinesscard },
-    { name: 'Stationery', image: mockupStationery },
+    { name: 'פוסטר אלה מדארי', image: printPosterEllamadari },
+    { name: 'אינפוגרפיקה חקלאית', image: printInfographicFarm },
+    { name: 'כרטיסי ביקור אדמה', image: mockupAdamaCards },
+    { name: 'הזמנה לחתונה', image: mockupWeddingInvite },
+    { name: 'כרטיס ביקור', image: mockupBusinesscard },
+    { name: 'ניירת משרדית', image: mockupStationery },
     { name: 'Tote Bag', image: mockupTotebag },
-    { name: 'Mug', image: mockupMug },
+    { name: 'מאג', image: mockupMug },
   ],
 };
