@@ -8,6 +8,7 @@ import website1 from "@/assets/website-1.jpg";
 import website2 from "@/assets/website-2.jpg";
 import website3 from "@/assets/website-3.jpg";
 import website4 from "@/assets/website-4.jpg";
+import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
 
 // Import branding assets
 import brand1Logo from "@/assets/brand1-logo.png";
@@ -26,10 +27,11 @@ import mockupTotebag from "@/assets/mockup-totebag.jpg";
 import mockupStationery from "@/assets/mockup-stationery.jpg";
 
 const websites = [
-  { id: "1", title: "Wellness Spa Website", screenshot: website1 },
-  { id: "2", title: "Coffee Roastery Website", screenshot: website2 },
-  { id: "3", title: "Architecture Studio Website", screenshot: website3 },
-  { id: "4", title: "Fashion Boutique Website", screenshot: website4 },
+  { id: "1", title: "BetterSeeds - Gene Editing Platform", screenshot: websiteBetterseeds },
+  { id: "2", title: "Wellness Spa Website", screenshot: website1 },
+  { id: "3", title: "Coffee Roastery Website", screenshot: website2 },
+  { id: "4", title: "Architecture Studio Website", screenshot: website3 },
+  { id: "5", title: "Fashion Boutique Website", screenshot: website4 },
 ];
 
 const brands = [
