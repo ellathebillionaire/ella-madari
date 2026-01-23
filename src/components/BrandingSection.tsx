@@ -27,6 +27,7 @@ const BrandingSection = ({ brands }: BrandingSectionProps) => {
               logo={brand.logo}
               monogram={brand.monogram}
               colors={brand.colors}
+              mockups={brand.mockups}
             />
           ))}
         </div>
