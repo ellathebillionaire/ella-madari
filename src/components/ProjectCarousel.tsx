@@ -1,13 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
+import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { projects } from '@/data/projects';
 
 const ProjectCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const dragX = useMotionValue(0);
   const totalProjects = projects.length;
 
+  // Auto-rotate when idle
+  useEffect(() => {
+    if (!isAutoPlaying || isDragging) return;
+    
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % totalProjects);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, isDragging, totalProjects]);
+
+  // Pause auto-play on interaction
+  const pauseAutoPlay = useCallback(() => {
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  }, []);
+
   const rotate = (direction: 'left' | 'right') => {
+    pauseAutoPlay();
     if (direction === 'left') {
       setActiveIndex((prev) => (prev - 1 + totalProjects) % totalProjects);
     } else {
@@ -17,46 +39,49 @@ const ProjectCarousel = () => {
 
   // Handle wheel scroll
   const handleWheel = (e: React.WheelEvent) => {
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-      if (e.deltaX > 20) rotate('right');
-      if (e.deltaX < -20) rotate('left');
-    } else {
-      if (e.deltaY > 20) rotate('right');
-      if (e.deltaY < -20) rotate('left');
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (Math.abs(delta) > 30) {
+      pauseAutoPlay();
+      if (delta > 0) rotate('right');
+      else rotate('left');
     }
+  };
+
+  // Handle drag
+  const handleDragEnd = () => {
+    const x = dragX.get();
+    if (Math.abs(x) > 50) {
+      if (x < 0) rotate('right');
+      else rotate('left');
+    }
+    animate(dragX, 0, { type: 'spring', stiffness: 300, damping: 30 });
+    setIsDragging(false);
   };
 
   // Calculate position for each card in the arc
   const getCardStyle = (index: number) => {
-    // Calculate relative position from active (-3 to +3)
     let relativePos = index - activeIndex;
-    
-    // Handle wrapping
     if (relativePos > totalProjects / 2) relativePos -= totalProjects;
     if (relativePos < -totalProjects / 2) relativePos += totalProjects;
 
-    // Arc parameters - LARGER for dramatic effect
-    const radius = 900; // Increased from 600
-    const angleStep = 30; // Increased from 25 for more spread
+    const radius = 850;
+    const angleStep = 28;
     const angle = relativePos * angleStep;
     const angleRad = (angle * Math.PI) / 180;
 
-    // Calculate 3D position on the arc
     const x = Math.sin(angleRad) * radius;
     const z = Math.cos(angleRad) * radius - radius;
-    const rotateY = -angle;
+    const rotateY = -angle * 0.8;
+    const y = Math.abs(relativePos) * 15; // Slight vertical offset for depth
 
-    // Scale and opacity based on distance
     const absPos = Math.abs(relativePos);
-    const scale = Math.max(0.5, 1 - absPos * 0.15);
-    const opacity = Math.max(0.2, 1 - absPos * 0.25);
-    const blur = absPos > 2 ? (absPos - 2) * 1.5 : 0;
+    const scale = Math.max(0.55, 1 - absPos * 0.13);
+    const opacity = Math.max(0.15, 1 - absPos * 0.3);
 
     return {
-      transform: `translateX(${x}px) translateZ(${z}px) rotateY(${rotateY}deg) scale(${scale})`,
-      opacity,
-      filter: blur > 0 ? `blur(${blur}px)` : 'none',
-      zIndex: 100 - Math.abs(relativePos) * 10,
+      x, y, z, rotateY, scale, opacity,
+      zIndex: 100 - absPos * 10,
+      isVisible: absPos <= 3,
     };
   };
 
@@ -64,19 +89,49 @@ const ProjectCarousel = () => {
 
   return (
     <section 
-      className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#fafafa]"
+      className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
+      style={{ 
+        background: 'linear-gradient(180deg, #fafafa 0%, #f0f0f5 100%)',
+      }}
       onWheel={handleWheel}
     >
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-30" style={{
+        backgroundImage: 'radial-gradient(circle at 50% 50%, #e0e0e0 1px, transparent 1px)',
+        backgroundSize: '40px 40px',
+      }} />
+
       {/* Header */}
-      <header className="absolute top-0 left-0 right-0 px-8 py-8 z-30">
-        <h1 className="text-xl font-light tracking-tight text-[#1d1d1f]">Ella Madari</h1>
-        <p className="text-[9px] text-[#86868b] tracking-[0.2em] uppercase mt-0.5">Design Portfolio</p>
+      <header className="absolute top-0 left-0 right-0 px-8 py-6 z-30 flex items-center justify-between">
+        <div>
+          <h1 className="text-lg font-medium tracking-tight text-[#1d1d1f]">Ella Madari</h1>
+          <p className="text-[8px] text-[#86868b] tracking-[0.25em] uppercase">Design Portfolio</p>
+        </div>
+        <div className="flex items-center gap-1">
+          {projects.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setActiveIndex(i); pauseAutoPlay(); }}
+              className={`transition-all duration-300 rounded-full ${
+                i === activeIndex 
+                  ? 'w-6 h-1.5 bg-[#1d1d1f]' 
+                  : 'w-1.5 h-1.5 bg-[#d2d2d7] hover:bg-[#86868b]'
+              }`}
+            />
+          ))}
+        </div>
       </header>
 
       {/* 3D Carousel Container */}
-      <div 
-        className="relative w-full h-[600px] flex items-center justify-center"
-        style={{ perspective: '1500px' }}
+      <motion.div 
+        className="relative w-full h-[580px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+        style={{ perspective: '1400px' }}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.1}
+        onDragStart={() => { setIsDragging(true); pauseAutoPlay(); }}
+        onDragEnd={handleDragEnd}
+        whileDrag={{ cursor: 'grabbing' }}
       >
         <div 
           className="relative w-full h-full flex items-center justify-center"
@@ -86,106 +141,178 @@ const ProjectCarousel = () => {
             const isActive = index === activeIndex;
             const style = getCardStyle(index);
             
+            if (!style.isVisible) return null;
+            
             return (
               <motion.div
                 key={project.slug}
-                className="absolute cursor-pointer"
+                className="absolute"
                 style={{
-                  width: 320, // Increased from 240
-                  ...style,
+                  width: 300,
                   transformStyle: 'preserve-3d',
+                  zIndex: style.zIndex,
                 }}
                 initial={false}
-                animate={style}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                onClick={() => setActiveIndex(index)}
+                animate={{
+                  x: style.x,
+                  y: style.y,
+                  z: style.z,
+                  rotateY: style.rotateY,
+                  scale: style.scale,
+                  opacity: style.opacity,
+                }}
+                transition={{ 
+                  type: 'spring', 
+                  stiffness: 200, 
+                  damping: 25,
+                  mass: 0.8,
+                }}
+                onClick={() => { 
+                  if (!isActive) {
+                    setActiveIndex(index);
+                    pauseAutoPlay();
+                  }
+                }}
               >
-                {/* Top expanded images */}
-                <div className="h-20 mb-3 flex justify-center gap-2">
-                  <AnimatePresence>
-                    {isActive && project.images.length > 1 && (
-                      <>
-                        {project.images.slice(1, 3).map((img, i) => (
-                          <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 15, scale: 0.8 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 15, scale: 0.8 }}
-                            transition={{ duration: 0.3, delay: i * 0.08 }}
-                            className="w-20 h-20 rounded-xl overflow-hidden shadow-lg"
-                          >
-                            <img src={img} alt="" className="w-full h-full object-cover" />
-                          </motion.div>
-                        ))}
-                      </>
-                    )}
+                {/* Expanded Images - Top */}
+                <div className="h-24 mb-3 flex justify-center items-end gap-2 perspective-1000">
+                  <AnimatePresence mode="popLayout">
+                    {isActive && project.images.slice(1, 4).map((img, i) => (
+                      <motion.div
+                        key={`top-${i}`}
+                        initial={{ opacity: 0, y: 30, scale: 0.7, rotateX: 20 }}
+                        animate={{ 
+                          opacity: 1, 
+                          y: 0, 
+                          scale: 1 - (i === 1 ? 0 : 0.08),
+                          rotateX: 0,
+                        }}
+                        exit={{ opacity: 0, y: 20, scale: 0.8 }}
+                        transition={{ duration: 0.4, delay: i * 0.08, type: 'spring' }}
+                        className="rounded-xl overflow-hidden shadow-lg bg-white"
+                        style={{ 
+                          width: i === 1 ? 72 : 60,
+                          height: i === 1 ? 72 : 60,
+                        }}
+                      >
+                        <img src={img} alt="" className="w-full h-full object-cover" />
+                      </motion.div>
+                    ))}
                   </AnimatePresence>
                 </div>
 
                 {/* Main Card */}
-                <Link to={`/project/${project.slug}`} onClick={(e) => !isActive && e.preventDefault()}>
-                  <div 
-                    className={`aspect-square rounded-2xl overflow-hidden transition-shadow duration-500 ${
-                      isActive ? 'shadow-2xl ring-2 ring-white/50' : 'shadow-lg'
-                    }`}
-                    style={{ backgroundColor: project.bgColor }}
-                  >
+                <motion.div
+                  className={`relative rounded-3xl overflow-hidden cursor-pointer transition-shadow duration-500 ${
+                    isActive 
+                      ? 'shadow-[0_30px_80px_-20px_rgba(0,0,0,0.35)] ring-1 ring-white/60' 
+                      : 'shadow-xl hover:shadow-2xl'
+                  }`}
+                  style={{ backgroundColor: project.bgColor }}
+                  whileHover={!isActive ? { scale: 1.02 } : {}}
+                  whileTap={isActive ? { scale: 0.98 } : {}}
+                >
+                  {/* Logo Badge - CONSISTENT POSITION */}
+                  <div className="absolute top-4 left-4 z-10">
+                    <div className="h-8 px-3 bg-white/90 backdrop-blur-md rounded-full flex items-center gap-2 shadow-sm">
+                      <img 
+                        src={project.logo} 
+                        alt="" 
+                        className="h-4 w-auto object-contain"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Active indicator */}
+                  {isActive && (
+                    <motion.div
+                      className="absolute top-4 right-4 z-10"
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <Link 
+                        to={`/project/${project.slug}`}
+                        className="w-8 h-8 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5 text-[#1d1d1f]" />
+                      </Link>
+                    </motion.div>
+                  )}
+
+                  {/* Hero Image */}
+                  <div className="aspect-square overflow-hidden">
                     <img 
                       src={project.heroImage} 
                       alt={project.name}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                </Link>
 
-                {/* Bottom expanded images */}
-                <div className="h-20 mt-3 flex justify-center gap-2">
-                  <AnimatePresence>
-                    {isActive && project.images.length > 3 && (
-                      <>
-                        {project.images.slice(3, 5).map((img, i) => (
-                          <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: -15, scale: 0.8 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: -15, scale: 0.8 }}
-                            transition={{ duration: 0.3, delay: i * 0.08 }}
-                            className="w-20 h-20 rounded-xl overflow-hidden shadow-lg"
-                          >
-                            <img src={img} alt="" className="w-full h-full object-cover" />
-                          </motion.div>
-                        ))}
-                      </>
-                    )}
+                  {/* Bottom Gradient Overlay with Name */}
+                  <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/40 to-transparent flex items-end p-4">
+                    <span className="text-white text-sm font-medium tracking-wide drop-shadow-md">
+                      {project.name}
+                    </span>
+                  </div>
+                </motion.div>
+
+                {/* Expanded Images - Bottom */}
+                <div className="h-24 mt-3 flex justify-center items-start gap-2">
+                  <AnimatePresence mode="popLayout">
+                    {isActive && project.images.length > 4 && project.images.slice(4, 7).map((img, i) => (
+                      <motion.div
+                        key={`bottom-${i}`}
+                        initial={{ opacity: 0, y: -30, scale: 0.7 }}
+                        animate={{ 
+                          opacity: 1, 
+                          y: 0, 
+                          scale: 1 - (i === 1 ? 0 : 0.08),
+                        }}
+                        exit={{ opacity: 0, y: -20, scale: 0.8 }}
+                        transition={{ duration: 0.4, delay: i * 0.08, type: 'spring' }}
+                        className="rounded-xl overflow-hidden shadow-lg bg-white"
+                        style={{ 
+                          width: i === 1 ? 72 : 60,
+                          height: i === 1 ? 72 : 60,
+                        }}
+                      >
+                        <img src={img} alt="" className="w-full h-full object-cover" />
+                      </motion.div>
+                    ))}
                   </AnimatePresence>
                 </div>
               </motion.div>
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
-      {/* Active Project Info */}
-      <div className="absolute bottom-32 left-1/2 -translate-x-1/2 text-center z-20">
+      {/* Active Project Info Panel */}
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="flex flex-col items-center gap-2"
+            transition={{ duration: 0.25 }}
+            className="flex flex-col items-center gap-3"
           >
-            <div className="flex items-center gap-2">
-              <img src={activeProject.logo} alt="" className="h-5 w-auto object-contain" />
-              <span className="text-sm font-medium text-[#1d1d1f]">{activeProject.name}</span>
-            </div>
             <Link 
               to={`/project/${activeProject.slug}`}
-              className="text-[10px] text-[#86868b] hover:text-[#1d1d1f] transition-colors uppercase tracking-widest"
+              className="group flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-xl rounded-full shadow-lg hover:shadow-xl hover:bg-white transition-all"
             >
-              View Project →
+              <span className="text-sm font-medium text-[#1d1d1f] group-hover:text-black">
+                {activeProject.name}
+              </span>
+              <ChevronRight className="w-4 h-4 text-[#86868b] group-hover:text-[#1d1d1f] group-hover:translate-x-0.5 transition-all" />
             </Link>
+            {activeProject.description && (
+              <p className="text-[11px] text-[#86868b] max-w-xs text-center">
+                {activeProject.description}
+              </p>
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -193,36 +320,33 @@ const ProjectCarousel = () => {
       {/* Navigation Arrows */}
       <button
         onClick={() => rotate('left')}
-        className="absolute left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg flex items-center justify-center text-[#1d1d1f] hover:bg-white transition-colors z-20"
+        className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-md shadow-lg flex items-center justify-center text-[#1d1d1f] hover:bg-white hover:scale-110 active:scale-95 transition-all z-20"
       >
-        ←
+        <ChevronLeft className="w-5 h-5" />
       </button>
       <button
         onClick={() => rotate('right')}
-        className="absolute right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg flex items-center justify-center text-[#1d1d1f] hover:bg-white transition-colors z-20"
+        className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-md shadow-lg flex items-center justify-center text-[#1d1d1f] hover:bg-white hover:scale-110 active:scale-95 transition-all z-20"
       >
-        →
+        <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* Navigation Dots */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        {projects.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveIndex(index)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              index === activeIndex 
-                ? 'bg-[#1d1d1f] w-5' 
-                : 'bg-[#d2d2d7] w-1.5 hover:bg-[#86868b]'
-            }`}
-          />
-        ))}
+      {/* Keyboard hint */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 text-[9px] text-[#86868b]/50 tracking-wider uppercase z-10">
+        <span>← → or scroll</span>
+        <span className="w-1 h-1 rounded-full bg-[#86868b]/30" />
+        <span>drag to explore</span>
       </div>
 
-      {/* Scroll hint */}
-      <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[8px] text-[#86868b]/50 tracking-widest uppercase z-20">
-        Scroll or drag to explore
-      </p>
+      {/* Progress bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#e0e0e0]">
+        <motion.div
+          className="h-full bg-[#1d1d1f]"
+          initial={{ width: '0%' }}
+          animate={{ width: `${((activeIndex + 1) / totalProjects) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
     </section>
   );
 };
