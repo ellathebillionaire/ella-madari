@@ -25,8 +25,8 @@ import learnaiLogo from "@/assets/learnai-logo.jpg";
 import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 
 // ============ BRANDING - EBRIDER ============
-import ebriderLogo from "@/assets/ebrider-logo.jpg";
-import ebriderMonogram from "@/assets/ebrider-monogram.jpg";
+import ebriderLogo from "@/assets/ebrider-logo-transparent.png";
+import ebriderMonogram from "@/assets/ebrider-monogram-transparent.png";
 
 // ============ BRANDING - STUDIO ALEF ============
 import studioalefLogo from "@/assets/studioalef-logo.png";
@@ -66,6 +66,7 @@ import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
 // ============ PRINT DESIGN ============
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
 import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
+import aiDroneFarming from "@/assets/ai-drone-farming.jpg";
 
 // ============ DATA ============
 
@@ -170,6 +171,7 @@ const mockups = [
 const printDesigns = [
   { id: "1", title: "Ella Madari - Inspirational Poster", image: printPosterEllamadari },
   { id: "2", title: "ירקות מהמשק - Shopping Guide", image: printInfographicFarm },
+  { id: "3", title: "BetterSeeds - AI Agriculture Vision", image: aiDroneFarming },
 ];
 
 const Index = () => {
