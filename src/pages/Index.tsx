@@ -42,8 +42,9 @@ import ebriderMonogram from "@/assets/ebrider-monogram-transparent.png";
 import mockupEbrider from "@/assets/mockup-ebrider.jpg";
 
 // ============ SI SEÑORA ============
-import sisenoraLogo from "@/assets/sisenora-logo.jpg";
+import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
+import websiteSisenora from "@/assets/website-sisenora.png";
 
 // ============ OTHER MOCKUPS ============
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
@@ -57,6 +58,7 @@ const websites = [
   { id: "betterseeds", title: "BetterSeeds", screenshot: websiteBetterseeds },
   { id: "sfd", title: "Strength For Dancers", screenshot: websiteSfd },
   { id: "learnai", title: "Learn AI", screenshot: websiteLearnai },
+  { id: "sisenora", title: "Si Señora", screenshot: websiteSisenora },
   { id: "ellamadari", title: "Ella Madari Shop", screenshot: websiteEllamadariShop },
   { id: "sen", title: "SEN Fine Jewelry", screenshot: websiteSenMobile, type: "mobile" as const },
 ];
