@@ -4,67 +4,91 @@ import BrandingSection from "@/components/BrandingSection";
 import MockupsSection from "@/components/MockupsSection";
 
 // Import website screenshots
-import website1 from "@/assets/website-1.jpg";
-import website2 from "@/assets/website-2.jpg";
-import website3 from "@/assets/website-3.jpg";
-import website4 from "@/assets/website-4.jpg";
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
+import websiteLearnai from "@/assets/website-learnai.jpg";
 
-// Import branding assets
-import brand1Logo from "@/assets/brand1-logo.png";
-import brand1Monogram from "@/assets/brand1-monogram.png";
-import brand2Logo from "@/assets/brand2-logo.png";
-import brand2Monogram from "@/assets/brand2-monogram.png";
-import brand3Logo from "@/assets/brand3-logo.png";
-import brand3Monogram from "@/assets/brand3-monogram.png";
+// Import branding assets - Tali Ter
+import taliterLogo from "@/assets/taliter-logo.jpg";
+import taliterMonogram from "@/assets/taliter-monogram.jpg";
+
+// Import branding assets - SFD (Strength For Dancers)
+import sfdLogo from "@/assets/sfd-logo.jpg";
+import sfdMonogram from "@/assets/sfd-monogram.jpg";
+
+// Import branding assets - Meshek 27
+import meshek27Logo from "@/assets/meshek27-logo.jpg";
+import meshek27Monogram from "@/assets/meshek27-monogram.jpg";
+
+// Import branding assets - Learn AI / DotAi
+import learnaiLogo from "@/assets/learnai-logo.jpg";
+import dotaiMonogram from "@/assets/dotai-monogram.jpg";
+
+// Import branding assets - EBrider
+import ebriderLogo from "@/assets/ebrider-logo.jpg";
+import ebriderMonogram from "@/assets/ebrider-monogram.jpg";
 
 // Import mockup images
-import mockupBusinesscard from "@/assets/mockup-businesscard.jpg";
-import mockupMug from "@/assets/mockup-mug.jpg";
-import mockupTshirt from "@/assets/mockup-tshirt.jpg";
-import mockupPackaging from "@/assets/mockup-packaging.jpg";
-import mockupTotebag from "@/assets/mockup-totebag.jpg";
-import mockupStationery from "@/assets/mockup-stationery.jpg";
+import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
+import mockupSfdBlack from "@/assets/mockup-sfd-black.jpg";
+import mockupSfdWhite from "@/assets/mockup-sfd-white.jpg";
+import mockupMeshek27Branding from "@/assets/mockup-meshek27-branding.jpg";
+import mockupMeshek27Wall from "@/assets/mockup-meshek27-wall.jpg";
+import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
+import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
+import mockupOnmor from "@/assets/mockup-onmor.png";
 
 const websites = [
   { id: "1", title: "BetterSeeds - Gene Editing Platform", screenshot: websiteBetterseeds },
-  { id: "2", title: "Wellness Spa Website", screenshot: website1 },
-  { id: "3", title: "Coffee Roastery Website", screenshot: website2 },
-  { id: "4", title: "Architecture Studio Website", screenshot: website3 },
-  { id: "5", title: "Fashion Boutique Website", screenshot: website4 },
+  { id: "2", title: "Learn AI - Educational Platform", screenshot: websiteLearnai },
 ];
 
 const brands = [
   {
     id: "1",
-    name: "Serenity Spa",
-    logo: brand1Logo,
-    monogram: brand1Monogram,
-    colors: ["#7B9E87", "#D4E4D9", "#F5F8F5", "#3D5A45"],
+    name: "Tali Ter Barre Pilates",
+    logo: taliterLogo,
+    monogram: taliterMonogram,
+    colors: ["#5CC8B5", "#F68B1F", "#FDF6E3", "#2A4A4A"],
   },
   {
     id: "2",
-    name: "Artisan Coffee",
-    logo: brand2Logo,
-    monogram: brand2Monogram,
-    colors: ["#8B4513", "#D2691E", "#F5DEB3", "#3E2723"],
+    name: "Strength For Dancers",
+    logo: sfdLogo,
+    monogram: sfdMonogram,
+    colors: ["#1A1A1A", "#2D2D2D", "#F5F5F0", "#FFFFFF"],
   },
   {
     id: "3",
-    name: "Architecture Studio",
-    logo: brand3Logo,
-    monogram: brand3Monogram,
-    colors: ["#1A1A1A", "#4A4A4A", "#E5E5E5", "#FFFFFF"],
+    name: "משק 27",
+    logo: meshek27Logo,
+    monogram: meshek27Monogram,
+    colors: ["#4A7C3F", "#6B9F5B", "#F5F8E8", "#2D4A28"],
+  },
+  {
+    id: "4",
+    name: "Learn AI",
+    logo: learnaiLogo,
+    monogram: dotaiMonogram,
+    colors: ["#00BCD4", "#0097A7", "#1A2B3C", "#F0F8FF"],
+  },
+  {
+    id: "5",
+    name: "EBrider",
+    logo: ebriderLogo,
+    monogram: ebriderMonogram,
+    colors: ["#4A7C3F", "#1A1A1A", "#F5F5F5", "#2D4A28"],
   },
 ];
 
 const mockups = [
-  { id: "1", title: "Business Card", image: mockupBusinesscard },
-  { id: "2", title: "Coffee Mug", image: mockupMug },
-  { id: "3", title: "T-Shirt", image: mockupTshirt },
-  { id: "4", title: "Packaging Box", image: mockupPackaging },
-  { id: "5", title: "Tote Bag", image: mockupTotebag },
-  { id: "6", title: "Stationery Set", image: mockupStationery },
+  { id: "1", title: "Tali Ter - Brand Identity Set", image: mockupTaliterSet },
+  { id: "2", title: "SFD - Fitness Equipment", image: mockupSfdBlack },
+  { id: "3", title: "SFD - White Collection", image: mockupSfdWhite },
+  { id: "4", title: "משק 27 - Full Branding", image: mockupMeshek27Branding },
+  { id: "5", title: "משק 27 - Wall Signage", image: mockupMeshek27Wall },
+  { id: "6", title: "Adama - Business Cards", image: mockupAdamaCards },
+  { id: "7", title: "Lin & Guy - Wedding Invitation", image: mockupWeddingInvite },
+  { id: "8", title: "ON MOR - Luxury Logo", image: mockupOnmor },
 ];
 
 const Index = () => {
