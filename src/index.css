@@ -114,11 +114,9 @@
     @apply w-2 h-2 md:w-2.5 md:h-2.5 rounded-full;
   }
 
-  .branding-strip {
-    @apply w-full py-8 md:py-12 border-b border-border flex flex-col md:flex-row items-center gap-6 md:gap-12;
-  }
+  /* Branding strip styles removed - now handled inline in component */
 
   .color-dot {
-    @apply w-8 h-8 md:w-10 md:h-10 rounded-full;
+    @apply w-6 h-6 md:w-7 md:h-7 rounded-full;
   }
 }
