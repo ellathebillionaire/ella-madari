@@ -146,35 +146,12 @@ const ProjectCarousel = () => {
         </header>
 
         {/* Main Content */}
-        <div className="w-full max-w-7xl mx-auto px-4 pt-24 pb-8">
-          
-        {/* Top Expanded Images */}
-        <div className="h-24 md:h-28 flex justify-center items-end gap-2 md:gap-3 mb-4">
-            <AnimatePresence mode="popLayout">
-              {allActiveImages.slice(1, 4).map((img, i) => (
-                <motion.div
-                  key={`top-${activeIndex}-${i}`}
-                  initial={{ opacity: 0, y: 50, scale: 0.6, rotateX: 25 }}
-                  animate={{ 
-                    opacity: 1, y: 0, scale: i === 1 ? 1.08 : 0.92, rotateX: 0,
-                  }}
-                  exit={{ opacity: 0, y: 40, scale: 0.7 }}
-                  transition={{ duration: 0.5, delay: i * 0.07, type: 'spring', stiffness: 150 }}
-                  className="rounded-xl md:rounded-2xl overflow-hidden shadow-xl bg-white cursor-pointer hover:scale-110 hover:shadow-2xl transition-all duration-300"
-                  style={{ width: i === 1 ? 90 : 70, height: i === 1 ? 90 : 70 }}
-                  onClick={() => setSelectedImage(img)}
-                  whileHover={{ y: -5 }}
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
+        <div className="w-full max-w-7xl mx-auto px-4 pt-20 pb-8">
 
-          {/* 3D Carousel */}
+          {/* 3D Carousel - Double Size */}
           <motion.div 
-            className="relative h-[320px] md:h-[380px] flex items-center justify-center cursor-grab active:cursor-grabbing"
-            style={{ perspective: '1300px' }}
+            className="relative h-[500px] md:h-[620px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+            style={{ perspective: '1600px' }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.1}
@@ -191,7 +168,7 @@ const ProjectCarousel = () => {
                   <motion.div
                     key={project.slug}
                     className="absolute cursor-pointer"
-                    style={{ width: 280, transformStyle: 'preserve-3d', zIndex: style.zIndex }}
+                    style={{ width: 480, transformStyle: 'preserve-3d', zIndex: style.zIndex }}
                     initial={false}
                     animate={{
                       x: style.x, y: style.y, z: style.z,
@@ -203,28 +180,28 @@ const ProjectCarousel = () => {
                     <motion.div
                       className={`relative rounded-3xl overflow-hidden ${
                         isActive 
-                          ? 'shadow-[0_40px_100px_-25px_rgba(0,0,0,0.45)] ring-2 ring-white/80' 
+                          ? 'shadow-[0_50px_120px_-30px_rgba(0,0,0,0.5)] ring-2 ring-white/80' 
                           : 'shadow-lg'
                       }`}
                       style={{ backgroundColor: project.bgColor }}
                       whileHover={!isActive ? { scale: 1.04, y: -5 } : {}}
                     >
                       {/* Logo Badge - CONSISTENT */}
-                      <div className="absolute top-3 left-3 z-10">
-                        <div className="h-8 px-2.5 bg-white/95 backdrop-blur-md rounded-lg flex items-center shadow-md">
-                          <img src={project.logo} alt="" className="h-4 w-auto object-contain" />
+                      <div className="absolute top-4 left-4 z-10">
+                        <div className="h-10 px-3 bg-white/95 backdrop-blur-md rounded-xl flex items-center shadow-lg">
+                          <img src={project.logo} alt="" className="h-5 w-auto object-contain" />
                         </div>
                       </div>
 
                       {/* Video indicator */}
                       {project.video && isActive && (
                         <motion.div 
-                          className="absolute top-3 right-3 z-10"
+                          className="absolute top-4 right-4 z-10"
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                         >
-                          <div className="w-8 h-8 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-md">
-                            <Play className="w-3 h-3 text-[#1d1d1f] ml-0.5" />
+                          <div className="w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg">
+                            <Play className="w-4 h-4 text-[#1d1d1f] ml-0.5" />
                           </div>
                         </motion.div>
                       )}
@@ -234,14 +211,39 @@ const ProjectCarousel = () => {
                         <img src={project.heroImage} alt={project.name} className="w-full h-full object-cover" />
                       </div>
 
+                      {/* Color Palette & Category - Overlaid on Image */}
+                      {isActive && (
+                        <motion.div 
+                          className="absolute bottom-16 left-4 right-4 z-10 flex items-center justify-between"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          <div className="flex items-center gap-1.5 px-3 py-2 bg-white/90 backdrop-blur-md rounded-full shadow-lg">
+                            {project.colors.slice(0, 5).map((color, i) => (
+                              <div
+                                key={i}
+                                className="w-5 h-5 rounded-full shadow-inner border border-white/50"
+                                style={{ backgroundColor: color }}
+                              />
+                            ))}
+                          </div>
+                          <div className="px-3 py-2 bg-white/90 backdrop-blur-md rounded-full shadow-lg">
+                            <span className="text-[10px] text-[#1d1d1f] font-semibold tracking-wider uppercase">
+                              {project.category === 'branding' ? 'BRANDING' : 'WEBSITE'}
+                            </span>
+                          </div>
+                        </motion.div>
+                      )}
+
                       {/* Bottom gradient with name */}
                       <div 
-                        className="absolute bottom-0 left-0 right-0 h-20 flex items-end p-4"
+                        className="absolute bottom-0 left-0 right-0 h-14 flex items-end p-4"
                         style={{ 
-                          background: `linear-gradient(to top, ${project.accentColor}CC 0%, transparent 100%)`
+                          background: `linear-gradient(to top, ${project.accentColor}DD 0%, transparent 100%)`
                         }}
                       >
-                        <span className="text-white text-sm font-semibold tracking-wide drop-shadow-lg">
+                        <span className="text-white text-base font-semibold tracking-wide drop-shadow-lg">
                           {project.name}
                         </span>
                       </div>
@@ -252,51 +254,24 @@ const ProjectCarousel = () => {
             </div>
           </motion.div>
 
-        {/* Bottom Expanded Images */}
-        <div className="h-24 md:h-28 flex justify-center items-start gap-2 md:gap-3 mt-4">
+        {/* Bottom Expanded Images - Only Direction Down */}
+        <div className="flex justify-center items-start gap-3 md:gap-4 mt-6">
           <AnimatePresence mode="popLayout">
-            {allActiveImages.slice(4).map((img, i) => (
+            {allActiveImages.slice(1).map((img, i) => (
               <motion.div
                 key={`bottom-${activeIndex}-${i}`}
-                initial={{ opacity: 0, y: -50, scale: 0.6 }}
-                animate={{ opacity: 1, y: 0, scale: i === 0 ? 1.08 : 0.92 }}
-                exit={{ opacity: 0, y: -40, scale: 0.7 }}
-                transition={{ duration: 0.5, delay: i * 0.07, type: 'spring', stiffness: 150 }}
-                className="rounded-xl md:rounded-2xl overflow-hidden shadow-xl bg-white cursor-pointer hover:scale-110 hover:shadow-2xl transition-all duration-300"
-                style={{ width: i === 0 ? 90 : 70, height: i === 0 ? 90 : 70 }}
+                initial={{ opacity: 0, y: -30, scale: 0.7 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.8 }}
+                transition={{ duration: 0.4, delay: i * 0.05, type: 'spring', stiffness: 180 }}
+                className="rounded-xl md:rounded-2xl overflow-hidden shadow-xl bg-white cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                style={{ width: 80, height: 80 }}
                 onClick={() => setSelectedImage(img)}
-                whileHover={{ y: 5 }}
+                whileHover={{ y: 4 }}
               >
                 <img src={img} alt="" className="w-full h-full object-cover" />
               </motion.div>
             ))}
-          </AnimatePresence>
-        </div>
-
-        {/* Color Palette & Category - Now Below */}
-        <div className="flex justify-center items-center gap-2 mt-6 mb-4">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndex}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-md rounded-full shadow-sm"
-            >
-              {activeProject.colors.map((color, i) => (
-                <motion.div
-                  key={i}
-                  className="w-4 h-4 rounded-full shadow-inner"
-                  style={{ backgroundColor: color }}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                />
-              ))}
-              <span className="ml-2 text-[10px] text-[#86868b] font-medium">
-                {activeProject.category === 'branding' ? 'BRANDING' : 'WEBSITE'}
-              </span>
-            </motion.div>
           </AnimatePresence>
         </div>
 
