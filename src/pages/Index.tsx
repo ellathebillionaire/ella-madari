@@ -13,8 +13,8 @@ import taliterLogo from "@/assets/taliter-logo.jpg";
 import taliterMonogram from "@/assets/taliter-monogram.jpg";
 
 // ============ BRANDING - SFD (Strength For Dancers) ============
-import sfdLogo from "@/assets/sfd-logo.jpg";
-import sfdLogoDark from "@/assets/sfd-logo-dark.jpg";
+import sfdLogoFull from "@/assets/sfd-logo-full.jpg";
+import sfdMonogram from "@/assets/sfd-monogram-new.jpg";
 
 // ============ BRANDING - MESHEK 27 ============
 import meshek27Logo from "@/assets/meshek27-logo.jpg";
@@ -86,8 +86,8 @@ const brands = [
   {
     id: "2",
     name: "Strength For Dancers",
-    logo: sfdLogo,
-    monogram: sfdLogoDark,
+    logo: sfdLogoFull,
+    monogram: sfdMonogram,
     colors: ["#1A1A1A", "#2D2D2D", "#F5F5F0", "#FFFFFF"],
   },
   {
