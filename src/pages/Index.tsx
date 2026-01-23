@@ -143,11 +143,16 @@ const Index = () => {
       <WebsitesSection websites={standaloneWebsites} />
       <MockupsSection mockups={standaloneMockups} />
       
-      {/* Footer */}
-      <footer className="py-20 text-center border-t border-border/30">
-        <p className="text-xs text-muted-foreground tracking-widest uppercase">
-          © 2024 Ella Madari · Design Portfolio
-        </p>
+      {/* Footer - Premium minimal */}
+      <footer className="py-32 md:py-40 text-center">
+        <div className="container max-w-4xl mx-auto px-6">
+          <p className="text-[11px] text-muted-foreground tracking-[0.3em] uppercase font-light">
+            © 2024 Ella Madari
+          </p>
+          <p className="mt-2 text-[10px] text-muted-foreground/50 tracking-[0.2em] uppercase">
+            Crafted with intention
+          </p>
+        </div>
       </footer>
     </main>
   );

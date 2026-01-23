@@ -4,69 +4,69 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
-/* Ella Madari Portfolio - Minimalist Apple-style Design System */
+/* Ella Madari Portfolio - Premium Apple-style Design System */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 8%;
+    --foreground: 0 0% 3%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 8%;
+    --card-foreground: 0 0% 3%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 8%;
+    --popover-foreground: 0 0% 3%;
 
-    --primary: 0 0% 8%;
+    --primary: 0 0% 3%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 8%;
+    --secondary: 0 0% 97%;
+    --secondary-foreground: 0 0% 3%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 0 0% 97%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 0 0% 94%;
-    --accent-foreground: 0 0% 8%;
+    --accent: 0 0% 95%;
+    --accent-foreground: 0 0% 3%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 92%;
-    --input: 0 0% 92%;
-    --ring: 0 0% 8%;
+    --border: 0 0% 93%;
+    --input: 0 0% 93%;
+    --ring: 0 0% 3%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Custom portfolio tokens */
-    --surface-elevated: 0 0% 98%;
-    --text-secondary: 0 0% 55%;
-    --hover-overlay: 0 0% 0%;
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.08);
-    --shadow-elevated: 0 8px 40px -8px hsl(0 0% 0% / 0.12);
+    /* Premium portfolio tokens */
+    --surface-elevated: 0 0% 99%;
+    --text-secondary: 0 0% 50%;
+    --shadow-soft: 0 2px 40px -12px hsl(0 0% 0% / 0.15);
+    --shadow-elevated: 0 25px 80px -20px hsl(0 0% 0% / 0.2);
+    --shadow-glow: 0 0 60px -15px hsl(0 0% 0% / 0.1);
   }
 
   .dark {
-    --background: 0 0% 4%;
+    --background: 0 0% 2%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 6%;
+    --card: 0 0% 4%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 6%;
+    --popover: 0 0% 4%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 8%;
-    --secondary: 0 0% 12%;
+    --primary-foreground: 0 0% 3%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
+    --muted: 0 0% 8%;
     --muted-foreground: 0 0% 55%;
-    --accent: 0 0% 15%;
+    --accent: 0 0% 12%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
     --ring: 0 0% 85%;
-    --surface-elevated: 0 0% 8%;
+    --surface-elevated: 0 0% 6%;
     --text-secondary: 0 0% 60%;
   }
 }
@@ -82,41 +82,111 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-feature-settings: 'cv11', 'ss01';
-    letter-spacing: -0.01em;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    letter-spacing: -0.02em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Premium selection styling */
+  ::selection {
+    @apply bg-foreground/10;
   }
 }
 
 @layer components {
   .portfolio-section {
-    @apply w-full py-20 md:py-32;
+    @apply w-full py-24 md:py-40;
   }
 
   .section-title {
-    @apply text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground mb-12 md:mb-16;
+    @apply text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground mb-16 md:mb-24;
   }
 
+  /* Apple-style reveal animation classes */
+  .reveal-base {
+    @apply opacity-0;
+  }
+
+  .reveal-visible {
+    @apply opacity-100;
+  }
+
+  .reveal-fade-up {
+    @apply opacity-0 translate-y-10;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-fade-up.visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Staggered children animation */
+  .stagger-children > * {
+    @apply opacity-0 translate-y-6;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; @apply opacity-100 translate-y-0; }
+  .stagger-children.visible > *:nth-child(2) { transition-delay: 100ms; @apply opacity-100 translate-y-0; }
+  .stagger-children.visible > *:nth-child(3) { transition-delay: 200ms; @apply opacity-100 translate-y-0; }
+  .stagger-children.visible > *:nth-child(4) { transition-delay: 300ms; @apply opacity-100 translate-y-0; }
+  .stagger-children.visible > *:nth-child(5) { transition-delay: 400ms; @apply opacity-100 translate-y-0; }
+  .stagger-children.visible > *:nth-child(6) { transition-delay: 500ms; @apply opacity-100 translate-y-0; }
+
+  /* Premium card styles */
+  .premium-card {
+    @apply bg-white rounded-3xl overflow-hidden;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .premium-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  /* Desktop mockup premium style */
   .desktop-mockup {
-    @apply relative bg-secondary rounded-xl overflow-hidden shadow-[var(--shadow-soft)] transition-all duration-500 ease-out;
+    @apply relative bg-secondary rounded-2xl overflow-hidden;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .desktop-mockup:hover {
-    @apply shadow-[var(--shadow-elevated)];
-    transform: scale(1.02);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-elevated);
   }
 
   .desktop-browser-bar {
-    @apply h-8 md:h-10 bg-accent flex items-center px-3 md:px-4 gap-1.5 md:gap-2;
+    @apply h-10 md:h-12 bg-accent/50 flex items-center px-4 md:px-5 gap-2;
+    backdrop-filter: blur(20px);
   }
 
   .browser-dot {
-    @apply w-2 h-2 md:w-2.5 md:h-2.5 rounded-full;
+    @apply w-2.5 h-2.5 md:w-3 md:h-3 rounded-full;
   }
 
-  /* Branding strip styles removed - now handled inline in component */
-
   .color-dot {
-    @apply w-6 h-6 md:w-7 md:h-7 rounded-full;
+    @apply w-5 h-5 md:w-6 md:h-6 rounded-full transition-transform duration-300;
+  }
+
+  .color-dot:hover {
+    transform: scale(1.2);
+  }
+
+  /* Smooth image loading */
+  .image-reveal {
+    @apply opacity-0 scale-105;
+    transition: opacity 0.8s ease-out, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .image-reveal.loaded {
+    @apply opacity-100 scale-100;
   }
 }
