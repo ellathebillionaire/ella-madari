@@ -6,6 +6,7 @@ interface Brand {
   logo: string;
   monogram: string;
   colors: string[];
+  mockups?: string[];
 }
 
 interface BrandingSectionProps {

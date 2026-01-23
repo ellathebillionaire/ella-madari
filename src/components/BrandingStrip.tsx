@@ -3,11 +3,12 @@ interface BrandingStripProps {
   logo: string;
   monogram: string;
   colors: string[];
+  mockups?: string[];
 }
 
-const BrandingStrip = ({ brandName, logo, monogram, colors }: BrandingStripProps) => {
+const BrandingStrip = ({ brandName, logo, monogram, colors, mockups = [] }: BrandingStripProps) => {
   return (
-    <div className="branding-strip group">
+    <div className="branding-strip group flex-wrap">
       {/* Brand Name - Hidden visually but accessible */}
       <span className="sr-only">{brandName}</span>
       
@@ -28,6 +29,24 @@ const BrandingStrip = ({ brandName, logo, monogram, colors }: BrandingStripProps
           className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
         />
       </div>
+
+      {/* Mockups */}
+      {mockups.length > 0 && (
+        <div className="flex items-center gap-2 md:gap-3">
+          {mockups.map((mockup, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 w-16 md:w-20 h-16 md:h-20 rounded-lg overflow-hidden shadow-sm"
+            >
+              <img
+                src={mockup}
+                alt={`${brandName} mockup ${index + 1}`}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Spacer */}
       <div className="hidden md:block flex-1" />
