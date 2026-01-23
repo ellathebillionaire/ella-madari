@@ -1,38 +1,14 @@
-import { Link } from 'react-router-dom';
-import BrandCard from '@/components/BrandCard';
-import { projects, additionalWork } from '@/data/projects';
+import ProjectCarousel from '@/components/ProjectCarousel';
+import { additionalWork } from '@/data/projects';
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-[#fafafa]">
-      {/* Header */}
-      <header className="px-6 md:px-10 py-8 md:py-12">
-        <h1 className="text-2xl md:text-3xl font-light tracking-tight text-[#1d1d1f]">
-          Ella Madari
-        </h1>
-        <p className="text-[10px] text-[#86868b] tracking-[0.2em] uppercase mt-1">
-          Design Portfolio
-        </p>
-      </header>
-
-      {/* Brand Cards Grid */}
-      <section className="px-6 md:px-10 pb-16">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-          {projects.map((project) => (
-            <BrandCard
-              key={project.slug}
-              slug={project.slug}
-              name={project.name}
-              logo={project.logo}
-              heroImage={project.heroImage}
-              bgColor={project.bgColor}
-            />
-          ))}
-        </div>
-      </section>
+    <main className="bg-[#fafafa]">
+      {/* Main Carousel Section */}
+      <ProjectCarousel />
 
       {/* More Work Section */}
-      <section className="px-6 md:px-10 py-12 border-t border-gray-200/50">
+      <section className="px-6 md:px-10 py-16 border-t border-gray-200/50">
         <p className="text-[10px] text-[#86868b] tracking-[0.15em] uppercase mb-6">
           More Work
         </p>
