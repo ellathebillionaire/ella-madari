@@ -235,30 +235,6 @@ const ProjectCarousel = () => {
                         <img src={project.heroImage} alt={project.name} className="w-full h-full object-cover" />
                       </div>
 
-                      {/* Active card overlay - Color Palette & Category */}
-                      {isActive && (
-                        <motion.div 
-                          className="absolute bottom-14 left-4 right-4 z-10 flex items-center justify-between"
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.15 }}
-                        >
-                          <div className="flex items-center gap-1 px-2.5 py-1.5 bg-white/95 backdrop-blur-md rounded-full shadow-lg">
-                            {project.colors.slice(0, 4).map((color, i) => (
-                              <div
-                                key={i}
-                                className="w-4 h-4 rounded-full shadow-sm border border-white/60"
-                                style={{ backgroundColor: color }}
-                              />
-                            ))}
-                          </div>
-                          <div className="px-3 py-1.5 bg-white/95 backdrop-blur-md rounded-full shadow-lg">
-                            <span className="text-[9px] text-[#1d1d1f] font-semibold tracking-wider uppercase">
-                              {project.category === 'branding' ? 'BRANDING' : 'WEBSITE'}
-                            </span>
-                          </div>
-                        </motion.div>
-                      )}
 
                       {/* Bottom gradient with name */}
                       <div 
@@ -278,11 +254,47 @@ const ProjectCarousel = () => {
             </div>
           </motion.div>
 
+          {/* Project Info Strip - Between hero and gallery */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`info-${activeIndex}`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.25 }}
+              className="flex justify-center items-center gap-4 mt-5"
+            >
+              {/* Logo + Name */}
+              <div className="flex items-center gap-2.5 px-4 py-2 bg-white/80 backdrop-blur-xl rounded-full shadow-md">
+                <img src={activeProject.logo} alt="" className="h-4 w-auto" />
+                <span className="text-sm font-medium text-[#1d1d1f]">{activeProject.name}</span>
+              </div>
+
+              {/* Color Palette */}
+              <div className="flex items-center gap-1.5 px-3 py-2 bg-white/80 backdrop-blur-xl rounded-full shadow-md">
+                {activeProject.colors.slice(0, 4).map((color, i) => (
+                  <div
+                    key={i}
+                    className="w-4 h-4 rounded-full shadow-sm border border-white/60"
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+
+              {/* Category */}
+              <div className="px-3 py-2 bg-white/80 backdrop-blur-xl rounded-full shadow-md">
+                <span className="text-[9px] text-[#86868b] font-semibold tracking-wider uppercase">
+                  {activeProject.category === 'branding' ? 'BRANDING' : 'WEBSITE'}
+                </span>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
           {/* Project images grid - Smart layout */}
           <AnimatePresence mode="wait">
             <motion.div 
               key={activeIndex}
-              className="flex justify-center items-center mt-6"
+              className="flex justify-center items-center mt-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -324,30 +336,19 @@ const ProjectCarousel = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Project Info - Minimal */}
-          <div className="text-center mt-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.2 }}
-                className="flex flex-col items-center gap-2"
+          {/* Description only */}
+          {activeProject.description && (
+            <div className="text-center mt-3">
+              <motion.p 
+                key={`desc-${activeIndex}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-[10px] text-[#86868b] max-w-xs mx-auto leading-relaxed"
               >
-                <motion.div 
-                  className="flex items-center gap-3 px-5 py-2.5 bg-white/85 backdrop-blur-xl rounded-full shadow-md"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <img src={activeProject.logo} alt="" className="h-4 w-auto" />
-                  <span className="text-sm font-medium text-[#1d1d1f]">{activeProject.name}</span>
-                </motion.div>
-                {activeProject.description && (
-                  <p className="text-[10px] text-[#86868b] max-w-xs leading-relaxed">{activeProject.description}</p>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
+                {activeProject.description}
+              </motion.p>
+            </div>
+          )}
         </div>
 
         {/* Navigation Arrows */}
