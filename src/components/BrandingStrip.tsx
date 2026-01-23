@@ -12,7 +12,7 @@ const BrandingStrip = ({ brandName, logo, monogram, colors }: BrandingStripProps
       <span className="sr-only">{brandName}</span>
       
       {/* Logo */}
-      <div className="flex-shrink-0 w-24 md:w-32 h-16 md:h-20 flex items-center justify-center">
+      <div className="flex-shrink-0 w-28 md:w-40 h-20 md:h-24 flex items-center justify-center bg-white rounded-lg shadow-sm overflow-hidden p-3">
         <img
           src={logo}
           alt={`${brandName} logo`}
@@ -21,7 +21,7 @@ const BrandingStrip = ({ brandName, logo, monogram, colors }: BrandingStripProps
       </div>
 
       {/* Monogram */}
-      <div className="flex-shrink-0 w-12 md:w-16 h-12 md:h-16 flex items-center justify-center">
+      <div className="flex-shrink-0 w-16 md:w-20 h-16 md:h-20 flex items-center justify-center bg-white rounded-lg shadow-sm overflow-hidden p-2">
         <img
           src={monogram}
           alt={`${brandName} monogram`}
