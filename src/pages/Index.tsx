@@ -13,7 +13,7 @@ import taliterLogo from "@/assets/taliter-logo.jpg";
 import taliterMonogram from "@/assets/taliter-monogram.jpg";
 
 // ============ BRANDING - SFD (Strength For Dancers) ============
-import sfdLogoFull from "@/assets/sfd-logo-full.jpg";
+import sfdLogoTransparent from "@/assets/sfd-logo-transparent.png";
 import sfdMonogram from "@/assets/sfd-monogram-new.jpg";
 
 // ============ BRANDING - MESHEK 27 ============
@@ -47,6 +47,7 @@ import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
 import mockupSfdBlack from "@/assets/mockup-sfd-black.jpg";
 import mockupSfdWhite from "@/assets/mockup-sfd-white.jpg";
 import mockupSfdBands from "@/assets/mockup-sfd-bands.jpg";
+import mockupSfdBandSystem from "@/assets/mockup-sfd-band-system.jpg";
 import mockupTshirtAthlete from "@/assets/mockup-tshirt-athlete.jpg";
 
 // ============ MOCKUPS - MESHEK 27 ============
@@ -87,9 +88,9 @@ const brands = [
   {
     id: "2",
     name: "Strength For Dancers",
-    logo: sfdLogoFull,
+    logo: sfdLogoTransparent,
     monogram: sfdMonogram,
-    colors: ["#1A1A1A", "#2D2D2D", "#F5F5F0", "#FFFFFF"],
+    colors: ["#1A1A1A", "#4A5568", "#64748B", "#1E3A5F"],
   },
   {
     id: "3",
@@ -151,7 +152,8 @@ const mockups = [
   { id: "2", title: "SFD - Fitness Equipment", image: mockupSfdBlack },
   { id: "3", title: "SFD - White Collection", image: mockupSfdWhite },
   { id: "4", title: "SFD - Resistance Bands", image: mockupSfdBands },
-  { id: "5", title: "SFD - Train Like An Athlete", image: mockupTshirtAthlete },
+  { id: "5", title: "SFD - Band Color System", image: mockupSfdBandSystem },
+  { id: "6", title: "SFD - Train Like An Athlete", image: mockupTshirtAthlete },
   
   // Meshek 27
   { id: "6", title: "משק 27 - Full Branding", image: mockupMeshek27Branding },
