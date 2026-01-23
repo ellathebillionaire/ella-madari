@@ -8,6 +8,7 @@ import PrintDesignSection from "@/components/PrintDesignSection";
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
 import websiteLearnai from "@/assets/website-learnai.jpg";
 import websiteSfd from "@/assets/website-sfd.jpg";
+import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
 // ============ BRANDING - TALI TER ============
 import taliterLogo from "@/assets/taliter-logo.jpg";
@@ -72,6 +73,7 @@ const websites = [
   { id: "1", title: "BetterSeeds - Gene Editing Platform", screenshot: websiteBetterseeds },
   { id: "2", title: "Learn AI - Educational Platform", screenshot: websiteLearnai },
   { id: "3", title: "SFD - Strength For Dancers", screenshot: websiteSfd },
+  { id: "4", title: "SEN Fine Jewelry", screenshot: websiteSenMobile, type: "mobile" as const },
 ];
 
 // Brands with complete identity (logo + monogram + mockups)
