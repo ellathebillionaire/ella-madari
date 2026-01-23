@@ -54,31 +54,17 @@ import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
 import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
 import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
 
-// ============ DATA ============
+// ============ STANDALONE DATA ============
 
-const websites = [
+// Websites without full projects
+const standaloneWebsites = [
   { id: "betterseeds", title: "BetterSeeds", screenshot: websiteBetterseeds },
-  { id: "sfd", title: "Strength For Dancers", screenshot: websiteSfd },
-  { id: "sisenora", title: "Si Señora", screenshot: websiteSisenora },
   { id: "ellamadari", title: "Ella Madari Shop", screenshot: websiteEllamadariShop },
   { id: "sen", title: "SEN Fine Jewelry", screenshot: websiteSenMobile, type: "mobile" as const },
 ];
 
-const brands = [
-  {
-    id: "sfd",
-    name: "Strength For Dancers",
-    logo: sfdLogoTransparent,
-    monogram: sfdMonogram,
-    colors: ["#1A1A1A", "#4A5568", "#64748B", "#1E3A5F"],
-  },
-  {
-    id: "meshek27",
-    name: "משק 27",
-    logo: meshek27Logo,
-    monogram: meshek27Monogram,
-    colors: ["#4A7C3F", "#6B9F5B", "#F5F8E8", "#2D4A28"],
-  },
+// Branding-only projects
+const standaloneBrands = [
   {
     id: "taliter",
     name: "Tali Ter Barre Pilates",
@@ -93,28 +79,12 @@ const brands = [
     monogram: ebriderMonogram,
     colors: ["#4A7C3F", "#1A1A1A", "#F5F5F5"],
   },
-  {
-    id: "sisenora",
-    name: "Si Señora",
-    logo: sisenoraLogo,
-    monogram: sisenoraLogo, // using logo as monogram for now
-    colors: ["#1A1A1A", "#D4A574", "#F5F5F0", "#4A7C3F"],
-  },
 ];
 
-const mockups = [
-  { id: "sfd-black", title: "SFD Black Packaging", image: mockupSfdBlack },
-  { id: "sfd-white", title: "SFD White Packaging", image: mockupSfdWhite },
-  { id: "sfd-bands", title: "SFD Band System", image: mockupSfdBandSystem },
-  { id: "sfd-athlete", title: "SFD Athlete Tee", image: mockupTshirtAthlete },
-  { id: "meshek-branding", title: "Meshek 27 Branding", image: mockupMeshek27Branding },
-  { id: "meshek-wall", title: "Meshek 27 Wall", image: mockupMeshek27Wall },
-  { id: "meshek-box", title: "Meshek 27 Box", image: mockupMeshek27Box },
-  { id: "meshek-packaging", title: "Meshek 27 Packaging", image: mockupMeshek27Packaging },
-  { id: "meshek-tshirt", title: "Meshek 27 Tshirt", image: mockupMeshek27Tshirt },
+// Standalone mockups/print
+const standaloneMockups = [
   { id: "taliter", title: "Tali Ter Set", image: mockupTaliterSet },
   { id: "ebrider", title: "EBrider", image: mockupEbrider },
-  { id: "sisenora", title: "Si Señora Shop", image: mockupSisenoraShop },
   { id: "poster-ellamadari", title: "Ella Madari Poster", image: printPosterEllamadari },
   { id: "infographic", title: "Farm Infographic", image: printInfographicFarm },
   { id: "adama-cards", title: "Adama Cards", image: mockupAdamaCards },
@@ -125,9 +95,38 @@ const Index = () => {
   return (
     <main className="min-h-screen bg-background">
       <HeroSection />
-      <WebsitesSection websites={websites} />
       
-      {/* Full Projects */}
+      {/* ========== FULL PROJECTS ========== */}
+      
+      <FullProjectSection
+        name="SFD - Strength For Dancers"
+        description="Branding · Website · Product Packaging"
+        logo={sfdLogoTransparent}
+        monogram={sfdMonogram}
+        website={websiteSfd}
+        mockups={[mockupSfdBlack, mockupSfdWhite, mockupSfdBandSystem, mockupSfdBands, mockupTshirtAthlete]}
+        colors={["#1A1A1A", "#4A5568", "#64748B", "#1E3A5F"]}
+      />
+      
+      <FullProjectSection
+        name="משק 27"
+        description="Branding · Packaging Design"
+        logo={meshek27Logo}
+        monogram={meshek27Monogram}
+        mockups={[mockupMeshek27Branding, mockupMeshek27Wall, mockupMeshek27Box, mockupMeshek27Packaging, mockupMeshek27Tshirt]}
+        colors={["#4A7C3F", "#6B9F5B", "#F5F8E8", "#2D4A28"]}
+        isAlternate
+      />
+      
+      <FullProjectSection
+        name="Si Señora"
+        description="Branding · Website · Interior Design"
+        logo={sisenoraLogo}
+        website={websiteSisenora}
+        mockups={[mockupSisenoraShop]}
+        colors={["#1A1A1A", "#D4A574", "#F5F5F0", "#4A7C3F"]}
+      />
+      
       <FullProjectSection
         name="Learn AI / DotAi"
         description="Avatar Design · Logo · Animation"
@@ -135,10 +134,14 @@ const Index = () => {
         mascot={dotaiMascot}
         video={learnaiAnimation}
         colors={["#00D4E5", "#1A365D", "#F8FAFC", "#0F172A"]}
+        isAlternate
       />
       
-      <BrandingSection brands={brands} />
-      <MockupsSection mockups={mockups} />
+      {/* ========== STANDALONE SECTIONS ========== */}
+      
+      <WebsitesSection websites={standaloneWebsites} />
+      <BrandingSection brands={standaloneBrands} />
+      <MockupsSection mockups={standaloneMockups} />
       
       {/* Footer */}
       <footer className="py-20 text-center border-t border-border/30">
