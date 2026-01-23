@@ -10,8 +10,6 @@ import websiteSenMobile from "@/assets/website-sen-mobile.png";
 // ============ TALI TER ============
 import taliterLogo from "@/assets/taliter-logo.jpg";
 import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
-import mockupTaliterStudio from "@/assets/mockup-taliter-studio.jpg";
-import mockupTaliterEquipment from "@/assets/mockup-taliter-equipment.jpg";
 
 // ============ SFD (Strength For Dancers) ============
 import sfdLogoTransparent from "@/assets/sfd-logo-transparent.png";
@@ -36,28 +34,16 @@ import aiDnaScientist from "@/assets/ai-dna-scientist.png";
 import aiGeneEditing from "@/assets/ai-gene-editing.png";
 import aiCrisprLab from "@/assets/ai-crispr-lab.png";
 import aiPlantTechnology from "@/assets/ai-plant-technology.jpg";
-import mockupLearnaiDevices from "@/assets/mockup-learnai-devices.jpg";
-import mockupLearnaiMascot from "@/assets/mockup-learnai-mascot.jpg";
 
 // ============ EBRIDER ============
 import ebriderLogo from "@/assets/ebrider-logo-transparent.png";
 import mockupEbrider from "@/assets/mockup-ebrider.jpg";
-import mockupEbriderBike from "@/assets/mockup-ebrider-bike.jpg";
-import mockupEbriderApp from "@/assets/mockup-ebrider-app.jpg";
-
-// ============ SEN JEWELRY ============
-import mockupSenJewelry from "@/assets/mockup-sen-jewelry.jpg";
-import mockupSenPackaging from "@/assets/mockup-sen-packaging.jpg";
 
 // ============ ON MOR ============
 import onmorLogo from "@/assets/onmor-logo.png";
-import mockupOnmorWine from "@/assets/mockup-onmor-wine.jpg";
-import mockupOnmorLabel from "@/assets/mockup-onmor-label.jpg";
 
 // ============ STUDIO ALEF ============
 import studioalefLogo from "@/assets/studioalef-logo.png";
-import mockupStudioalefWorkspace from "@/assets/mockup-studioalef-workspace.jpg";
-import mockupStudioalefStationery from "@/assets/mockup-studioalef-stationery.jpg";
 
 // ============ OTHER ============
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
@@ -92,45 +78,31 @@ const projects = [
   },
   {
     name: "Learn AI",
-    category: "Website · Branding · Illustration",
+    category: "Website · Branding",
     logo: learnaiLogo,
     colors: ["#00BCD4", "#0097A7", "#1A2B3C"],
-    images: [websiteLearnai, mockupLearnaiDevices, mockupLearnaiMascot, aiDnaScientist],
+    images: [websiteLearnai, aiDnaScientist],
   },
   {
     name: "Tali Ter Barre Pilates",
-    category: "Branding · Interior · Product",
+    category: "Branding · Print",
     logo: taliterLogo,
     colors: ["#5CC8B5", "#F68B1F", "#FDF6E3", "#2A4A4A"],
-    images: [mockupTaliterSet, mockupTaliterStudio, mockupTaliterEquipment],
+    images: [mockupTaliterSet],
   },
   {
     name: "EBrider",
-    category: "Branding · Product · App Design",
+    category: "Branding · Product",
     logo: ebriderLogo,
     colors: ["#4A7C3F", "#1A1A1A", "#F5F5F5"],
-    images: [mockupEbriderBike, mockupEbrider, mockupEbriderApp],
+    images: [mockupEbrider],
   },
   {
     name: "SEN Fine Jewelry",
-    category: "Website · Packaging · Branding",
+    category: "Website Design",
     logo: undefined,
     colors: ["#1A365D", "#C53030", "#F7FAFC"],
-    images: [websiteSenMobile, mockupSenJewelry, mockupSenPackaging],
-  },
-  {
-    name: "ON MOR",
-    category: "Branding · Packaging · Label Design",
-    logo: onmorLogo,
-    colors: ["#722F37", "#C9A227", "#F5E6D3"],
-    images: [mockupOnmorWine, mockupOnmorLabel],
-  },
-  {
-    name: "Studio Alef",
-    category: "Branding · Stationery · Interior",
-    logo: studioalefLogo,
-    colors: ["#4A4A4A", "#8B8B8B", "#FFFFFF"],
-    images: [mockupStudioalefWorkspace, mockupStudioalefStationery],
+    images: [websiteSenMobile],
   },
   {
     name: "Ella Madari Shop",
