@@ -28,16 +28,32 @@ import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 import ebriderLogo from "@/assets/ebrider-logo.jpg";
 import ebriderMonogram from "@/assets/ebrider-monogram.jpg";
 
+// Import branding assets - Studio Alef
+import studioalefLogo from "@/assets/studioalef-logo.png";
+
+// Import branding assets - Si Señora
+import sisenoraLogo from "@/assets/sisenora-logo.jpg";
+
+// Import branding assets - Ella Madari
+import ellamadariLogo from "@/assets/ellamadari-logo.jpg";
+
 // Import mockup images
 import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
 import mockupSfdBlack from "@/assets/mockup-sfd-black.jpg";
 import mockupSfdWhite from "@/assets/mockup-sfd-white.jpg";
+import mockupSfdBands from "@/assets/mockup-sfd-bands.jpg";
 import mockupMeshek27Branding from "@/assets/mockup-meshek27-branding.jpg";
 import mockupMeshek27Wall from "@/assets/mockup-meshek27-wall.jpg";
+import mockupMeshek27Tshirt from "@/assets/mockup-meshek27-tshirt.jpg";
 import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
 import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
 import mockupOnmor from "@/assets/mockup-onmor.png";
 import mockupEbrider from "@/assets/mockup-ebrider.jpg";
+import mockupTshirtAthlete from "@/assets/mockup-tshirt-athlete.jpg";
+
+// Import print design images
+import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
+import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
 
 const websites = [
   { id: "1", title: "BetterSeeds - Gene Editing Platform", screenshot: websiteBetterseeds },
@@ -80,22 +96,48 @@ const brands = [
     monogram: ebriderMonogram,
     colors: ["#4A7C3F", "#1A1A1A", "#F5F5F5", "#2D4A28"],
   },
+  {
+    id: "6",
+    name: "Studio Alef",
+    logo: studioalefLogo,
+    monogram: studioalefLogo,
+    colors: ["#4A4A4A", "#8B8B8B", "#FFFFFF", "#1A1A1A"],
+  },
+  {
+    id: "7",
+    name: "Si Señora",
+    logo: sisenoraLogo,
+    monogram: sisenoraLogo,
+    colors: ["#1A1A1A", "#4A4A4A", "#FFFFFF", "#F5F5F5"],
+  },
+  {
+    id: "8",
+    name: "Ella Madari",
+    logo: ellamadariLogo,
+    monogram: ellamadariLogo,
+    colors: ["#1A1A1A", "#FFFFFF", "#F5F5F5", "#2D2D2D"],
+  },
 ];
 
 const mockups = [
   { id: "1", title: "Tali Ter - Brand Identity Set", image: mockupTaliterSet },
   { id: "2", title: "SFD - Fitness Equipment", image: mockupSfdBlack },
   { id: "3", title: "SFD - White Collection", image: mockupSfdWhite },
-  { id: "4", title: "משק 27 - Full Branding", image: mockupMeshek27Branding },
-  { id: "5", title: "משק 27 - Wall Signage", image: mockupMeshek27Wall },
-  { id: "6", title: "EBrider - Electric Bike", image: mockupEbrider },
-  { id: "7", title: "Adama - Business Cards", image: mockupAdamaCards },
-  { id: "8", title: "Lin & Guy - Wedding Invitation", image: mockupWeddingInvite },
-  { id: "9", title: "ON MOR - Luxury Logo", image: mockupOnmor },
+  { id: "4", title: "SFD - Resistance Bands", image: mockupSfdBands },
+  { id: "5", title: "משק 27 - Full Branding", image: mockupMeshek27Branding },
+  { id: "6", title: "משק 27 - Wall Signage", image: mockupMeshek27Wall },
+  { id: "7", title: "משק 27 - T-Shirt", image: mockupMeshek27Tshirt },
+  { id: "8", title: "EBrider - Electric Bike", image: mockupEbrider },
+  { id: "9", title: "Adama - Business Cards", image: mockupAdamaCards },
+  { id: "10", title: "Lin & Guy - Wedding Invitation", image: mockupWeddingInvite },
+  { id: "11", title: "ON MOR - Luxury Logo", image: mockupOnmor },
+  { id: "12", title: "Train Like An Athlete - T-Shirt", image: mockupTshirtAthlete },
 ];
 
-// Print design placeholder - will be populated when user uploads images
-const printDesigns: { id: string; title: string; image: string }[] = [];
+const printDesigns = [
+  { id: "1", title: "Ella Madari - Inspirational Poster", image: printPosterEllamadari },
+  { id: "2", title: "ירקות מהמשק - Shopping Guide", image: printInfographicFarm },
+];
 
 const Index = () => {
   return (
