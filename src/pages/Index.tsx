@@ -26,9 +26,11 @@ import websiteSisenora from "@/assets/website-sisenora.png";
 import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
-// Learn AI
+// Learn AI / DotAi
 import learnaiLogoFull from "@/assets/learnai-logo-full.jpg";
+import learnaiLogo from "@/assets/learnai-logo.jpg";
 import dotaiMascot from "@/assets/dotai-mascot.jpg";
+import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
 
 // Tali Ter
@@ -189,17 +191,33 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Learn AI */}
+        {/* Learn AI / DotAi */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium text-[#1d1d1f]">Learn AI</span>
+              <span className="text-xs font-medium text-[#1d1d1f]">Learn AI / DotAi</span>
               <ColorDots colors={['#00D4E5', '#1A365D', '#F8FAFC']} />
             </div>
             <BrandingBadge logo={learnaiLogoFull} symbol={dotaiMascot} />
           </div>
+          {/* Main video */}
           <div className="aspect-[4/3] rounded-lg overflow-hidden bg-white">
             <video src={learnaiAnimation} autoPlay loop muted playsInline className="w-full h-full object-contain" />
+          </div>
+          {/* Additional images */}
+          <div className="grid grid-cols-3 gap-1.5">
+            <div className="aspect-square rounded-md overflow-hidden bg-white p-2 flex items-center justify-center cursor-pointer"
+              onMouseEnter={() => setHovered('learn-logo')} onMouseLeave={() => setHovered(null)}>
+              <img src={learnaiLogo} alt="" className={`max-h-full max-w-full object-contain transition-transform duration-500 ${hovered === 'learn-logo' ? 'scale-110' : ''}`} />
+            </div>
+            <div className="aspect-square rounded-md overflow-hidden cursor-pointer"
+              onMouseEnter={() => setHovered('learn-mascot')} onMouseLeave={() => setHovered(null)}>
+              <img src={dotaiMascot} alt="" className={`w-full h-full object-cover transition-transform duration-500 ${hovered === 'learn-mascot' ? 'scale-110' : ''}`} />
+            </div>
+            <div className="aspect-square rounded-md overflow-hidden cursor-pointer"
+              onMouseEnter={() => setHovered('learn-mono')} onMouseLeave={() => setHovered(null)}>
+              <img src={dotaiMonogram} alt="" className={`w-full h-full object-cover transition-transform duration-500 ${hovered === 'learn-mono' ? 'scale-110' : ''}`} />
+            </div>
           </div>
         </div>
 
