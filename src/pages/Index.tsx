@@ -26,7 +26,6 @@ const Index = () => {
               logo={project.logo}
               heroImage={project.heroImage}
               bgColor={project.bgColor}
-              accentColor={project.accentColor}
             />
           ))}
         </div>
