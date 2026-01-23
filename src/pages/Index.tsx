@@ -2,6 +2,7 @@ import HeroSection from "@/components/HeroSection";
 import WebsitesSection from "@/components/WebsitesSection";
 import BrandingSection from "@/components/BrandingSection";
 import MockupsSection from "@/components/MockupsSection";
+import PrintDesignSection from "@/components/PrintDesignSection";
 
 // Import website screenshots
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
@@ -93,6 +94,9 @@ const mockups = [
   { id: "9", title: "ON MOR - Luxury Logo", image: mockupOnmor },
 ];
 
+// Print design placeholder - will be populated when user uploads images
+const printDesigns: { id: string; title: string; image: string }[] = [];
+
 const Index = () => {
   return (
     <main className="min-h-screen bg-background">
@@ -100,6 +104,7 @@ const Index = () => {
       <WebsitesSection websites={websites} />
       <BrandingSection brands={brands} />
       <MockupsSection mockups={mockups} />
+      {printDesigns.length > 0 && <PrintDesignSection designs={printDesigns} />}
       
       {/* Footer - minimal */}
       <footer className="py-16 text-center">
