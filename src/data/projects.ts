@@ -103,15 +103,15 @@ export const projects: Project[] = [
     description: 'Strength For Dancers - מיתוג מלא ועיצוב מוצרים',
     logo: sfdLogoTransparent,
     monogram: sfdMonogram,
-    heroImage: mockupSfdBandSystem,
+    heroImage: mockupTshirtAthlete, // Athlete wearing the brand - strong visual
     bgColor: '#F5F5F7',
     accentColor: '#1A1A1A',
     colors: ['#1A1A1A', '#FFFFFF', '#4A5568'],
     images: [
+      mockupSfdBandSystem,
       mockupSfdBlack,
       mockupSfdWhite,
       mockupSfdBands,
-      mockupTshirtAthlete,
       websiteSfd,
     ],
   },
@@ -122,7 +122,7 @@ export const projects: Project[] = [
     description: 'מיתוג ואריזות לחווה אורגנית',
     logo: meshek27Logo,
     monogram: meshek27Monogram,
-    heroImage: mockupMeshek27Branding,
+    heroImage: mockupMeshek27Branding, // Full branding set
     bgColor: '#F5F8F3',
     accentColor: '#4A7C3F',
     colors: ['#4A7C3F', '#8BC34A', '#F5F5DC'],
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     description: 'מיתוג לסטודיו לקוסמטיקה ופילאטיס',
     logo: taliterLogo,
     monogram: taliterMonogram,
-    heroImage: taliterBrandingSet,
+    heroImage: taliterBrandingSet, // Elegant branding set
     bgColor: '#FFFBF5',
     accentColor: '#5CC8B5',
     colors: ['#5CC8B5', '#F68B1F', '#FDF6E3'],
@@ -159,12 +159,12 @@ export const projects: Project[] = [
     description: 'מיתוג ואנימציה לפלטפורמת לימוד AI',
     logo: learnaiLogoFull,
     monogram: dotaiMonogram,
-    heroImage: learnaiMockupDesktop,
+    heroImage: dotaiLogoFull, // Clean DotAi mascot logo
     bgColor: '#F0FAFB',
     accentColor: '#00D4E5',
     colors: ['#00D4E5', '#1A365D', '#F8FAFC'],
     images: [
-      dotaiLogoFull,
+      learnaiMockupDesktop,
       dotaiMascot,
       websiteLearnai,
       learnaiLogo,
@@ -177,7 +177,7 @@ export const projects: Project[] = [
     category: 'branding',
     description: 'מיתוג לסטודיו לעיצוב גרפי',
     logo: studioalefLogo,
-    heroImage: studioalefWallMockup,
+    heroImage: studioalefWallMockup, // Elegant wall signage
     bgColor: '#F8F8F8',
     accentColor: '#5A5A5A',
     colors: ['#5A5A5A', '#FFFFFF', '#E0E0E0'],
@@ -190,7 +190,7 @@ export const projects: Project[] = [
     category: 'website',
     description: 'עיצוב אתר לחנות תכשיטים',
     logo: websiteSenMobile,
-    heroImage: websiteSenFull,
+    heroImage: websiteSenFull, // Dramatic jewelry website
     bgColor: '#0D2847',
     accentColor: '#C9A86C',
     colors: ['#0D2847', '#C9A86C', '#E8B4B8'],
@@ -205,7 +205,7 @@ export const projects: Project[] = [
     description: 'מיתוג לחברת אופניים חשמליים',
     logo: ebriderLogoNew,
     monogram: ebriderSymbol,
-    heroImage: ebriderMockupHero,
+    heroImage: ebriderMockupHero, // Main product display
     bgColor: '#F5F8F5',
     accentColor: '#4A9F4A',
     colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
@@ -220,7 +220,7 @@ export const projects: Project[] = [
     category: 'branding',
     description: 'מיתוג ואתר לחנות אופנה',
     logo: sisenoraLogo,
-    heroImage: mockupSisenoraShop,
+    heroImage: mockupSisenoraShop, // Shop environment
     bgColor: '#FAF8F5',
     accentColor: '#D4A574',
     colors: ['#1A1A1A', '#D4A574', '#F5F5F0'],
@@ -234,12 +234,12 @@ export const projects: Project[] = [
     category: 'branding',
     description: 'מיתוג ואתר לחברת טכנולוגיה חקלאית',
     logo: betterseedsIcons,
-    heroImage: websiteBetterseeds,
+    heroImage: betterseedsIcons, // Clean icon set
     bgColor: '#F5F8F3',
     accentColor: '#3D7C3F',
     colors: ['#3D7C3F', '#6AAF4A', '#FFFFFF'],
     images: [
-      betterseedsIcons,
+      websiteBetterseeds,
     ],
     video: betterseedsAnimation,
   },
