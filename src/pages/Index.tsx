@@ -1,50 +1,67 @@
 import { useState } from 'react';
 
 // ============ ASSETS ============
-import websiteSfd from "@/assets/website-sfd.jpg";
-import websiteSisenora from "@/assets/website-sisenora.png";
-import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
-import websiteEllamadariShop from "@/assets/website-ellamadari-shop.png";
-import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
+// SFD
+import websiteSfd from "@/assets/website-sfd.jpg";
 import sfdLogoTransparent from "@/assets/sfd-logo-transparent.png";
 import sfdMonogram from "@/assets/sfd-monogram-new.jpg";
 import mockupSfdBlack from "@/assets/mockup-sfd-black.jpg";
 import mockupSfdWhite from "@/assets/mockup-sfd-white.jpg";
+import mockupSfdBands from "@/assets/mockup-sfd-bands.jpg";
 import mockupSfdBandSystem from "@/assets/mockup-sfd-band-system.jpg";
+import mockupTshirtAthlete from "@/assets/mockup-tshirt-athlete.jpg";
 
+// Meshek 27
 import meshek27Logo from "@/assets/meshek27-logo.jpg";
 import meshek27Monogram from "@/assets/meshek27-monogram.jpg";
 import mockupMeshek27Branding from "@/assets/mockup-meshek27-branding.jpg";
 import mockupMeshek27Wall from "@/assets/mockup-meshek27-wall.jpg";
 import mockupMeshek27Box from "@/assets/mockup-meshek27-box.jpg";
+import mockupMeshek27Tshirt from "@/assets/mockup-meshek27-tshirt.jpg";
+import mockupMeshek27Packaging from "@/assets/mockup-meshek27-packaging.jpg";
 
+// Si Señora
+import websiteSisenora from "@/assets/website-sisenora.png";
+import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
+import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
+
+// Learn AI
 import learnaiLogoFull from "@/assets/learnai-logo-full.jpg";
 import dotaiMascot from "@/assets/dotai-mascot.jpg";
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
 
+// Tali Ter
 import taliterLogo from "@/assets/taliter-logo.jpg";
 import taliterMonogram from "@/assets/taliter-monogram.jpg";
 import taliterBrandingSet from "@/assets/taliter-branding-set.jpg";
 import taliterWallMockup from "@/assets/taliter-wall-mockup.jpg";
+import taliterBottleMockup from "@/assets/taliter-bottle-mockup.jpg";
 
+// EBrider
 import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
 import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
 import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 
-import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
-import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
+// Standalone Websites
+import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
+import websiteEllamadariShop from "@/assets/website-ellamadari-shop.png";
+import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
+// Print & Other
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
 import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
 import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
 import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
+import mockupBusinesscard from "@/assets/mockup-businesscard.jpg";
+import mockupStationery from "@/assets/mockup-stationery.jpg";
+import mockupTotebag from "@/assets/mockup-totebag.jpg";
+import mockupMug from "@/assets/mockup-mug.jpg";
 
 // ============ COMPONENTS ============
 
 const DesktopFrame = ({ src, className = '' }: { src: string; className?: string }) => (
   <div className={`bg-[#f5f5f7] rounded-lg overflow-hidden shadow-sm ${className}`}>
-    {/* Browser Bar */}
     <div className="h-6 bg-[#e8e8ed] flex items-center px-2 gap-1.5">
       <div className="w-2 h-2 rounded-full bg-[#ff5f57]" />
       <div className="w-2 h-2 rounded-full bg-[#febc2e]" />
@@ -53,7 +70,6 @@ const DesktopFrame = ({ src, className = '' }: { src: string; className?: string
         <div className="h-3 bg-white/60 rounded max-w-[100px] mx-auto" />
       </div>
     </div>
-    {/* Screenshot */}
     <div className="aspect-[16/10] overflow-hidden">
       <img src={src} alt="" className="w-full h-full object-cover object-top" />
     </div>
@@ -89,6 +105,23 @@ const BrandingBadge = ({ logo, symbol }: { logo: string; symbol?: string }) => (
   </div>
 );
 
+const ImageGrid = ({ images, id, hovered, setHovered, cols = 3 }: { 
+  images: string[]; 
+  id: string; 
+  hovered: string | null; 
+  setHovered: (v: string | null) => void;
+  cols?: number;
+}) => (
+  <div className={`grid gap-1.5 ${cols === 2 ? 'grid-cols-2' : cols === 4 ? 'grid-cols-4' : 'grid-cols-3'}`}>
+    {images.map((img, i) => (
+      <div key={i} className="aspect-square rounded-md overflow-hidden cursor-pointer"
+        onMouseEnter={() => setHovered(`${id}-${i}`)} onMouseLeave={() => setHovered(null)}>
+        <img src={img} alt="" className={`w-full h-full object-cover transition-transform duration-500 ${hovered === `${id}-${i}` ? 'scale-110' : ''}`} />
+      </div>
+    ))}
+  </div>
+);
+
 // ============ MAIN ============
 
 const Index = () => {
@@ -105,7 +138,7 @@ const Index = () => {
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 md:gap-12">
         
-        {/* SFD - Has Website */}
+        {/* SFD */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -115,17 +148,13 @@ const Index = () => {
             <BrandingBadge logo={sfdLogoTransparent} symbol={sfdMonogram} />
           </div>
           <DesktopFrame src={websiteSfd} />
-          <div className="grid grid-cols-3 gap-1.5">
-            {[mockupSfdBlack, mockupSfdWhite, mockupSfdBandSystem].map((img, i) => (
-              <div key={i} className="aspect-square rounded-md overflow-hidden cursor-pointer"
-                onMouseEnter={() => setHovered(`sfd-${i}`)} onMouseLeave={() => setHovered(null)}>
-                <img src={img} alt="" className={`w-full h-full object-cover transition-transform duration-500 ${hovered === `sfd-${i}` ? 'scale-110' : ''}`} />
-              </div>
-            ))}
-          </div>
+          <ImageGrid 
+            images={[mockupSfdBlack, mockupSfdWhite, mockupSfdBandSystem, mockupSfdBands, mockupTshirtAthlete]} 
+            id="sfd" hovered={hovered} setHovered={setHovered} 
+          />
         </div>
 
-        {/* Meshek 27 - Mockups only */}
+        {/* Meshek 27 */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -138,17 +167,13 @@ const Index = () => {
             onMouseEnter={() => setHovered('meshek-main')} onMouseLeave={() => setHovered(null)}>
             <img src={mockupMeshek27Branding} alt="" className={`w-full h-full object-cover transition-transform duration-500 ${hovered === 'meshek-main' ? 'scale-105' : ''}`} />
           </div>
-          <div className="grid grid-cols-2 gap-1.5">
-            {[mockupMeshek27Wall, mockupMeshek27Box].map((img, i) => (
-              <div key={i} className="aspect-[4/3] rounded-md overflow-hidden cursor-pointer"
-                onMouseEnter={() => setHovered(`meshek-${i}`)} onMouseLeave={() => setHovered(null)}>
-                <img src={img} alt="" className={`w-full h-full object-cover transition-transform duration-500 ${hovered === `meshek-${i}` ? 'scale-110' : ''}`} />
-              </div>
-            ))}
-          </div>
+          <ImageGrid 
+            images={[mockupMeshek27Wall, mockupMeshek27Box, mockupMeshek27Tshirt, mockupMeshek27Packaging]} 
+            id="meshek" hovered={hovered} setHovered={setHovered} cols={4}
+          />
         </div>
 
-        {/* Si Señora - Has Website */}
+        {/* Si Señora */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -164,7 +189,7 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Learn AI - Animation + Avatar */}
+        {/* Learn AI */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -178,7 +203,7 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Tali Ter - Mockups */}
+        {/* Tali Ter */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -191,13 +216,13 @@ const Index = () => {
             onMouseEnter={() => setHovered('tali-main')} onMouseLeave={() => setHovered(null)}>
             <img src={taliterBrandingSet} alt="" className={`w-full h-full object-cover transition-transform duration-500 ${hovered === 'tali-main' ? 'scale-105' : ''}`} />
           </div>
-          <div className="aspect-[16/9] rounded-md overflow-hidden cursor-pointer"
-            onMouseEnter={() => setHovered('tali-wall')} onMouseLeave={() => setHovered(null)}>
-            <img src={taliterWallMockup} alt="" className={`w-full h-full object-cover transition-transform duration-500 ${hovered === 'tali-wall' ? 'scale-105' : ''}`} />
-          </div>
+          <ImageGrid 
+            images={[taliterWallMockup, taliterBottleMockup]} 
+            id="tali" hovered={hovered} setHovered={setHovered} cols={2}
+          />
         </div>
 
-        {/* EBrider - Mockup */}
+        {/* EBrider */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -218,14 +243,11 @@ const Index = () => {
       <section className="mt-14">
         <p className="text-[10px] text-[#86868b] tracking-[0.15em] uppercase mb-3">More Work</p>
         <div className="flex items-end gap-3 flex-wrap">
-          {/* Desktop sites */}
-          <DesktopFrame src={websiteBetterseeds} className="w-48" />
-          <DesktopFrame src={websiteEllamadariShop} className="w-48" />
-          {/* Mobile */}
+          <DesktopFrame src={websiteBetterseeds} className="w-44" />
+          <DesktopFrame src={websiteEllamadariShop} className="w-44" />
           <MobileFrame src={websiteSenMobile} />
-          {/* Print */}
-          {[printPosterEllamadari, printInfographicFarm, mockupAdamaCards, mockupWeddingInvite].map((img, i) => (
-            <div key={i} className="w-20 aspect-square rounded-md overflow-hidden cursor-pointer"
+          {[printPosterEllamadari, printInfographicFarm, mockupAdamaCards, mockupWeddingInvite, mockupBusinesscard, mockupStationery, mockupTotebag, mockupMug].map((img, i) => (
+            <div key={i} className="w-16 aspect-square rounded-md overflow-hidden cursor-pointer"
               onMouseEnter={() => setHovered(`more-${i}`)} onMouseLeave={() => setHovered(null)}>
               <img src={img} alt="" className={`w-full h-full object-cover transition-transform duration-500 ${hovered === `more-${i}` ? 'scale-110' : ''}`} />
             </div>
