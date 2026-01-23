@@ -68,6 +68,10 @@ import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
 import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
 import aiDroneFarming from "@/assets/ai-drone-farming.jpg";
+import aiDnaScientist from "@/assets/ai-dna-scientist.png";
+import aiGeneEditing from "@/assets/ai-gene-editing.png";
+import aiCrisprLab from "@/assets/ai-crispr-lab.png";
+import aiPlantTechnology from "@/assets/ai-plant-technology.jpg";
 
 // ============ DATA ============
 
@@ -174,6 +178,10 @@ const printDesigns = [
   { id: "1", title: "Ella Madari - Inspirational Poster", image: printPosterEllamadari },
   { id: "2", title: "ירקות מהמשק - Shopping Guide", image: printInfographicFarm },
   { id: "3", title: "BetterSeeds - AI Agriculture Vision", image: aiDroneFarming },
+  { id: "4", title: "BetterSeeds - DNA Scientist", image: aiDnaScientist },
+  { id: "5", title: "BetterSeeds - Gene Editing", image: aiGeneEditing },
+  { id: "6", title: "BetterSeeds - CRISPR Lab", image: aiCrisprLab },
+  { id: "7", title: "BetterSeeds - Plant Technology", image: aiPlantTechnology },
 ];
 
 const Index = () => {
