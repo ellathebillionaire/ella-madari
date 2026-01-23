@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence, animate, useMotionValue } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { projects } from '@/data/projects';
+import { getProjectLayout } from './layouts/ProjectLayoutFactory';
 
 const ProjectCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -81,16 +82,6 @@ const ProjectCarousel = () => {
     [activeProject.heroImage, ...activeProject.images].filter(Boolean),
     [activeProject]
   );
-
-  // Smart grid layout based on number of images
-  const getImageLayout = (count: number) => {
-    if (count <= 2) return { cols: 2, size: 120 };
-    if (count <= 4) return { cols: 4, size: 100 };
-    if (count <= 6) return { cols: 6, size: 85 };
-    return { cols: 7, size: 75 };
-  };
-
-  const imageLayout = getImageLayout(allActiveImages.length - 1);
 
   return (
     <>
@@ -264,49 +255,19 @@ const ProjectCarousel = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Project images grid */}
+          {/* Project-specific layout */}
           <AnimatePresence mode="wait">
             <motion.div 
               key={activeIndex}
-              className="flex justify-center items-center mt-5"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              className="mt-5 px-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
             >
-              {allActiveImages.length > 1 && (
-                <div 
-                  className="flex flex-wrap justify-center gap-2.5"
-                  style={{ maxWidth: imageLayout.cols * (imageLayout.size + 10) }}
-                >
-                  {allActiveImages.slice(1).map((img, i) => (
-                    <motion.div
-                      key={`img-${i}`}
-                      initial={{ opacity: 0, y: 12, scale: 0.92 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ 
-                        duration: 0.35, 
-                        delay: i * 0.04, 
-                        type: 'spring', 
-                        stiffness: 180 
-                      }}
-                      className="rounded-lg overflow-hidden shadow-sm bg-card cursor-pointer group border border-border/30"
-                      style={{ 
-                        width: imageLayout.size, 
-                        height: imageLayout.size 
-                      }}
-                      onClick={() => setSelectedImage(img)}
-                      whileHover={{ scale: 1.06, y: -2, boxShadow: '0 12px 25px -8px rgba(0,0,0,0.2)' }}
-                    >
-                      <img 
-                        src={img} 
-                        alt="" 
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-              )}
+              {allActiveImages.length > 1 && 
+                getProjectLayout(activeProject, allActiveImages.slice(1), setSelectedImage)
+              }
             </motion.div>
           </AnimatePresence>
 
