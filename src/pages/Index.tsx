@@ -64,6 +64,7 @@ import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
 import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
 import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
 import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
+import websiteEllamadariShop from "@/assets/website-ellamadari-shop.png";
 
 // ============ PROJECT DATA ============
 
@@ -130,6 +131,13 @@ const projects = [
     logo: studioalefLogo,
     colors: ["#4A4A4A", "#8B8B8B", "#FFFFFF"],
     images: [mockupStudioalefWorkspace, mockupStudioalefStationery],
+  },
+  {
+    name: "Ella Madari Shop",
+    category: "E-commerce · Website Design",
+    logo: undefined,
+    colors: ["#1A1A1A", "#F5F5F5", "#FFFFFF"],
+    images: [websiteEllamadariShop],
   },
   {
     name: "Graphic Design",
