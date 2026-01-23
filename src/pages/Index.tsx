@@ -2,13 +2,14 @@ import HeroSection from "@/components/HeroSection";
 import WebsitesSection from "@/components/WebsitesSection";
 import BrandingSection from "@/components/BrandingSection";
 import MockupsSection from "@/components/MockupsSection";
+import FullProjectSection from "@/components/FullProjectSection";
 
 // ============ WEBSITES ============
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
-import websiteLearnai from "@/assets/website-learnai.jpg";
 import websiteSfd from "@/assets/website-sfd.jpg";
 import websiteSenMobile from "@/assets/website-sen-mobile.png";
 import websiteEllamadariShop from "@/assets/website-ellamadari-shop.png";
+import websiteSisenora from "@/assets/website-sisenora.png";
 
 // ============ SFD (Strength For Dancers) ============
 import sfdLogoTransparent from "@/assets/sfd-logo-transparent.png";
@@ -29,7 +30,9 @@ import mockupMeshek27Box from "@/assets/mockup-meshek27-box.jpg";
 import mockupMeshek27Packaging from "@/assets/mockup-meshek27-packaging.jpg";
 
 // ============ LEARN AI ============
-import learnaiLogo from "@/assets/learnai-logo.jpg";
+import learnaiLogoFull from "@/assets/learnai-logo-full.jpg";
+import dotaiMascot from "@/assets/dotai-mascot.jpg";
+import learnaiAnimation from "@/assets/learnai-animation.mp4";
 
 // ============ TALI TER ============
 import taliterLogo from "@/assets/taliter-logo.jpg";
@@ -44,7 +47,6 @@ import mockupEbrider from "@/assets/mockup-ebrider.jpg";
 // ============ SI SEÑORA ============
 import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
-import websiteSisenora from "@/assets/website-sisenora.png";
 
 // ============ OTHER MOCKUPS ============
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
@@ -57,7 +59,6 @@ import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
 const websites = [
   { id: "betterseeds", title: "BetterSeeds", screenshot: websiteBetterseeds },
   { id: "sfd", title: "Strength For Dancers", screenshot: websiteSfd },
-  { id: "learnai", title: "Learn AI", screenshot: websiteLearnai },
   { id: "sisenora", title: "Si Señora", screenshot: websiteSisenora },
   { id: "ellamadari", title: "Ella Madari Shop", screenshot: websiteEllamadariShop },
   { id: "sen", title: "SEN Fine Jewelry", screenshot: websiteSenMobile, type: "mobile" as const },
@@ -125,6 +126,17 @@ const Index = () => {
     <main className="min-h-screen bg-background">
       <HeroSection />
       <WebsitesSection websites={websites} />
+      
+      {/* Full Projects */}
+      <FullProjectSection
+        name="Learn AI / DotAi"
+        description="Avatar Design · Logo · Animation"
+        logo={learnaiLogoFull}
+        mascot={dotaiMascot}
+        video={learnaiAnimation}
+        colors={["#00D4E5", "#1A365D", "#F8FAFC", "#0F172A"]}
+      />
+      
       <BrandingSection brands={brands} />
       <MockupsSection mockups={mockups} />
       
