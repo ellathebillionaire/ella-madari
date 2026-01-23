@@ -18,11 +18,11 @@ const DesktopMockup = ({ screenshot, title }: DesktopMockupProps) => {
     >
       {/* Browser Bar */}
       <div className="desktop-browser-bar">
-        <div className="browser-dot bg-red-400" />
-        <div className="browser-dot bg-yellow-400" />
-        <div className="browser-dot bg-green-400" />
-        <div className="flex-1 mx-4 md:mx-8">
-          <div className="h-4 md:h-5 bg-background/60 rounded-md max-w-[200px] mx-auto" />
+        <div className="browser-dot bg-[#FF5F57]" />
+        <div className="browser-dot bg-[#FEBC2E]" />
+        <div className="browser-dot bg-[#28C840]" />
+        <div className="flex-1 mx-6 md:mx-10">
+          <div className="h-5 md:h-6 bg-background/40 rounded-lg max-w-[180px] mx-auto" />
         </div>
       </div>
       

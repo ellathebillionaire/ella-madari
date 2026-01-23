@@ -6,22 +6,24 @@ interface MobileMockupProps {
 const MobileMockup = ({ screenshot, title }: MobileMockupProps) => {
   return (
     <div className="group">
-      {/* Phone Frame */}
-      <div className="relative mx-auto w-[180px] md:w-[220px] bg-foreground rounded-[2.5rem] p-2 shadow-[var(--shadow-elevated)] transition-all duration-500 group-hover:scale-[1.02]">
-        {/* Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-foreground rounded-b-2xl z-10" />
+      {/* Phone Frame - Premium iPhone style */}
+      <div className="relative mx-auto w-[200px] md:w-[240px] bg-foreground rounded-[3rem] p-[6px] transition-all duration-700 ease-out group-hover:scale-[1.02]"
+        style={{ boxShadow: 'var(--shadow-elevated)' }}
+      >
+        {/* Dynamic Island */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-foreground rounded-full z-10" />
         
         {/* Screen */}
-        <div className="relative rounded-[2rem] overflow-hidden bg-secondary aspect-[9/19.5]">
+        <div className="relative rounded-[2.6rem] overflow-hidden bg-secondary aspect-[9/19.5]">
           <img
             src={screenshot}
             alt={title}
-            className="w-full h-full object-cover object-top"
+            className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
           />
         </div>
         
         {/* Home indicator */}
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-white/30 rounded-full" />
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/30 rounded-full" />
       </div>
       
       {/* Title - hidden visually but accessible */}
