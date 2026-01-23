@@ -11,14 +11,25 @@ import websiteLearnai from "@/assets/website-learnai.jpg";
 // ============ BRANDING - TALI TER ============
 import taliterLogo from "@/assets/taliter-logo.jpg";
 import taliterMonogram from "@/assets/taliter-monogram.jpg";
+import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
 
 // ============ BRANDING - SFD (Strength For Dancers) ============
 import sfdLogoTransparent from "@/assets/sfd-logo-transparent.png";
 import sfdMonogram from "@/assets/sfd-monogram-new.jpg";
+import mockupSfdBlack from "@/assets/mockup-sfd-black.jpg";
+import mockupSfdWhite from "@/assets/mockup-sfd-white.jpg";
+import mockupSfdBands from "@/assets/mockup-sfd-bands.jpg";
+import mockupSfdBandSystem from "@/assets/mockup-sfd-band-system.jpg";
+import mockupTshirtAthlete from "@/assets/mockup-tshirt-athlete.jpg";
 
 // ============ BRANDING - MESHEK 27 ============
 import meshek27Logo from "@/assets/meshek27-logo.jpg";
 import meshek27Monogram from "@/assets/meshek27-monogram.jpg";
+import mockupMeshek27Branding from "@/assets/mockup-meshek27-branding.jpg";
+import mockupMeshek27Wall from "@/assets/mockup-meshek27-wall.jpg";
+import mockupMeshek27Tshirt from "@/assets/mockup-meshek27-tshirt.jpg";
+import mockupMeshek27Box from "@/assets/mockup-meshek27-box.jpg";
+import mockupMeshek27Packaging from "@/assets/mockup-meshek27-packaging.jpg";
 
 // ============ BRANDING - LEARN AI / DOTAI ============
 import learnaiLogo from "@/assets/learnai-logo.jpg";
@@ -27,6 +38,7 @@ import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 // ============ BRANDING - EBRIDER ============
 import ebriderLogo from "@/assets/ebrider-logo-transparent.png";
 import ebriderMonogram from "@/assets/ebrider-monogram-transparent.png";
+import mockupEbrider from "@/assets/mockup-ebrider.jpg";
 
 // ============ BRANDING - STUDIO ALEF ============
 import studioalefLogo from "@/assets/studioalef-logo.png";
@@ -40,27 +52,7 @@ import sisenoraLogo from "@/assets/sisenora-logo.jpg";
 // ============ BRANDING - ELLA MADARI ============
 import ellamadariLogo from "@/assets/ellamadari-logo.jpg";
 
-// ============ MOCKUPS - TALI TER ============
-import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
-
-// ============ MOCKUPS - SFD ============
-import mockupSfdBlack from "@/assets/mockup-sfd-black.jpg";
-import mockupSfdWhite from "@/assets/mockup-sfd-white.jpg";
-import mockupSfdBands from "@/assets/mockup-sfd-bands.jpg";
-import mockupSfdBandSystem from "@/assets/mockup-sfd-band-system.jpg";
-import mockupTshirtAthlete from "@/assets/mockup-tshirt-athlete.jpg";
-
-// ============ MOCKUPS - MESHEK 27 ============
-import mockupMeshek27Branding from "@/assets/mockup-meshek27-branding.jpg";
-import mockupMeshek27Wall from "@/assets/mockup-meshek27-wall.jpg";
-import mockupMeshek27Tshirt from "@/assets/mockup-meshek27-tshirt.jpg";
-import mockupMeshek27Box from "@/assets/mockup-meshek27-box.jpg";
-import mockupMeshek27Packaging from "@/assets/mockup-meshek27-packaging.jpg";
-
-// ============ MOCKUPS - EBRIDER ============
-import mockupEbrider from "@/assets/mockup-ebrider.jpg";
-
-// ============ MOCKUPS - OTHER ============
+// ============ MOCKUPS - OTHER (not tied to branding) ============
 import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
 import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
 
@@ -80,7 +72,7 @@ const websites = [
   { id: "2", title: "Learn AI - Educational Platform", screenshot: websiteLearnai },
 ];
 
-// Brands with complete identity (logo + monogram)
+// Brands with complete identity (logo + monogram + mockups)
 const brands = [
   {
     id: "1",
@@ -88,6 +80,7 @@ const brands = [
     logo: taliterLogo,
     monogram: taliterMonogram,
     colors: ["#5CC8B5", "#F68B1F", "#FDF6E3", "#2A4A4A"],
+    mockups: [mockupTaliterSet],
   },
   {
     id: "2",
@@ -95,6 +88,7 @@ const brands = [
     logo: sfdLogoTransparent,
     monogram: sfdMonogram,
     colors: ["#1A1A1A", "#4A5568", "#64748B", "#1E3A5F"],
+    mockups: [mockupSfdBlack, mockupSfdWhite, mockupSfdBands, mockupSfdBandSystem, mockupTshirtAthlete],
   },
   {
     id: "3",
@@ -102,6 +96,7 @@ const brands = [
     logo: meshek27Logo,
     monogram: meshek27Monogram,
     colors: ["#4A7C3F", "#6B9F5B", "#F5F8E8", "#2D4A28"],
+    mockups: [mockupMeshek27Branding, mockupMeshek27Wall, mockupMeshek27Tshirt, mockupMeshek27Box, mockupMeshek27Packaging],
   },
   {
     id: "4",
@@ -116,6 +111,7 @@ const brands = [
     logo: ebriderLogo,
     monogram: ebriderMonogram,
     colors: ["#4A7C3F", "#1A1A1A", "#F5F5F5", "#2D4A28"],
+    mockups: [mockupEbrider],
   },
   {
     id: "6",
@@ -147,31 +143,10 @@ const brands = [
   },
 ];
 
-// Mockups grouped by project
+// Mockups NOT tied to specific branding
 const mockups = [
-  // Tali Ter
-  { id: "1", title: "Tali Ter - Brand Identity", image: mockupTaliterSet },
-  
-  // SFD - Strength For Dancers
-  { id: "2", title: "SFD - Fitness Equipment", image: mockupSfdBlack },
-  { id: "3", title: "SFD - White Collection", image: mockupSfdWhite },
-  { id: "4", title: "SFD - Resistance Bands", image: mockupSfdBands },
-  { id: "5", title: "SFD - Band Color System", image: mockupSfdBandSystem },
-  { id: "6", title: "SFD - Train Like An Athlete", image: mockupTshirtAthlete },
-  
-  // Meshek 27
-  { id: "6", title: "משק 27 - Full Branding", image: mockupMeshek27Branding },
-  { id: "7", title: "משק 27 - Wall Signage", image: mockupMeshek27Wall },
-  { id: "8", title: "משק 27 - T-Shirt", image: mockupMeshek27Tshirt },
-  { id: "9", title: "משק 27 - Vegetable Box", image: mockupMeshek27Box },
-  { id: "10", title: "משק 27 - Packaging", image: mockupMeshek27Packaging },
-  
-  // EBrider
-  { id: "11", title: "EBrider - Electric Bike", image: mockupEbrider },
-  
-  // Other projects
-  { id: "12", title: "Adama - Business Cards", image: mockupAdamaCards },
-  { id: "13", title: "Lin & Guy - Wedding", image: mockupWeddingInvite },
+  { id: "1", title: "Adama - Business Cards", image: mockupAdamaCards },
+  { id: "2", title: "Lin & Guy - Wedding", image: mockupWeddingInvite },
 ];
 
 const printDesigns = [
@@ -190,7 +165,7 @@ const Index = () => {
       <HeroSection />
       <WebsitesSection websites={websites} />
       <BrandingSection brands={brands} />
-      <MockupsSection mockups={mockups} />
+      {mockups.length > 0 && <MockupsSection mockups={mockups} />}
       {printDesigns.length > 0 && <PrintDesignSection designs={printDesigns} />}
       
       {/* Footer - minimal */}
