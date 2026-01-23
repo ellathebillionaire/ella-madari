@@ -31,6 +31,8 @@ import dotaiMascot from "@/assets/dotai-mascot.jpg";
 import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
 import websiteLearnai from "@/assets/website-learnai.jpg";
+import learnaiMockupDesktop from "@/assets/learnai-mockup-desktop.jpg";
+import dotaiLogoFull from "@/assets/dotai-logo-full.jpg";
 
 // Tali Ter
 import taliterLogo from "@/assets/taliter-logo.jpg";
@@ -46,12 +48,23 @@ import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
 import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 import mockupEbrider from "@/assets/mockup-ebrider.jpg";
 
+// Studio Alef
+import studioalefLogo from "@/assets/studioalef-logo.png";
+import studioalefWallMockup from "@/assets/studioalef-wall-mockup.png";
+import studioalefAnimation from "@/assets/studioalef-animation.mp4";
+
+// SEN Jewelry
+import websiteSenFull from "@/assets/website-sen-full.png";
+import websiteSenMobile from "@/assets/website-sen-mobile.png";
+
+// BetterSeeds
+import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
+import betterseedsIcons from "@/assets/betterseeds-icons.jpg";
+import betterseedsAnimation from "@/assets/betterseeds-animation.mp4";
+
 // ============ ADDITIONAL WORK ============
 
-// Websites
-import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
 import websiteEllamadariShop from "@/assets/website-ellamadari-shop.png";
-import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
 // Print & Graphic Design
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
@@ -81,8 +94,6 @@ export interface Project {
 }
 
 // ============ BRANDING PROJECTS ============
-// Hero images chosen for CONSISTENCY - all show "branding set" style mockups
-// showing multiple branded items together for unified visual appearance
 
 export const projects: Project[] = [
   {
@@ -92,16 +103,16 @@ export const projects: Project[] = [
     description: 'Strength For Dancers - מיתוג מלא ועיצוב מוצרים',
     logo: sfdLogoTransparent,
     monogram: sfdMonogram,
-    heroImage: mockupSfdBandSystem, // Better hero - shows the band system clearly
+    heroImage: mockupSfdBandSystem,
     bgColor: '#F5F5F7',
     accentColor: '#1A1A1A',
     colors: ['#1A1A1A', '#FFFFFF', '#4A5568'],
     images: [
-      mockupSfdBlack,      // Product mockup
-      mockupSfdWhite,      // White version
-      mockupSfdBands,      // Product detail
-      mockupTshirtAthlete, // Apparel
-      websiteSfd,          // Website
+      mockupSfdBlack,
+      mockupSfdWhite,
+      mockupSfdBands,
+      mockupTshirtAthlete,
+      websiteSfd,
     ],
   },
   {
@@ -111,16 +122,16 @@ export const projects: Project[] = [
     description: 'מיתוג ואריזות לחווה אורגנית',
     logo: meshek27Logo,
     monogram: meshek27Monogram,
-    heroImage: mockupMeshek27Branding, // Full branding set
+    heroImage: mockupMeshek27Branding,
     bgColor: '#F5F8F3',
     accentColor: '#4A7C3F',
     colors: ['#4A7C3F', '#8BC34A', '#F5F5DC'],
     images: [
-      meshek27Monogram,        // Monogram
-      mockupMeshek27Wall,      // Environment mockup
-      mockupMeshek27Box,       // Packaging
-      mockupMeshek27Packaging, // More packaging
-      mockupMeshek27Tshirt,    // Apparel
+      meshek27Monogram,
+      mockupMeshek27Wall,
+      mockupMeshek27Box,
+      mockupMeshek27Packaging,
+      mockupMeshek27Tshirt,
     ],
   },
   {
@@ -130,45 +141,15 @@ export const projects: Project[] = [
     description: 'מיתוג לסטודיו לקוסמטיקה ופילאטיס',
     logo: taliterLogo,
     monogram: taliterMonogram,
-    heroImage: taliterBrandingSet, // Full branding set
+    heroImage: taliterBrandingSet,
     bgColor: '#FFFBF5',
     accentColor: '#5CC8B5',
     colors: ['#5CC8B5', '#F68B1F', '#FDF6E3'],
     images: [
-      taliterMonogram,     // Monogram
-      mockupTaliterSet,    // Set mockup
-      taliterWallMockup,   // Environment
-      taliterBottleMockup, // Product
-    ],
-  },
-  {
-    slug: 'ebrider',
-    name: 'EBrider',
-    category: 'branding',
-    description: 'מיתוג לחברת אופניים חשמליים',
-    logo: ebriderLogoNew,
-    monogram: ebriderSymbol,
-    heroImage: ebriderMockupHero, // Main product mockup
-    bgColor: '#F5F8F5',
-    accentColor: '#4A9F4A',
-    colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
-    images: [
-      ebriderSymbol,   // Symbol
-      mockupEbrider,   // Additional mockup
-    ],
-  },
-  {
-    slug: 'sisenora',
-    name: 'Si Señora',
-    category: 'branding',
-    description: 'מיתוג ואתר לחנות אופנה',
-    logo: sisenoraLogo,
-    heroImage: mockupSisenoraShop, // Shop environment
-    bgColor: '#FAF8F5',
-    accentColor: '#D4A574',
-    colors: ['#1A1A1A', '#D4A574', '#F5F5F0'],
-    images: [
-      websiteSisenora, // Website
+      taliterMonogram,
+      mockupTaliterSet,
+      taliterWallMockup,
+      taliterBottleMockup,
     ],
   },
   {
@@ -178,16 +159,89 @@ export const projects: Project[] = [
     description: 'מיתוג ואנימציה לפלטפורמת לימוד AI',
     logo: learnaiLogoFull,
     monogram: dotaiMonogram,
-    heroImage: websiteLearnai, // Website as hero - more impressive
+    heroImage: learnaiMockupDesktop,
     bgColor: '#F0FAFB',
     accentColor: '#00D4E5',
     colors: ['#00D4E5', '#1A365D', '#F8FAFC'],
     images: [
-      dotaiMascot,    // Mascot
-      learnaiLogo,    // Logo variant
-      dotaiMonogram,  // Symbol
+      dotaiLogoFull,
+      dotaiMascot,
+      websiteLearnai,
+      learnaiLogo,
     ],
     video: learnaiAnimation,
+  },
+  {
+    slug: 'studioalef',
+    name: 'Studio Alef',
+    category: 'branding',
+    description: 'מיתוג לסטודיו לעיצוב גרפי',
+    logo: studioalefLogo,
+    heroImage: studioalefWallMockup,
+    bgColor: '#F8F8F8',
+    accentColor: '#5A5A5A',
+    colors: ['#5A5A5A', '#FFFFFF', '#E0E0E0'],
+    images: [],
+    video: studioalefAnimation,
+  },
+  {
+    slug: 'sen',
+    name: 'SEN Jewelry',
+    category: 'website',
+    description: 'עיצוב אתר לחנות תכשיטים',
+    logo: websiteSenMobile,
+    heroImage: websiteSenFull,
+    bgColor: '#0D2847',
+    accentColor: '#C9A86C',
+    colors: ['#0D2847', '#C9A86C', '#E8B4B8'],
+    images: [
+      websiteSenMobile,
+    ],
+  },
+  {
+    slug: 'ebrider',
+    name: 'EBrider',
+    category: 'branding',
+    description: 'מיתוג לחברת אופניים חשמליים',
+    logo: ebriderLogoNew,
+    monogram: ebriderSymbol,
+    heroImage: ebriderMockupHero,
+    bgColor: '#F5F8F5',
+    accentColor: '#4A9F4A',
+    colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
+    images: [
+      ebriderSymbol,
+      mockupEbrider,
+    ],
+  },
+  {
+    slug: 'sisenora',
+    name: 'Si Señora',
+    category: 'branding',
+    description: 'מיתוג ואתר לחנות אופנה',
+    logo: sisenoraLogo,
+    heroImage: mockupSisenoraShop,
+    bgColor: '#FAF8F5',
+    accentColor: '#D4A574',
+    colors: ['#1A1A1A', '#D4A574', '#F5F5F0'],
+    images: [
+      websiteSisenora,
+    ],
+  },
+  {
+    slug: 'betterseeds',
+    name: 'BetterSeeds',
+    category: 'branding',
+    description: 'מיתוג ואתר לחברת טכנולוגיה חקלאית',
+    logo: betterseedsIcons,
+    heroImage: websiteBetterseeds,
+    bgColor: '#F5F8F3',
+    accentColor: '#3D7C3F',
+    colors: ['#3D7C3F', '#6AAF4A', '#FFFFFF'],
+    images: [
+      betterseedsIcons,
+    ],
+    video: betterseedsAnimation,
   },
 ];
 
@@ -195,9 +249,7 @@ export const projects: Project[] = [
 
 export const additionalWork = {
   websites: [
-    { name: 'BetterSeeds', image: websiteBetterseeds, color: '#4A7C3F' },
     { name: 'Ella Madari Shop', image: websiteEllamadariShop, color: '#1A1A1A' },
-    { name: 'SEN Jewelry', image: websiteSenMobile, color: '#0D4F4F' },
   ],
   print: [
     { name: 'פוסטר אלה מדארי', image: printPosterEllamadari },
