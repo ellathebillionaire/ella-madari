@@ -1,371 +1,324 @@
 import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence, animate, useMotionValue } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 import { projects } from '@/data/projects';
 
 const ProjectCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showGallery, setShowGallery] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const dragX = useMotionValue(0);
   const totalProjects = projects.length;
 
-  // Auto-rotate
-  useEffect(() => {
-    if (!isAutoPlaying || isDragging || selectedImage) return;
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % totalProjects);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, isDragging, selectedImage, totalProjects]);
-
-  const pauseAutoPlay = useCallback(() => {
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 15000);
-  }, []);
-
-  const rotate = (direction: 'left' | 'right') => {
-    pauseAutoPlay();
-    if (direction === 'left') {
+  const navigate = useCallback((direction: 'up' | 'down') => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setShowGallery(false);
+    
+    if (direction === 'up') {
       setActiveIndex((prev) => (prev - 1 + totalProjects) % totalProjects);
     } else {
       setActiveIndex((prev) => (prev + 1) % totalProjects);
     }
-  };
+    
+    setTimeout(() => setIsTransitioning(false), 800);
+  }, [isTransitioning, totalProjects]);
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImage) {
+        if (e.key === 'Escape') setSelectedImage(null);
+        return;
+      }
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') navigate('up');
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') navigate('down');
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [navigate, selectedImage]);
+
+  // Wheel navigation
   const handleWheel = (e: React.WheelEvent) => {
-    if (selectedImage) return;
-    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    if (Math.abs(delta) > 30) {
-      pauseAutoPlay();
-      if (delta > 0) rotate('right');
-      else rotate('left');
+    if (selectedImage || showGallery) return;
+    if (Math.abs(e.deltaY) > 50) {
+      if (e.deltaY > 0) navigate('down');
+      else navigate('up');
     }
-  };
-
-  const handleDragEnd = () => {
-    const x = dragX.get();
-    if (Math.abs(x) > 50) {
-      if (x < 0) rotate('right');
-      else rotate('left');
-    }
-    animate(dragX, 0, { type: 'spring', stiffness: 300, damping: 30 });
-    setIsDragging(false);
-  };
-
-  const getCardStyle = (index: number) => {
-    let relativePos = index - activeIndex;
-    if (relativePos > totalProjects / 2) relativePos -= totalProjects;
-    if (relativePos < -totalProjects / 2) relativePos += totalProjects;
-
-    const radius = 750;
-    const angleStep = 35;
-    const angle = relativePos * angleStep;
-    const angleRad = (angle * Math.PI) / 180;
-
-    const x = Math.sin(angleRad) * radius;
-    const z = Math.cos(angleRad) * radius - radius;
-    const rotateY = -angle * 0.6;
-    const y = Math.abs(relativePos) * 25;
-
-    const absPos = Math.abs(relativePos);
-    const scale = Math.max(0.45, 1 - absPos * 0.18);
-    const opacity = Math.max(0.08, 1 - absPos * 0.4);
-
-    return { x, y, z, rotateY, scale, opacity, zIndex: 100 - absPos * 10, isVisible: absPos <= 2 };
   };
 
   const activeProject = projects[activeIndex];
-  const allActiveImages = [activeProject.heroImage, ...activeProject.images];
+  const nextProject = projects[(activeIndex + 1) % totalProjects];
 
   return (
     <>
-      <section 
-        className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-        style={{ background: 'linear-gradient(180deg, #FAFAFA 0%, #F0F0F2 50%, #E8E8EC 100%)' }}
-        onWheel={handleWheel}
-      >
-        {/* Animated gradient orbs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div 
-            className="absolute w-[600px] h-[600px] rounded-full opacity-20"
-            style={{ 
-              background: `radial-gradient(circle, ${activeProject.accentColor}40 0%, transparent 70%)`,
-              left: '10%', top: '20%',
-            }}
-            animate={{ scale: [1, 1.2, 1], x: [0, 30, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div 
-            className="absolute w-[400px] h-[400px] rounded-full opacity-15"
-            style={{ 
-              background: `radial-gradient(circle, ${activeProject.accentColor}30 0%, transparent 70%)`,
-              right: '15%', bottom: '30%',
-            }}
-            animate={{ scale: [1.1, 0.9, 1.1], y: [0, -20, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </div>
+      <div className="fixed inset-0 bg-black" onWheel={handleWheel}>
+        
+        {/* Background - Full screen hero image */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <img 
+              src={activeProject.heroImage} 
+              alt={activeProject.name}
+              className="w-full h-full object-cover"
+            />
+            {/* Gradient overlays for readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
+          </motion.div>
+        </AnimatePresence>
 
         {/* Header */}
-        <header className="absolute top-0 left-0 right-0 px-6 md:px-10 py-5 z-30 flex items-center justify-between">
-          <div>
-            <h1 className="text-base md:text-lg font-semibold tracking-tight text-[#1d1d1f]">Ella Madari</h1>
-            <p className="text-[7px] md:text-[8px] text-[#86868b] tracking-[0.3em] uppercase">Design & Branding</p>
-          </div>
+        <header className="absolute top-0 left-0 right-0 z-20 px-8 md:px-12 py-6 flex items-center justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <h1 className="text-white text-lg md:text-xl font-light tracking-wide">Ella Madari</h1>
+            <p className="text-white/50 text-[9px] tracking-[0.4em] uppercase mt-0.5">Design Portfolio</p>
+          </motion.div>
           
-          {/* Navigation dots with project colors */}
-          <div className="flex items-center gap-2">
+          {/* Project counter */}
+          <motion.div 
+            className="text-white/60 text-sm font-light"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <span className="text-white font-medium text-lg">{String(activeIndex + 1).padStart(2, '0')}</span>
+            <span className="mx-2">/</span>
+            <span>{String(totalProjects).padStart(2, '0')}</span>
+          </motion.div>
+        </header>
+
+        {/* Main Content - Project Info */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 px-8 md:px-12 pb-8 md:pb-12">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="max-w-4xl"
+            >
+              {/* Logo */}
+              <motion.div 
+                className="mb-4"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full">
+                  <img src={activeProject.logo} alt="" className="h-5 w-auto brightness-0 invert" />
+                  <span className="text-white/70 text-xs tracking-widest uppercase">
+                    {activeProject.category}
+                  </span>
+                </div>
+              </motion.div>
+
+              {/* Title */}
+              <motion.h2 
+                className="text-white text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight mb-4"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+              >
+                {activeProject.name}
+              </motion.h2>
+
+              {/* Description */}
+              {activeProject.description && (
+                <motion.p 
+                  className="text-white/60 text-base md:text-lg font-light max-w-xl mb-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  {activeProject.description}
+                </motion.p>
+              )}
+
+              {/* Color Palette */}
+              <motion.div 
+                className="flex items-center gap-3 mb-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
+                {activeProject.colors.map((color, i) => (
+                  <div
+                    key={i}
+                    className="w-8 h-8 rounded-full ring-2 ring-white/20"
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </motion.div>
+
+              {/* Gallery Thumbnails */}
+              {activeProject.images.length > 0 && (
+                <motion.div 
+                  className="flex items-center gap-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                >
+                  {activeProject.images.slice(0, 5).map((img, i) => (
+                    <motion.div
+                      key={i}
+                      className="w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden cursor-pointer ring-2 ring-white/20 hover:ring-white/60 transition-all"
+                      whileHover={{ scale: 1.1, y: -5 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setSelectedImage(img)}
+                    >
+                      <img src={img} alt="" className="w-full h-full object-cover" />
+                    </motion.div>
+                  ))}
+                  {activeProject.images.length > 5 && (
+                    <motion.button
+                      className="w-16 h-16 md:w-20 md:h-20 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-white/70 text-sm font-light hover:bg-white/20 transition-colors"
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => setShowGallery(true)}
+                    >
+                      +{activeProject.images.length - 5}
+                    </motion.button>
+                  )}
+                </motion.div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Right side - Project Navigation */}
+        <div className="absolute right-8 md:right-12 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-4">
+          <motion.button
+            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all"
+            onClick={() => navigate('up')}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <ChevronUp className="w-5 h-5" />
+          </motion.button>
+          
+          {/* Project dots */}
+          <div className="flex flex-col gap-2 py-4">
             {projects.map((project, i) => (
               <button
                 key={i}
-                onClick={() => { setActiveIndex(i); pauseAutoPlay(); }}
-                className="group relative"
+                onClick={() => {
+                  if (!isTransitioning && i !== activeIndex) {
+                    setIsTransitioning(true);
+                    setShowGallery(false);
+                    setActiveIndex(i);
+                    setTimeout(() => setIsTransitioning(false), 800);
+                  }
+                }}
+                className="group relative flex items-center justify-end"
               >
+                <span className={`absolute right-6 text-[10px] text-white/60 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity ${i === activeIndex ? 'opacity-100 text-white' : ''}`}>
+                  {project.name}
+                </span>
                 <div 
                   className={`transition-all duration-300 rounded-full ${
                     i === activeIndex 
-                      ? 'w-7 h-2.5 shadow-lg' 
-                      : 'w-2.5 h-2.5 opacity-40 hover:opacity-70'
+                      ? 'w-3 h-8 bg-white' 
+                      : 'w-2 h-2 bg-white/30 hover:bg-white/60'
                   }`}
-                  style={{ backgroundColor: project.accentColor }}
                 />
-                {i === activeIndex && (
-                  <motion.span 
-                    className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[8px] text-[#86868b] whitespace-nowrap"
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                  >
-                    {project.name}
-                  </motion.span>
-                )}
               </button>
             ))}
           </div>
-        </header>
-
-        {/* Main Content */}
-        <div className="w-full max-w-7xl mx-auto px-4 pt-24 pb-8">
           
-          {/* Color Palette Display */}
-          <div className="flex justify-center items-center gap-2 mb-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-md rounded-full shadow-sm"
+          <motion.button
+            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all"
+            onClick={() => navigate('down')}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <ChevronDown className="w-5 h-5" />
+          </motion.button>
+        </div>
+
+        {/* Next project preview */}
+        <motion.div 
+          className="absolute bottom-8 right-8 md:right-auto md:left-1/2 md:-translate-x-1/2 z-10 flex items-center gap-2 text-white/40 text-xs cursor-pointer hover:text-white/70 transition-colors"
+          onClick={() => navigate('down')}
+          whileHover={{ y: 5 }}
+        >
+          <span className="hidden md:block">Next:</span>
+          <span className="font-medium">{nextProject.name}</span>
+          <ChevronDown className="w-4 h-4 animate-bounce" />
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div 
+          className="absolute bottom-8 left-8 md:left-12 text-white/30 text-[9px] tracking-widest uppercase z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          Scroll to explore
+        </motion.div>
+      </div>
+
+      {/* Full Gallery Overlay */}
+      <AnimatePresence>
+        {showGallery && (
+          <motion.div
+            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl overflow-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <button
+              className="fixed top-6 right-6 z-50 text-white/70 hover:text-white text-2xl font-light"
+              onClick={() => setShowGallery(false)}
+            >
+              ✕
+            </button>
+            
+            <div className="min-h-screen p-8 md:p-12">
+              <motion.h3 
+                className="text-white text-3xl font-light mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
               >
-                {activeProject.colors.map((color, i) => (
+                {activeProject.name}
+              </motion.h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[activeProject.heroImage, ...activeProject.images].map((img, i) => (
                   <motion.div
                     key={i}
-                    className="w-4 h-4 rounded-full shadow-inner"
-                    style={{ backgroundColor: color }}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: i * 0.05 }}
-                  />
-                ))}
-                <span className="ml-2 text-[10px] text-[#86868b] font-medium">
-                  {activeProject.category === 'branding' ? 'BRANDING' : 'WEBSITE'}
-                </span>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Top Expanded Images */}
-          <div className="h-24 md:h-28 flex justify-center items-end gap-2 md:gap-3 mb-4">
-            <AnimatePresence mode="popLayout">
-              {allActiveImages.slice(1, 4).map((img, i) => (
-                <motion.div
-                  key={`top-${activeIndex}-${i}`}
-                  initial={{ opacity: 0, y: 50, scale: 0.6, rotateX: 25 }}
-                  animate={{ 
-                    opacity: 1, y: 0, scale: i === 1 ? 1.08 : 0.92, rotateX: 0,
-                  }}
-                  exit={{ opacity: 0, y: 40, scale: 0.7 }}
-                  transition={{ duration: 0.5, delay: i * 0.07, type: 'spring', stiffness: 150 }}
-                  className="rounded-xl md:rounded-2xl overflow-hidden shadow-xl bg-white cursor-pointer hover:scale-110 hover:shadow-2xl transition-all duration-300"
-                  style={{ width: i === 1 ? 90 : 70, height: i === 1 ? 90 : 70 }}
-                  onClick={() => setSelectedImage(img)}
-                  whileHover={{ y: -5 }}
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {/* 3D Carousel */}
-          <motion.div 
-            className="relative h-[320px] md:h-[380px] flex items-center justify-center cursor-grab active:cursor-grabbing"
-            style={{ perspective: '1300px' }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.1}
-            onDragStart={() => { setIsDragging(true); pauseAutoPlay(); }}
-            onDragEnd={handleDragEnd}
-          >
-            <div className="relative w-full h-full flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
-              {projects.map((project, index) => {
-                const isActive = index === activeIndex;
-                const style = getCardStyle(index);
-                if (!style.isVisible) return null;
-                
-                return (
-                  <motion.div
-                    key={project.slug}
-                    className="absolute cursor-pointer"
-                    style={{ width: 280, transformStyle: 'preserve-3d', zIndex: style.zIndex }}
-                    initial={false}
-                    animate={{
-                      x: style.x, y: style.y, z: style.z,
-                      rotateY: style.rotateY, scale: style.scale, opacity: style.opacity,
-                    }}
-                    transition={{ type: 'spring', stiffness: 150, damping: 20, mass: 0.9 }}
-                    onClick={() => { if (!isActive) { setActiveIndex(index); pauseAutoPlay(); }}}
+                    className="aspect-square rounded-2xl overflow-hidden cursor-pointer"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => setSelectedImage(img)}
                   >
-                    <motion.div
-                      className={`relative rounded-3xl overflow-hidden ${
-                        isActive 
-                          ? 'shadow-[0_40px_100px_-25px_rgba(0,0,0,0.45)] ring-2 ring-white/80' 
-                          : 'shadow-lg'
-                      }`}
-                      style={{ backgroundColor: project.bgColor }}
-                      whileHover={!isActive ? { scale: 1.04, y: -5 } : {}}
-                    >
-                      {/* Logo Badge - CONSISTENT */}
-                      <div className="absolute top-3 left-3 z-10">
-                        <div className="h-8 px-2.5 bg-white/95 backdrop-blur-md rounded-lg flex items-center shadow-md">
-                          <img src={project.logo} alt="" className="h-4 w-auto object-contain" />
-                        </div>
-                      </div>
-
-                      {/* Video indicator */}
-                      {project.video && isActive && (
-                        <motion.div 
-                          className="absolute top-3 right-3 z-10"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                        >
-                          <div className="w-8 h-8 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-md">
-                            <Play className="w-3 h-3 text-[#1d1d1f] ml-0.5" />
-                          </div>
-                        </motion.div>
-                      )}
-
-                      {/* Hero Image */}
-                      <div className="aspect-square overflow-hidden">
-                        <img src={project.heroImage} alt={project.name} className="w-full h-full object-cover" />
-                      </div>
-
-                      {/* Bottom gradient with name */}
-                      <div 
-                        className="absolute bottom-0 left-0 right-0 h-20 flex items-end p-4"
-                        style={{ 
-                          background: `linear-gradient(to top, ${project.accentColor}CC 0%, transparent 100%)`
-                        }}
-                      >
-                        <span className="text-white text-sm font-semibold tracking-wide drop-shadow-lg">
-                          {project.name}
-                        </span>
-                      </div>
-                    </motion.div>
+                    <img src={img} alt="" className="w-full h-full object-cover" />
                   </motion.div>
-                );
-              })}
+                ))}
+              </div>
             </div>
           </motion.div>
-
-          {/* Bottom Expanded Images */}
-          <div className="h-24 md:h-28 flex justify-center items-start gap-2 md:gap-3 mt-4">
-            <AnimatePresence mode="popLayout">
-              {allActiveImages.slice(4).map((img, i) => (
-                <motion.div
-                  key={`bottom-${activeIndex}-${i}`}
-                  initial={{ opacity: 0, y: -50, scale: 0.6 }}
-                  animate={{ opacity: 1, y: 0, scale: i === 0 ? 1.08 : 0.92 }}
-                  exit={{ opacity: 0, y: -40, scale: 0.7 }}
-                  transition={{ duration: 0.5, delay: i * 0.07, type: 'spring', stiffness: 150 }}
-                  className="rounded-xl md:rounded-2xl overflow-hidden shadow-xl bg-white cursor-pointer hover:scale-110 hover:shadow-2xl transition-all duration-300"
-                  style={{ width: i === 0 ? 90 : 70, height: i === 0 ? 90 : 70 }}
-                  onClick={() => setSelectedImage(img)}
-                  whileHover={{ y: 5 }}
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {/* Project Info */}
-          <div className="text-center mt-8">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.25 }}
-                className="flex flex-col items-center gap-3"
-              >
-                <motion.div 
-                  className="flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-xl rounded-full shadow-lg"
-                  whileHover={{ scale: 1.02, boxShadow: '0 20px 50px -15px rgba(0,0,0,0.2)' }}
-                >
-                  <img src={activeProject.logo} alt="" className="h-5 w-auto" />
-                  <span className="text-sm font-semibold text-[#1d1d1f]">{activeProject.name}</span>
-                </motion.div>
-                {activeProject.description && (
-                  <p className="text-[11px] text-[#86868b] max-w-sm">{activeProject.description}</p>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Navigation Arrows */}
-        <motion.button
-          onClick={() => rotate('left')}
-          className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-[#1d1d1f] z-20"
-          whileHover={{ scale: 1.1, backgroundColor: '#fff' }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </motion.button>
-        <motion.button
-          onClick={() => rotate('right')}
-          className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-[#1d1d1f] z-20"
-          whileHover={{ scale: 1.1, backgroundColor: '#fff' }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <ChevronRight className="w-5 h-5" />
-        </motion.button>
-
-        {/* Hint */}
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[8px] text-[#86868b]/40 tracking-widest uppercase z-10">
-          ← → scroll or drag
-        </div>
-
-        {/* Progress bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#e5e5e7]">
-          <motion.div
-            className="h-full"
-            style={{ backgroundColor: activeProject.accentColor }}
-            initial={{ width: '0%' }}
-            animate={{ width: `${((activeIndex + 1) / totalProjects) * 100}%` }}
-            transition={{ duration: 0.4 }}
-          />
-        </div>
-      </section>
+        )}
+      </AnimatePresence>
 
       {/* Lightbox */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md cursor-zoom-out"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md cursor-zoom-out"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -374,14 +327,14 @@ const ProjectCarousel = () => {
             <motion.img
               src={selectedImage}
               alt=""
-              className="max-w-[90vw] max-h-[85vh] object-contain rounded-2xl shadow-2xl"
-              initial={{ scale: 0.8, opacity: 0 }}
+              className="max-w-[92vw] max-h-[90vh] object-contain rounded-lg"
+              initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
+              exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 200, damping: 25 }}
             />
             <button
-              className="absolute top-6 right-6 text-white/70 hover:text-white text-2xl font-light"
+              className="absolute top-6 right-6 text-white/70 hover:text-white text-3xl font-light"
               onClick={() => setSelectedImage(null)}
             >
               ✕
