@@ -148,35 +148,8 @@ const ProjectCarousel = () => {
         {/* Main Content */}
         <div className="w-full max-w-7xl mx-auto px-4 pt-24 pb-8">
           
-          {/* Color Palette Display */}
-          <div className="flex justify-center items-center gap-2 mb-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-md rounded-full shadow-sm"
-              >
-                {activeProject.colors.map((color, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-4 h-4 rounded-full shadow-inner"
-                    style={{ backgroundColor: color }}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: i * 0.05 }}
-                  />
-                ))}
-                <span className="ml-2 text-[10px] text-[#86868b] font-medium">
-                  {activeProject.category === 'branding' ? 'BRANDING' : 'WEBSITE'}
-                </span>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Top Expanded Images */}
-          <div className="h-24 md:h-28 flex justify-center items-end gap-2 md:gap-3 mb-4">
+        {/* Top Expanded Images */}
+        <div className="h-24 md:h-28 flex justify-center items-end gap-2 md:gap-3 mb-4">
             <AnimatePresence mode="popLayout">
               {allActiveImages.slice(1, 4).map((img, i) => (
                 <motion.div
@@ -279,33 +252,60 @@ const ProjectCarousel = () => {
             </div>
           </motion.div>
 
-          {/* Bottom Expanded Images */}
-          <div className="h-24 md:h-28 flex justify-center items-start gap-2 md:gap-3 mt-4">
-            <AnimatePresence mode="popLayout">
-              {allActiveImages.slice(4).map((img, i) => (
-                <motion.div
-                  key={`bottom-${activeIndex}-${i}`}
-                  initial={{ opacity: 0, y: -50, scale: 0.6 }}
-                  animate={{ opacity: 1, y: 0, scale: i === 0 ? 1.08 : 0.92 }}
-                  exit={{ opacity: 0, y: -40, scale: 0.7 }}
-                  transition={{ duration: 0.5, delay: i * 0.07, type: 'spring', stiffness: 150 }}
-                  className="rounded-xl md:rounded-2xl overflow-hidden shadow-xl bg-white cursor-pointer hover:scale-110 hover:shadow-2xl transition-all duration-300"
-                  style={{ width: i === 0 ? 90 : 70, height: i === 0 ? 90 : 70 }}
-                  onClick={() => setSelectedImage(img)}
-                  whileHover={{ y: 5 }}
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {/* Project Info */}
-          <div className="text-center mt-8">
-            <AnimatePresence mode="wait">
+        {/* Bottom Expanded Images */}
+        <div className="h-24 md:h-28 flex justify-center items-start gap-2 md:gap-3 mt-4">
+          <AnimatePresence mode="popLayout">
+            {allActiveImages.slice(4).map((img, i) => (
               <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, y: 15 }}
+                key={`bottom-${activeIndex}-${i}`}
+                initial={{ opacity: 0, y: -50, scale: 0.6 }}
+                animate={{ opacity: 1, y: 0, scale: i === 0 ? 1.08 : 0.92 }}
+                exit={{ opacity: 0, y: -40, scale: 0.7 }}
+                transition={{ duration: 0.5, delay: i * 0.07, type: 'spring', stiffness: 150 }}
+                className="rounded-xl md:rounded-2xl overflow-hidden shadow-xl bg-white cursor-pointer hover:scale-110 hover:shadow-2xl transition-all duration-300"
+                style={{ width: i === 0 ? 90 : 70, height: i === 0 ? 90 : 70 }}
+                onClick={() => setSelectedImage(img)}
+                whileHover={{ y: 5 }}
+              >
+                <img src={img} alt="" className="w-full h-full object-cover" />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {/* Color Palette & Category - Now Below */}
+        <div className="flex justify-center items-center gap-2 mt-6 mb-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-md rounded-full shadow-sm"
+            >
+              {activeProject.colors.map((color, i) => (
+                <motion.div
+                  key={i}
+                  className="w-4 h-4 rounded-full shadow-inner"
+                  style={{ backgroundColor: color }}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                />
+              ))}
+              <span className="ml-2 text-[10px] text-[#86868b] font-medium">
+                {activeProject.category === 'branding' ? 'BRANDING' : 'WEBSITE'}
+              </span>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Project Info */}
+        <div className="text-center mt-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
