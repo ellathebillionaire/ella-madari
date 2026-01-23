@@ -1,11 +1,7 @@
-import ProjectCarousel from '@/components/ProjectCarousel';
+import MinimalGallery from '@/components/MinimalGallery';
 
 const Index = () => {
-  return (
-    <main className="bg-[#fafafa]">
-      <ProjectCarousel />
-    </main>
-  );
+  return <MinimalGallery />;
 };
 
 export default Index;
