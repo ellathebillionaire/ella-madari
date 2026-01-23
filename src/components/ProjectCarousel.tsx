@@ -1,324 +1,254 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronUp, ChevronDown } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects } from '@/data/projects';
 
 const ProjectCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [showGallery, setShowGallery] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const totalProjects = projects.length;
 
-  const navigate = useCallback((direction: 'up' | 'down') => {
+  const navigate = useCallback((direction: 'prev' | 'next') => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setShowGallery(false);
     
-    if (direction === 'up') {
+    if (direction === 'prev') {
       setActiveIndex((prev) => (prev - 1 + totalProjects) % totalProjects);
     } else {
       setActiveIndex((prev) => (prev + 1) % totalProjects);
     }
     
-    setTimeout(() => setIsTransitioning(false), 800);
+    setTimeout(() => setIsTransitioning(false), 600);
   }, [isTransitioning, totalProjects]);
 
-  // Keyboard navigation
+  // Keyboard
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedImage) {
         if (e.key === 'Escape') setSelectedImage(null);
         return;
       }
-      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') navigate('up');
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') navigate('down');
+      if (e.key === 'ArrowLeft') navigate('prev');
+      if (e.key === 'ArrowRight') navigate('next');
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [navigate, selectedImage]);
 
-  // Wheel navigation
+  // Wheel
   const handleWheel = (e: React.WheelEvent) => {
-    if (selectedImage || showGallery) return;
-    if (Math.abs(e.deltaY) > 50) {
-      if (e.deltaY > 0) navigate('down');
-      else navigate('up');
+    if (selectedImage) return;
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (Math.abs(delta) > 50) {
+      if (delta > 0) navigate('next');
+      else navigate('prev');
     }
   };
 
   const activeProject = projects[activeIndex];
-  const nextProject = projects[(activeIndex + 1) % totalProjects];
 
   return (
     <>
-      <div className="fixed inset-0 bg-black" onWheel={handleWheel}>
-        
-        {/* Background - Full screen hero image */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            className="absolute inset-0"
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <img 
-              src={activeProject.heroImage} 
-              alt={activeProject.name}
-              className="w-full h-full object-cover"
-            />
-            {/* Gradient overlays for readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/40" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Header */}
-        <header className="absolute top-0 left-0 right-0 z-20 px-8 md:px-12 py-6 flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h1 className="text-white text-lg md:text-xl font-light tracking-wide">Ella Madari</h1>
-            <p className="text-white/50 text-[9px] tracking-[0.4em] uppercase mt-0.5">Design Portfolio</p>
-          </motion.div>
+      <div 
+        className="min-h-screen bg-[#f5f5f7] flex flex-col"
+        onWheel={handleWheel}
+      >
+        {/* Header - Apple style */}
+        <header className="px-8 md:px-16 lg:px-24 py-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-[#1d1d1f] text-base font-semibold tracking-tight">Ella Madari</h1>
+            <p className="text-[#86868b] text-[10px] tracking-[0.2em] uppercase">Design Portfolio</p>
+          </div>
           
-          {/* Project counter */}
-          <motion.div 
-            className="text-white/60 text-sm font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <span className="text-white font-medium text-lg">{String(activeIndex + 1).padStart(2, '0')}</span>
-            <span className="mx-2">/</span>
-            <span>{String(totalProjects).padStart(2, '0')}</span>
-          </motion.div>
-        </header>
-
-        {/* Main Content - Project Info */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 px-8 md:px-12 pb-8 md:pb-12">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndex}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="max-w-4xl"
-            >
-              {/* Logo */}
-              <motion.div 
-                className="mb-4"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-              >
-                <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full">
-                  <img src={activeProject.logo} alt="" className="h-5 w-auto brightness-0 invert" />
-                  <span className="text-white/70 text-xs tracking-widest uppercase">
-                    {activeProject.category}
-                  </span>
-                </div>
-              </motion.div>
-
-              {/* Title */}
-              <motion.h2 
-                className="text-white text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight mb-4"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-              >
-                {activeProject.name}
-              </motion.h2>
-
-              {/* Description */}
-              {activeProject.description && (
-                <motion.p 
-                  className="text-white/60 text-base md:text-lg font-light max-w-xl mb-6"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  {activeProject.description}
-                </motion.p>
-              )}
-
-              {/* Color Palette */}
-              <motion.div 
-                className="flex items-center gap-3 mb-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-              >
-                {activeProject.colors.map((color, i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 rounded-full ring-2 ring-white/20"
-                    style={{ backgroundColor: color }}
-                  />
-                ))}
-              </motion.div>
-
-              {/* Gallery Thumbnails */}
-              {activeProject.images.length > 0 && (
-                <motion.div 
-                  className="flex items-center gap-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 }}
-                >
-                  {activeProject.images.slice(0, 5).map((img, i) => (
-                    <motion.div
-                      key={i}
-                      className="w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden cursor-pointer ring-2 ring-white/20 hover:ring-white/60 transition-all"
-                      whileHover={{ scale: 1.1, y: -5 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => setSelectedImage(img)}
-                    >
-                      <img src={img} alt="" className="w-full h-full object-cover" />
-                    </motion.div>
-                  ))}
-                  {activeProject.images.length > 5 && (
-                    <motion.button
-                      className="w-16 h-16 md:w-20 md:h-20 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-white/70 text-sm font-light hover:bg-white/20 transition-colors"
-                      whileHover={{ scale: 1.05 }}
-                      onClick={() => setShowGallery(true)}
-                    >
-                      +{activeProject.images.length - 5}
-                    </motion.button>
-                  )}
-                </motion.div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Right side - Project Navigation */}
-        <div className="absolute right-8 md:right-12 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-4">
-          <motion.button
-            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all"
-            onClick={() => navigate('up')}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ChevronUp className="w-5 h-5" />
-          </motion.button>
-          
-          {/* Project dots */}
-          <div className="flex flex-col gap-2 py-4">
+          {/* Navigation */}
+          <div className="flex items-center gap-3">
             {projects.map((project, i) => (
               <button
                 key={i}
-                onClick={() => {
-                  if (!isTransitioning && i !== activeIndex) {
-                    setIsTransitioning(true);
-                    setShowGallery(false);
-                    setActiveIndex(i);
-                    setTimeout(() => setIsTransitioning(false), 800);
-                  }
-                }}
-                className="group relative flex items-center justify-end"
+                onClick={() => !isTransitioning && setActiveIndex(i)}
+                className={`transition-all duration-300 ${
+                  i === activeIndex 
+                    ? 'text-[#1d1d1f] font-medium' 
+                    : 'text-[#86868b] hover:text-[#1d1d1f]'
+                }`}
               >
-                <span className={`absolute right-6 text-[10px] text-white/60 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity ${i === activeIndex ? 'opacity-100 text-white' : ''}`}>
-                  {project.name}
-                </span>
-                <div 
-                  className={`transition-all duration-300 rounded-full ${
-                    i === activeIndex 
-                      ? 'w-3 h-8 bg-white' 
-                      : 'w-2 h-2 bg-white/30 hover:bg-white/60'
-                  }`}
-                />
+                <span className="text-[11px] tracking-wide">{project.name}</span>
               </button>
             ))}
           </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="flex-1 px-8 md:px-16 lg:px-24 pb-12 flex flex-col">
           
-          <motion.button
-            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all"
-            onClick={() => navigate('down')}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ChevronDown className="w-5 h-5" />
-          </motion.button>
-        </div>
-
-        {/* Next project preview */}
-        <motion.div 
-          className="absolute bottom-8 right-8 md:right-auto md:left-1/2 md:-translate-x-1/2 z-10 flex items-center gap-2 text-white/40 text-xs cursor-pointer hover:text-white/70 transition-colors"
-          onClick={() => navigate('down')}
-          whileHover={{ y: 5 }}
-        >
-          <span className="hidden md:block">Next:</span>
-          <span className="font-medium">{nextProject.name}</span>
-          <ChevronDown className="w-4 h-4 animate-bounce" />
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div 
-          className="absolute bottom-8 left-8 md:left-12 text-white/30 text-[9px] tracking-widest uppercase z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          Scroll to explore
-        </motion.div>
-      </div>
-
-      {/* Full Gallery Overlay */}
-      <AnimatePresence>
-        {showGallery && (
-          <motion.div
-            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl overflow-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <button
-              className="fixed top-6 right-6 z-50 text-white/70 hover:text-white text-2xl font-light"
-              onClick={() => setShowGallery(false)}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="flex-1 flex flex-col"
             >
-              ✕
-            </button>
-            
-            <div className="min-h-screen p-8 md:p-12">
-              <motion.h3 
-                className="text-white text-3xl font-light mb-8"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                {activeProject.name}
-              </motion.h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[activeProject.heroImage, ...activeProject.images].map((img, i) => (
-                  <motion.div
-                    key={i}
-                    className="aspect-square rounded-2xl overflow-hidden cursor-pointer"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                    onClick={() => setSelectedImage(img)}
-                  >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
-                  </motion.div>
-                ))}
+              {/* Project Header */}
+              <div className="flex items-start justify-between mb-8">
+                <div className="flex items-center gap-4">
+                  {/* Logo in white card */}
+                  <div className="h-12 px-4 bg-white rounded-2xl shadow-sm flex items-center">
+                    <img src={activeProject.logo} alt="" className="h-6 w-auto object-contain" />
+                  </div>
+                  
+                  <div>
+                    <motion.h2 
+                      className="text-[#1d1d1f] text-3xl md:text-4xl font-semibold tracking-tight"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      {activeProject.name}
+                    </motion.h2>
+                    <motion.p 
+                      className="text-[#86868b] text-sm mt-1"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      {activeProject.description}
+                    </motion.p>
+                  </div>
+                </div>
+
+                {/* Color palette */}
+                <div className="flex items-center gap-2">
+                  {activeProject.colors.map((color, i) => (
+                    <motion.div
+                      key={i}
+                      className="w-6 h-6 rounded-full shadow-sm"
+                      style={{ backgroundColor: color }}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.1 + i * 0.05 }}
+                    />
+                  ))}
+                </div>
               </div>
+
+              {/* Images Grid - Contained with margins */}
+              <div className="flex-1 grid grid-cols-12 gap-4">
+                
+                {/* Main Hero Image */}
+                <motion.div 
+                  className="col-span-12 lg:col-span-7 bg-white rounded-3xl overflow-hidden shadow-sm cursor-pointer"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                  whileHover={{ scale: 1.005 }}
+                  onClick={() => setSelectedImage(activeProject.heroImage)}
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img 
+                      src={activeProject.heroImage} 
+                      alt={activeProject.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Side Images Stack */}
+                <div className="col-span-12 lg:col-span-5 flex flex-col gap-4">
+                  {activeProject.images.slice(0, 2).map((img, i) => (
+                    <motion.div
+                      key={i}
+                      className="flex-1 bg-white rounded-3xl overflow-hidden shadow-sm cursor-pointer"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 + i * 0.1 }}
+                      whileHover={{ scale: 1.01 }}
+                      onClick={() => setSelectedImage(img)}
+                    >
+                      <div className="h-full overflow-hidden">
+                        <img 
+                          src={img} 
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Bottom Row - Additional Images */}
+                {activeProject.images.length > 2 && (
+                  <div className="col-span-12 grid grid-cols-4 gap-4 mt-2">
+                    {activeProject.images.slice(2, 6).map((img, i) => (
+                      <motion.div
+                        key={i}
+                        className="bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 + i * 0.05 }}
+                        whileHover={{ scale: 1.02, y: -2 }}
+                        onClick={() => setSelectedImage(img)}
+                      >
+                        <div className="aspect-square overflow-hidden">
+                          <img 
+                            src={img} 
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Bottom Navigation */}
+          <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#d2d2d7]/50">
+            <motion.button
+              onClick={() => navigate('prev')}
+              className="flex items-center gap-2 text-[#0066cc] text-sm font-medium hover:underline"
+              whileHover={{ x: -3 }}
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>{projects[(activeIndex - 1 + totalProjects) % totalProjects].name}</span>
+            </motion.button>
+
+            {/* Dots */}
+            <div className="flex items-center gap-2">
+              {projects.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => !isTransitioning && setActiveIndex(i)}
+                  className={`transition-all duration-300 rounded-full ${
+                    i === activeIndex 
+                      ? 'w-6 h-2 bg-[#1d1d1f]' 
+                      : 'w-2 h-2 bg-[#d2d2d7] hover:bg-[#86868b]'
+                  }`}
+                />
+              ))}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            <motion.button
+              onClick={() => navigate('next')}
+              className="flex items-center gap-2 text-[#0066cc] text-sm font-medium hover:underline"
+              whileHover={{ x: 3 }}
+            >
+              <span>{projects[(activeIndex + 1) % totalProjects].name}</span>
+              <ChevronRight className="w-4 h-4" />
+            </motion.button>
+          </div>
+        </main>
+      </div>
 
       {/* Lightbox */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md cursor-zoom-out"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xl cursor-zoom-out p-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -327,14 +257,14 @@ const ProjectCarousel = () => {
             <motion.img
               src={selectedImage}
               alt=""
-              className="max-w-[92vw] max-h-[90vh] object-contain rounded-lg"
+              className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 200, damping: 25 }}
             />
             <button
-              className="absolute top-6 right-6 text-white/70 hover:text-white text-3xl font-light"
+              className="absolute top-6 right-6 w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors"
               onClick={() => setSelectedImage(null)}
             >
               ✕
