@@ -10,6 +10,8 @@ import websiteSenMobile from "@/assets/website-sen-mobile.png";
 // ============ TALI TER ============
 import taliterLogo from "@/assets/taliter-logo.jpg";
 import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
+import mockupTaliterStudio from "@/assets/mockup-taliter-studio.jpg";
+import mockupTaliterEquipment from "@/assets/mockup-taliter-equipment.jpg";
 
 // ============ SFD (Strength For Dancers) ============
 import sfdLogoTransparent from "@/assets/sfd-logo-transparent.png";
@@ -34,20 +36,32 @@ import aiDnaScientist from "@/assets/ai-dna-scientist.png";
 import aiGeneEditing from "@/assets/ai-gene-editing.png";
 import aiCrisprLab from "@/assets/ai-crispr-lab.png";
 import aiPlantTechnology from "@/assets/ai-plant-technology.jpg";
+import mockupLearnaiDevices from "@/assets/mockup-learnai-devices.jpg";
+import mockupLearnaiMascot from "@/assets/mockup-learnai-mascot.jpg";
 
 // ============ EBRIDER ============
 import ebriderLogo from "@/assets/ebrider-logo-transparent.png";
 import mockupEbrider from "@/assets/mockup-ebrider.jpg";
+import mockupEbriderBike from "@/assets/mockup-ebrider-bike.jpg";
+import mockupEbriderApp from "@/assets/mockup-ebrider-app.jpg";
 
-// ============ OTHER BRANDS ============
+// ============ SEN JEWELRY ============
+import mockupSenJewelry from "@/assets/mockup-sen-jewelry.jpg";
+import mockupSenPackaging from "@/assets/mockup-sen-packaging.jpg";
+
+// ============ ON MOR ============
 import onmorLogo from "@/assets/onmor-logo.png";
+import mockupOnmorWine from "@/assets/mockup-onmor-wine.jpg";
+import mockupOnmorLabel from "@/assets/mockup-onmor-label.jpg";
+
+// ============ STUDIO ALEF ============
 import studioalefLogo from "@/assets/studioalef-logo.png";
-import sisenoraLogo from "@/assets/sisenora-logo.jpg";
-import ellamadariLogo from "@/assets/ellamadari-logo.jpg";
+import mockupStudioalefWorkspace from "@/assets/mockup-studioalef-workspace.jpg";
+import mockupStudioalefStationery from "@/assets/mockup-studioalef-stationery.jpg";
+
+// ============ OTHER ============
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
 import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
-
-// ============ OTHER MOCKUPS ============
 import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
 import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
 
@@ -77,49 +91,49 @@ const projects = [
   },
   {
     name: "Learn AI",
-    category: "Website · Branding",
+    category: "Website · Branding · Illustration",
     logo: learnaiLogo,
     colors: ["#00BCD4", "#0097A7", "#1A2B3C"],
-    images: [websiteLearnai],
+    images: [websiteLearnai, mockupLearnaiDevices, mockupLearnaiMascot, aiDnaScientist],
   },
   {
     name: "Tali Ter Barre Pilates",
-    category: "Branding · Print",
+    category: "Branding · Interior · Product",
     logo: taliterLogo,
     colors: ["#5CC8B5", "#F68B1F", "#FDF6E3", "#2A4A4A"],
-    images: [mockupTaliterSet],
+    images: [mockupTaliterSet, mockupTaliterStudio, mockupTaliterEquipment],
   },
   {
     name: "EBrider",
-    category: "Branding · Product",
+    category: "Branding · Product · App Design",
     logo: ebriderLogo,
     colors: ["#4A7C3F", "#1A1A1A", "#F5F5F5"],
-    images: [mockupEbrider],
+    images: [mockupEbriderBike, mockupEbrider, mockupEbriderApp],
   },
   {
     name: "SEN Fine Jewelry",
-    category: "Website Design",
+    category: "Website · Packaging · Branding",
     logo: undefined,
     colors: ["#1A365D", "#C53030", "#F7FAFC"],
-    images: [websiteSenMobile],
+    images: [websiteSenMobile, mockupSenJewelry, mockupSenPackaging],
   },
   {
     name: "ON MOR",
-    category: "Branding",
+    category: "Branding · Packaging · Label Design",
     logo: onmorLogo,
     colors: ["#722F37", "#C9A227", "#F5E6D3"],
-    images: [],
+    images: [mockupOnmorWine, mockupOnmorLabel],
   },
   {
     name: "Studio Alef",
-    category: "Branding",
+    category: "Branding · Stationery · Interior",
     logo: studioalefLogo,
     colors: ["#4A4A4A", "#8B8B8B", "#FFFFFF"],
-    images: [],
+    images: [mockupStudioalefWorkspace, mockupStudioalefStationery],
   },
   {
     name: "Graphic Design",
-    category: "Print · Illustration",
+    category: "Print · Illustration · Invitations",
     logo: undefined,
     colors: ["#1A1A1A", "#FFFFFF"],
     images: [printPosterEllamadari, printInfographicFarm, mockupAdamaCards, mockupWeddingInvite],
