@@ -4,62 +4,77 @@ import BrandingSection from "@/components/BrandingSection";
 import MockupsSection from "@/components/MockupsSection";
 import PrintDesignSection from "@/components/PrintDesignSection";
 
-// Import website screenshots
+// ============ WEBSITES ============
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
 import websiteLearnai from "@/assets/website-learnai.jpg";
 
-// Import branding assets - Tali Ter
+// ============ BRANDING - TALI TER ============
 import taliterLogo from "@/assets/taliter-logo.jpg";
 import taliterMonogram from "@/assets/taliter-monogram.jpg";
 
-// Import branding assets - SFD (Strength For Dancers)
+// ============ BRANDING - SFD (Strength For Dancers) ============
 import sfdLogo from "@/assets/sfd-logo.jpg";
-import sfdMonogram from "@/assets/sfd-monogram.jpg";
+import sfdLogoDark from "@/assets/sfd-logo-dark.jpg";
 
-// Import branding assets - Meshek 27
+// ============ BRANDING - MESHEK 27 ============
 import meshek27Logo from "@/assets/meshek27-logo.jpg";
 import meshek27Monogram from "@/assets/meshek27-monogram.jpg";
 
-// Import branding assets - Learn AI / DotAi
+// ============ BRANDING - LEARN AI / DOTAI ============
 import learnaiLogo from "@/assets/learnai-logo.jpg";
 import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 
-// Import branding assets - EBrider
+// ============ BRANDING - EBRIDER ============
 import ebriderLogo from "@/assets/ebrider-logo.jpg";
 import ebriderMonogram from "@/assets/ebrider-monogram.jpg";
 
-// Import branding assets - Studio Alef
+// ============ BRANDING - STUDIO ALEF ============
 import studioalefLogo from "@/assets/studioalef-logo.png";
 
-// Import branding assets - Si Señora
+// ============ BRANDING - ON MOR ============
+import onmorLogo from "@/assets/onmor-logo.png";
+
+// ============ BRANDING - SI SEÑORA ============
 import sisenoraLogo from "@/assets/sisenora-logo.jpg";
 
-// Import branding assets - Ella Madari
+// ============ BRANDING - ELLA MADARI ============
 import ellamadariLogo from "@/assets/ellamadari-logo.jpg";
 
-// Import mockup images
+// ============ MOCKUPS - TALI TER ============
 import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
+
+// ============ MOCKUPS - SFD ============
 import mockupSfdBlack from "@/assets/mockup-sfd-black.jpg";
 import mockupSfdWhite from "@/assets/mockup-sfd-white.jpg";
 import mockupSfdBands from "@/assets/mockup-sfd-bands.jpg";
+import mockupTshirtAthlete from "@/assets/mockup-tshirt-athlete.jpg";
+
+// ============ MOCKUPS - MESHEK 27 ============
 import mockupMeshek27Branding from "@/assets/mockup-meshek27-branding.jpg";
 import mockupMeshek27Wall from "@/assets/mockup-meshek27-wall.jpg";
 import mockupMeshek27Tshirt from "@/assets/mockup-meshek27-tshirt.jpg";
+import mockupMeshek27Box from "@/assets/mockup-meshek27-box.jpg";
+import mockupMeshek27Packaging from "@/assets/mockup-meshek27-packaging.jpg";
+
+// ============ MOCKUPS - EBRIDER ============
+import mockupEbrider from "@/assets/mockup-ebrider.jpg";
+
+// ============ MOCKUPS - OTHER ============
 import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
 import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
-import mockupOnmor from "@/assets/mockup-onmor.png";
-import mockupEbrider from "@/assets/mockup-ebrider.jpg";
-import mockupTshirtAthlete from "@/assets/mockup-tshirt-athlete.jpg";
 
-// Import print design images
+// ============ PRINT DESIGN ============
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
 import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
+
+// ============ DATA ============
 
 const websites = [
   { id: "1", title: "BetterSeeds - Gene Editing Platform", screenshot: websiteBetterseeds },
   { id: "2", title: "Learn AI - Educational Platform", screenshot: websiteLearnai },
 ];
 
+// Brands with complete identity (logo + monogram)
 const brands = [
   {
     id: "1",
@@ -72,7 +87,7 @@ const brands = [
     id: "2",
     name: "Strength For Dancers",
     logo: sfdLogo,
-    monogram: sfdMonogram,
+    monogram: sfdLogoDark,
     colors: ["#1A1A1A", "#2D2D2D", "#F5F5F0", "#FFFFFF"],
   },
   {
@@ -98,20 +113,27 @@ const brands = [
   },
   {
     id: "6",
+    name: "ON MOR",
+    logo: onmorLogo,
+    monogram: onmorLogo,
+    colors: ["#722F37", "#C9A227", "#F5E6D3", "#1A0A0A"],
+  },
+  {
+    id: "7",
     name: "Studio Alef",
     logo: studioalefLogo,
     monogram: studioalefLogo,
     colors: ["#4A4A4A", "#8B8B8B", "#FFFFFF", "#1A1A1A"],
   },
   {
-    id: "7",
+    id: "8",
     name: "Si Señora",
     logo: sisenoraLogo,
     monogram: sisenoraLogo,
     colors: ["#1A1A1A", "#4A4A4A", "#FFFFFF", "#F5F5F5"],
   },
   {
-    id: "8",
+    id: "9",
     name: "Ella Madari",
     logo: ellamadariLogo,
     monogram: ellamadariLogo,
@@ -119,19 +141,30 @@ const brands = [
   },
 ];
 
+// Mockups grouped by project
 const mockups = [
-  { id: "1", title: "Tali Ter - Brand Identity Set", image: mockupTaliterSet },
+  // Tali Ter
+  { id: "1", title: "Tali Ter - Brand Identity", image: mockupTaliterSet },
+  
+  // SFD - Strength For Dancers
   { id: "2", title: "SFD - Fitness Equipment", image: mockupSfdBlack },
   { id: "3", title: "SFD - White Collection", image: mockupSfdWhite },
   { id: "4", title: "SFD - Resistance Bands", image: mockupSfdBands },
-  { id: "5", title: "משק 27 - Full Branding", image: mockupMeshek27Branding },
-  { id: "6", title: "משק 27 - Wall Signage", image: mockupMeshek27Wall },
-  { id: "7", title: "משק 27 - T-Shirt", image: mockupMeshek27Tshirt },
-  { id: "8", title: "EBrider - Electric Bike", image: mockupEbrider },
-  { id: "9", title: "Adama - Business Cards", image: mockupAdamaCards },
-  { id: "10", title: "Lin & Guy - Wedding Invitation", image: mockupWeddingInvite },
-  { id: "11", title: "ON MOR - Luxury Logo", image: mockupOnmor },
-  { id: "12", title: "Train Like An Athlete - T-Shirt", image: mockupTshirtAthlete },
+  { id: "5", title: "SFD - Train Like An Athlete", image: mockupTshirtAthlete },
+  
+  // Meshek 27
+  { id: "6", title: "משק 27 - Full Branding", image: mockupMeshek27Branding },
+  { id: "7", title: "משק 27 - Wall Signage", image: mockupMeshek27Wall },
+  { id: "8", title: "משק 27 - T-Shirt", image: mockupMeshek27Tshirt },
+  { id: "9", title: "משק 27 - Vegetable Box", image: mockupMeshek27Box },
+  { id: "10", title: "משק 27 - Packaging", image: mockupMeshek27Packaging },
+  
+  // EBrider
+  { id: "11", title: "EBrider - Electric Bike", image: mockupEbrider },
+  
+  // Other projects
+  { id: "12", title: "Adama - Business Cards", image: mockupAdamaCards },
+  { id: "13", title: "Lin & Guy - Wedding", image: mockupWeddingInvite },
 ];
 
 const printDesigns = [
