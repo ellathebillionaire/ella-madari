@@ -45,6 +45,10 @@ import onmorLogo from "@/assets/onmor-logo.png";
 // ============ STUDIO ALEF ============
 import studioalefLogo from "@/assets/studioalef-logo.png";
 
+// ============ SI SEÑORA ============
+import sisenoraLogo from "@/assets/sisenora-logo.jpg";
+import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
+
 // ============ OTHER ============
 import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
 import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
@@ -103,6 +107,13 @@ const projects = [
     logo: undefined,
     colors: ["#1A365D", "#C53030", "#F7FAFC"],
     images: [websiteSenMobile],
+  },
+  {
+    name: "Si Señora",
+    category: "Branding · Store Design · Interior",
+    logo: sisenoraLogo,
+    colors: ["#1A1A1A", "#D4A574", "#F5F5F0", "#4A7C3F"],
+    images: [mockupSisenoraShop],
   },
   {
     name: "Ella Madari Shop",
