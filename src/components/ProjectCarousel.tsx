@@ -35,22 +35,22 @@ const ProjectCarousel = () => {
     if (relativePos > totalProjects / 2) relativePos -= totalProjects;
     if (relativePos < -totalProjects / 2) relativePos += totalProjects;
 
-    // Arc parameters
-    const radius = 600; // Distance from center
-    const angleStep = 25; // Degrees between each card
+    // Arc parameters - LARGER for dramatic effect
+    const radius = 900; // Increased from 600
+    const angleStep = 30; // Increased from 25 for more spread
     const angle = relativePos * angleStep;
     const angleRad = (angle * Math.PI) / 180;
 
     // Calculate 3D position on the arc
     const x = Math.sin(angleRad) * radius;
-    const z = Math.cos(angleRad) * radius - radius; // Offset so center is at z=0
+    const z = Math.cos(angleRad) * radius - radius;
     const rotateY = -angle;
 
     // Scale and opacity based on distance
     const absPos = Math.abs(relativePos);
-    const scale = Math.max(0.6, 1 - absPos * 0.12);
-    const opacity = Math.max(0.3, 1 - absPos * 0.2);
-    const blur = absPos > 2 ? absPos - 2 : 0;
+    const scale = Math.max(0.5, 1 - absPos * 0.15);
+    const opacity = Math.max(0.2, 1 - absPos * 0.25);
+    const blur = absPos > 2 ? (absPos - 2) * 1.5 : 0;
 
     return {
       transform: `translateX(${x}px) translateZ(${z}px) rotateY(${rotateY}deg) scale(${scale})`,
@@ -75,8 +75,8 @@ const ProjectCarousel = () => {
 
       {/* 3D Carousel Container */}
       <div 
-        className="relative w-full h-[500px] flex items-center justify-center"
-        style={{ perspective: '1200px' }}
+        className="relative w-full h-[600px] flex items-center justify-center"
+        style={{ perspective: '1500px' }}
       >
         <div 
           className="relative w-full h-full flex items-center justify-center"
@@ -91,7 +91,7 @@ const ProjectCarousel = () => {
                 key={project.slug}
                 className="absolute cursor-pointer"
                 style={{
-                  width: 240,
+                  width: 320, // Increased from 240
                   ...style,
                   transformStyle: 'preserve-3d',
                 }}
@@ -101,18 +101,18 @@ const ProjectCarousel = () => {
                 onClick={() => setActiveIndex(index)}
               >
                 {/* Top expanded images */}
-                <div className="h-16 mb-2 flex justify-center gap-1.5">
+                <div className="h-20 mb-3 flex justify-center gap-2">
                   <AnimatePresence>
                     {isActive && project.images.length > 1 && (
                       <>
                         {project.images.slice(1, 3).map((img, i) => (
                           <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                            initial={{ opacity: 0, y: 15, scale: 0.8 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 10, scale: 0.8 }}
-                            transition={{ duration: 0.25, delay: i * 0.05 }}
-                            className="w-14 h-14 rounded-lg overflow-hidden shadow-md"
+                            exit={{ opacity: 0, y: 15, scale: 0.8 }}
+                            transition={{ duration: 0.3, delay: i * 0.08 }}
+                            className="w-20 h-20 rounded-xl overflow-hidden shadow-lg"
                           >
                             <img src={img} alt="" className="w-full h-full object-cover" />
                           </motion.div>
@@ -139,18 +139,18 @@ const ProjectCarousel = () => {
                 </Link>
 
                 {/* Bottom expanded images */}
-                <div className="h-16 mt-2 flex justify-center gap-1.5">
+                <div className="h-20 mt-3 flex justify-center gap-2">
                   <AnimatePresence>
                     {isActive && project.images.length > 3 && (
                       <>
                         {project.images.slice(3, 5).map((img, i) => (
                           <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: -10, scale: 0.8 }}
+                            initial={{ opacity: 0, y: -15, scale: 0.8 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: -10, scale: 0.8 }}
-                            transition={{ duration: 0.25, delay: i * 0.05 }}
-                            className="w-14 h-14 rounded-lg overflow-hidden shadow-md"
+                            exit={{ opacity: 0, y: -15, scale: 0.8 }}
+                            transition={{ duration: 0.3, delay: i * 0.08 }}
+                            className="w-20 h-20 rounded-xl overflow-hidden shadow-lg"
                           >
                             <img src={img} alt="" className="w-full h-full object-cover" />
                           </motion.div>
