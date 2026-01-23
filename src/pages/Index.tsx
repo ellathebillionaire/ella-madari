@@ -36,6 +36,7 @@ import mockupMeshek27Wall from "@/assets/mockup-meshek27-wall.jpg";
 import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
 import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
 import mockupOnmor from "@/assets/mockup-onmor.png";
+import mockupEbrider from "@/assets/mockup-ebrider.jpg";
 
 const websites = [
   { id: "1", title: "BetterSeeds - Gene Editing Platform", screenshot: websiteBetterseeds },
@@ -86,9 +87,10 @@ const mockups = [
   { id: "3", title: "SFD - White Collection", image: mockupSfdWhite },
   { id: "4", title: "משק 27 - Full Branding", image: mockupMeshek27Branding },
   { id: "5", title: "משק 27 - Wall Signage", image: mockupMeshek27Wall },
-  { id: "6", title: "Adama - Business Cards", image: mockupAdamaCards },
-  { id: "7", title: "Lin & Guy - Wedding Invitation", image: mockupWeddingInvite },
-  { id: "8", title: "ON MOR - Luxury Logo", image: mockupOnmor },
+  { id: "6", title: "EBrider - Electric Bike", image: mockupEbrider },
+  { id: "7", title: "Adama - Business Cards", image: mockupAdamaCards },
+  { id: "8", title: "Lin & Guy - Wedding Invitation", image: mockupWeddingInvite },
+  { id: "9", title: "ON MOR - Luxury Logo", image: mockupOnmor },
 ];
 
 const Index = () => {
