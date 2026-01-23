@@ -1,14 +1,13 @@
 // ============ BRANDING PROJECTS ============
 
-// SFD - Strength For Dancers
-import sfdLogoTransparent from "@/assets/sfd-logo-transparent.png";
-import sfdMonogram from "@/assets/sfd-monogram-new.jpg";
-import websiteSfd from "@/assets/website-sfd.jpg";
-import mockupSfdBlack from "@/assets/mockup-sfd-black.jpg";
-import mockupSfdWhite from "@/assets/mockup-sfd-white.jpg";
-import mockupSfdBands from "@/assets/mockup-sfd-bands.jpg";
-import mockupSfdBandSystem from "@/assets/mockup-sfd-band-system.jpg";
-import mockupTshirtAthlete from "@/assets/mockup-tshirt-athlete.jpg";
+// SFD - Strength For Dancers - New organized assets
+import sfdMainLogo from '@/assets/sfd/main-logo.jpg';
+import sfdBrandingSet from '@/assets/sfd/branding-set.jpg';
+import sfdSecondaryLogo from '@/assets/sfd/secondary-logo.jpg';
+import sfdTshirtMockup from '@/assets/sfd/tshirt-mockup.jpg';
+import sfdWebsite from '@/assets/sfd/website.jpg';
+import sfdLogoTransparent from '@/assets/sfd/logo-transparent.png';
+import sfdSymbol from '@/assets/sfd/symbol.jpg';
 
 // Meshek 27 - New organized assets
 import meshek27WallLogo from '@/assets/meshek27/wall-logo.png';
@@ -36,13 +35,10 @@ import websiteLearnai from "@/assets/website-learnai.jpg";
 import learnaiMockupDesktop from "@/assets/learnai-mockup-desktop.jpg";
 import dotaiLogoFull from "@/assets/dotai-logo-full.jpg";
 
-// Tali Ter
-import taliterLogo from "@/assets/taliter-logo.jpg";
-import taliterMonogram from "@/assets/taliter-monogram.jpg";
-import taliterBrandingSet from "@/assets/taliter-branding-set.jpg";
-import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
-import taliterWallMockup from "@/assets/taliter-wall-mockup.jpg";
-import taliterBottleMockup from "@/assets/taliter-bottle-mockup.jpg";
+// Tali Ter - New organized assets
+import taliterBrandingSet from '@/assets/taliter/branding-set.jpg';
+import taliterWallSignage from '@/assets/taliter/wall-signage.jpg';
+import taliterBottleMockup from '@/assets/taliter/bottle-mockup.jpg';
 
 // EBrider
 import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
@@ -104,17 +100,16 @@ export const projects: Project[] = [
     category: 'branding',
     description: 'Strength For Dancers - מיתוג מלא ועיצוב מוצרים',
     logo: sfdLogoTransparent,
-    monogram: sfdMonogram,
-    heroImage: mockupTshirtAthlete, // Athlete wearing the brand - strong visual
+    monogram: sfdSecondaryLogo,
+    heroImage: sfdBrandingSet,
     bgColor: '#F5F5F7',
     accentColor: '#1A1A1A',
     colors: ['#1A1A1A', '#FFFFFF', '#4A5568'],
     images: [
-      mockupSfdBandSystem,
-      mockupSfdBlack,
-      mockupSfdWhite,
-      mockupSfdBands,
-      websiteSfd,
+      sfdMainLogo,
+      sfdSymbol,
+      sfdTshirtMockup,
+      sfdWebsite,
     ],
   },
   {
@@ -142,17 +137,14 @@ export const projects: Project[] = [
     slug: 'taliter',
     name: 'Tali Ter',
     category: 'branding',
-    description: 'מיתוג לסטודיו לקוסמטיקה ופילאטיס',
-    logo: taliterLogo,
-    monogram: taliterMonogram,
-    heroImage: taliterBrandingSet, // Elegant branding set
+    description: 'מיתוג לסטודיו לבר פילאטיס',
+    logo: taliterBrandingSet,
+    heroImage: taliterBrandingSet,
     bgColor: '#FFFBF5',
     accentColor: '#5CC8B5',
     colors: ['#5CC8B5', '#F68B1F', '#FDF6E3'],
     images: [
-      taliterMonogram,
-      mockupTaliterSet,
-      taliterWallMockup,
+      taliterWallSignage,
       taliterBottleMockup,
     ],
   },
