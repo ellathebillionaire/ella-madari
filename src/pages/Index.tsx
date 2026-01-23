@@ -40,9 +40,9 @@ import taliterMonogram from "@/assets/taliter-monogram.jpg";
 import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
 
 // ============ EBRIDER ============
-import ebriderLogo from "@/assets/ebrider-logo-transparent.png";
-import ebriderMonogram from "@/assets/ebrider-monogram-transparent.png";
-import mockupEbrider from "@/assets/mockup-ebrider.jpg";
+import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
+import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
+import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 
 // ============ SI SEÑORA ============
 import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
@@ -72,19 +72,11 @@ const standaloneBrands = [
     monogram: taliterMonogram,
     colors: ["#5CC8B5", "#F68B1F", "#FDF6E3", "#2A4A4A"],
   },
-  {
-    id: "ebrider",
-    name: "EBrider",
-    logo: ebriderLogo,
-    monogram: ebriderMonogram,
-    colors: ["#4A7C3F", "#1A1A1A", "#F5F5F5"],
-  },
 ];
 
 // Standalone mockups/print
 const standaloneMockups = [
   { id: "taliter", title: "Tali Ter Set", image: mockupTaliterSet },
-  { id: "ebrider", title: "EBrider", image: mockupEbrider },
   { id: "poster-ellamadari", title: "Ella Madari Poster", image: printPosterEllamadari },
   { id: "infographic", title: "Farm Infographic", image: printInfographicFarm },
   { id: "adama-cards", title: "Adama Cards", image: mockupAdamaCards },
@@ -135,6 +127,15 @@ const Index = () => {
         video={learnaiAnimation}
         colors={["#00D4E5", "#1A365D", "#F8FAFC", "#0F172A"]}
         isAlternate
+      />
+      
+      <FullProjectSection
+        name="EBrider"
+        description="Branding · Logo · Symbol"
+        logo={ebriderLogoNew}
+        monogram={ebriderSymbol}
+        mockups={[ebriderMockupHero]}
+        colors={["#4A7C3F", "#1A1A1A", "#F5F5F5"]}
       />
       
       {/* ========== STANDALONE SECTIONS ========== */}
