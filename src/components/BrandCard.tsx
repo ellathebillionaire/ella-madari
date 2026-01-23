@@ -9,43 +9,34 @@ interface BrandCardProps {
   accentColor?: string;
 }
 
-const BrandCard = ({ slug, name, logo, heroImage, bgColor, accentColor }: BrandCardProps) => {
+const BrandCard = ({ slug, name, logo, heroImage, bgColor }: BrandCardProps) => {
   return (
     <Link 
       to={`/project/${slug}`}
-      className="group block rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
+      className="group block rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
       style={{ backgroundColor: bgColor }}
     >
-      <div className="relative aspect-[3/4] p-6 flex flex-col">
-        {/* Accent circle behind product */}
-        {accentColor && (
-          <div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full opacity-60 transition-transform duration-500 group-hover:scale-110"
-            style={{ backgroundColor: accentColor }}
-          />
-        )}
-        
-        {/* Hero image/mockup */}
-        <div className="relative z-10 flex-1 flex items-center justify-center">
+      {/* Hero Image */}
+      <div className="aspect-[4/5] overflow-hidden">
+        <img 
+          src={heroImage} 
+          alt={name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+      </div>
+      
+      {/* Footer with logo and name */}
+      <div 
+        className="px-4 py-3 flex items-center justify-between gap-2"
+        style={{ backgroundColor: bgColor }}
+      >
+        <span className="text-xs font-medium text-gray-700 truncate">{name}</span>
+        <div className="h-5 w-auto flex-shrink-0">
           <img 
-            src={heroImage} 
-            alt={name}
-            className="max-h-full max-w-full object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105 group-hover:-translate-y-2"
+            src={logo} 
+            alt={`${name} logo`}
+            className="h-full w-auto object-contain"
           />
-        </div>
-        
-        {/* Brand name & logo */}
-        <div className="relative z-10 mt-auto pt-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-medium text-gray-800 tracking-wide">{name}</h3>
-            <div className="h-6 w-auto">
-              <img 
-                src={logo} 
-                alt={`${name} logo`}
-                className="h-full w-auto object-contain opacity-70 group-hover:opacity-100 transition-opacity"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </Link>
