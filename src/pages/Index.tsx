@@ -37,7 +37,9 @@ import learnaiAnimation from "@/assets/learnai-animation.mp4";
 // ============ TALI TER ============
 import taliterLogo from "@/assets/taliter-logo.jpg";
 import taliterMonogram from "@/assets/taliter-monogram.jpg";
-import mockupTaliterSet from "@/assets/mockup-taliter-set.jpg";
+import taliterWallMockup from "@/assets/taliter-wall-mockup.jpg";
+import taliterBrandingSet from "@/assets/taliter-branding-set.jpg";
+import taliterBottleMockup from "@/assets/taliter-bottle-mockup.jpg";
 
 // ============ EBRIDER ============
 import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
@@ -63,20 +65,8 @@ const standaloneWebsites = [
   { id: "sen", title: "SEN Fine Jewelry", screenshot: websiteSenMobile, type: "mobile" as const },
 ];
 
-// Branding-only projects
-const standaloneBrands = [
-  {
-    id: "taliter",
-    name: "Tali Ter Barre Pilates",
-    logo: taliterLogo,
-    monogram: taliterMonogram,
-    colors: ["#5CC8B5", "#F68B1F", "#FDF6E3", "#2A4A4A"],
-  },
-];
-
 // Standalone mockups/print
 const standaloneMockups = [
-  { id: "taliter", title: "Tali Ter Set", image: mockupTaliterSet },
   { id: "poster-ellamadari", title: "Ella Madari Poster", image: printPosterEllamadari },
   { id: "infographic", title: "Farm Infographic", image: printInfographicFarm },
   { id: "adama-cards", title: "Adama Cards", image: mockupAdamaCards },
@@ -130,18 +120,27 @@ const Index = () => {
       />
       
       <FullProjectSection
+        name="Tali Ter"
+        description="Branding · Pilates Studio Identity"
+        logo={taliterLogo}
+        monogram={taliterMonogram}
+        mockups={[taliterBrandingSet, taliterWallMockup, taliterBottleMockup]}
+        colors={["#5CC8B5", "#F68B1F", "#FDF6E3", "#2A4A4A"]}
+      />
+      
+      <FullProjectSection
         name="EBrider"
         description="Branding · Logo · Symbol"
         logo={ebriderLogoNew}
         monogram={ebriderSymbol}
         mockups={[ebriderMockupHero]}
         colors={["#4A7C3F", "#1A1A1A", "#F5F5F5"]}
+        isAlternate
       />
       
       {/* ========== STANDALONE SECTIONS ========== */}
       
       <WebsitesSection websites={standaloneWebsites} />
-      <BrandingSection brands={standaloneBrands} />
       <MockupsSection mockups={standaloneMockups} />
       
       {/* Footer */}
