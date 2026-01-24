@@ -1,7 +1,7 @@
-import MinimalGallery from '@/components/MinimalGallery';
+import Portfolio from '@/components/portfolio';
 
 const Index = () => {
-  return <MinimalGallery />;
+  return <Portfolio />;
 };
 
 export default Index;
