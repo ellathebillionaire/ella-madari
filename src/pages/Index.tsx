@@ -1,7 +1,7 @@
-import InteractivePortfolio from '@/components/portfolio/InteractivePortfolio';
+import SinglePagePortfolio from '@/components/portfolio/SinglePagePortfolio';
 
 const Index = () => {
-  return <InteractivePortfolio />;
+  return <SinglePagePortfolio />;
 };
 
 export default Index;
