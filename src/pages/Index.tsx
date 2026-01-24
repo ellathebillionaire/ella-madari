@@ -1,7 +1,7 @@
-import SinglePagePortfolio from '@/components/portfolio/SinglePagePortfolio';
+import CollagePortfolio from '@/components/portfolio/CollagePortfolio';
 
 const Index = () => {
-  return <SinglePagePortfolio />;
+  return <CollagePortfolio />;
 };
 
 export default Index;
