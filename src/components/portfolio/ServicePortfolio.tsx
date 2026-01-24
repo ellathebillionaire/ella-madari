@@ -1,0 +1,337 @@
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { X, Monitor, Smartphone, Palette, Printer } from 'lucide-react';
+import { projects, additionalWork } from '@/data/projects';
+
+// Get unique images
+const getUniqueImages = (images: string[], hero: string): string[] => {
+  return [...new Set([hero, ...images].filter(Boolean))];
+};
+
+// Filter valid projects
+const brandingProjects = projects.filter(p => p.category === 'branding' && p.heroImage);
+const websiteProjects = projects.filter(p => p.category === 'website' && p.heroImage);
+
+// ============ LIGHTBOX ============
+const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClose: () => void }) => {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', handleKey); document.body.style.overflow = ''; };
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 z-[200] bg-background/95 backdrop-blur-xl flex items-center justify-center p-8"
+    >
+      <button onClick={onClose} className="absolute top-6 right-6 p-2 rounded-full hover:bg-muted">
+        <X className="w-6 h-6" />
+      </button>
+      <span className="absolute top-6 left-6 text-sm text-muted-foreground">{name}</span>
+      <motion.img
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        src={image}
+        alt={name}
+        className="max-w-full max-h-full object-contain rounded-xl"
+        onClick={(e) => e.stopPropagation()}
+      />
+    </motion.div>
+  );
+};
+
+// ============ DESKTOP BROWSER MOCKUP ============
+const DesktopMockup = ({ image, name, onClick }: { image: string; name: string; onClick: () => void }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    onClick={onClick}
+    className="group cursor-pointer"
+  >
+    <div className="bg-muted rounded-2xl overflow-hidden shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2">
+      <div className="h-10 bg-secondary/60 flex items-center px-4 gap-2">
+        <div className="w-3 h-3 rounded-full bg-red-400/80" />
+        <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
+        <div className="w-3 h-3 rounded-full bg-green-400/80" />
+        <div className="flex-1 mx-6">
+          <div className="h-5 bg-background/30 rounded-full max-w-[250px]" />
+        </div>
+      </div>
+      <div className="aspect-[16/10] overflow-hidden">
+        <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+      </div>
+    </div>
+    <p className="text-sm text-muted-foreground mt-4 text-center font-light">{name}</p>
+  </motion.div>
+);
+
+// ============ MOBILE MOCKUP ============
+const MobileMockup = ({ image, name, onClick }: { image: string; name: string; onClick: () => void }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    onClick={onClick}
+    className="group cursor-pointer flex flex-col items-center"
+  >
+    <div className="relative bg-foreground rounded-[2.5rem] p-2 shadow-2xl transition-all duration-500 group-hover:-translate-y-2">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-foreground rounded-b-xl z-10" />
+      <div className="bg-background rounded-[2rem] overflow-hidden w-44 aspect-[9/19]">
+        <img src={image} alt={name} className="w-full h-full object-cover object-top" />
+      </div>
+    </div>
+    <p className="text-sm text-muted-foreground mt-5 text-center font-light">{name}</p>
+  </motion.div>
+);
+
+// ============ BRANDING PROJECT CARD ============
+const BrandingProjectCard = ({ project, onImageClick }: { 
+  project: typeof projects[0]; 
+  onImageClick: (img: string, name: string) => void 
+}) => {
+  const allImages = getUniqueImages(project.images, project.heroImage);
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.6 }}
+      className="mb-20"
+    >
+      {/* Project Header */}
+      <div className="mb-6">
+        <h3 className="text-xl md:text-2xl font-light tracking-tight">{project.name}</h3>
+        {project.description && (
+          <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+        )}
+      </div>
+      
+      {/* Images Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        {allImages.map((img, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: i * 0.05 }}
+            onClick={() => onImageClick(img, project.name)}
+            className="group cursor-pointer overflow-hidden rounded-xl bg-muted aspect-[4/3]"
+          >
+            <img
+              src={img}
+              alt={project.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </motion.div>
+        ))}
+        
+        {/* Video if exists */}
+        {project.video && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="overflow-hidden rounded-xl bg-muted aspect-[4/3] col-span-2"
+          >
+            <video
+              src={project.video}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
+// ============ PRINT CARD ============
+const PrintCard = ({ image, name, onClick }: { image: string; name: string; onClick: () => void }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5 }}
+    onClick={onClick}
+    className="group cursor-pointer"
+  >
+    <div className="relative">
+      <div className="absolute inset-1 bg-foreground/5 rounded-lg blur-lg group-hover:blur-xl transition-all" />
+      <div className="relative bg-background rounded-xl overflow-hidden shadow-md border border-border/30 transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
+        <div className="aspect-[4/5] overflow-hidden">
+          <img src={image} alt={name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        </div>
+      </div>
+    </div>
+    <p className="text-xs text-muted-foreground mt-3 text-center">{name}</p>
+  </motion.div>
+);
+
+// ============ SECTION HEADER ============
+const SectionHeader = ({ title, subtitle, icon }: { title: string; subtitle: string; icon: React.ReactNode }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    className="mb-12 md:mb-16 pt-8 border-t border-border/30"
+  >
+    <div className="flex items-center gap-3 mb-4">
+      <div className="p-2.5 rounded-xl bg-muted text-muted-foreground">{icon}</div>
+      <span className="text-[10px] tracking-[0.35em] uppercase text-muted-foreground">{subtitle}</span>
+    </div>
+    <h2 className="text-3xl md:text-5xl font-extralight tracking-tight">{title}</h2>
+  </motion.div>
+);
+
+// ============ MAIN COMPONENT ============
+const ServicePortfolio = () => {
+  const [lightbox, setLightbox] = useState<{ image: string; name: string } | null>(null);
+
+  const handleImageClick = (image: string, name: string) => {
+    setLightbox({ image, name });
+  };
+
+  return (
+    <>
+      <AnimatePresence>
+        {lightbox && (
+          <Lightbox image={lightbox.image} name={lightbox.name} onClose={() => setLightbox(null)} />
+        )}
+      </AnimatePresence>
+
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20"
+        >
+          <div className="max-w-6xl mx-auto px-6 md:px-10 py-4 flex justify-between items-center">
+            <div>
+              <h1 className="text-sm font-medium tracking-[0.12em]">ELLA MADARI</h1>
+              <p className="text-[9px] text-muted-foreground tracking-wide">Creative Director</p>
+            </div>
+            <nav className="flex gap-6 text-[10px] tracking-wider text-muted-foreground">
+              <a href="#branding" className="hover:text-foreground transition-colors">Branding</a>
+              <a href="#websites" className="hover:text-foreground transition-colors">Websites</a>
+              <a href="#print" className="hover:text-foreground transition-colors">Print</a>
+            </nav>
+          </div>
+        </motion.header>
+
+        {/* Hero */}
+        <section className="py-20 md:py-32 text-center px-6">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight mb-4">Portfolio</h1>
+            <p className="text-muted-foreground text-sm max-w-sm mx-auto font-light leading-relaxed">
+              מיתוג · עיצוב אתרים · גרפיקה
+            </p>
+          </motion.div>
+        </section>
+
+        <main className="max-w-6xl mx-auto px-6 md:px-10">
+          
+          {/* ========== BRANDING ========== */}
+          <section id="branding" className="py-16">
+            <SectionHeader title="מיתוג וזהות חזותית" subtitle="Branding" icon={<Palette className="w-5 h-5" />} />
+            
+            {brandingProjects.map((project) => (
+              <BrandingProjectCard 
+                key={project.slug} 
+                project={project} 
+                onImageClick={handleImageClick}
+              />
+            ))}
+          </section>
+
+          {/* ========== WEBSITES ========== */}
+          <section id="websites" className="py-16">
+            <SectionHeader title="עיצוב אתרים" subtitle="Web Design" icon={<Monitor className="w-5 h-5" />} />
+            
+            {/* Desktop Websites */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
+              {websiteProjects.map((project) => (
+                <DesktopMockup
+                  key={project.slug}
+                  image={project.heroImage}
+                  name={project.name}
+                  onClick={() => handleImageClick(project.heroImage, project.name)}
+                />
+              ))}
+              {additionalWork.websites.map((site, i) => (
+                <DesktopMockup
+                  key={`add-${i}`}
+                  image={site.image}
+                  name={site.name}
+                  onClick={() => handleImageClick(site.image, site.name)}
+                />
+              ))}
+            </div>
+
+            {/* Mobile Versions */}
+            {websiteProjects.some(p => p.images.length > 0) && (
+              <div className="mt-20">
+                <div className="flex items-center gap-2 mb-10">
+                  <Smartphone className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground">Mobile Versions</span>
+                </div>
+                <div className="flex justify-center gap-12 flex-wrap">
+                  {websiteProjects.filter(p => p.images.length > 0).map((project) => (
+                    <MobileMockup
+                      key={`mobile-${project.slug}`}
+                      image={project.images[0]}
+                      name={project.name}
+                      onClick={() => handleImageClick(project.images[0], project.name)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+
+          {/* ========== PRINT ========== */}
+          <section id="print" className="py-16">
+            <SectionHeader title="עיצוב גרפי ודפוס" subtitle="Print & Graphics" icon={<Printer className="w-5 h-5" />} />
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              {additionalWork.print.map((item, i) => (
+                <PrintCard
+                  key={i}
+                  image={item.image}
+                  name={item.name}
+                  onClick={() => handleImageClick(item.image, item.name)}
+                />
+              ))}
+            </div>
+          </section>
+
+        </main>
+
+        {/* Footer */}
+        <footer className="border-t border-border/20 py-10 mt-16">
+          <div className="max-w-6xl mx-auto px-6 md:px-10 flex justify-between items-center">
+            <a href="mailto:hello@ellamadari.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              hello@ellamadari.com
+            </a>
+            <span className="text-[10px] text-muted-foreground">© {new Date().getFullYear()}</span>
+          </div>
+        </footer>
+      </div>
+    </>
+  );
+};
+
+export default ServicePortfolio;
