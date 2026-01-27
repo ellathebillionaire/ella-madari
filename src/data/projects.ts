@@ -180,7 +180,6 @@ export const projects: Project[] = [
     colors: ['#5A5A5A', '#FFFFFF', '#E0E0E0'],
     images: [
       studioalefLogo,         // Logo
-      studioalefWallMockup,   // Wall mockup
     ],
     video: betterseedsAnimation, // 3D animation moved from BetterSeeds
   },
