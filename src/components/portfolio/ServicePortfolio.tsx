@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { X, Monitor, Smartphone, Palette } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { projects as staticProjects } from '@/data/projects';
 
 // ============ TYPES ============
 interface ProjectImage {
@@ -11,7 +12,7 @@ interface ProjectImage {
   display_order: number | null;
 }
 
-interface Project {
+interface DBProject {
   id: string;
   slug: string;
   name: string;
@@ -26,6 +27,19 @@ interface Project {
   display_order: number | null;
   is_visible: boolean | null;
   project_images: ProjectImage[];
+}
+
+// Combined project type that merges DB data with static fallbacks
+interface DisplayProject {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  description: string | null;
+  website_image: string | null;
+  mobile_image: string | null;
+  images: string[];
+  video?: string;
 }
 
 // ============ LIGHTBOX ============
@@ -114,13 +128,9 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
 
 // ============ BRANDING PROJECT CARD ============
 const BrandingProjectCard = ({ project, onImageClick }: { 
-  project: Project; 
+  project: DisplayProject; 
   onImageClick: (img: string, name: string) => void 
 }) => {
-  const images = project.project_images
-    .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
-    .map(img => img.image_url);
-  
   const hasScreenMockups = project.website_image || project.mobile_image;
   
   return (
@@ -171,9 +181,9 @@ const BrandingProjectCard = ({ project, onImageClick }: {
       )}
       
       {/* Images Grid */}
-      {images.length > 0 && (
+      {project.images.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
-          {images.map((img, i) => (
+          {project.images.map((img, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -190,6 +200,25 @@ const BrandingProjectCard = ({ project, onImageClick }: {
               />
             </motion.div>
           ))}
+          
+          {/* Video if exists */}
+          {project.video && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="overflow-hidden rounded-lg sm:rounded-xl bg-muted aspect-[4/3]"
+            >
+              <video
+                src={project.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          )}
         </div>
       )}
     </motion.div>
@@ -215,7 +244,7 @@ const SectionHeader = ({ title, subtitle, icon }: { title: string; subtitle: str
 // ============ MAIN COMPONENT ============
 const ServicePortfolio = () => {
   const [lightbox, setLightbox] = useState<{ image: string; name: string } | null>(null);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [dbProjects, setDbProjects] = useState<DBProject[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -230,7 +259,7 @@ const ServicePortfolio = () => {
         .order('display_order', { ascending: true });
 
       if (!error && data) {
-        setProjects(data as Project[]);
+        setDbProjects(data as DBProject[]);
       }
       setLoading(false);
     };
@@ -242,13 +271,37 @@ const ServicePortfolio = () => {
     setLightbox({ image, name });
   };
 
+  // Merge DB projects with static fallback data for images
+  const displayProjects: DisplayProject[] = dbProjects.map(dbProject => {
+    const staticProject = staticProjects.find(sp => sp.slug === dbProject.slug);
+    
+    // Use DB images if available, otherwise fall back to static images
+    const dbImages = dbProject.project_images
+      .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
+      .map(img => img.image_url);
+    
+    const images = dbImages.length > 0 ? dbImages : (staticProject?.images || []);
+    
+    return {
+      id: dbProject.id,
+      slug: dbProject.slug,
+      name: dbProject.name,
+      category: dbProject.category,
+      description: dbProject.description,
+      // Use DB images first, then static fallback
+      website_image: dbProject.website_image || staticProject?.websiteImage || null,
+      mobile_image: dbProject.mobile_image || staticProject?.mobileImage || null,
+      images,
+      video: staticProject?.video,
+    };
+  });
+
   // Filter projects by category
-  const brandingProjects = projects.filter(p => p.category === 'branding');
-  const websiteProjects = projects.filter(p => p.category === 'website');
+  const brandingProjects = displayProjects.filter(p => p.category === 'branding');
   
   // Projects with website images for the websites section
-  const projectsWithWebsiteImages = projects.filter(p => p.website_image);
-  const projectsWithMobileImages = projects.filter(p => p.mobile_image);
+  const projectsWithWebsiteImages = displayProjects.filter(p => p.website_image);
+  const projectsWithMobileImages = displayProjects.filter(p => p.mobile_image);
 
   if (loading) {
     return (
