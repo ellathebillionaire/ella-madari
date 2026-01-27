@@ -332,12 +332,8 @@ const ServicePortfolio = () => {
           animate={{ opacity: 1, y: 0 }}
           className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20"
         >
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-3 sm:py-4 flex justify-between items-center">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-3 sm:py-4 flex justify-center items-center">
             <h1 className="text-xs sm:text-sm font-medium tracking-[0.1em] sm:tracking-[0.12em]">ELLA MADARI</h1>
-            <nav className="flex gap-4 sm:gap-5 text-[9px] sm:text-[10px] tracking-wider text-muted-foreground">
-              <a href="#branding" className="hover:text-foreground transition-colors">מיתוג</a>
-              <a href="#websites" className="hover:text-foreground transition-colors">אתרים</a>
-            </nav>
           </div>
         </motion.header>
 
