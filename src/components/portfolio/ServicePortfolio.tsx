@@ -13,6 +13,7 @@ const sfdProject = projects.find(p => p.slug === 'sfd') as ProjectWithWebsite | 
 const betterseedsProject = projects.find(p => p.slug === 'betterseeds') as ProjectWithWebsite | undefined;
 const sisenoraProject = projects.find(p => p.slug === 'sisenora') as ProjectWithWebsite | undefined;
 const ascolaProject = projects.find(p => p.slug === 'ascola') as ProjectWithWebsite | undefined;
+const ebriderProject = projects.find(p => p.slug === 'ebrider') as ProjectWithWebsite | undefined;
 
 // ============ LIGHTBOX ============
 const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClose: () => void }) => {
@@ -372,6 +373,14 @@ const ServicePortfolio = () => {
                     image={betterseedsProject.mobileImage}
                     name="BetterSeeds"
                     onClick={() => handleImageClick(betterseedsProject.mobileImage!, 'BetterSeeds')}
+                  />
+                )}
+                {/* EBrider Mobile */}
+                {ebriderProject?.mobileImage && (
+                  <MobileMockup
+                    image={ebriderProject.mobileImage}
+                    name="EBrider"
+                    onClick={() => handleImageClick(ebriderProject.mobileImage!, 'EBrider')}
                   />
                 )}
               </div>

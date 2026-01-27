@@ -44,6 +44,7 @@ import taliterBottleMockup from '@/assets/taliter/bottle-mockup.jpg';
 import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
 import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
 import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
+import ebriderMobile from "@/assets/ebrider-mobile.png";
 
 // Studio Alef
 import studioalefLogo from "@/assets/studioalef-logo.png";
@@ -203,7 +204,7 @@ export const projects: Project[] = [
     slug: 'ebrider',
     name: 'EBrider',
     category: 'branding',
-    description: 'מיתוג לחברת אופניים חשמליים',
+    description: 'לוגו ובניית אתר חנות - חלקי חילוף לאופניים',
     logo: ebriderLogoNew,
     monogram: ebriderSymbol,
     heroImage: ebriderMockupHero,
@@ -215,6 +216,7 @@ export const projects: Project[] = [
       ebriderSymbol,          // Symbol/monogram
       ebriderMockupHero,      // Main mockup
     ],
+    mobileImage: ebriderMobile,
   },
   {
     slug: 'sisenora',
