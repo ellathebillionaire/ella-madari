@@ -159,25 +159,6 @@ export const projects: Project[] = [
       meshek27TshirtMockup,
     ],
   },
-  // EBrider - 3 images + mobile = 4 items
-  {
-    slug: 'ebrider',
-    name: 'EBrider',
-    category: 'branding',
-    description: 'לוגו ובניית אתר חנות - חלקי חילוף לאופניים',
-    logo: ebriderLogoNew,
-    monogram: ebriderSymbol,
-    heroImage: ebriderMockupHero,
-    bgColor: '#F5F8F5',
-    accentColor: '#4A9F4A',
-    colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
-    images: [
-      ebriderLogoNew,
-      ebriderSymbol,
-      ebriderMockupHero,
-    ],
-    mobileImage: ebriderMobile,
-  },
   // Learn AI - 3 images + video = 4 items
   {
     slug: 'learnai',
@@ -247,6 +228,25 @@ export const projects: Project[] = [
       taliterWallSignage,
       taliterBottleMockup,
     ],
+  },
+  // EBrider - 3 images + mobile = 4 items
+  {
+    slug: 'ebrider',
+    name: 'EBrider',
+    category: 'branding',
+    description: 'לוגו ובניית אתר חנות - חלקי חילוף לאופניים',
+    logo: ebriderLogoNew,
+    monogram: ebriderSymbol,
+    heroImage: ebriderMockupHero,
+    bgColor: '#F5F8F5',
+    accentColor: '#4A9F4A',
+    colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
+    images: [
+      ebriderLogoNew,
+      ebriderSymbol,
+      ebriderMockupHero,
+    ],
+    mobileImage: ebriderMobile,
   },
   // Studio Alef - 1 image + video = 2 items
   {
