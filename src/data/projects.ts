@@ -109,7 +109,6 @@ export const projects: Project[] = [
       sfdSymbol,          // Monogram
       sfdTshirtMockup,    // Mockup
       sfdBandsProduct,    // Bands product mockup
-      sfdWebsite,         // Website
     ],
     websiteImage: sfdWebsiteDesktopNew,
     mobileImage: sfdWebsiteMobileNew,
