@@ -1,20 +1,32 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { X, Monitor, Smartphone, Palette } from 'lucide-react';
-import { projects } from '@/data/projects';
+import { supabase } from '@/integrations/supabase/client';
 
-// Filter valid projects
-const brandingProjects = projects.filter(p => p.category === 'branding' && p.heroImage);
-const websiteProjects = projects.filter(p => p.category === 'website' && p.heroImage);
+// ============ TYPES ============
+interface ProjectImage {
+  id: string;
+  image_url: string;
+  alt_text: string | null;
+  display_order: number | null;
+}
 
-// Get projects with website/mobile images for websites section
-type ProjectWithWebsite = typeof projects[0] & { websiteImage?: string; mobileImage?: string };
-const sfdProject = projects.find(p => p.slug === 'sfd') as ProjectWithWebsite | undefined;
-const betterseedsProject = projects.find(p => p.slug === 'betterseeds') as ProjectWithWebsite | undefined;
-const sisenoraProject = projects.find(p => p.slug === 'sisenora') as ProjectWithWebsite | undefined;
-const ascolaProject = projects.find(p => p.slug === 'ascola') as ProjectWithWebsite | undefined;
-const ebriderProject = projects.find(p => p.slug === 'ebrider') as ProjectWithWebsite | undefined;
-const learnaiProject = projects.find(p => p.slug === 'learnai') as ProjectWithWebsite | undefined;
+interface Project {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  description: string | null;
+  hero_image: string | null;
+  bg_color: string | null;
+  accent_color: string | null;
+  colors: string[] | null;
+  website_image: string | null;
+  mobile_image: string | null;
+  display_order: number | null;
+  is_visible: boolean | null;
+  project_images: ProjectImage[];
+}
 
 // ============ LIGHTBOX ============
 const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClose: () => void }) => {
@@ -102,13 +114,14 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
 
 // ============ BRANDING PROJECT CARD ============
 const BrandingProjectCard = ({ project, onImageClick }: { 
-  project: typeof projects[0]; 
+  project: Project; 
   onImageClick: (img: string, name: string) => void 
 }) => {
-  // Get unique images only (no duplicates)
-  const allImages = [...new Set(project.images)];
-  const projectWithWebsite = project as typeof projects[0] & { websiteImage?: string; mobileImage?: string };
-  const hasScreenMockups = projectWithWebsite.websiteImage || projectWithWebsite.mobileImage;
+  const images = project.project_images
+    .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
+    .map(img => img.image_url);
+  
+  const hasScreenMockups = project.website_image || project.mobile_image;
   
   return (
     <motion.div
@@ -136,66 +149,49 @@ const BrandingProjectCard = ({ project, onImageClick }: {
           className="mb-4 sm:mb-6 flex flex-wrap gap-3 sm:gap-4 items-end"
         >
           {/* Desktop Mockup */}
-          {projectWithWebsite.websiteImage && (
+          {project.website_image && (
             <div className="flex-1 min-w-[160px] sm:min-w-[200px] max-w-sm md:max-w-md">
               <DesktopMockup
-                image={projectWithWebsite.websiteImage}
+                image={project.website_image}
                 name=""
-                onClick={() => onImageClick(projectWithWebsite.websiteImage!, project.name)}
+                onClick={() => onImageClick(project.website_image!, project.name)}
               />
             </div>
           )}
           
           {/* Mobile Mockup */}
-          {projectWithWebsite.mobileImage && (
+          {project.mobile_image && (
             <MobileMockup
-              image={projectWithWebsite.mobileImage}
+              image={project.mobile_image}
               name=""
-              onClick={() => onImageClick(projectWithWebsite.mobileImage!, project.name)}
+              onClick={() => onImageClick(project.mobile_image!, project.name)}
             />
           )}
         </motion.div>
       )}
       
       {/* Images Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
-        {allImages.map((img, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-            onClick={() => onImageClick(img, project.name)}
-            className="group cursor-pointer overflow-hidden rounded-lg sm:rounded-xl bg-muted aspect-[4/3]"
-          >
-            <img
-              src={img}
-              alt={project.name}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          </motion.div>
-        ))}
-        
-        {/* Video if exists - same size as images */}
-        {project.video && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="overflow-hidden rounded-lg sm:rounded-xl bg-muted aspect-[4/3]"
-          >
-            <video
-              src={project.video}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        )}
-      </div>
+      {images.length > 0 && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
+          {images.map((img, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              onClick={() => onImageClick(img, project.name)}
+              className="group cursor-pointer overflow-hidden rounded-lg sm:rounded-xl bg-muted aspect-[4/3]"
+            >
+              <img
+                src={img}
+                alt={project.name}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </motion.div>
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 };
@@ -219,10 +215,48 @@ const SectionHeader = ({ title, subtitle, icon }: { title: string; subtitle: str
 // ============ MAIN COMPONENT ============
 const ServicePortfolio = () => {
   const [lightbox, setLightbox] = useState<{ image: string; name: string } | null>(null);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const { data, error } = await supabase
+        .from('projects')
+        .select(`
+          *,
+          project_images (*)
+        `)
+        .eq('is_visible', true)
+        .order('display_order', { ascending: true });
+
+      if (!error && data) {
+        setProjects(data as Project[]);
+      }
+      setLoading(false);
+    };
+
+    fetchProjects();
+  }, []);
 
   const handleImageClick = (image: string, name: string) => {
     setLightbox({ image, name });
   };
+
+  // Filter projects by category
+  const brandingProjects = projects.filter(p => p.category === 'branding');
+  const websiteProjects = projects.filter(p => p.category === 'website');
+  
+  // Projects with website images for the websites section
+  const projectsWithWebsiteImages = projects.filter(p => p.website_image);
+  const projectsWithMobileImages = projects.filter(p => p.mobile_image);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-muted-foreground/30 border-t-foreground rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -267,7 +301,7 @@ const ServicePortfolio = () => {
             
             {brandingProjects.map((project) => (
               <BrandingProjectCard 
-                key={project.slug} 
+                key={project.id} 
                 project={project} 
                 onImageClick={handleImageClick}
               />
@@ -279,82 +313,38 @@ const ServicePortfolio = () => {
             <SectionHeader title="עיצוב אתרים" subtitle="Web Design" icon={<Monitor className="w-4 h-4" />} />
             
             {/* Desktop Websites */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-12">
-              {sfdProject?.websiteImage && (
-                <DesktopMockup
-                  image={sfdProject.websiteImage}
-                  name="SFD"
-                  onClick={() => handleImageClick(sfdProject.websiteImage!, 'SFD')}
-                />
-              )}
-              {betterseedsProject?.websiteImage && (
-                <DesktopMockup
-                  image={betterseedsProject.websiteImage}
-                  name="BetterSeeds"
-                  onClick={() => handleImageClick(betterseedsProject.websiteImage!, 'BetterSeeds')}
-                />
-              )}
-              {sisenoraProject?.websiteImage && (
-                <DesktopMockup
-                  image={sisenoraProject.websiteImage}
-                  name="Si Señora"
-                  onClick={() => handleImageClick(sisenoraProject.websiteImage!, 'Si Señora')}
-                />
-              )}
-              {ascolaProject?.websiteImage && (
-                <DesktopMockup
-                  image={ascolaProject.websiteImage}
-                  name="Ascola Garden"
-                  onClick={() => handleImageClick(ascolaProject.websiteImage!, 'Ascola Garden')}
-                />
-              )}
-              {learnaiProject?.websiteImage && (
-                <DesktopMockup
-                  image={learnaiProject.websiteImage}
-                  name="Learn AI"
-                  onClick={() => handleImageClick(learnaiProject.websiteImage!, 'Learn AI')}
-                />
-              )}
-            </div>
-
-            {/* Mobile Versions */}
-            <div className="mt-8 sm:mt-12">
-              <div className="flex items-center gap-2 mb-4 sm:mb-6">
-                <Smartphone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-muted-foreground" />
-                <span className="text-[8px] sm:text-[9px] tracking-[0.2em] uppercase text-muted-foreground">Mobile</span>
-              </div>
-              <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
-                {websiteProjects.filter(p => p.slug === 'sen' && p.images.length > 0).map((project) => (
-                  <MobileMockup
-                    key={`mobile-${project.slug}`}
-                    image={project.images[0]}
+            {projectsWithWebsiteImages.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-12">
+                {projectsWithWebsiteImages.map((project) => (
+                  <DesktopMockup
+                    key={project.id}
+                    image={project.website_image!}
                     name={project.name}
-                    onClick={() => handleImageClick(project.images[0], project.name)}
+                    onClick={() => handleImageClick(project.website_image!, project.name)}
                   />
                 ))}
-                {sfdProject?.mobileImage && (
-                  <MobileMockup
-                    image={sfdProject.mobileImage}
-                    name="SFD"
-                    onClick={() => handleImageClick(sfdProject.mobileImage!, 'SFD')}
-                  />
-                )}
-                {betterseedsProject?.mobileImage && (
-                  <MobileMockup
-                    image={betterseedsProject.mobileImage}
-                    name="BetterSeeds"
-                    onClick={() => handleImageClick(betterseedsProject.mobileImage!, 'BetterSeeds')}
-                  />
-                )}
-                {ebriderProject?.mobileImage && (
-                  <MobileMockup
-                    image={ebriderProject.mobileImage}
-                    name="EBrider"
-                    onClick={() => handleImageClick(ebriderProject.mobileImage!, 'EBrider')}
-                  />
-                )}
               </div>
-            </div>
+            )}
+
+            {/* Mobile Versions */}
+            {projectsWithMobileImages.length > 0 && (
+              <div className="mt-8 sm:mt-12">
+                <div className="flex items-center gap-2 mb-4 sm:mb-6">
+                  <Smartphone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-muted-foreground" />
+                  <span className="text-[8px] sm:text-[9px] tracking-[0.2em] uppercase text-muted-foreground">Mobile</span>
+                </div>
+                <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
+                  {projectsWithMobileImages.map((project) => (
+                    <MobileMockup
+                      key={project.id}
+                      image={project.mobile_image!}
+                      name={project.name}
+                      onClick={() => handleImageClick(project.mobile_image!, project.name)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
 
         </main>
