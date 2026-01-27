@@ -3,14 +3,12 @@ import { useState, useEffect } from 'react';
 import { X, Monitor, Smartphone, Palette, Printer } from 'lucide-react';
 import { projects, additionalWork } from '@/data/projects';
 
-// Get unique images
-const getUniqueImages = (images: string[], hero: string): string[] => {
-  return [...new Set([hero, ...images].filter(Boolean))];
-};
-
 // Filter valid projects
 const brandingProjects = projects.filter(p => p.category === 'branding' && p.heroImage);
 const websiteProjects = projects.filter(p => p.category === 'website' && p.heroImage);
+
+// Get BetterSeeds for desktop mockup in websites section
+const betterseedsProject = projects.find(p => p.slug === 'betterseeds') as (typeof projects[0] & { websiteImage?: string }) | undefined;
 
 // ============ LIGHTBOX ============
 const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClose: () => void }) => {
@@ -97,7 +95,8 @@ const BrandingProjectCard = ({ project, onImageClick }: {
   project: typeof projects[0]; 
   onImageClick: (img: string, name: string) => void 
 }) => {
-  const allImages = getUniqueImages(project.images, project.heroImage);
+  // Get unique images only (no duplicates)
+  const allImages = [...new Set(project.images)];
   
   return (
     <motion.div
@@ -135,13 +134,13 @@ const BrandingProjectCard = ({ project, onImageClick }: {
           </motion.div>
         ))}
         
-        {/* Video if exists */}
+        {/* Video if exists - same size as images */}
         {project.video && (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="overflow-hidden rounded-xl bg-muted aspect-[4/3] col-span-2"
+            className="overflow-hidden rounded-xl bg-muted aspect-[4/3]"
           >
             <video
               src={project.video}
@@ -271,6 +270,14 @@ const ServicePortfolio = () => {
                   onClick={() => handleImageClick(project.heroImage, project.name)}
                 />
               ))}
+              {/* BetterSeeds website in desktop mockup */}
+              {betterseedsProject?.websiteImage && (
+                <DesktopMockup
+                  image={betterseedsProject.websiteImage}
+                  name="BetterSeeds"
+                  onClick={() => handleImageClick(betterseedsProject.websiteImage!, 'BetterSeeds')}
+                />
+              )}
               {additionalWork.websites.map((site, i) => (
                 <DesktopMockup
                   key={`add-${i}`}
