@@ -14,7 +14,95 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      project_images: {
+        Row: {
+          alt_text: string | null
+          created_at: string | null
+          display_order: number | null
+          id: string
+          image_url: string
+          project_id: string
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          image_url: string
+          project_id: string
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_images_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          accent_color: string | null
+          bg_color: string | null
+          category: string
+          colors: string[] | null
+          created_at: string | null
+          description: string | null
+          display_order: number | null
+          hero_image: string | null
+          id: string
+          is_visible: boolean | null
+          mobile_image: string | null
+          name: string
+          slug: string
+          updated_at: string | null
+          website_image: string | null
+        }
+        Insert: {
+          accent_color?: string | null
+          bg_color?: string | null
+          category: string
+          colors?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          hero_image?: string | null
+          id?: string
+          is_visible?: boolean | null
+          mobile_image?: string | null
+          name: string
+          slug: string
+          updated_at?: string | null
+          website_image?: string | null
+        }
+        Update: {
+          accent_color?: string | null
+          bg_color?: string | null
+          category?: string
+          colors?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          hero_image?: string | null
+          id?: string
+          is_visible?: boolean | null
+          mobile_image?: string | null
+          name?: string
+          slug?: string
+          updated_at?: string | null
+          website_image?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
