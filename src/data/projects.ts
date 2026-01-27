@@ -52,6 +52,7 @@ import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
 // BetterSeeds - AI generated images for website
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
+import betterseedsMobile from "@/assets/betterseeds-mobile.png";
 import betterseedsHero from "@/assets/betterseeds-hero.jpg";
 import aiGeneEditing from "@/assets/ai-gene-editing.png";
 import aiDnaScientist from "@/assets/ai-dna-scientist.png";
@@ -249,8 +250,9 @@ export const projects: Project[] = [
       aiDroneFarming,         // AI: Plant DNA
       aiCrisprLab,            // AI: CRISPR lab
     ],
-    websiteImage: websiteBetterseeds, // Separate website image for desktop mockup
-  } as Project & { websiteImage: string },
+    websiteImage: websiteBetterseeds,
+    mobileImage: betterseedsMobile,
+  } as Project & { websiteImage: string; mobileImage: string },
 ];
 
 // ============ ADDITIONAL WORK (Websites, Print, Graphics) ============
