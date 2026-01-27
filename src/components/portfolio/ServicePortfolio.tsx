@@ -157,15 +157,18 @@ const BrandingProjectCard = ({ project, onImageClick }: {
         
         {/* Brand Colors */}
         {project.colors && project.colors.length > 0 && (
-          <div className="flex gap-1.5 sm:gap-2">
-            {project.colors.map((color, idx) => (
-              <div
-                key={idx}
-                className="w-5 h-5 sm:w-6 sm:h-6 rounded-full shadow-sm border border-black/5"
-                style={{ backgroundColor: color }}
-                title={color}
-              />
-            ))}
+          <div className="flex flex-col items-end gap-1.5">
+            <span className="text-[10px] text-muted-foreground tracking-wide">פלטת צבעים</span>
+            <div className="flex gap-1.5 sm:gap-2">
+              {project.colors.map((color, idx) => (
+                <div
+                  key={idx}
+                  className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-border"
+                  style={{ backgroundColor: color }}
+                  title={color}
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>
