@@ -247,9 +247,13 @@ const ServicePortfolio = () => {
         </motion.header>
 
         {/* Hero */}
-        <section className="py-16 md:py-24 text-center px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight">Ella Madari</h2>
+        <section className="py-14 md:py-20 text-center px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="w-px h-16 mx-auto bg-gradient-to-b from-transparent via-border/40 to-transparent" />
           </motion.div>
         </section>
 
