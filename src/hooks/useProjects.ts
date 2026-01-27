@@ -125,6 +125,32 @@ export const useProjects = () => {
     return { url: publicUrl, error: null };
   };
 
+  const reorderProjects = async (projectIds: string[]) => {
+    // Update display_order for each project
+    const updates = projectIds.map((id, index) => 
+      supabase
+        .from('projects')
+        .update({ display_order: index })
+        .eq('id', id)
+    );
+    
+    await Promise.all(updates);
+    await fetchProjects();
+  };
+
+  const reorderImages = async (projectId: string, imageIds: string[]) => {
+    // Update display_order for each image
+    const updates = imageIds.map((id, index) => 
+      supabase
+        .from('project_images')
+        .update({ display_order: index })
+        .eq('id', id)
+    );
+    
+    await Promise.all(updates);
+    await fetchProjects();
+  };
+
   return {
     projects,
     loading,
@@ -134,6 +160,8 @@ export const useProjects = () => {
     deleteProject,
     addProjectImage,
     deleteProjectImage,
-    uploadImage
+    uploadImage,
+    reorderProjects,
+    reorderImages
   };
 };
