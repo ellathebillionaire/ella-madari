@@ -86,17 +86,19 @@ const DesktopMockup = ({ image, name, onClick }: { image: string; name: string; 
       onClick={onClick}
       className="group cursor-pointer w-full"
     >
-      <div className="bg-neutral-200 rounded-lg sm:rounded-xl overflow-hidden shadow-md transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
-        <div className="bg-neutral-300 flex items-center h-5 sm:h-6 px-2 sm:px-2.5 gap-1">
-          <div className="rounded-full bg-red-400 w-1.5 h-1.5 sm:w-2 sm:h-2" />
-          <div className="rounded-full bg-yellow-400 w-1.5 h-1.5 sm:w-2 sm:h-2" />
-          <div className="rounded-full bg-green-400 w-1.5 h-1.5 sm:w-2 sm:h-2" />
-          <div className="flex-1 mx-2 sm:mx-3">
-            <div className="h-2 sm:h-3 bg-neutral-400/40 rounded-full max-w-[60px] sm:max-w-[100px]" />
+      <div className="bg-neutral-100 rounded-lg sm:rounded-xl overflow-hidden shadow-md transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
+        {/* Browser Bar - tight and minimal */}
+        <div className="bg-neutral-200 flex items-center h-4 sm:h-5 px-2 gap-1">
+          <div className="rounded-full bg-[#FF5F57] w-1.5 h-1.5 sm:w-2 sm:h-2" />
+          <div className="rounded-full bg-[#FEBC2E] w-1.5 h-1.5 sm:w-2 sm:h-2" />
+          <div className="rounded-full bg-[#28C840] w-1.5 h-1.5 sm:w-2 sm:h-2" />
+          <div className="flex-1 mx-2 sm:mx-4">
+            <div className="h-2 sm:h-2.5 bg-neutral-300 rounded-full max-w-[80px] sm:max-w-[120px] mx-auto" />
           </div>
         </div>
-        <div className="aspect-[16/10] overflow-hidden bg-neutral-100">
-          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-102" />
+        {/* Screenshot - fills the frame completely */}
+        <div className="aspect-[16/10] overflow-hidden">
+          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]" />
         </div>
       </div>
       {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 text-center font-light">{name}</p>}
