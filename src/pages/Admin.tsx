@@ -9,17 +9,31 @@ import { Trash2, Plus, Eye, EyeOff, Upload, LogOut, ArrowLeft } from 'lucide-rea
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 
-const AdminLogin = ({ onLogin }: { onLogin: (email: string, password: string) => Promise<{ error: Error | null }> }) => {
+const AdminLogin = ({ onLogin, onSignUp }: { 
+  onLogin: (email: string, password: string) => Promise<{ error: Error | null }>;
+  onSignUp: (email: string, password: string) => Promise<{ error: Error | null }>;
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await onLogin(email, password);
-    if (error) {
-      toast.error('שגיאה בהתחברות');
+    
+    if (isSignUp) {
+      const { error } = await onSignUp(email, password);
+      if (error) {
+        toast.error('שגיאה בהרשמה: ' + error.message);
+      } else {
+        toast.success('נרשמת בהצלחה! כעת צריך להוסיף לך הרשאות מנהל.');
+      }
+    } else {
+      const { error } = await onLogin(email, password);
+      if (error) {
+        toast.error('שגיאה בהתחברות');
+      }
     }
     setLoading(false);
   };
@@ -28,7 +42,7 @@ const AdminLogin = ({ onLogin }: { onLogin: (email: string, password: string) =>
     <div className="min-h-screen flex items-center justify-center bg-background p-6">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-center">כניסת מנהל</CardTitle>
+          <CardTitle className="text-center">{isSignUp ? 'הרשמה' : 'כניסת מנהל'}</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -42,16 +56,24 @@ const AdminLogin = ({ onLogin }: { onLogin: (email: string, password: string) =>
             />
             <Input
               type="password"
-              placeholder="סיסמה"
+              placeholder="סיסמה (מינימום 6 תווים)"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              minLength={6}
               dir="ltr"
             />
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'מתחבר...' : 'התחבר'}
+              {loading ? 'מעבד...' : (isSignUp ? 'הרשם' : 'התחבר')}
             </Button>
           </form>
+          <button
+            type="button"
+            onClick={() => setIsSignUp(!isSignUp)}
+            className="w-full mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {isSignUp ? 'יש לך חשבון? התחבר' : 'אין לך חשבון? הרשם'}
+          </button>
         </CardContent>
       </Card>
     </div>
@@ -228,7 +250,7 @@ const ProjectEditor = ({
 };
 
 const Admin = () => {
-  const { user, isAdmin, loading: authLoading, signIn, signOut } = useAuth();
+  const { user, isAdmin, loading: authLoading, signIn, signUp, signOut } = useAuth();
   const { projects, loading: projectsLoading, updateProject, deleteProject, addProjectImage, deleteProjectImage, uploadImage, addProject } = useProjects();
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProject, setNewProject] = useState({
@@ -247,7 +269,7 @@ const Admin = () => {
   }
 
   if (!user) {
-    return <AdminLogin onLogin={signIn} />;
+    return <AdminLogin onLogin={signIn} onSignUp={signUp} />;
   }
 
   if (!isAdmin) {
