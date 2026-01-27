@@ -69,16 +69,16 @@ const DesktopMockup = ({ image, name, onClick, size = 'large' }: { image: string
       onClick={onClick}
       className="group cursor-pointer"
     >
-      <div className="bg-muted rounded-2xl overflow-hidden shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2">
-        <div className={`bg-secondary/60 flex items-center ${sizeClasses[size]}`}>
-          <div className={`rounded-full bg-red-400/80 ${dotSizes[size]}`} />
-          <div className={`rounded-full bg-yellow-400/80 ${dotSizes[size]}`} />
-          <div className={`rounded-full bg-green-400/80 ${dotSizes[size]}`} />
+      <div className="bg-neutral-200 rounded-2xl overflow-hidden shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2">
+        <div className={`bg-neutral-300 flex items-center ${sizeClasses[size]}`}>
+          <div className={`rounded-full bg-red-400 ${dotSizes[size]}`} />
+          <div className={`rounded-full bg-yellow-400 ${dotSizes[size]}`} />
+          <div className={`rounded-full bg-green-400 ${dotSizes[size]}`} />
           <div className="flex-1 mx-4">
-            <div className="h-4 bg-background/30 rounded-full max-w-[180px]" />
+            <div className="h-4 bg-neutral-400/40 rounded-full max-w-[180px]" />
           </div>
         </div>
-        <div className="aspect-[16/10] overflow-hidden">
+        <div className="aspect-[16/10] overflow-hidden bg-neutral-100">
           <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
         </div>
       </div>
@@ -114,9 +114,9 @@ const MobileMockup = ({ image, name, onClick, size = 'large' }: { image: string;
       onClick={onClick}
       className="group cursor-pointer flex flex-col items-center"
     >
-      <div className={`relative bg-foreground shadow-2xl transition-all duration-500 group-hover:-translate-y-2 ${frameClasses[size]}`}>
-        <div className={`absolute top-0 left-1/2 -translate-x-1/2 bg-foreground z-10 ${notchClasses[size]}`} />
-        <div className={`bg-background overflow-hidden ${sizeClasses[size]}`}>
+      <div className={`relative bg-neutral-900 shadow-2xl transition-all duration-500 group-hover:-translate-y-2 ${frameClasses[size]}`}>
+        <div className={`absolute top-0 left-1/2 -translate-x-1/2 bg-neutral-900 z-10 ${notchClasses[size]}`} />
+        <div className={`bg-neutral-100 overflow-hidden ${sizeClasses[size]}`}>
           <img src={image} alt={name} className="w-full h-full object-cover object-top" />
         </div>
       </div>
