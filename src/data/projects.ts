@@ -92,7 +92,31 @@ export interface Project {
 // Image order: Logo (white bg), Logo (black bg), Monogram (if exists), then mockups
 
 export const projects: Project[] = [
-  // ========== PROJECTS WITH DESKTOP + MOBILE ==========
+  // ========== ORDERED BY CONTENT AMOUNT (MOST FIRST) ==========
+  
+  // BetterSeeds - 6 images + desktop + mobile = 8 items
+  {
+    slug: 'betterseeds',
+    name: 'BetterSeeds',
+    category: 'branding',
+    description: 'אתר ויזואלים AI לחברת טכנולוגיה חקלאית',
+    logo: betterseedsHero,
+    heroImage: betterseedsHero,
+    bgColor: '#F5F8F3',
+    accentColor: '#3D7C3F',
+    colors: ['#3D7C3F', '#6AAF4A', '#FFFFFF'],
+    images: [
+      betterseedsHero,
+      aiGeneEditing,
+      aiDnaScientist,
+      aiPlantTechnology,
+      aiDroneFarming,
+      aiCrisprLab,
+    ],
+    websiteImage: websiteBetterseeds,
+    mobileImage: betterseedsMobile,
+  },
+  // SFD - 5 images + desktop + mobile = 7 items
   {
     slug: 'sfd',
     name: 'SFD',
@@ -105,89 +129,16 @@ export const projects: Project[] = [
     accentColor: '#1A1A1A',
     colors: ['#1A1A1A', '#FFFFFF', '#4A5568'],
     images: [
-      sfdMainLogo,        // Logo white bg
-      sfdSecondaryLogo,   // Secondary logo
-      sfdSymbol,          // Monogram
-      sfdTshirtMockup,    // Mockup
-      sfdBandsProduct,    // Bands product mockup
+      sfdMainLogo,
+      sfdSecondaryLogo,
+      sfdSymbol,
+      sfdTshirtMockup,
+      sfdBandsProduct,
     ],
     websiteImage: sfdWebsiteDesktopNew,
     mobileImage: sfdWebsiteMobileNew,
   },
-  {
-    slug: 'betterseeds',
-    name: 'BetterSeeds',
-    category: 'branding',
-    description: 'אתר ויזואלים AI לחברת טכנולוגיה חקלאית',
-    logo: betterseedsHero,
-    heroImage: betterseedsHero,
-    bgColor: '#F5F8F3',
-    accentColor: '#3D7C3F',
-    colors: ['#3D7C3F', '#6AAF4A', '#FFFFFF'],
-    images: [
-      betterseedsHero,        // Hero image
-      aiGeneEditing,          // AI: Gene editing scissors
-      aiDnaScientist,         // AI: Scientist with DNA
-      aiPlantTechnology,      // AI: Plant in lab
-      aiDroneFarming,         // AI: Plant DNA
-      aiCrisprLab,            // AI: CRISPR lab
-    ],
-    websiteImage: websiteBetterseeds,
-    mobileImage: betterseedsMobile,
-  },
-  // ========== PROJECTS WITH DESKTOP ONLY ==========
-  {
-    slug: 'sisenora',
-    name: 'Si Señora',
-    category: 'branding',
-    description: 'מיתוג ואתר לחנות אופנה',
-    logo: sisenoraLogo,
-    heroImage: mockupSisenoraShop,
-    bgColor: '#FAF8F5',
-    accentColor: '#D4A574',
-    colors: ['#1A1A1A', '#D4A574', '#F5F5F0'],
-    images: [
-      sisenoraLogo,           // Logo
-      mockupSisenoraShop,     // Shop mockup
-    ],
-    websiteImage: sisenoraWebsiteNew,
-  },
-  {
-    slug: 'ascola',
-    name: 'Ascola Garden',
-    category: 'branding',
-    description: 'לוגו ובניית אתר תדמית לעסק של מתחם אירועים טוסקני',
-    logo: ascolaLogo,
-    heroImage: ascolaWebsite,
-    bgColor: '#F5F5F0',
-    accentColor: '#2D5A4A',
-    colors: ['#2D5A4A', '#1A1A1A', '#FFFFFF'],
-    images: [
-      ascolaLogo,             // Logo
-      ascolaBrandingMockup,   // Branding mockup
-    ],
-    websiteImage: ascolaWebsite,
-  },
-  // ========== PROJECTS WITH MOBILE ONLY ==========
-  {
-    slug: 'ebrider',
-    name: 'EBrider',
-    category: 'branding',
-    description: 'לוגו ובניית אתר חנות - חלקי חילוף לאופניים',
-    logo: ebriderLogoNew,
-    monogram: ebriderSymbol,
-    heroImage: ebriderMockupHero,
-    bgColor: '#F5F8F5',
-    accentColor: '#4A9F4A',
-    colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
-    images: [
-      ebriderLogoNew,         // Logo
-      ebriderSymbol,          // Symbol/monogram
-      ebriderMockupHero,      // Main mockup
-    ],
-    mobileImage: ebriderMobile,
-  },
-  // ========== PROJECTS WITHOUT SCREENS ==========
+  // Meshek 27 - 6 images
   {
     slug: 'meshek27',
     name: 'משק 27',
@@ -200,30 +151,34 @@ export const projects: Project[] = [
     accentColor: '#4A7C3F',
     colors: ['#4A7C3F', '#8BC34A', '#F5F5DC'],
     images: [
-      meshek27LogoClean,      // Logo clean
-      meshek27AppIcons,       // Monogram/icons
-      meshek27WallSignage,    // Signage
-      meshek27BoxVegetables,  // Packaging
-      meshek27BoxDesign,      // Box design
-      meshek27TshirtMockup,   // Tshirt
+      meshek27LogoClean,
+      meshek27AppIcons,
+      meshek27WallSignage,
+      meshek27BoxVegetables,
+      meshek27BoxDesign,
+      meshek27TshirtMockup,
     ],
   },
+  // EBrider - 3 images + mobile = 4 items
   {
-    slug: 'taliter',
-    name: 'Tali Ter',
+    slug: 'ebrider',
+    name: 'EBrider',
     category: 'branding',
-    description: 'מיתוג למאמנת בר',
-    logo: taliterBrandingSet,
-    heroImage: taliterBrandingSet,
-    bgColor: '#FFFBF5',
-    accentColor: '#5CC8B5',
-    colors: ['#5CC8B5', '#F68B1F', '#FDF6E3'],
+    description: 'לוגו ובניית אתר חנות - חלקי חילוף לאופניים',
+    logo: ebriderLogoNew,
+    monogram: ebriderSymbol,
+    heroImage: ebriderMockupHero,
+    bgColor: '#F5F8F5',
+    accentColor: '#4A9F4A',
+    colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
     images: [
-      taliterBrandingSet,     // Logo/branding set
-      taliterWallSignage,     // Signage mockup
-      taliterBottleMockup,    // Bottle mockup
+      ebriderLogoNew,
+      ebriderSymbol,
+      ebriderMockupHero,
     ],
+    mobileImage: ebriderMobile,
   },
+  // Learn AI - 3 images + video = 4 items
   {
     slug: 'learnai',
     name: 'Learn AI',
@@ -236,12 +191,64 @@ export const projects: Project[] = [
     accentColor: '#00D4E5',
     colors: ['#00D4E5', '#1A365D', '#F8FAFC'],
     images: [
-      learnaiLogoFull,        // Logo
-      dotaiMonogram,          // Monogram
-      learnaiMockupDesktop,   // Desktop mockup
+      learnaiLogoFull,
+      dotaiMonogram,
+      learnaiMockupDesktop,
     ],
     video: learnaiAnimation,
   },
+  // Si Señora - 2 images + desktop = 3 items
+  {
+    slug: 'sisenora',
+    name: 'Si Señora',
+    category: 'branding',
+    description: 'מיתוג ואתר לחנות אופנה',
+    logo: sisenoraLogo,
+    heroImage: mockupSisenoraShop,
+    bgColor: '#FAF8F5',
+    accentColor: '#D4A574',
+    colors: ['#1A1A1A', '#D4A574', '#F5F5F0'],
+    images: [
+      sisenoraLogo,
+      mockupSisenoraShop,
+    ],
+    websiteImage: sisenoraWebsiteNew,
+  },
+  // Ascola Garden - 2 images + desktop = 3 items
+  {
+    slug: 'ascola',
+    name: 'Ascola Garden',
+    category: 'branding',
+    description: 'לוגו ובניית אתר תדמית לעסק של מתחם אירועים טוסקני',
+    logo: ascolaLogo,
+    heroImage: ascolaWebsite,
+    bgColor: '#F5F5F0',
+    accentColor: '#2D5A4A',
+    colors: ['#2D5A4A', '#1A1A1A', '#FFFFFF'],
+    images: [
+      ascolaLogo,
+      ascolaBrandingMockup,
+    ],
+    websiteImage: ascolaWebsite,
+  },
+  // Tali Ter - 3 images
+  {
+    slug: 'taliter',
+    name: 'Tali Ter',
+    category: 'branding',
+    description: 'מיתוג למאמנת בר',
+    logo: taliterBrandingSet,
+    heroImage: taliterBrandingSet,
+    bgColor: '#FFFBF5',
+    accentColor: '#5CC8B5',
+    colors: ['#5CC8B5', '#F68B1F', '#FDF6E3'],
+    images: [
+      taliterBrandingSet,
+      taliterWallSignage,
+      taliterBottleMockup,
+    ],
+  },
+  // Studio Alef - 1 image + video = 2 items
   {
     slug: 'studioalef',
     name: 'Studio Alef',
@@ -253,10 +260,11 @@ export const projects: Project[] = [
     accentColor: '#5A5A5A',
     colors: ['#5A5A5A', '#FFFFFF', '#E0E0E0'],
     images: [
-      studioalefLogo,         // Logo
+      studioalefLogo,
     ],
     video: betterseedsAnimation,
   },
+  // SEN Jewelry - 1 image
   {
     slug: 'sen',
     name: 'SEN Jewelry',
