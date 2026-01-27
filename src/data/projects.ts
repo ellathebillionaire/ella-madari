@@ -33,7 +33,7 @@ import learnaiLogoFull from "@/assets/learnai-logo-full.jpg";
 import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
 import dotaiLogoFull from "@/assets/dotai-logo-full.jpg";
-import learnaiMockupDesktop from "@/assets/learnai-mockup-desktop.jpg";
+import learnaiWebsiteDesktop from "@/assets/learnai-website-desktop.png";
 
 // Tali Ter - New organized assets
 import taliterBrandingSet from '@/assets/taliter/branding-set.jpg';
@@ -159,7 +159,7 @@ export const projects: Project[] = [
       meshek27TshirtMockup,
     ],
   },
-  // Learn AI - 3 images + video = 4 items
+  // Learn AI - 3 images + video + desktop = 5 items
   {
     slug: 'learnai',
     name: 'Learn AI',
@@ -174,9 +174,9 @@ export const projects: Project[] = [
     images: [
       learnaiLogoFull,
       dotaiMonogram,
-      learnaiMockupDesktop,
     ],
     video: learnaiAnimation,
+    websiteImage: learnaiWebsiteDesktop,
   },
   // Si Señora - 2 images + desktop = 3 items
   {
