@@ -146,19 +146,71 @@ const BrandingProjectCard = ({ project, onImageClick }: {
       transition={{ duration: 0.6 }}
       className="mb-12 sm:mb-16 md:mb-20"
     >
-      {/* Project Header with Brand Colors */}
-      <div className="mb-4 sm:mb-6 flex justify-between items-start">
-        <div>
-          <h3 className="text-lg sm:text-xl md:text-2xl font-light tracking-tight">{project.name}</h3>
-          {project.description && (
-            <p className="text-xs sm:text-sm text-muted-foreground mt-1">{project.description}</p>
+      {/* Project Header */}
+      <div className="mb-4 sm:mb-6">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-light tracking-tight">{project.name}</h3>
+        {project.description && (
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">{project.description}</p>
+        )}
+      </div>
+
+      {/* Website/Mobile Mockups with Color Palette */}
+      {hasScreenMockups && (
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-4 sm:mb-6 flex flex-wrap gap-3 sm:gap-4 items-start"
+        >
+          {/* Mockups Container */}
+          <div className="flex flex-wrap gap-3 sm:gap-4 items-end flex-1">
+            {/* Desktop Mockup */}
+            {project.website_image && (
+              <div className="flex-1 min-w-[160px] sm:min-w-[200px] max-w-sm md:max-w-md">
+                <DesktopMockup
+                  image={project.website_image}
+                  name=""
+                  aspectRatio={project.aspect_ratio || '16/9'}
+                  onClick={() => onImageClick(project.website_image!, project.name)}
+                />
+              </div>
+            )}
+            
+            {/* Mobile Mockup */}
+            {project.mobile_image && (
+              <MobileMockup
+                image={project.mobile_image}
+                name=""
+                onClick={() => onImageClick(project.mobile_image!, project.name)}
+              />
+            )}
+          </div>
+          
+          {/* Brand Colors - positioned at top right of mockups section */}
+          {project.colors && project.colors.length > 0 && (
+            <div className="flex flex-col items-end gap-1.5 pt-1">
+              <span className="text-[10px] text-muted-foreground tracking-wide whitespace-nowrap">פלטת צבעים</span>
+              <div className="flex gap-1.5 sm:gap-2">
+                {project.colors.map((color, idx) => (
+                  <div
+                    key={idx}
+                    className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-border"
+                    style={{ backgroundColor: color }}
+                    title={color}
+                  />
+                ))}
+              </div>
+            </div>
           )}
-        </div>
-        
-        {/* Brand Colors */}
-        {project.colors && project.colors.length > 0 && (
+        </motion.div>
+      )}
+      
+      {/* Color Palette for projects WITHOUT mockups */}
+      {!hasScreenMockups && project.colors && project.colors.length > 0 && (
+        <div className="mb-4 sm:mb-6 flex justify-end">
           <div className="flex flex-col items-end gap-1.5">
-            <span className="text-[10px] text-muted-foreground tracking-wide">פלטת צבעים</span>
+            <span className="text-[10px] text-muted-foreground tracking-wide whitespace-nowrap">פלטת צבעים</span>
             <div className="flex gap-1.5 sm:gap-2">
               {project.colors.map((color, idx) => (
                 <div
@@ -170,39 +222,7 @@ const BrandingProjectCard = ({ project, onImageClick }: {
               ))}
             </div>
           </div>
-        )}
-      </div>
-
-      {/* Website/Mobile Mockups - ALWAYS FIRST when they exist */}
-      {hasScreenMockups && (
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-4 sm:mb-6 flex flex-wrap gap-3 sm:gap-4 items-end"
-        >
-          {/* Desktop Mockup */}
-          {project.website_image && (
-            <div className="flex-1 min-w-[160px] sm:min-w-[200px] max-w-sm md:max-w-md">
-              <DesktopMockup
-                image={project.website_image}
-                name=""
-                aspectRatio={project.aspect_ratio || '16/9'}
-                onClick={() => onImageClick(project.website_image!, project.name)}
-              />
-            </div>
-          )}
-          
-          {/* Mobile Mockup */}
-          {project.mobile_image && (
-            <MobileMockup
-              image={project.mobile_image}
-              name=""
-              onClick={() => onImageClick(project.mobile_image!, project.name)}
-            />
-          )}
-        </motion.div>
+        </div>
       )}
       
       {/* Images Grid */}
