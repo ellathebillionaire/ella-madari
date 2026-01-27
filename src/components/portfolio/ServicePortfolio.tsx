@@ -330,7 +330,7 @@ const ServicePortfolio = () => {
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20"
+          className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20 shadow-sm"
         >
           <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-3 sm:py-4 flex justify-center items-center">
             <h1 className="text-xs sm:text-sm font-medium tracking-[0.1em] sm:tracking-[0.12em]">ELLA MADARI</h1>
