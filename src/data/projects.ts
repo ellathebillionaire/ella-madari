@@ -92,6 +92,7 @@ export interface Project {
 // Image order: Logo (white bg), Logo (black bg), Monogram (if exists), then mockups
 
 export const projects: Project[] = [
+  // ========== PROJECTS WITH DESKTOP + MOBILE ==========
   {
     slug: 'sfd',
     name: 'SFD',
@@ -113,6 +114,80 @@ export const projects: Project[] = [
     websiteImage: sfdWebsiteDesktopNew,
     mobileImage: sfdWebsiteMobileNew,
   },
+  {
+    slug: 'betterseeds',
+    name: 'BetterSeeds',
+    category: 'branding',
+    description: 'אתר ויזואלים AI לחברת טכנולוגיה חקלאית',
+    logo: betterseedsHero,
+    heroImage: betterseedsHero,
+    bgColor: '#F5F8F3',
+    accentColor: '#3D7C3F',
+    colors: ['#3D7C3F', '#6AAF4A', '#FFFFFF'],
+    images: [
+      betterseedsHero,        // Hero image
+      aiGeneEditing,          // AI: Gene editing scissors
+      aiDnaScientist,         // AI: Scientist with DNA
+      aiPlantTechnology,      // AI: Plant in lab
+      aiDroneFarming,         // AI: Plant DNA
+      aiCrisprLab,            // AI: CRISPR lab
+    ],
+    websiteImage: websiteBetterseeds,
+    mobileImage: betterseedsMobile,
+  },
+  // ========== PROJECTS WITH DESKTOP ONLY ==========
+  {
+    slug: 'sisenora',
+    name: 'Si Señora',
+    category: 'branding',
+    description: 'מיתוג ואתר לחנות אופנה',
+    logo: sisenoraLogo,
+    heroImage: mockupSisenoraShop,
+    bgColor: '#FAF8F5',
+    accentColor: '#D4A574',
+    colors: ['#1A1A1A', '#D4A574', '#F5F5F0'],
+    images: [
+      sisenoraLogo,           // Logo
+      mockupSisenoraShop,     // Shop mockup
+    ],
+    websiteImage: sisenoraWebsiteNew,
+  },
+  {
+    slug: 'ascola',
+    name: 'Ascola Garden',
+    category: 'branding',
+    description: 'לוגו ובניית אתר תדמית לעסק של מתחם אירועים טוסקני',
+    logo: ascolaLogo,
+    heroImage: ascolaWebsite,
+    bgColor: '#F5F5F0',
+    accentColor: '#2D5A4A',
+    colors: ['#2D5A4A', '#1A1A1A', '#FFFFFF'],
+    images: [
+      ascolaLogo,             // Logo
+      ascolaBrandingMockup,   // Branding mockup
+    ],
+    websiteImage: ascolaWebsite,
+  },
+  // ========== PROJECTS WITH MOBILE ONLY ==========
+  {
+    slug: 'ebrider',
+    name: 'EBrider',
+    category: 'branding',
+    description: 'לוגו ובניית אתר חנות - חלקי חילוף לאופניים',
+    logo: ebriderLogoNew,
+    monogram: ebriderSymbol,
+    heroImage: ebriderMockupHero,
+    bgColor: '#F5F8F5',
+    accentColor: '#4A9F4A',
+    colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
+    images: [
+      ebriderLogoNew,         // Logo
+      ebriderSymbol,          // Symbol/monogram
+      ebriderMockupHero,      // Main mockup
+    ],
+    mobileImage: ebriderMobile,
+  },
+  // ========== PROJECTS WITHOUT SCREENS ==========
   {
     slug: 'meshek27',
     name: 'משק 27',
@@ -180,7 +255,7 @@ export const projects: Project[] = [
     images: [
       studioalefLogo,         // Logo
     ],
-    video: betterseedsAnimation, // 3D animation moved from BetterSeeds
+    video: betterseedsAnimation,
   },
   {
     slug: 'sen',
@@ -195,77 +270,6 @@ export const projects: Project[] = [
     images: [
       websiteSenMobile,
     ],
-  },
-  {
-    slug: 'ebrider',
-    name: 'EBrider',
-    category: 'branding',
-    description: 'לוגו ובניית אתר חנות - חלקי חילוף לאופניים',
-    logo: ebriderLogoNew,
-    monogram: ebriderSymbol,
-    heroImage: ebriderMockupHero,
-    bgColor: '#F5F8F5',
-    accentColor: '#4A9F4A',
-    colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
-    images: [
-      ebriderLogoNew,         // Logo
-      ebriderSymbol,          // Symbol/monogram
-      ebriderMockupHero,      // Main mockup
-    ],
-    mobileImage: ebriderMobile,
-  },
-  {
-    slug: 'sisenora',
-    name: 'Si Señora',
-    category: 'branding',
-    description: 'מיתוג ואתר לחנות אופנה',
-    logo: sisenoraLogo,
-    heroImage: mockupSisenoraShop,
-    bgColor: '#FAF8F5',
-    accentColor: '#D4A574',
-    colors: ['#1A1A1A', '#D4A574', '#F5F5F0'],
-    images: [
-      sisenoraLogo,           // Logo
-      mockupSisenoraShop,     // Shop mockup
-    ],
-    websiteImage: sisenoraWebsiteNew, // New website screenshot
-  },
-  {
-    slug: 'betterseeds',
-    name: 'BetterSeeds',
-    category: 'branding',
-    description: 'אתר ויזואלים AI לחברת טכנולוגיה חקלאית',
-    logo: betterseedsHero,
-    heroImage: betterseedsHero,
-    bgColor: '#F5F8F3',
-    accentColor: '#3D7C3F',
-    colors: ['#3D7C3F', '#6AAF4A', '#FFFFFF'],
-    images: [
-      betterseedsHero,        // Hero image
-      aiGeneEditing,          // AI: Gene editing scissors
-      aiDnaScientist,         // AI: Scientist with DNA
-      aiPlantTechnology,      // AI: Plant in lab
-      aiDroneFarming,         // AI: Plant DNA
-      aiCrisprLab,            // AI: CRISPR lab
-    ],
-    websiteImage: websiteBetterseeds,
-    mobileImage: betterseedsMobile,
-  },
-  {
-    slug: 'ascola',
-    name: 'Ascola Garden',
-    category: 'branding',
-    description: 'לוגו ובניית אתר תדמית לעסק של מתחם אירועים טוסקני',
-    logo: ascolaLogo,
-    heroImage: ascolaWebsite,
-    bgColor: '#F5F5F0',
-    accentColor: '#2D5A4A',
-    colors: ['#2D5A4A', '#1A1A1A', '#FFFFFF'],
-    images: [
-      ascolaLogo,             // Logo
-      ascolaBrandingMockup,   // Branding mockup
-    ],
-    websiteImage: ascolaWebsite,
   },
 ];
 
