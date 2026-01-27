@@ -126,7 +126,6 @@ export const projects: Project[] = [
     colors: ['#4A7C3F', '#8BC34A', '#F5F5DC'],
     images: [
       meshek27LogoClean,      // Logo clean
-      meshek27LogoGraphic,    // Logo graphic
       meshek27AppIcons,       // Monogram/icons
       meshek27WallLogo,       // Wall mockup
       meshek27WallSignage,    // Signage
