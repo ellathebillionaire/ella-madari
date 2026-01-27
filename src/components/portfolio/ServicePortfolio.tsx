@@ -96,7 +96,7 @@ const DesktopMockup = ({ image, name, onClick }: { image: string; name: string; 
           </div>
         </div>
         <div className="aspect-[16/10] overflow-hidden bg-neutral-100">
-          <img src={image} alt={name} className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-102" />
+          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-102" />
         </div>
       </div>
       {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 text-center font-light">{name}</p>}
@@ -115,11 +115,12 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
       onClick={onClick}
       className="group cursor-pointer flex flex-col items-center"
     >
-      <div className="relative bg-neutral-900 shadow-lg rounded-[1rem] sm:rounded-[1.25rem] p-0.5 sm:p-1 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-neutral-900 z-10 w-8 sm:w-10 h-2 sm:h-2.5 rounded-b-md" />
-        <div className="bg-neutral-100 overflow-hidden w-16 sm:w-20 md:w-24 aspect-[9/19] rounded-[0.8rem] sm:rounded-[1rem]">
+      <div className="relative bg-neutral-900 shadow-lg rounded-[1.5rem] sm:rounded-[2rem] p-[3px] sm:p-1 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl">
+        <div className="absolute top-1.5 left-1/2 -translate-x-1/2 bg-neutral-900 z-10 w-12 sm:w-16 h-3 sm:h-4 rounded-full" />
+        <div className="bg-neutral-100 overflow-hidden w-20 sm:w-24 md:w-28 aspect-[9/19.5] rounded-[1.3rem] sm:rounded-[1.75rem]">
           <img src={image} alt={name} className="w-full h-full object-cover object-top" />
         </div>
+        <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-8 sm:w-10 h-1 bg-white/30 rounded-full" />
       </div>
       {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 text-center font-light">{name}</p>}
     </motion.div>
