@@ -7,8 +7,8 @@ import { projects, additionalWork } from '@/data/projects';
 const brandingProjects = projects.filter(p => p.category === 'branding' && p.heroImage);
 const websiteProjects = projects.filter(p => p.category === 'website' && p.heroImage);
 
-// Get BetterSeeds for desktop mockup in websites section
-const betterseedsProject = projects.find(p => p.slug === 'betterseeds') as (typeof projects[0] & { websiteImage?: string }) | undefined;
+// Get BetterSeeds for desktop/mobile mockups in websites section
+const betterseedsProject = projects.find(p => p.slug === 'betterseeds') as (typeof projects[0] & { websiteImage?: string; mobileImage?: string }) | undefined;
 
 // ============ LIGHTBOX ============
 const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClose: () => void }) => {
@@ -289,24 +289,30 @@ const ServicePortfolio = () => {
             </div>
 
             {/* Mobile Versions */}
-            {websiteProjects.some(p => p.images.length > 0) && (
-              <div className="mt-20">
-                <div className="flex items-center gap-2 mb-10">
-                  <Smartphone className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground">Mobile Versions</span>
-                </div>
-                <div className="flex justify-center gap-12 flex-wrap">
-                  {websiteProjects.filter(p => p.images.length > 0).map((project) => (
-                    <MobileMockup
-                      key={`mobile-${project.slug}`}
-                      image={project.images[0]}
-                      name={project.name}
-                      onClick={() => handleImageClick(project.images[0], project.name)}
-                    />
-                  ))}
-                </div>
+            <div className="mt-20">
+              <div className="flex items-center gap-2 mb-10">
+                <Smartphone className="w-4 h-4 text-muted-foreground" />
+                <span className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground">Mobile Versions</span>
               </div>
-            )}
+              <div className="flex justify-center gap-12 flex-wrap">
+                {websiteProjects.filter(p => p.images.length > 0).map((project) => (
+                  <MobileMockup
+                    key={`mobile-${project.slug}`}
+                    image={project.images[0]}
+                    name={project.name}
+                    onClick={() => handleImageClick(project.images[0], project.name)}
+                  />
+                ))}
+                {/* BetterSeeds Mobile */}
+                {betterseedsProject?.mobileImage && (
+                  <MobileMockup
+                    image={betterseedsProject.mobileImage}
+                    name="BetterSeeds"
+                    onClick={() => handleImageClick(betterseedsProject.mobileImage!, 'BetterSeeds')}
+                  />
+                )}
+              </div>
+            </div>
           </section>
 
           {/* ========== PRINT ========== */}
