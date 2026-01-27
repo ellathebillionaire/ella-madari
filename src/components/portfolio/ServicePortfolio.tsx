@@ -341,16 +341,8 @@ const ServicePortfolio = () => {
           </div>
         </motion.header>
 
-        {/* Hero */}
-        <section className="py-8 sm:py-14 md:py-20 text-center px-4 sm:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="w-px h-10 sm:h-16 mx-auto bg-gradient-to-b from-transparent via-border/40 to-transparent" />
-          </motion.div>
-        </section>
+        {/* Minimal spacing after header */}
+        <div className="h-2 sm:h-3" />
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10">
           
