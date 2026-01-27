@@ -57,22 +57,22 @@ const DesktopMockup = ({ image, name, onClick }: { image: string; name: string; 
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       onClick={onClick}
-      className="group cursor-pointer"
+      className="group cursor-pointer w-full"
     >
-      <div className="bg-neutral-200 rounded-xl overflow-hidden shadow-md transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
-        <div className="bg-neutral-300 flex items-center h-6 px-2.5 gap-1">
-          <div className="rounded-full bg-red-400 w-2 h-2" />
-          <div className="rounded-full bg-yellow-400 w-2 h-2" />
-          <div className="rounded-full bg-green-400 w-2 h-2" />
-          <div className="flex-1 mx-3">
-            <div className="h-3 bg-neutral-400/40 rounded-full max-w-[100px]" />
+      <div className="bg-neutral-200 rounded-lg sm:rounded-xl overflow-hidden shadow-md transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
+        <div className="bg-neutral-300 flex items-center h-5 sm:h-6 px-2 sm:px-2.5 gap-1">
+          <div className="rounded-full bg-red-400 w-1.5 h-1.5 sm:w-2 sm:h-2" />
+          <div className="rounded-full bg-yellow-400 w-1.5 h-1.5 sm:w-2 sm:h-2" />
+          <div className="rounded-full bg-green-400 w-1.5 h-1.5 sm:w-2 sm:h-2" />
+          <div className="flex-1 mx-2 sm:mx-3">
+            <div className="h-2 sm:h-3 bg-neutral-400/40 rounded-full max-w-[60px] sm:max-w-[100px]" />
           </div>
         </div>
         <div className="aspect-[16/10] overflow-hidden bg-neutral-100">
           <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-102" />
         </div>
       </div>
-      {name && <p className="text-xs text-muted-foreground mt-3 text-center font-light">{name}</p>}
+      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 text-center font-light">{name}</p>}
     </motion.div>
   );
 };
@@ -88,13 +88,13 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
       onClick={onClick}
       className="group cursor-pointer flex flex-col items-center"
     >
-      <div className="relative bg-neutral-900 shadow-lg rounded-[1.25rem] p-1 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-neutral-900 z-10 w-10 h-2.5 rounded-b-md" />
-        <div className="bg-neutral-100 overflow-hidden w-24 aspect-[9/19] rounded-[1rem]">
+      <div className="relative bg-neutral-900 shadow-lg rounded-[1rem] sm:rounded-[1.25rem] p-0.5 sm:p-1 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-neutral-900 z-10 w-8 sm:w-10 h-2 sm:h-2.5 rounded-b-md" />
+        <div className="bg-neutral-100 overflow-hidden w-16 sm:w-20 md:w-24 aspect-[9/19] rounded-[0.8rem] sm:rounded-[1rem]">
           <img src={image} alt={name} className="w-full h-full object-cover object-top" />
         </div>
       </div>
-      {name && <p className="text-xs text-muted-foreground mt-3 text-center font-light">{name}</p>}
+      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 text-center font-light">{name}</p>}
     </motion.div>
   );
 };
@@ -115,13 +115,13 @@ const BrandingProjectCard = ({ project, onImageClick }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6 }}
-      className="mb-20"
+      className="mb-12 sm:mb-16 md:mb-20"
     >
       {/* Project Header */}
-      <div className="mb-6">
-        <h3 className="text-xl md:text-2xl font-light tracking-tight">{project.name}</h3>
+      <div className="mb-4 sm:mb-6">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-light tracking-tight">{project.name}</h3>
         {project.description && (
-          <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">{project.description}</p>
         )}
       </div>
 
@@ -132,11 +132,11 @@ const BrandingProjectCard = ({ project, onImageClick }: {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-6 flex flex-wrap gap-4 items-end"
+          className="mb-4 sm:mb-6 flex flex-wrap gap-3 sm:gap-4 items-end"
         >
           {/* Desktop Mockup */}
           {projectWithWebsite.websiteImage && (
-            <div className="flex-1 min-w-[200px] max-w-md">
+            <div className="flex-1 min-w-[160px] sm:min-w-[200px] max-w-sm md:max-w-md">
               <DesktopMockup
                 image={projectWithWebsite.websiteImage}
                 name=""
@@ -157,7 +157,7 @@ const BrandingProjectCard = ({ project, onImageClick }: {
       )}
       
       {/* Images Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
         {allImages.map((img, i) => (
           <motion.div
             key={i}
@@ -166,7 +166,7 @@ const BrandingProjectCard = ({ project, onImageClick }: {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.05 }}
             onClick={() => onImageClick(img, project.name)}
-            className="group cursor-pointer overflow-hidden rounded-xl bg-muted aspect-[4/3]"
+            className="group cursor-pointer overflow-hidden rounded-lg sm:rounded-xl bg-muted aspect-[4/3]"
           >
             <img
               src={img}
@@ -182,7 +182,7 @@ const BrandingProjectCard = ({ project, onImageClick }: {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="overflow-hidden rounded-xl bg-muted aspect-[4/3]"
+            className="overflow-hidden rounded-lg sm:rounded-xl bg-muted aspect-[4/3]"
           >
             <video
               src={project.video}
@@ -205,13 +205,13 @@ const SectionHeader = ({ title, subtitle, icon }: { title: string; subtitle: str
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    className="mb-12 md:mb-16 pt-8 border-t border-border/30"
+    className="mb-8 sm:mb-12 md:mb-16 pt-6 sm:pt-8 border-t border-border/30"
   >
-    <div className="flex items-center gap-3 mb-4">
-      <div className="p-2.5 rounded-xl bg-muted text-muted-foreground">{icon}</div>
-      <span className="text-[10px] tracking-[0.35em] uppercase text-muted-foreground">{subtitle}</span>
+    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+      <div className="p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-muted text-muted-foreground">{icon}</div>
+      <span className="text-[9px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.35em] uppercase text-muted-foreground">{subtitle}</span>
     </div>
-    <h2 className="text-3xl md:text-5xl font-extralight tracking-tight">{title}</h2>
+    <h2 className="text-2xl sm:text-3xl md:text-5xl font-extralight tracking-tight">{title}</h2>
   </motion.div>
 );
 
@@ -238,9 +238,9 @@ const ServicePortfolio = () => {
           animate={{ opacity: 1, y: 0 }}
           className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20"
         >
-          <div className="max-w-6xl mx-auto px-6 md:px-10 py-4 flex justify-between items-center">
-            <h1 className="text-sm font-medium tracking-[0.12em]">ELLA MADARI</h1>
-            <nav className="flex gap-5 text-[10px] tracking-wider text-muted-foreground">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-3 sm:py-4 flex justify-between items-center">
+            <h1 className="text-xs sm:text-sm font-medium tracking-[0.1em] sm:tracking-[0.12em]">ELLA MADARI</h1>
+            <nav className="flex gap-4 sm:gap-5 text-[9px] sm:text-[10px] tracking-wider text-muted-foreground">
               <a href="#branding" className="hover:text-foreground transition-colors">מיתוג</a>
               <a href="#websites" className="hover:text-foreground transition-colors">אתרים</a>
             </nav>
@@ -248,21 +248,21 @@ const ServicePortfolio = () => {
         </motion.header>
 
         {/* Hero */}
-        <section className="py-14 md:py-20 text-center px-6">
+        <section className="py-8 sm:py-14 md:py-20 text-center px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="w-px h-16 mx-auto bg-gradient-to-b from-transparent via-border/40 to-transparent" />
+            <div className="w-px h-10 sm:h-16 mx-auto bg-gradient-to-b from-transparent via-border/40 to-transparent" />
           </motion.div>
         </section>
 
-        <main className="max-w-6xl mx-auto px-6 md:px-10">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10">
           
           {/* ========== BRANDING ========== */}
-          <section id="branding" className="py-16">
-            <SectionHeader title="מיתוג וזהות חזותית" subtitle="Branding" icon={<Palette className="w-5 h-5" />} />
+          <section id="branding" className="py-8 sm:py-12 md:py-16">
+            <SectionHeader title="מיתוג וזהות חזותית" subtitle="Branding" icon={<Palette className="w-4 h-4 sm:w-5 sm:h-5" />} />
             
             {brandingProjects.map((project) => (
               <BrandingProjectCard 
@@ -274,11 +274,11 @@ const ServicePortfolio = () => {
           </section>
 
           {/* ========== WEBSITES ========== */}
-          <section id="websites" className="py-12">
+          <section id="websites" className="py-8 sm:py-12">
             <SectionHeader title="עיצוב אתרים" subtitle="Web Design" icon={<Monitor className="w-4 h-4" />} />
             
             {/* Desktop Websites */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-12">
               {sfdProject?.websiteImage && (
                 <DesktopMockup
                   image={sfdProject.websiteImage}
@@ -310,12 +310,12 @@ const ServicePortfolio = () => {
             </div>
 
             {/* Mobile Versions */}
-            <div className="mt-12">
-              <div className="flex items-center gap-2 mb-6">
-                <Smartphone className="w-3.5 h-3.5 text-muted-foreground" />
-                <span className="text-[9px] tracking-[0.2em] uppercase text-muted-foreground">Mobile</span>
+            <div className="mt-8 sm:mt-12">
+              <div className="flex items-center gap-2 mb-4 sm:mb-6">
+                <Smartphone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-muted-foreground" />
+                <span className="text-[8px] sm:text-[9px] tracking-[0.2em] uppercase text-muted-foreground">Mobile</span>
               </div>
-              <div className="flex justify-center gap-6 md:gap-8 flex-wrap">
+              <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
                 {websiteProjects.filter(p => p.slug === 'sen' && p.images.length > 0).map((project) => (
                   <MobileMockup
                     key={`mobile-${project.slug}`}
@@ -352,12 +352,12 @@ const ServicePortfolio = () => {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-border/20 py-10 mt-16">
-          <div className="max-w-6xl mx-auto px-6 md:px-10 flex justify-between items-center">
-            <a href="mailto:hello@ellamadari.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+        <footer className="border-t border-border/20 py-6 sm:py-10 mt-10 sm:mt-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 flex justify-between items-center">
+            <a href="mailto:hello@ellamadari.com" className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors">
               hello@ellamadari.com
             </a>
-            <span className="text-[10px] text-muted-foreground">© {new Date().getFullYear()}</span>
+            <span className="text-[9px] sm:text-[10px] text-muted-foreground">© {new Date().getFullYear()}</span>
           </div>
         </footer>
       </div>
