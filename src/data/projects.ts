@@ -27,12 +27,8 @@ import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
 // Learn AI / DotAi
 import learnaiLogoFull from "@/assets/learnai-logo-full.jpg";
-import learnaiLogo from "@/assets/learnai-logo.jpg";
-import dotaiMascot from "@/assets/dotai-mascot.jpg";
 import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
-import websiteLearnai from "@/assets/website-learnai.jpg";
-import learnaiMockupDesktop from "@/assets/learnai-mockup-desktop.jpg";
 import dotaiLogoFull from "@/assets/dotai-logo-full.jpg";
 
 // Tali Ter - New organized assets
@@ -44,21 +40,24 @@ import taliterBottleMockup from '@/assets/taliter/bottle-mockup.jpg';
 import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
 import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
 import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
-import mockupEbrider from "@/assets/mockup-ebrider.jpg";
 
 // Studio Alef
 import studioalefLogo from "@/assets/studioalef-logo.png";
 import studioalefWallMockup from "@/assets/studioalef-wall-mockup.png";
-import studioalefAnimation from "@/assets/studioalef-animation.mp4";
+import betterseedsAnimation from "@/assets/betterseeds-animation.mp4"; // Using for Studio Alef
 
 // SEN Jewelry
 import websiteSenFull from "@/assets/website-sen-full.png";
 import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
-// BetterSeeds
+// BetterSeeds - AI generated images for website
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
-import betterseedsIcons from "@/assets/betterseeds-icons.jpg";
-import betterseedsAnimation from "@/assets/betterseeds-animation.mp4";
+import betterseedsHero from "@/assets/betterseeds-hero.jpg";
+import aiGeneEditing from "@/assets/ai-gene-editing.png";
+import aiDnaScientist from "@/assets/ai-dna-scientist.png";
+import aiPlantTechnology from "@/assets/ai-plant-technology.jpg";
+import aiDroneFarming from "@/assets/ai-drone-farming.jpg";
+import aiCrisprLab from "@/assets/ai-crispr-lab.png";
 
 // ============ ADDITIONAL WORK ============
 
@@ -92,6 +91,7 @@ export interface Project {
 }
 
 // ============ BRANDING PROJECTS ============
+// Image order: Logo (white bg), Logo (black bg), Monogram (if exists), then mockups
 
 export const projects: Project[] = [
   {
@@ -100,16 +100,17 @@ export const projects: Project[] = [
     category: 'branding',
     description: 'Strength For Dancers - מיתוג מלא ועיצוב מוצרים',
     logo: sfdLogoTransparent,
-    monogram: sfdSecondaryLogo,
+    monogram: sfdSymbol,
     heroImage: sfdBrandingSet,
     bgColor: '#F5F5F7',
     accentColor: '#1A1A1A',
     colors: ['#1A1A1A', '#FFFFFF', '#4A5568'],
     images: [
-      sfdMainLogo,
-      sfdSymbol,
-      sfdTshirtMockup,
-      sfdWebsite,
+      sfdMainLogo,        // Logo white bg
+      sfdSecondaryLogo,   // Secondary logo
+      sfdSymbol,          // Monogram
+      sfdTshirtMockup,    // Mockup
+      sfdWebsite,         // Website
     ],
   },
   {
@@ -118,34 +119,36 @@ export const projects: Project[] = [
     category: 'branding',
     description: 'מיתוג מלא לחווה אורגנית',
     logo: meshek27LogoClean,
-    monogram: meshek27AppIcons,
+    monogram: meshek27LogoGraphic,
     heroImage: meshek27BrandingFull,
     bgColor: '#F5F8F3',
     accentColor: '#4A7C3F',
     colors: ['#4A7C3F', '#8BC34A', '#F5F5DC'],
     images: [
-      meshek27WallLogo,
-      meshek27WallSignage,
-      meshek27BoxVegetables,
-      meshek27BoxDesign,
-      meshek27TshirtMockup,
-      meshek27LogoGraphic,
-      meshek27AppIcons,
+      meshek27LogoClean,      // Logo clean
+      meshek27LogoGraphic,    // Logo graphic
+      meshek27AppIcons,       // Monogram/icons
+      meshek27WallLogo,       // Wall mockup
+      meshek27WallSignage,    // Signage
+      meshek27BoxVegetables,  // Packaging
+      meshek27BoxDesign,      // Box design
+      meshek27TshirtMockup,   // Tshirt
     ],
   },
   {
     slug: 'taliter',
     name: 'Tali Ter',
     category: 'branding',
-    description: 'מיתוג לסטודיו לבר פילאטיס',
+    description: 'מיתוג למאמנת בר',
     logo: taliterBrandingSet,
     heroImage: taliterBrandingSet,
     bgColor: '#FFFBF5',
     accentColor: '#5CC8B5',
     colors: ['#5CC8B5', '#F68B1F', '#FDF6E3'],
     images: [
-      taliterWallSignage,
-      taliterBottleMockup,
+      taliterBrandingSet,     // Logo/branding set
+      taliterWallSignage,     // Signage mockup
+      taliterBottleMockup,    // Bottle mockup
     ],
   },
   {
@@ -155,15 +158,13 @@ export const projects: Project[] = [
     description: 'מיתוג ואנימציה לפלטפורמת לימוד AI',
     logo: learnaiLogoFull,
     monogram: dotaiMonogram,
-    heroImage: dotaiLogoFull, // Clean DotAi mascot logo
+    heroImage: dotaiLogoFull,
     bgColor: '#F0FAFB',
     accentColor: '#00D4E5',
     colors: ['#00D4E5', '#1A365D', '#F8FAFC'],
     images: [
-      learnaiMockupDesktop,
-      dotaiMascot,
-      websiteLearnai,
-      learnaiLogo,
+      learnaiLogoFull,        // Logo
+      dotaiMonogram,          // Monogram
     ],
     video: learnaiAnimation,
   },
@@ -171,14 +172,17 @@ export const projects: Project[] = [
     slug: 'studioalef',
     name: 'Studio Alef',
     category: 'branding',
-    description: 'מיתוג לסטודיו לעיצוב גרפי',
+    description: 'מיתוג לסטודיו עיצוב - 3D',
     logo: studioalefLogo,
-    heroImage: studioalefWallMockup, // Elegant wall signage
+    heroImage: studioalefWallMockup,
     bgColor: '#F8F8F8',
     accentColor: '#5A5A5A',
     colors: ['#5A5A5A', '#FFFFFF', '#E0E0E0'],
-    images: [],
-    video: studioalefAnimation,
+    images: [
+      studioalefLogo,         // Logo
+      studioalefWallMockup,   // Wall mockup
+    ],
+    video: betterseedsAnimation, // 3D animation moved from BetterSeeds
   },
   {
     slug: 'sen',
@@ -186,7 +190,7 @@ export const projects: Project[] = [
     category: 'website',
     description: 'עיצוב אתר לחנות תכשיטים',
     logo: websiteSenMobile,
-    heroImage: websiteSenFull, // Dramatic jewelry website
+    heroImage: websiteSenFull,
     bgColor: '#0D2847',
     accentColor: '#C9A86C',
     colors: ['#0D2847', '#C9A86C', '#E8B4B8'],
@@ -201,13 +205,14 @@ export const projects: Project[] = [
     description: 'מיתוג לחברת אופניים חשמליים',
     logo: ebriderLogoNew,
     monogram: ebriderSymbol,
-    heroImage: ebriderMockupHero, // Main product display
+    heroImage: ebriderMockupHero,
     bgColor: '#F5F8F5',
     accentColor: '#4A9F4A',
     colors: ['#4A9F4A', '#1A1A1A', '#FFFFFF'],
     images: [
-      ebriderSymbol,
-      mockupEbrider,
+      ebriderLogoNew,         // Logo
+      ebriderSymbol,          // Symbol/monogram
+      ebriderMockupHero,      // Main mockup
     ],
   },
   {
@@ -216,29 +221,36 @@ export const projects: Project[] = [
     category: 'branding',
     description: 'מיתוג ואתר לחנות אופנה',
     logo: sisenoraLogo,
-    heroImage: mockupSisenoraShop, // Shop environment
+    heroImage: mockupSisenoraShop,
     bgColor: '#FAF8F5',
     accentColor: '#D4A574',
     colors: ['#1A1A1A', '#D4A574', '#F5F5F0'],
     images: [
-      websiteSisenora,
+      sisenoraLogo,           // Logo
+      mockupSisenoraShop,     // Shop mockup
+      websiteSisenora,        // Website
     ],
   },
   {
     slug: 'betterseeds',
     name: 'BetterSeeds',
     category: 'branding',
-    description: 'מיתוג ואתר לחברת טכנולוגיה חקלאית',
-    logo: betterseedsIcons,
-    heroImage: betterseedsIcons, // Clean icon set
+    description: 'אתר ויזואלים AI לחברת טכנולוגיה חקלאית',
+    logo: betterseedsHero,
+    heroImage: betterseedsHero,
     bgColor: '#F5F8F3',
     accentColor: '#3D7C3F',
     colors: ['#3D7C3F', '#6AAF4A', '#FFFFFF'],
     images: [
-      websiteBetterseeds,
+      betterseedsHero,        // Hero image
+      aiGeneEditing,          // AI: Gene editing scissors
+      aiDnaScientist,         // AI: Scientist with DNA
+      aiPlantTechnology,      // AI: Plant in lab
+      aiDroneFarming,         // AI: Plant DNA
+      aiCrisprLab,            // AI: CRISPR lab
     ],
-    video: betterseedsAnimation,
-  },
+    websiteImage: websiteBetterseeds, // Separate website image for desktop mockup
+  } as Project & { websiteImage: string },
 ];
 
 // ============ ADDITIONAL WORK (Websites, Print, Graphics) ============
