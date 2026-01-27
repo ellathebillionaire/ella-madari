@@ -1,14 +1,16 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { X, Monitor, Smartphone, Palette, Printer } from 'lucide-react';
-import { projects, additionalWork } from '@/data/projects';
+import { X, Monitor, Smartphone, Palette } from 'lucide-react';
+import { projects } from '@/data/projects';
 
 // Filter valid projects
 const brandingProjects = projects.filter(p => p.category === 'branding' && p.heroImage);
 const websiteProjects = projects.filter(p => p.category === 'website' && p.heroImage);
 
-// Get BetterSeeds for desktop/mobile mockups in websites section
-const betterseedsProject = projects.find(p => p.slug === 'betterseeds') as (typeof projects[0] & { websiteImage?: string; mobileImage?: string }) | undefined;
+// Get projects with website/mobile images for websites section
+type ProjectWithWebsite = typeof projects[0] & { websiteImage?: string; mobileImage?: string };
+const sfdProject = projects.find(p => p.slug === 'sfd') as ProjectWithWebsite | undefined;
+const betterseedsProject = projects.find(p => p.slug === 'betterseeds') as ProjectWithWebsite | undefined;
 
 // ============ LIGHTBOX ============
 const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClose: () => void }) => {
@@ -157,28 +159,6 @@ const BrandingProjectCard = ({ project, onImageClick }: {
   );
 };
 
-// ============ PRINT CARD ============
-const PrintCard = ({ image, name, onClick }: { image: string; name: string; onClick: () => void }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    onClick={onClick}
-    className="group cursor-pointer"
-  >
-    <div className="relative">
-      <div className="absolute inset-1 bg-foreground/5 rounded-lg blur-lg group-hover:blur-xl transition-all" />
-      <div className="relative bg-background rounded-xl overflow-hidden shadow-md border border-border/30 transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
-        <div className="aspect-[4/5] overflow-hidden">
-          <img src={image} alt={name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-        </div>
-      </div>
-    </div>
-    <p className="text-xs text-muted-foreground mt-3 text-center">{name}</p>
-  </motion.div>
-);
-
 // ============ SECTION HEADER ============
 const SectionHeader = ({ title, subtitle, icon }: { title: string; subtitle: string; icon: React.ReactNode }) => (
   <motion.div
@@ -226,7 +206,6 @@ const ServicePortfolio = () => {
             <nav className="flex gap-6 text-[10px] tracking-wider text-muted-foreground">
               <a href="#branding" className="hover:text-foreground transition-colors">Branding</a>
               <a href="#websites" className="hover:text-foreground transition-colors">Websites</a>
-              <a href="#print" className="hover:text-foreground transition-colors">Print</a>
             </nav>
           </div>
         </motion.header>
@@ -236,7 +215,7 @@ const ServicePortfolio = () => {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight mb-4">Portfolio</h1>
             <p className="text-muted-foreground text-sm max-w-sm mx-auto font-light leading-relaxed">
-              מיתוג · עיצוב אתרים · גרפיקה
+              מיתוג · עיצוב אתרים
             </p>
           </motion.div>
         </section>
@@ -262,14 +241,14 @@ const ServicePortfolio = () => {
             
             {/* Desktop Websites */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
-              {websiteProjects.map((project) => (
+              {/* SFD Website */}
+              {sfdProject?.websiteImage && (
                 <DesktopMockup
-                  key={project.slug}
-                  image={project.heroImage}
-                  name={project.name}
-                  onClick={() => handleImageClick(project.heroImage, project.name)}
+                  image={sfdProject.websiteImage}
+                  name="SFD - Strength For Dancers"
+                  onClick={() => handleImageClick(sfdProject.websiteImage!, 'SFD')}
                 />
-              ))}
+              )}
               {/* BetterSeeds website in desktop mockup */}
               {betterseedsProject?.websiteImage && (
                 <DesktopMockup
@@ -278,14 +257,6 @@ const ServicePortfolio = () => {
                   onClick={() => handleImageClick(betterseedsProject.websiteImage!, 'BetterSeeds')}
                 />
               )}
-              {additionalWork.websites.map((site, i) => (
-                <DesktopMockup
-                  key={`add-${i}`}
-                  image={site.image}
-                  name={site.name}
-                  onClick={() => handleImageClick(site.image, site.name)}
-                />
-              ))}
             </div>
 
             {/* Mobile Versions */}
@@ -295,7 +266,8 @@ const ServicePortfolio = () => {
                 <span className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground">Mobile Versions</span>
               </div>
               <div className="flex justify-center gap-12 flex-wrap">
-                {websiteProjects.filter(p => p.images.length > 0).map((project) => (
+                {/* SEN Mobile Only */}
+                {websiteProjects.filter(p => p.slug === 'sen' && p.images.length > 0).map((project) => (
                   <MobileMockup
                     key={`mobile-${project.slug}`}
                     image={project.images[0]}
@@ -303,6 +275,14 @@ const ServicePortfolio = () => {
                     onClick={() => handleImageClick(project.images[0], project.name)}
                   />
                 ))}
+                {/* SFD Mobile */}
+                {sfdProject?.mobileImage && (
+                  <MobileMockup
+                    image={sfdProject.mobileImage}
+                    name="SFD"
+                    onClick={() => handleImageClick(sfdProject.mobileImage!, 'SFD')}
+                  />
+                )}
                 {/* BetterSeeds Mobile */}
                 {betterseedsProject?.mobileImage && (
                   <MobileMockup
@@ -312,22 +292,6 @@ const ServicePortfolio = () => {
                   />
                 )}
               </div>
-            </div>
-          </section>
-
-          {/* ========== PRINT ========== */}
-          <section id="print" className="py-16">
-            <SectionHeader title="עיצוב גרפי ודפוס" subtitle="Print & Graphics" icon={<Printer className="w-5 h-5" />} />
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-              {additionalWork.print.map((item, i) => (
-                <PrintCard
-                  key={i}
-                  image={item.image}
-                  name={item.name}
-                  onClick={() => handleImageClick(item.image, item.name)}
-                />
-              ))}
             </div>
           </section>
 
