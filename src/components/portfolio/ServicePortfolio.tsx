@@ -39,6 +39,7 @@ interface DisplayProject {
   website_image: string | null;
   mobile_image: string | null;
   aspect_ratio: string | null;
+  colors: string[] | null;
   images: string[];
   video?: string;
 }
@@ -145,11 +146,27 @@ const BrandingProjectCard = ({ project, onImageClick }: {
       transition={{ duration: 0.6 }}
       className="mb-12 sm:mb-16 md:mb-20"
     >
-      {/* Project Header */}
-      <div className="mb-4 sm:mb-6">
-        <h3 className="text-lg sm:text-xl md:text-2xl font-light tracking-tight">{project.name}</h3>
-        {project.description && (
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">{project.description}</p>
+      {/* Project Header with Brand Colors */}
+      <div className="mb-4 sm:mb-6 flex justify-between items-start">
+        <div>
+          <h3 className="text-lg sm:text-xl md:text-2xl font-light tracking-tight">{project.name}</h3>
+          {project.description && (
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1">{project.description}</p>
+          )}
+        </div>
+        
+        {/* Brand Colors */}
+        {project.colors && project.colors.length > 0 && (
+          <div className="flex gap-1.5 sm:gap-2">
+            {project.colors.map((color, idx) => (
+              <div
+                key={idx}
+                className="w-5 h-5 sm:w-6 sm:h-6 rounded-full shadow-sm border border-black/5"
+                style={{ backgroundColor: color }}
+                title={color}
+              />
+            ))}
+          </div>
         )}
       </div>
 
@@ -297,6 +314,7 @@ const ServicePortfolio = () => {
       website_image: dbProject.website_image || staticProject?.websiteImage || null,
       mobile_image: dbProject.mobile_image || staticProject?.mobileImage || null,
       aspect_ratio: (dbProject as any).aspect_ratio || '16/9',
+      colors: dbProject.colors || null,
       images,
       video: staticProject?.video,
     };
