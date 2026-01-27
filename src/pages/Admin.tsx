@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trash2, Plus, Eye, EyeOff, Upload, LogOut, ArrowLeft, GripVertical, Copy, Monitor, Smartphone, Palette, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
+import { resolveImageUrl } from '@/lib/imageResolver';
 import {
   DndContext,
   closestCenter,
@@ -138,7 +139,7 @@ const SortableImage = ({
         <GripVertical className="h-3 w-3" />
       </div>
       <img
-        src={image.image_url}
+        src={resolveImageUrl(image.image_url) || image.image_url}
         alt={image.alt_text || projectName}
         className="w-full h-full object-cover"
       />
@@ -397,7 +398,7 @@ const SortableProjectCard = ({
                   <span className="text-xs text-muted-foreground">דסקטופ</span>
                   {project.website_image ? (
                     <div className="relative group w-40 aspect-video rounded-lg overflow-hidden bg-muted">
-                      <img src={project.website_image} alt="Desktop" className="w-full h-full object-cover" />
+                      <img src={resolveImageUrl(project.website_image) || project.website_image} alt="Desktop" className="w-full h-full object-cover" />
                       <button
                         onClick={() => onUpdate(project.id, { website_image: null })}
                         className="absolute top-1 right-1 p-1 bg-destructive text-destructive-foreground rounded opacity-0 group-hover:opacity-100 transition-opacity"
@@ -418,7 +419,7 @@ const SortableProjectCard = ({
                   <span className="text-xs text-muted-foreground">מובייל</span>
                   {project.mobile_image ? (
                     <div className="relative group w-20 aspect-[9/16] rounded-lg overflow-hidden bg-muted">
-                      <img src={project.mobile_image} alt="Mobile" className="w-full h-full object-cover" />
+                      <img src={resolveImageUrl(project.mobile_image) || project.mobile_image} alt="Mobile" className="w-full h-full object-cover" />
                       <button
                         onClick={() => onUpdate(project.id, { mobile_image: null })}
                         className="absolute top-1 right-1 p-1 bg-destructive text-destructive-foreground rounded opacity-0 group-hover:opacity-100 transition-opacity"

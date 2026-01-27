@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { X, Monitor, Smartphone, Palette } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { projects as staticProjects } from '@/data/projects';
+import { resolveImageUrl } from '@/lib/imageResolver';
 
 // ============ TYPES ============
 interface ProjectImage {
@@ -350,9 +351,13 @@ const ServicePortfolio = () => {
     // Use DB images if available, otherwise fall back to static images
     const dbImages = dbProject.project_images
       .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
-      .map(img => img.image_url);
+      .map(img => resolveImageUrl(img.image_url) || img.image_url);
     
     const images = dbImages.length > 0 ? dbImages : (staticProject?.images || []);
+    
+    // Resolve website and mobile images
+    const websiteImage = resolveImageUrl(dbProject.website_image) || dbProject.website_image || staticProject?.websiteImage || null;
+    const mobileImage = resolveImageUrl(dbProject.mobile_image) || dbProject.mobile_image || staticProject?.mobileImage || null;
     
     return {
       id: dbProject.id,
@@ -360,9 +365,8 @@ const ServicePortfolio = () => {
       name: dbProject.name,
       category: dbProject.category,
       description: dbProject.description,
-      // Use DB images first, then static fallback
-      website_image: dbProject.website_image || staticProject?.websiteImage || null,
-      mobile_image: dbProject.mobile_image || staticProject?.mobileImage || null,
+      website_image: websiteImage,
+      mobile_image: mobileImage,
       aspect_ratio: (dbProject as any).aspect_ratio || '16/9',
       colors: dbProject.colors || null,
       images,
