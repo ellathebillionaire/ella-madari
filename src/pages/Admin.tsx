@@ -391,7 +391,7 @@ const SortableProjectCard = ({
                 <Monitor className="h-4 w-4" />
                 תמונות אתר
               </h4>
-              <div className="flex gap-4 flex-wrap">
+              <div className="flex gap-4 flex-wrap items-end">
                 {/* Desktop */}
                 <div className="space-y-2">
                   <span className="text-xs text-muted-foreground">דסקטופ</span>
@@ -432,6 +432,22 @@ const SortableProjectCard = ({
                       {uploadingMobile ? <span className="text-xs">מעלה...</span> : <Smartphone className="h-4 w-4 text-muted-foreground" />}
                     </label>
                   )}
+                </div>
+
+                {/* Aspect Ratio Selector */}
+                <div className="space-y-2">
+                  <span className="text-xs text-muted-foreground">יחס גובה-רוחב</span>
+                  <select
+                    value={project.aspect_ratio || '16/9'}
+                    onChange={(e) => onUpdate(project.id, { aspect_ratio: e.target.value })}
+                    className="h-9 px-3 rounded-md border border-input bg-background text-sm"
+                  >
+                    <option value="16/9">16:9 (רחב)</option>
+                    <option value="16/10">16:10</option>
+                    <option value="4/3">4:3</option>
+                    <option value="3/2">3:2</option>
+                    <option value="1/1">1:1 (ריבוע)</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -591,7 +607,8 @@ const Admin = () => {
       accent_color: '#1A1A1A',
       colors: [],
       website_image: null,
-      mobile_image: null
+      mobile_image: null,
+      aspect_ratio: '16/9'
     });
     
     if (error) {
@@ -616,7 +633,8 @@ const Admin = () => {
       accent_color: project.accent_color,
       colors: project.colors,
       website_image: project.website_image,
-      mobile_image: project.mobile_image
+      mobile_image: project.mobile_image,
+      aspect_ratio: project.aspect_ratio || '16/9'
     });
     
     if (error) {

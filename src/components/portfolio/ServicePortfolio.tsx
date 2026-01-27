@@ -38,6 +38,7 @@ interface DisplayProject {
   description: string | null;
   website_image: string | null;
   mobile_image: string | null;
+  aspect_ratio: string | null;
   images: string[];
   video?: string;
 }
@@ -76,7 +77,7 @@ const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClo
 };
 
 // ============ DESKTOP BROWSER MOCKUP ============
-const DesktopMockup = ({ image, name, onClick }: { image: string; name: string; onClick: () => void }) => {
+const DesktopMockup = ({ image, name, onClick, aspectRatio = '16/9' }: { image: string; name: string; onClick: () => void; aspectRatio?: string }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -96,8 +97,8 @@ const DesktopMockup = ({ image, name, onClick }: { image: string; name: string; 
             <div className="h-2 sm:h-2.5 bg-neutral-300 rounded-full max-w-[80px] sm:max-w-[120px] mx-auto" />
           </div>
         </div>
-        {/* Screenshot - 16:9 ratio for web screenshots */}
-        <div className="aspect-video overflow-hidden">
+        {/* Screenshot - custom aspect ratio */}
+        <div className="overflow-hidden" style={{ aspectRatio }}>
           <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]" />
         </div>
       </div>
@@ -167,6 +168,7 @@ const BrandingProjectCard = ({ project, onImageClick }: {
               <DesktopMockup
                 image={project.website_image}
                 name=""
+                aspectRatio={project.aspect_ratio || '16/9'}
                 onClick={() => onImageClick(project.website_image!, project.name)}
               />
             </div>
@@ -294,6 +296,7 @@ const ServicePortfolio = () => {
       // Use DB images first, then static fallback
       website_image: dbProject.website_image || staticProject?.websiteImage || null,
       mobile_image: dbProject.mobile_image || staticProject?.mobileImage || null,
+      aspect_ratio: (dbProject as any).aspect_ratio || '16/9',
       images,
       video: staticProject?.video,
     };
@@ -376,6 +379,7 @@ const ServicePortfolio = () => {
                     key={project.id}
                     image={project.website_image!}
                     name={project.name}
+                    aspectRatio={project.aspect_ratio || '16/9'}
                     onClick={() => handleImageClick(project.website_image!, project.name)}
                   />
                 ))}
