@@ -8,8 +8,8 @@ import sfdTshirtMockup from '@/assets/sfd/tshirt-mockup.jpg';
 import sfdWebsite from '@/assets/sfd/website.jpg';
 import sfdLogoTransparent from '@/assets/sfd/logo-transparent.png';
 import sfdSymbol from '@/assets/sfd/symbol.jpg';
-import websiteSfdDesktop from '@/assets/website-sfd-desktop.png';
-import websiteSfdMobile from '@/assets/website-sfd-mobile.png';
+import sfdWebsiteDesktopNew from '@/assets/sfd/website-desktop-new.png';
+import sfdWebsiteMobileNew from '@/assets/sfd/website-mobile-new.png';
 import sfdBandsProduct from '@/assets/sfd-bands-product.png';
 
 // Meshek 27 - New organized assets
@@ -110,8 +110,8 @@ export const projects: Project[] = [
       sfdBandsProduct,    // Bands product mockup
       sfdWebsite,         // Website
     ],
-    websiteImage: websiteSfdDesktop,
-    mobileImage: websiteSfdMobile,
+    websiteImage: sfdWebsiteDesktopNew,
+    mobileImage: sfdWebsiteMobileNew,
   },
   {
     slug: 'meshek27',

@@ -101,6 +101,7 @@ const BrandingProjectCard = ({ project, onImageClick }: {
 }) => {
   // Get unique images only (no duplicates)
   const allImages = [...new Set(project.images)];
+  const projectWithWebsite = project as typeof projects[0] & { websiteImage?: string };
   
   return (
     <motion.div
@@ -157,6 +158,40 @@ const BrandingProjectCard = ({ project, onImageClick }: {
           </motion.div>
         )}
       </div>
+
+      {/* Website in Desktop Mockup - if project has websiteImage */}
+      {projectWithWebsite.websiteImage && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-6"
+        >
+          <div 
+            onClick={() => onImageClick(projectWithWebsite.websiteImage!, project.name)}
+            className="group cursor-pointer max-w-3xl"
+          >
+            <div className="bg-muted rounded-2xl overflow-hidden shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2">
+              <div className="h-8 bg-secondary/60 flex items-center px-3 gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+                <div className="flex-1 mx-4">
+                  <div className="h-4 bg-background/30 rounded-full max-w-[200px]" />
+                </div>
+              </div>
+              <div className="aspect-[16/10] overflow-hidden">
+                <img 
+                  src={projectWithWebsite.websiteImage} 
+                  alt={`${project.name} Website`} 
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" 
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </motion.div>
   );
 };
