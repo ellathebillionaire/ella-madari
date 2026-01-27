@@ -48,51 +48,82 @@ const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClo
 };
 
 // ============ DESKTOP BROWSER MOCKUP ============
-const DesktopMockup = ({ image, name, onClick }: { image: string; name: string; onClick: () => void }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.6 }}
-    onClick={onClick}
-    className="group cursor-pointer"
-  >
-    <div className="bg-muted rounded-2xl overflow-hidden shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2">
-      <div className="h-10 bg-secondary/60 flex items-center px-4 gap-2">
-        <div className="w-3 h-3 rounded-full bg-red-400/80" />
-        <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
-        <div className="w-3 h-3 rounded-full bg-green-400/80" />
-        <div className="flex-1 mx-6">
-          <div className="h-5 bg-background/30 rounded-full max-w-[250px]" />
+const DesktopMockup = ({ image, name, onClick, size = 'large' }: { image: string; name: string; onClick: () => void; size?: 'large' | 'medium' | 'small' }) => {
+  const sizeClasses = {
+    large: 'h-10 px-4 gap-2',
+    medium: 'h-8 px-3 gap-1.5',
+    small: 'h-7 px-2.5 gap-1.5'
+  };
+  const dotSizes = {
+    large: 'w-3 h-3',
+    medium: 'w-2.5 h-2.5',
+    small: 'w-2 h-2'
+  };
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      onClick={onClick}
+      className="group cursor-pointer"
+    >
+      <div className="bg-muted rounded-2xl overflow-hidden shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2">
+        <div className={`bg-secondary/60 flex items-center ${sizeClasses[size]}`}>
+          <div className={`rounded-full bg-red-400/80 ${dotSizes[size]}`} />
+          <div className={`rounded-full bg-yellow-400/80 ${dotSizes[size]}`} />
+          <div className={`rounded-full bg-green-400/80 ${dotSizes[size]}`} />
+          <div className="flex-1 mx-4">
+            <div className="h-4 bg-background/30 rounded-full max-w-[180px]" />
+          </div>
+        </div>
+        <div className="aspect-[16/10] overflow-hidden">
+          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
         </div>
       </div>
-      <div className="aspect-[16/10] overflow-hidden">
-        <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
-      </div>
-    </div>
-    <p className="text-sm text-muted-foreground mt-4 text-center font-light">{name}</p>
-  </motion.div>
-);
+      {name && <p className="text-sm text-muted-foreground mt-4 text-center font-light">{name}</p>}
+    </motion.div>
+  );
+};
 
 // ============ MOBILE MOCKUP ============
-const MobileMockup = ({ image, name, onClick }: { image: string; name: string; onClick: () => void }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.6 }}
-    onClick={onClick}
-    className="group cursor-pointer flex flex-col items-center"
-  >
-    <div className="relative bg-foreground rounded-[2.5rem] p-2 shadow-2xl transition-all duration-500 group-hover:-translate-y-2">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-foreground rounded-b-xl z-10" />
-      <div className="bg-background rounded-[2rem] overflow-hidden w-44 aspect-[9/19]">
-        <img src={image} alt={name} className="w-full h-full object-cover object-top" />
+const MobileMockup = ({ image, name, onClick, size = 'large' }: { image: string; name: string; onClick: () => void; size?: 'large' | 'medium' | 'small' }) => {
+  const sizeClasses = {
+    large: 'w-44 aspect-[9/19] rounded-[2rem]',
+    medium: 'w-36 aspect-[9/19] rounded-[1.5rem]',
+    small: 'w-28 aspect-[9/19] rounded-[1.25rem]'
+  };
+  const frameClasses = {
+    large: 'rounded-[2.5rem] p-2',
+    medium: 'rounded-[2rem] p-1.5',
+    small: 'rounded-[1.5rem] p-1'
+  };
+  const notchClasses = {
+    large: 'w-20 h-5 rounded-b-xl',
+    medium: 'w-16 h-4 rounded-b-lg',
+    small: 'w-12 h-3 rounded-b-md'
+  };
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      onClick={onClick}
+      className="group cursor-pointer flex flex-col items-center"
+    >
+      <div className={`relative bg-foreground shadow-2xl transition-all duration-500 group-hover:-translate-y-2 ${frameClasses[size]}`}>
+        <div className={`absolute top-0 left-1/2 -translate-x-1/2 bg-foreground z-10 ${notchClasses[size]}`} />
+        <div className={`bg-background overflow-hidden ${sizeClasses[size]}`}>
+          <img src={image} alt={name} className="w-full h-full object-cover object-top" />
+        </div>
       </div>
-    </div>
-    <p className="text-sm text-muted-foreground mt-5 text-center font-light">{name}</p>
-  </motion.div>
-);
+      {name && <p className="text-sm text-muted-foreground mt-5 text-center font-light">{name}</p>}
+    </motion.div>
+  );
+};
 
 // ============ BRANDING PROJECT CARD ============
 const BrandingProjectCard = ({ project, onImageClick }: { 
@@ -101,7 +132,7 @@ const BrandingProjectCard = ({ project, onImageClick }: {
 }) => {
   // Get unique images only (no duplicates)
   const allImages = [...new Set(project.images)];
-  const projectWithWebsite = project as typeof projects[0] & { websiteImage?: string };
+  const projectWithWebsite = project as typeof projects[0] & { websiteImage?: string; mobileImage?: string };
   
   return (
     <motion.div
@@ -159,37 +190,36 @@ const BrandingProjectCard = ({ project, onImageClick }: {
         )}
       </div>
 
-      {/* Website in Desktop Mockup - if project has websiteImage */}
-      {projectWithWebsite.websiteImage && (
+      {/* Website Mockups - Desktop and Mobile */}
+      {(projectWithWebsite.websiteImage || projectWithWebsite.mobileImage) && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-6"
+          className="mt-8 flex flex-wrap gap-6 items-end"
         >
-          <div 
-            onClick={() => onImageClick(projectWithWebsite.websiteImage!, project.name)}
-            className="group cursor-pointer max-w-3xl"
-          >
-            <div className="bg-muted rounded-2xl overflow-hidden shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2">
-              <div className="h-8 bg-secondary/60 flex items-center px-3 gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
-                <div className="flex-1 mx-4">
-                  <div className="h-4 bg-background/30 rounded-full max-w-[200px]" />
-                </div>
-              </div>
-              <div className="aspect-[16/10] overflow-hidden">
-                <img 
-                  src={projectWithWebsite.websiteImage} 
-                  alt={`${project.name} Website`} 
-                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" 
-                />
-              </div>
+          {/* Desktop Mockup */}
+          {projectWithWebsite.websiteImage && (
+            <div className="flex-1 min-w-[280px] max-w-2xl">
+              <DesktopMockup
+                image={projectWithWebsite.websiteImage}
+                name=""
+                size="medium"
+                onClick={() => onImageClick(projectWithWebsite.websiteImage!, project.name)}
+              />
             </div>
-          </div>
+          )}
+          
+          {/* Mobile Mockup */}
+          {projectWithWebsite.mobileImage && (
+            <MobileMockup
+              image={projectWithWebsite.mobileImage}
+              name=""
+              size="medium"
+              onClick={() => onImageClick(projectWithWebsite.mobileImage!, project.name)}
+            />
+          )}
         </motion.div>
       )}
     </motion.div>
