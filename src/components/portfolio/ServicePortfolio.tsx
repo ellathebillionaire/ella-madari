@@ -107,6 +107,7 @@ const BrandingProjectCard = ({ project, onImageClick }: {
   // Get unique images only (no duplicates)
   const allImages = [...new Set(project.images)];
   const projectWithWebsite = project as typeof projects[0] & { websiteImage?: string; mobileImage?: string };
+  const hasScreenMockups = projectWithWebsite.websiteImage || projectWithWebsite.mobileImage;
   
   return (
     <motion.div
@@ -123,6 +124,37 @@ const BrandingProjectCard = ({ project, onImageClick }: {
           <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
         )}
       </div>
+
+      {/* Website/Mobile Mockups - ALWAYS FIRST when they exist */}
+      {hasScreenMockups && (
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-6 flex flex-wrap gap-4 items-end"
+        >
+          {/* Desktop Mockup */}
+          {projectWithWebsite.websiteImage && (
+            <div className="flex-1 min-w-[200px] max-w-md">
+              <DesktopMockup
+                image={projectWithWebsite.websiteImage}
+                name=""
+                onClick={() => onImageClick(projectWithWebsite.websiteImage!, project.name)}
+              />
+            </div>
+          )}
+          
+          {/* Mobile Mockup */}
+          {projectWithWebsite.mobileImage && (
+            <MobileMockup
+              image={projectWithWebsite.mobileImage}
+              name=""
+              onClick={() => onImageClick(projectWithWebsite.mobileImage!, project.name)}
+            />
+          )}
+        </motion.div>
+      )}
       
       {/* Images Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -163,37 +195,6 @@ const BrandingProjectCard = ({ project, onImageClick }: {
           </motion.div>
         )}
       </div>
-
-      {/* Website Mockups - Desktop and Mobile */}
-      {(projectWithWebsite.websiteImage || projectWithWebsite.mobileImage) && (
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="mt-6 flex flex-wrap gap-4 items-end"
-        >
-          {/* Desktop Mockup */}
-          {projectWithWebsite.websiteImage && (
-            <div className="flex-1 min-w-[200px] max-w-md">
-              <DesktopMockup
-                image={projectWithWebsite.websiteImage}
-                name=""
-                onClick={() => onImageClick(projectWithWebsite.websiteImage!, project.name)}
-              />
-            </div>
-          )}
-          
-          {/* Mobile Mockup */}
-          {projectWithWebsite.mobileImage && (
-            <MobileMockup
-              image={projectWithWebsite.mobileImage}
-              name=""
-              onClick={() => onImageClick(projectWithWebsite.mobileImage!, project.name)}
-            />
-          )}
-        </motion.div>
-      )}
     </motion.div>
   );
 };
