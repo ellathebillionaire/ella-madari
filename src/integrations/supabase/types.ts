@@ -52,6 +52,7 @@ export type Database = {
       projects: {
         Row: {
           accent_color: string | null
+          aspect_ratio: string | null
           bg_color: string | null
           category: string
           colors: string[] | null
@@ -69,6 +70,7 @@ export type Database = {
         }
         Insert: {
           accent_color?: string | null
+          aspect_ratio?: string | null
           bg_color?: string | null
           category: string
           colors?: string[] | null
@@ -86,6 +88,7 @@ export type Database = {
         }
         Update: {
           accent_color?: string | null
+          aspect_ratio?: string | null
           bg_color?: string | null
           category?: string
           colors?: string[] | null
