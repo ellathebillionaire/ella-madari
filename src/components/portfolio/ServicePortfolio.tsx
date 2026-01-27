@@ -11,6 +11,8 @@ const websiteProjects = projects.filter(p => p.category === 'website' && p.heroI
 type ProjectWithWebsite = typeof projects[0] & { websiteImage?: string; mobileImage?: string };
 const sfdProject = projects.find(p => p.slug === 'sfd') as ProjectWithWebsite | undefined;
 const betterseedsProject = projects.find(p => p.slug === 'betterseeds') as ProjectWithWebsite | undefined;
+const sisenoraProject = projects.find(p => p.slug === 'sisenora') as ProjectWithWebsite | undefined;
+const ascolaProject = projects.find(p => p.slug === 'ascola') as ProjectWithWebsite | undefined;
 
 // ============ LIGHTBOX ============
 const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClose: () => void }) => {
@@ -255,6 +257,22 @@ const ServicePortfolio = () => {
                   image={betterseedsProject.websiteImage}
                   name="BetterSeeds"
                   onClick={() => handleImageClick(betterseedsProject.websiteImage!, 'BetterSeeds')}
+                />
+              )}
+              {/* Si Señora website in desktop mockup */}
+              {sisenoraProject?.websiteImage && (
+                <DesktopMockup
+                  image={sisenoraProject.websiteImage}
+                  name="Si Señora"
+                  onClick={() => handleImageClick(sisenoraProject.websiteImage!, 'Si Señora')}
+                />
+              )}
+              {/* Ascola Garden website in desktop mockup */}
+              {ascolaProject?.websiteImage && (
+                <DesktopMockup
+                  image={ascolaProject.websiteImage}
+                  name="Ascola Garden"
+                  onClick={() => handleImageClick(ascolaProject.websiteImage!, 'Ascola Garden')}
                 />
               )}
             </div>

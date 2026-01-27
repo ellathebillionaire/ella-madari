@@ -1,4 +1,4 @@
-// ============ BRANDING PROJECTS ============
+// ============= BRANDING PROJECTS ============
 
 // SFD - Strength For Dancers - New organized assets
 import sfdMainLogo from '@/assets/sfd/main-logo.jpg';
@@ -10,6 +10,7 @@ import sfdLogoTransparent from '@/assets/sfd/logo-transparent.png';
 import sfdSymbol from '@/assets/sfd/symbol.jpg';
 import websiteSfdDesktop from '@/assets/website-sfd-desktop.png';
 import websiteSfdMobile from '@/assets/website-sfd-mobile.png';
+import sfdBandsProduct from '@/assets/sfd-bands-product.png';
 
 // Meshek 27 - New organized assets
 import meshek27WallLogo from '@/assets/meshek27/wall-logo.png';
@@ -23,7 +24,7 @@ import meshek27LogoGraphic from '@/assets/meshek27/logo-graphic.jpg';
 import meshek27BoxDesign from '@/assets/meshek27/box-design.jpg';
 
 // Si Señora
-import websiteSisenora from "@/assets/website-sisenora.png";
+import sisenoraWebsiteNew from "@/assets/sisenora-website-new.png";
 import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
@@ -62,6 +63,11 @@ import aiPlantTechnology from "@/assets/ai-plant-technology.jpg";
 import aiDroneFarming from "@/assets/ai-drone-farming.jpg";
 import aiCrisprLab from "@/assets/ai-crispr-lab.png";
 
+// Ascola Garden
+import ascolaWebsite from "@/assets/ascola/website-screen.png";
+import ascolaLogo from "@/assets/ascola/logo.jpg";
+import ascolaBrandingMockup from "@/assets/ascola/branding-mockup.jpg";
+
 // ============ TYPES ============
 
 export interface Project {
@@ -77,6 +83,8 @@ export interface Project {
   colors: string[]; // Brand color palette
   images: string[];
   video?: string;
+  websiteImage?: string;
+  mobileImage?: string;
 }
 
 // ============ BRANDING PROJECTS ============
@@ -99,11 +107,12 @@ export const projects: Project[] = [
       sfdSecondaryLogo,   // Secondary logo
       sfdSymbol,          // Monogram
       sfdTshirtMockup,    // Mockup
+      sfdBandsProduct,    // Bands product mockup
       sfdWebsite,         // Website
     ],
     websiteImage: websiteSfdDesktop,
     mobileImage: websiteSfdMobile,
-  } as Project & { websiteImage: string; mobileImage: string },
+  },
   {
     slug: 'meshek27',
     name: 'משק 27',
@@ -220,8 +229,8 @@ export const projects: Project[] = [
     images: [
       sisenoraLogo,           // Logo
       mockupSisenoraShop,     // Shop mockup
-      websiteSisenora,        // Website
     ],
+    websiteImage: sisenoraWebsiteNew, // New website screenshot
   },
   {
     slug: 'betterseeds',
@@ -243,7 +252,23 @@ export const projects: Project[] = [
     ],
     websiteImage: websiteBetterseeds,
     mobileImage: betterseedsMobile,
-  } as Project & { websiteImage: string; mobileImage: string },
+  },
+  {
+    slug: 'ascola',
+    name: 'Ascola Garden',
+    category: 'branding',
+    description: 'לוגו ובניית אתר תדמית לעסק של מתחם אירועים טוסקני',
+    logo: ascolaLogo,
+    heroImage: ascolaWebsite,
+    bgColor: '#F5F5F0',
+    accentColor: '#2D5A4A',
+    colors: ['#2D5A4A', '#1A1A1A', '#FFFFFF'],
+    images: [
+      ascolaLogo,             // Logo
+      ascolaBrandingMockup,   // Branding mockup
+    ],
+    websiteImage: ascolaWebsite,
+  },
 ];
 
 // ============ ADDITIONAL WORK (Websites only - Print section removed) ============
