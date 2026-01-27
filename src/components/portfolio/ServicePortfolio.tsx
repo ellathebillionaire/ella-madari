@@ -96,8 +96,8 @@ const DesktopMockup = ({ image, name, onClick }: { image: string; name: string; 
             <div className="h-2 sm:h-2.5 bg-neutral-300 rounded-full max-w-[80px] sm:max-w-[120px] mx-auto" />
           </div>
         </div>
-        {/* Screenshot - fills the frame completely */}
-        <div className="aspect-[16/10] overflow-hidden">
+        {/* Screenshot - 16:9 ratio for web screenshots */}
+        <div className="aspect-video overflow-hidden">
           <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]" />
         </div>
       </div>

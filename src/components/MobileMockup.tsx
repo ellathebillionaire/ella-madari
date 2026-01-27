@@ -13,7 +13,7 @@ const MobileMockup = ({ screenshot, title }: MobileMockupProps) => {
         {/* Dynamic Island */}
         <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-foreground rounded-full z-10" />
         
-        {/* Screen */}
+        {/* Screen - 9:19.5 ratio for modern phones */}
         <div className="relative rounded-[2.6rem] overflow-hidden bg-secondary aspect-[9/19.5]">
           <img
             src={screenshot}

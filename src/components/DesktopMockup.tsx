@@ -26,8 +26,8 @@ const DesktopMockup = ({ screenshot, title }: DesktopMockupProps) => {
         </div>
       </div>
       
-      {/* Screenshot Container */}
-      <div className="relative overflow-hidden aspect-[16/10]">
+      {/* Screenshot Container - 16:9 ratio */}
+      <div className="relative overflow-hidden aspect-video">
         <img
           src={screenshot}
           alt={title}
