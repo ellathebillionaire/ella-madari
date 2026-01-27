@@ -127,7 +127,6 @@ export const projects: Project[] = [
     images: [
       meshek27LogoClean,      // Logo clean
       meshek27AppIcons,       // Monogram/icons
-      meshek27WallLogo,       // Wall mockup
       meshek27WallSignage,    // Signage
       meshek27BoxVegetables,  // Packaging
       meshek27BoxDesign,      // Box design
