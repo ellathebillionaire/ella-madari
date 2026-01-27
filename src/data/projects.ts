@@ -8,6 +8,8 @@ import sfdTshirtMockup from '@/assets/sfd/tshirt-mockup.jpg';
 import sfdWebsite from '@/assets/sfd/website.jpg';
 import sfdLogoTransparent from '@/assets/sfd/logo-transparent.png';
 import sfdSymbol from '@/assets/sfd/symbol.jpg';
+import websiteSfdDesktop from '@/assets/website-sfd-desktop.png';
+import websiteSfdMobile from '@/assets/website-sfd-mobile.png';
 
 // Meshek 27 - New organized assets
 import meshek27WallLogo from '@/assets/meshek27/wall-logo.png';
@@ -30,6 +32,7 @@ import learnaiLogoFull from "@/assets/learnai-logo-full.jpg";
 import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
 import dotaiLogoFull from "@/assets/dotai-logo-full.jpg";
+import learnaiMockupDesktop from "@/assets/learnai-mockup-desktop.jpg";
 
 // Tali Ter - New organized assets
 import taliterBrandingSet from '@/assets/taliter/branding-set.jpg';
@@ -47,7 +50,6 @@ import studioalefWallMockup from "@/assets/studioalef-wall-mockup.png";
 import betterseedsAnimation from "@/assets/betterseeds-animation.mp4"; // Using for Studio Alef
 
 // SEN Jewelry
-import websiteSenFull from "@/assets/website-sen-full.png";
 import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
 // BetterSeeds - AI generated images for website
@@ -59,20 +61,6 @@ import aiDnaScientist from "@/assets/ai-dna-scientist.png";
 import aiPlantTechnology from "@/assets/ai-plant-technology.jpg";
 import aiDroneFarming from "@/assets/ai-drone-farming.jpg";
 import aiCrisprLab from "@/assets/ai-crispr-lab.png";
-
-// ============ ADDITIONAL WORK ============
-
-import websiteEllamadariShop from "@/assets/website-ellamadari-shop.png";
-
-// Print & Graphic Design
-import printPosterEllamadari from "@/assets/print-poster-ellamadari.jpg";
-import printInfographicFarm from "@/assets/print-infographic-farm.jpg";
-import mockupAdamaCards from "@/assets/mockup-adama-cards.jpg";
-import mockupWeddingInvite from "@/assets/mockup-wedding-invite.jpg";
-import mockupBusinesscard from "@/assets/mockup-businesscard.jpg";
-import mockupStationery from "@/assets/mockup-stationery.jpg";
-import mockupTotebag from "@/assets/mockup-totebag.jpg";
-import mockupMug from "@/assets/mockup-mug.jpg";
 
 // ============ TYPES ============
 
@@ -99,7 +87,7 @@ export const projects: Project[] = [
     slug: 'sfd',
     name: 'SFD',
     category: 'branding',
-    description: 'Strength For Dancers - מיתוג מלא ועיצוב מוצרים',
+    description: 'מיתוג מחדש (REBRANDING) מלא וייבוא ליין מוצרים ממותג',
     logo: sfdLogoTransparent,
     monogram: sfdSymbol,
     heroImage: sfdBrandingSet,
@@ -113,12 +101,14 @@ export const projects: Project[] = [
       sfdTshirtMockup,    // Mockup
       sfdWebsite,         // Website
     ],
-  },
+    websiteImage: websiteSfdDesktop,
+    mobileImage: websiteSfdMobile,
+  } as Project & { websiteImage: string; mobileImage: string },
   {
     slug: 'meshek27',
     name: 'משק 27',
     category: 'branding',
-    description: 'מיתוג מלא לחווה אורגנית',
+    description: 'מיתוג מלא למשק חקלאי - משלוחי ירקות',
     logo: meshek27LogoClean,
     monogram: meshek27LogoGraphic,
     heroImage: meshek27BrandingFull,
@@ -166,6 +156,7 @@ export const projects: Project[] = [
     images: [
       learnaiLogoFull,        // Logo
       dotaiMonogram,          // Monogram
+      learnaiMockupDesktop,   // Desktop mockup
     ],
     video: learnaiAnimation,
   },
@@ -191,7 +182,7 @@ export const projects: Project[] = [
     category: 'website',
     description: 'עיצוב אתר לחנות תכשיטים',
     logo: websiteSenMobile,
-    heroImage: websiteSenFull,
+    heroImage: websiteSenMobile,
     bgColor: '#0D2847',
     accentColor: '#C9A86C',
     colors: ['#0D2847', '#C9A86C', '#E8B4B8'],
@@ -255,20 +246,8 @@ export const projects: Project[] = [
   } as Project & { websiteImage: string; mobileImage: string },
 ];
 
-// ============ ADDITIONAL WORK (Websites, Print, Graphics) ============
+// ============ ADDITIONAL WORK (Websites only - Print section removed) ============
 
 export const additionalWork = {
-  websites: [
-    { name: 'Ella Madari Shop', image: websiteEllamadariShop, color: '#1A1A1A' },
-  ],
-  print: [
-    { name: 'פוסטר אלה מדארי', image: printPosterEllamadari },
-    { name: 'אינפוגרפיקה חקלאית', image: printInfographicFarm },
-    { name: 'כרטיסי ביקור אדמה', image: mockupAdamaCards },
-    { name: 'הזמנה לחתונה', image: mockupWeddingInvite },
-    { name: 'כרטיס ביקור', image: mockupBusinesscard },
-    { name: 'ניירת משרדית', image: mockupStationery },
-    { name: 'Tote Bag', image: mockupTotebag },
-    { name: 'מאג', image: mockupMug },
-  ],
+  websites: [],
 };
