@@ -58,19 +58,34 @@ const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClo
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClose}
-      className="fixed inset-0 z-[200] bg-background/95 backdrop-blur-xl flex items-center justify-center p-8"
+      className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-2xl flex items-center justify-center p-6 sm:p-10"
     >
-      <button onClick={onClose} className="absolute top-6 right-6 p-2 rounded-full hover:bg-muted">
-        <X className="w-6 h-6" />
-      </button>
-      <span className="absolute top-6 left-6 text-sm text-muted-foreground">{name}</span>
+      <motion.button 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.1 }}
+        onClick={onClose} 
+        className="absolute top-4 right-4 sm:top-8 sm:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-lg transition-all duration-300 group"
+      >
+        <X className="w-5 h-5 text-white group-hover:rotate-90 transition-transform duration-300" />
+      </motion.button>
+      <motion.span 
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="absolute top-4 left-4 sm:top-8 sm:left-8 text-sm text-white/70 font-light tracking-wide"
+      >
+        {name}
+      </motion.span>
       <motion.img
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.92, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         src={image}
         alt={name}
-        className="max-w-full max-h-full object-contain rounded-xl"
+        className="max-w-full max-h-full object-contain rounded-xl sm:rounded-2xl shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       />
     </motion.div>
@@ -84,26 +99,26 @@ const DesktopMockup = ({ image, name, onClick, aspectRatio = '16/9' }: { image: 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
       className="group cursor-pointer w-full"
     >
-      <div className="bg-neutral-100 rounded-lg sm:rounded-xl overflow-hidden shadow-md transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
-        {/* Browser Bar - tight and minimal */}
-        <div className="bg-neutral-200 flex items-center h-4 sm:h-5 px-2 gap-1">
-          <div className="rounded-full bg-[#FF5F57] w-1.5 h-1.5 sm:w-2 sm:h-2" />
-          <div className="rounded-full bg-[#FEBC2E] w-1.5 h-1.5 sm:w-2 sm:h-2" />
-          <div className="rounded-full bg-[#28C840] w-1.5 h-1.5 sm:w-2 sm:h-2" />
-          <div className="flex-1 mx-2 sm:mx-4">
-            <div className="h-2 sm:h-2.5 bg-neutral-300 rounded-full max-w-[80px] sm:max-w-[120px] mx-auto" />
+      <div className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] transition-all duration-500 ease-out group-hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] group-hover:-translate-y-2">
+        {/* Browser Bar - Apple-style */}
+        <div className="bg-gradient-to-b from-neutral-100 to-neutral-200/80 flex items-center h-5 sm:h-6 px-2.5 gap-1.5 border-b border-neutral-200/50">
+          <div className="rounded-full bg-[#FF5F57] w-2 h-2 sm:w-2.5 sm:h-2.5 shadow-sm" />
+          <div className="rounded-full bg-[#FEBC2E] w-2 h-2 sm:w-2.5 sm:h-2.5 shadow-sm" />
+          <div className="rounded-full bg-[#28C840] w-2 h-2 sm:w-2.5 sm:h-2.5 shadow-sm" />
+          <div className="flex-1 mx-3 sm:mx-6">
+            <div className="h-2.5 sm:h-3 bg-neutral-200/80 rounded-md max-w-[100px] sm:max-w-[140px] mx-auto" />
           </div>
         </div>
         {/* Screenshot - custom aspect ratio */}
         <div className="overflow-hidden" style={{ aspectRatio }}>
-          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]" />
+          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
         </div>
       </div>
-      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 text-center font-light">{name}</p>}
+      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide">{name}</p>}
     </motion.div>
   );
 };
@@ -115,18 +130,20 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
       className="group cursor-pointer flex flex-col items-center"
     >
-      <div className="relative bg-neutral-900 shadow-lg rounded-[1.5rem] sm:rounded-[2rem] p-[3px] sm:p-1 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl">
-        <div className="absolute top-1.5 left-1/2 -translate-x-1/2 bg-neutral-900 z-10 w-12 sm:w-16 h-3 sm:h-4 rounded-full" />
-        <div className="bg-neutral-100 overflow-hidden w-20 sm:w-24 md:w-28 aspect-[9/19.5] rounded-[1.3rem] sm:rounded-[1.75rem]">
-          <img src={image} alt={name} className="w-full h-full object-cover object-top" />
+      <div className="relative bg-gradient-to-b from-neutral-800 to-neutral-900 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.3)] rounded-[1.5rem] sm:rounded-[2.5rem] p-[3px] sm:p-1 transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.4)]">
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-neutral-900 z-10 w-14 sm:w-20 h-4 sm:h-5 rounded-full flex items-center justify-center">
+          <div className="w-2 h-2 rounded-full bg-neutral-800 ring-1 ring-neutral-700" />
         </div>
-        <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-8 sm:w-10 h-1 bg-white/30 rounded-full" />
+        <div className="bg-white overflow-hidden w-24 sm:w-28 md:w-32 aspect-[9/19.5] rounded-[1.3rem] sm:rounded-[2.25rem]">
+          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]" />
+        </div>
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-10 sm:w-12 h-1 bg-white/20 rounded-full" />
       </div>
-      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 text-center font-light">{name}</p>}
+      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide">{name}</p>}
     </motion.div>
   );
 };
@@ -189,13 +206,17 @@ const BrandingProjectCard = ({ project, onImageClick }: {
           
           {/* Brand Colors - positioned at top right of mockups section */}
           {project.colors && project.colors.length > 0 && (
-            <div className="flex flex-col items-end gap-1.5 pt-1">
-              <span className="text-[10px] text-muted-foreground tracking-wide whitespace-nowrap">פלטת צבעים</span>
-              <div className="flex gap-1.5 sm:gap-2">
+            <div className="flex flex-col items-end gap-2 pt-1">
+              <span className="text-[10px] text-muted-foreground/70 tracking-wider uppercase whitespace-nowrap">Color Palette</span>
+              <div className="flex gap-2 sm:gap-2.5">
                 {project.colors.map((color, idx) => (
-                  <div
+                  <motion.div
                     key={idx}
-                    className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-border"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full shadow-[0_2px_8px_-2px_rgba(0,0,0,0.15),inset_0_1px_2px_rgba(255,255,255,0.3)] ring-1 ring-black/5 transition-transform duration-300 hover:scale-110 cursor-pointer"
                     style={{ backgroundColor: color }}
                     title={color}
                   />
@@ -209,13 +230,17 @@ const BrandingProjectCard = ({ project, onImageClick }: {
       {/* Color Palette for projects WITHOUT mockups */}
       {!hasScreenMockups && project.colors && project.colors.length > 0 && (
         <div className="mb-4 sm:mb-6 flex justify-end">
-          <div className="flex flex-col items-end gap-1.5">
-            <span className="text-[10px] text-muted-foreground tracking-wide whitespace-nowrap">פלטת צבעים</span>
-            <div className="flex gap-1.5 sm:gap-2">
+          <div className="flex flex-col items-end gap-2">
+            <span className="text-[10px] text-muted-foreground/70 tracking-wider uppercase whitespace-nowrap">Color Palette</span>
+            <div className="flex gap-2 sm:gap-2.5">
               {project.colors.map((color, idx) => (
-                <div
+                <motion.div
                   key={idx}
-                  className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-border"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full shadow-[0_2px_8px_-2px_rgba(0,0,0,0.15),inset_0_1px_2px_rgba(255,255,255,0.3)] ring-1 ring-black/5 transition-transform duration-300 hover:scale-110 cursor-pointer"
                   style={{ backgroundColor: color }}
                   title={color}
                 />
@@ -227,21 +252,21 @@ const BrandingProjectCard = ({ project, onImageClick }: {
       
       {/* Images Grid */}
       {project.images.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {project.images.map((img, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
+              transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
               onClick={() => onImageClick(img, project.name)}
-              className="group cursor-pointer overflow-hidden rounded-lg sm:rounded-xl bg-muted aspect-[4/3]"
+              className="group cursor-pointer overflow-hidden rounded-xl sm:rounded-2xl bg-muted aspect-[4/3] shadow-[0_2px_12px_-4px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.15)] transition-all duration-500 ease-out hover:-translate-y-1"
             >
               <img
                 src={img}
                 alt={project.name}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
               />
             </motion.div>
           ))}
@@ -249,10 +274,11 @@ const BrandingProjectCard = ({ project, onImageClick }: {
           {/* Video if exists */}
           {project.video && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="overflow-hidden rounded-lg sm:rounded-xl bg-muted aspect-[4/3]"
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden rounded-xl sm:rounded-2xl bg-muted aspect-[4/3] shadow-[0_2px_12px_-4px_rgba(0,0,0,0.08)]"
             >
               <video
                 src={project.video}
@@ -273,16 +299,17 @@ const BrandingProjectCard = ({ project, onImageClick }: {
 // ============ SECTION HEADER ============
 const SectionHeader = ({ title, subtitle, icon }: { title: string; subtitle: string; icon: React.ReactNode }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 25 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    className="mb-8 sm:mb-12 md:mb-16 pt-6 sm:pt-8 border-t border-border/30"
+    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+    className="mb-10 sm:mb-14 md:mb-20 pt-8 sm:pt-10 border-t border-black/[0.06]"
   >
-    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-      <div className="p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-muted text-muted-foreground">{icon}</div>
-      <span className="text-[9px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.35em] uppercase text-muted-foreground">{subtitle}</span>
+    <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5">
+      <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-neutral-100 text-neutral-500 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)]">{icon}</div>
+      <span className="text-[9px] sm:text-[10px] tracking-[0.35em] sm:tracking-[0.4em] uppercase text-muted-foreground/70 font-medium">{subtitle}</span>
     </div>
-    <h2 className="text-2xl sm:text-3xl md:text-5xl font-extralight tracking-tight">{title}</h2>
+    <h2 className="text-2xl sm:text-4xl md:text-5xl font-extralight tracking-tight text-foreground/90">{title}</h2>
   </motion.div>
 );
 
@@ -371,15 +398,16 @@ const ServicePortfolio = () => {
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20 shadow-sm"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="sticky top-0 z-50 bg-white/70 backdrop-blur-2xl border-b border-black/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
         >
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-3 sm:py-4 flex justify-center items-center">
-            <h1 className="text-xs sm:text-sm font-medium tracking-[0.1em] sm:tracking-[0.12em]">ELLA MADARI</h1>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-4 sm:py-5 flex justify-center items-center">
+            <h1 className="text-xs sm:text-sm font-medium tracking-[0.15em] sm:tracking-[0.2em] text-foreground/90">ELLA MADARI</h1>
           </div>
         </motion.header>
 
         {/* Minimal spacing after header */}
-        <div className="h-2 sm:h-3" />
+        <div className="h-4 sm:h-6" />
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10">
           
@@ -439,12 +467,15 @@ const ServicePortfolio = () => {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-border/20 py-6 sm:py-10 mt-10 sm:mt-16">
+        <footer className="border-t border-black/[0.04] py-8 sm:py-12 mt-12 sm:mt-20 bg-gradient-to-b from-transparent to-neutral-50/50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 flex justify-between items-center">
-            <a href="mailto:hello@ellamadari.com" className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a 
+              href="mailto:hello@ellamadari.com" 
+              className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-all duration-300 hover:-translate-y-0.5"
+            >
               hello@ellamadari.com
             </a>
-            <span className="text-[9px] sm:text-[10px] text-muted-foreground">© {new Date().getFullYear()}</span>
+            <span className="text-[9px] sm:text-[10px] text-muted-foreground/60 tracking-wider">© {new Date().getFullYear()} Ella Madari</span>
           </div>
         </footer>
       </div>
