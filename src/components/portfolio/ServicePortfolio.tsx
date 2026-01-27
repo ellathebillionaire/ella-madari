@@ -70,7 +70,7 @@ const DesktopMockup = ({ image, name, onClick }: { image: string; name: string; 
           </div>
         </div>
         <div className="aspect-[16/10] overflow-hidden bg-neutral-100">
-          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-102" />
+          <img src={image} alt={name} className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-102" />
         </div>
       </div>
       {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 text-center font-light">{name}</p>}
