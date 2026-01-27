@@ -24,7 +24,7 @@ import meshek27LogoGraphic from '@/assets/meshek27/logo-graphic.jpg';
 import meshek27BoxDesign from '@/assets/meshek27/box-design.jpg';
 
 // Si Señora
-import sisenoraWebsiteNew from "@/assets/sisenora-website-new.png";
+import sisenoraWebsiteCropped from "@/assets/sisenora-website-cropped.png";
 import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
@@ -65,7 +65,7 @@ import aiDroneFarming from "@/assets/ai-drone-farming.jpg";
 import aiCrisprLab from "@/assets/ai-crispr-lab.png";
 
 // Ascola Garden
-import ascolaWebsite from "@/assets/ascola/website-screen.png";
+import ascolaWebsiteCropped from "@/assets/ascola/website-cropped.png";
 import ascolaLogo from "@/assets/ascola/logo.jpg";
 import ascolaBrandingMockup from "@/assets/ascola/branding-mockup.jpg";
 
@@ -193,7 +193,7 @@ export const projects: Project[] = [
       sisenoraLogo,
       mockupSisenoraShop,
     ],
-    websiteImage: sisenoraWebsiteNew,
+    websiteImage: sisenoraWebsiteCropped,
   },
   // Ascola Garden - 2 images + desktop = 3 items
   {
@@ -202,7 +202,7 @@ export const projects: Project[] = [
     category: 'branding',
     description: 'לוגו ובניית אתר תדמית לעסק של מתחם אירועים טוסקני',
     logo: ascolaLogo,
-    heroImage: ascolaWebsite,
+    heroImage: ascolaWebsiteCropped,
     bgColor: '#F5F5F0',
     accentColor: '#2D5A4A',
     colors: ['#2D5A4A', '#1A1A1A', '#FFFFFF'],
@@ -210,7 +210,7 @@ export const projects: Project[] = [
       ascolaLogo,
       ascolaBrandingMockup,
     ],
-    websiteImage: ascolaWebsite,
+    websiteImage: ascolaWebsiteCropped,
   },
   // Tali Ter - 3 images
   {
