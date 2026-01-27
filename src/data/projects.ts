@@ -33,7 +33,7 @@ import learnaiLogoFull from "@/assets/learnai-logo-full.jpg";
 import dotaiMonogram from "@/assets/dotai-monogram.jpg";
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
 import dotaiLogoFull from "@/assets/dotai-logo-full.jpg";
-import learnaiWebsiteDesktop from "@/assets/learnai-website-desktop.png";
+import learnaiWebsiteDesktop from "@/assets/learnai-website-cropped.png";
 
 // Tali Ter - New organized assets
 import taliterBrandingSet from '@/assets/taliter/branding-set.jpg';
