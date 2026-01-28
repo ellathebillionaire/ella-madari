@@ -114,9 +114,9 @@ const DesktopMockup = ({ image, name, onClick, aspectRatio = '16/9' }: { image: 
             <div className="h-2.5 sm:h-3 bg-neutral-200/80 rounded-md max-w-[100px] sm:max-w-[140px] mx-auto" />
           </div>
         </div>
-        {/* Screenshot - custom aspect ratio */}
+        {/* Screenshot - custom aspect ratio with lazy loading */}
         <div className="overflow-hidden" style={{ aspectRatio }}>
-          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async" />
         </div>
       </div>
       {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide">{name}</p>}
@@ -140,7 +140,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
           <div className="w-2 h-2 rounded-full bg-neutral-800 ring-1 ring-neutral-700" />
         </div>
         <div className="bg-white overflow-hidden w-24 sm:w-28 md:w-32 aspect-[9/19.5] rounded-[1.3rem] sm:rounded-[2.25rem]">
-          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]" />
+          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]" loading="lazy" decoding="async" />
         </div>
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-10 sm:w-12 h-1 bg-white/20 rounded-full" />
       </div>
@@ -268,6 +268,8 @@ const BrandingProjectCard = ({ project, onImageClick }: {
                 src={img}
                 alt={project.name}
                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
           ))}

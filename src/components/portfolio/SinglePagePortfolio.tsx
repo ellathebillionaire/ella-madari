@@ -172,7 +172,7 @@ const Lightbox = ({ images, currentIndex, projectName, video, onClose, onNavigat
                 idx === currentIndex ? 'ring-1 ring-foreground scale-110' : 'opacity-40 hover:opacity-80'
               }`}
             >
-              <img src={img} alt="" className="w-full h-full object-cover" />
+              <img src={img} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
             </button>
           ))}
           {video && (
@@ -223,12 +223,14 @@ const ProjectCard = ({ project, index, totalCount, onClick }: ProjectCardProps) 
         shouldSpanDouble ? 'md:col-span-2' : ''
       }`}
     >
-      {/* Image */}
+      {/* Image with lazy loading */}
       <img
         src={project.heroImage}
         alt={project.name}
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         loading={index < 6 ? "eager" : "lazy"}
+        decoding="async"
+        fetchPriority={index < 3 ? "high" : "auto"}
       />
 
       {/* Overlay on hover */}
