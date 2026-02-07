@@ -119,7 +119,7 @@ const DesktopMockup = ({ image, name, onClick, aspectRatio = '16/9' }: { image: 
           <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async" />
         </div>
       </div>
-      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide">{name}</p>}
+      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide" dir="ltr">{name}</p>}
     </motion.div>
   );
 };
