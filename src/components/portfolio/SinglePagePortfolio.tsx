@@ -34,12 +34,12 @@ const Lightbox = ({ images, currentIndex, projectName, video, onClose, onNavigat
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') onClose();
     if (e.key === 'ArrowLeft') {
-      setDirection(-1);
-      onNavigate((currentIndex - 1 + totalItems) % totalItems);
-    }
-    if (e.key === 'ArrowRight') {
       setDirection(1);
       onNavigate((currentIndex + 1) % totalItems);
+    }
+    if (e.key === 'ArrowRight') {
+      setDirection(-1);
+      onNavigate((currentIndex - 1 + totalItems) % totalItems);
     }
   }, [currentIndex, totalItems, onClose, onNavigate]);
 
