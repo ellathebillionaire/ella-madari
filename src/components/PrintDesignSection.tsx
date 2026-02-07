@@ -85,7 +85,7 @@ const PrintDesignSection = ({ designs }: PrintDesignSectionProps) => {
                 
                 {/* Paper edge effect */}
                 <div 
-                  className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-l from-gray-300 to-transparent"
+                  className="absolute end-0 top-0 bottom-0 w-1 bg-gradient-to-l from-gray-300 to-transparent"
                   style={{ transform: "translateZ(-2px)" }}
                 />
                 
