@@ -1,1 +1,4 @@
 project_id = "huwlkgnyzgckrxfqitdr"
+
+[functions.sync-static-images]
+verify_jwt = false

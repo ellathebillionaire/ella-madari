@@ -3,11 +3,71 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 // Static project data - mirrors src/data/projects.ts
 const staticProjects = [
+  {
+    slug: 'acropolis',
+    images: [
+      'acropolis-home.png',
+      'acropolis-about.png',
+      'acropolis-contact.png',
+      'acropolis-projects.png',
+      'acropolis-services.png',
+    ],
+  },
+  {
+    slug: 'dronify',
+    images: [
+      'dronify-home.png',
+      'dronify-about.png',
+      'dronify-contact.png',
+      'dronify-projects.png',
+      'dronify-services.png',
+    ],
+  },
+  {
+    slug: 'athenas',
+    images: [
+      'athenas-home.png',
+      'athenas-about.png',
+      'athenas-contact.png',
+      'athenas-projects.png',
+      'athenas-services.png',
+    ],
+  },
+  {
+    slug: 'zues',
+    images: [
+      'zues-home.png',
+      'zues-about.png',
+      'zues-contact.png',
+      'zues-projects.png',
+      'zues-services.png',
+    ],
+  },
+  {
+    slug: 'hera',
+    images: [
+      'hera-home.png',
+      'hera-about.png',
+      'hera-contact.png',
+      'hera-projects.png',
+      'hera-services.png',
+    ],
+  },
+  {
+    slug: 'poseidon',
+    images: [
+      'poseidon-home.png',
+      'poseidon-about.png',
+      'poseidon-contact.png',
+      'poseidon-projects.png',
+      'poseidon-services.png',
+    ],
+  },
   {
     slug: 'betterseeds',
     images: [
@@ -15,7 +75,7 @@ const staticProjects = [
       'ai-gene-editing.png',
       'ai-dna-scientist.png',
       'ai-plant-technology.jpg',
-      'ai-drone-farming.jpg',
+      'ai-drone-farming.png',
       'ai-crispr-lab.png',
     ],
     websiteImage: 'website-betterseeds.jpg',
@@ -106,14 +166,54 @@ serve(async (req) => {
 
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+
+    // Authenticate the caller
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return new Response(
+        JSON.stringify({ error: "Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const authClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
+
+    const token = authHeader.replace("Bearer ", "");
+    const { data: claimsData, error: claimsError } = await authClient.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const userId = claimsData.claims.sub;
+
+    // Check admin role
+    const { data: roleData, error: roleError } = await authClient
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userId)
+      .eq("role", "admin")
+      .maybeSingle();
+
+    if (roleError || !roleData) {
+      return new Response(
+        JSON.stringify({ error: "Forbidden - Admin access required" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Authenticated as admin — use service role for writes
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const results: { slug: string; imagesUpdated: number; websiteImage: boolean; mobileImage: boolean }[] = [];
 
     for (const project of staticProjects) {
-      // Get project ID from database
       const { data: dbProject, error: projectError } = await supabase
         .from('projects')
         .select('id, website_image, mobile_image')
@@ -129,7 +229,6 @@ serve(async (req) => {
       let websiteUpdated = false;
       let mobileUpdated = false;
 
-      // Check existing images for this project
       const { data: existingImages } = await supabase
         .from('project_images')
         .select('image_url')
@@ -137,13 +236,10 @@ serve(async (req) => {
 
       const existingUrls = new Set(existingImages?.map(img => img.image_url) || []);
 
-      // Add project images that don't exist yet
       for (let i = 0; i < project.images.length; i++) {
         const imagePath = project.images[i];
-        // Create a URL pattern that matches the static asset
         const imageUrl = `/assets/${imagePath}`;
         
-        // Check if this image already exists
         const alreadyExists = Array.from(existingUrls).some(url => 
           url.includes(imagePath.split('/').pop() || imagePath)
         );
@@ -164,7 +260,6 @@ serve(async (req) => {
         }
       }
 
-      // Update website image if not set
       if (project.websiteImage && !dbProject.website_image) {
         const { error: updateError } = await supabase
           .from('projects')
@@ -176,7 +271,6 @@ serve(async (req) => {
         }
       }
 
-      // Update mobile image if not set
       if (project.mobileImage && !dbProject.mobile_image) {
         const { error: updateError } = await supabase
           .from('projects')
