@@ -68,7 +68,7 @@ const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClo
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.1 }}
         onClick={onClose} 
-        className="absolute top-4 right-4 sm:top-8 sm:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-lg transition-all duration-300 group"
+        className="absolute top-4 end-4 sm:top-8 sm:end-8 p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-lg transition-all duration-300 group"
       >
         <X className="w-5 h-5 text-white group-hover:rotate-90 transition-transform duration-300" />
       </motion.button>
