@@ -76,7 +76,7 @@ const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClo
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="absolute top-4 left-4 sm:top-8 sm:left-8 text-sm text-white/70 font-light tracking-wide"
+        className="absolute top-4 start-4 sm:top-8 sm:start-8 text-sm text-white/70 font-light tracking-wide"
       >
         {name}
       </motion.span>
