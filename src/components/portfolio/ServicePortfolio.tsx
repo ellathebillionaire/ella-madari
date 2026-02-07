@@ -144,7 +144,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
         </div>
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-10 sm:w-12 h-1 bg-white/20 rounded-full" />
       </div>
-      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide">{name}</p>}
+      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide" dir="ltr">{name}</p>}
     </motion.div>
   );
 };

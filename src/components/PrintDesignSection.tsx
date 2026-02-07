@@ -103,7 +103,7 @@ const PrintDesignSection = ({ designs }: PrintDesignSectionProps) => {
                 
                 {/* Page fold effect */}
                 <div 
-                  className="absolute top-0 right-0 w-6 h-6 bg-gradient-to-bl from-gray-200 to-white opacity-60"
+                  className="absolute top-0 end-0 w-6 h-6 bg-gradient-to-bl from-gray-200 to-white opacity-60"
                   style={{
                     clipPath: "polygon(100% 0, 0 0, 100% 100%)",
                   }}

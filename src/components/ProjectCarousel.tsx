@@ -334,7 +334,7 @@ const ProjectCarousel = () => {
               transition={{ type: 'spring', stiffness: 200, damping: 22 }}
             />
             <button
-              className="absolute top-6 right-6 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all"
+              className="absolute top-6 end-6 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all"
               onClick={() => setSelectedImage(null)}
             >
               ✕

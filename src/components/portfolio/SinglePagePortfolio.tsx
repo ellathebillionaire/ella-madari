@@ -253,8 +253,8 @@ const ProjectCard = ({ project, index, totalCount, onClick }: ProjectCardProps) 
 
       {/* Video indicator */}
       {project.video && (
-        <div className="absolute top-2 right-2 md:top-3 md:right-3 w-5 h-5 md:w-6 md:h-6 rounded-full bg-background/20 backdrop-blur-sm flex items-center justify-center">
-          <div className="w-0 h-0 border-l-[4px] md:border-l-[5px] border-l-background border-y-[2.5px] md:border-y-[3px] border-y-transparent ml-0.5" />
+        <div className="absolute top-2 start-2 md:top-3 md:start-3 w-5 h-5 md:w-6 md:h-6 rounded-full bg-background/20 backdrop-blur-sm flex items-center justify-center">
+          <div className="w-0 h-0 border-s-[4px] md:border-s-[5px] border-s-background border-y-[2.5px] md:border-y-[3px] border-y-transparent ms-0.5" />
         </div>
       )}
     </motion.div>
