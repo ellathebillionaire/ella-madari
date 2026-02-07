@@ -114,7 +114,7 @@ const ProjectCarousel = () => {
         </div>
 
         {/* Clean Header */}
-        <header className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-30 flex items-center justify-between">
+        <header className="absolute top-0 inset-x-0 px-6 md:px-12 py-6 z-30 flex items-center justify-between">
           <div>
             <h1 className="text-lg md:text-xl font-semibold tracking-tight text-foreground">Ella Madari</h1>
             <p className="text-[9px] md:text-[10px] text-muted-foreground tracking-[0.25em] uppercase mt-1">Design & Branding</p>
