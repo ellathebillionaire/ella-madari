@@ -85,7 +85,7 @@ const Lightbox = ({ images, currentIndex, projectName, video, onClose, onNavigat
       onClick={onClose}
     >
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 py-5">
+      <div className="absolute top-0 inset-x-0 z-10 flex justify-between items-center px-6 py-5">
         <div>
           <h3 className="text-lg font-light tracking-tight">{projectName}</h3>
           <span className="text-xs text-muted-foreground">{currentIndex + 1} / {totalItems}</span>
