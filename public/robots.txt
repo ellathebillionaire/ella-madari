@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ellamadari.com/sitemap.xml
+Sitemap: https://ella-madari.lovable.app/sitemap.xml
