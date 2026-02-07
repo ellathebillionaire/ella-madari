@@ -303,7 +303,7 @@ const ProjectCarousel = () => {
         </motion.button>
 
         {/* Progress bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-border/50">
+        <div className="absolute bottom-0 inset-x-0 h-[3px] bg-border/50">
           <motion.div
             className="h-full rounded-full"
             style={{ backgroundColor: activeProject.accentColor }}
