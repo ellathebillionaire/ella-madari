@@ -102,16 +102,16 @@ const Lightbox = ({ images, currentIndex, projectName, video, onClose, onNavigat
       {totalItems > 1 && (
         <>
           <button
-            onClick={(e) => { e.stopPropagation(); goToPrev(); }}
-            className="absolute left-4 md:left-8 z-10 p-3 rounded-full bg-muted/50 hover:bg-muted transition-all"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
             onClick={(e) => { e.stopPropagation(); goToNext(); }}
-            className="absolute right-4 md:right-8 z-10 p-3 rounded-full bg-muted/50 hover:bg-muted transition-all"
+            className="absolute start-4 md:start-8 z-10 p-3 rounded-full bg-muted/50 hover:bg-muted transition-all"
           >
             <ChevronRight className="w-5 h-5" />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); goToPrev(); }}
+            className="absolute end-4 md:end-8 z-10 p-3 rounded-full bg-muted/50 hover:bg-muted transition-all"
+          >
+            <ChevronLeft className="w-5 h-5" />
           </button>
         </>
       )}
