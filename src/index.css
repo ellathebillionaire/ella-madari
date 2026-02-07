@@ -87,6 +87,7 @@
 
   html {
     scroll-behavior: smooth;
+    direction: rtl;
   }
 
   body {
@@ -94,6 +95,7 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
     font-feature-settings: 'cv11', 'ss01', 'ss03';
     letter-spacing: -0.02em;
+    text-align: start;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

@@ -68,7 +68,7 @@ const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClo
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.1 }}
         onClick={onClose} 
-        className="absolute top-4 right-4 sm:top-8 sm:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-lg transition-all duration-300 group"
+        className="absolute top-4 end-4 sm:top-8 sm:end-8 p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-lg transition-all duration-300 group"
       >
         <X className="w-5 h-5 text-white group-hover:rotate-90 transition-transform duration-300" />
       </motion.button>
@@ -76,7 +76,7 @@ const Lightbox = ({ image, name, onClose }: { image: string; name: string; onClo
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="absolute top-4 left-4 sm:top-8 sm:left-8 text-sm text-white/70 font-light tracking-wide"
+        className="absolute top-4 start-4 sm:top-8 sm:start-8 text-sm text-white/70 font-light tracking-wide"
       >
         {name}
       </motion.span>
@@ -106,7 +106,7 @@ const DesktopMockup = ({ image, name, onClick, aspectRatio = '16/9' }: { image: 
     >
       <div className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] transition-all duration-500 ease-out group-hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] group-hover:-translate-y-2">
         {/* Browser Bar - Apple-style */}
-        <div className="bg-gradient-to-b from-neutral-100 to-neutral-200/80 flex items-center h-5 sm:h-6 px-2.5 gap-1.5 border-b border-neutral-200/50">
+        <div className="bg-gradient-to-b from-neutral-100 to-neutral-200/80 flex items-center h-5 sm:h-6 px-2.5 gap-1.5 border-b border-neutral-200/50" dir="ltr">
           <div className="rounded-full bg-[#FF5F57] w-2 h-2 sm:w-2.5 sm:h-2.5 shadow-sm" />
           <div className="rounded-full bg-[#FEBC2E] w-2 h-2 sm:w-2.5 sm:h-2.5 shadow-sm" />
           <div className="rounded-full bg-[#28C840] w-2 h-2 sm:w-2.5 sm:h-2.5 shadow-sm" />
@@ -119,7 +119,7 @@ const DesktopMockup = ({ image, name, onClick, aspectRatio = '16/9' }: { image: 
           <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async" />
         </div>
       </div>
-      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide">{name}</p>}
+      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide" dir="ltr">{name}</p>}
     </motion.div>
   );
 };
@@ -144,7 +144,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
         </div>
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-10 sm:w-12 h-1 bg-white/20 rounded-full" />
       </div>
-      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide">{name}</p>}
+      {name && <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center font-light tracking-wide" dir="ltr">{name}</p>}
     </motion.div>
   );
 };

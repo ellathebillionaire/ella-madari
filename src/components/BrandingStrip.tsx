@@ -58,7 +58,7 @@ const BrandingStrip = ({ brandName, logo, monogram, colors, mockups = [] }: Bran
         <div className="flex-1 hidden lg:block" />
 
         {/* Color Palette - Uniform circles */}
-        <div className="flex items-center gap-2 ml-auto md:ml-0">
+        <div className="flex items-center gap-2 ms-auto md:ms-0">
           {colors.map((color, index) => (
             <div
               key={index}

@@ -114,7 +114,7 @@ const ProjectCarousel = () => {
         </div>
 
         {/* Clean Header */}
-        <header className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-30 flex items-center justify-between">
+        <header className="absolute top-0 inset-x-0 px-6 md:px-12 py-6 z-30 flex items-center justify-between">
           <div>
             <h1 className="text-lg md:text-xl font-semibold tracking-tight text-foreground">Ella Madari</h1>
             <p className="text-[9px] md:text-[10px] text-muted-foreground tracking-[0.25em] uppercase mt-1">Design & Branding</p>
@@ -186,12 +186,12 @@ const ProjectCarousel = () => {
                       {/* Video indicator */}
                       {project.video && isActive && (
                         <motion.div 
-                          className="absolute top-2.5 right-2.5 z-10"
+                          className="absolute top-2.5 start-2.5 z-10"
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                         >
                           <div className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
-                            <Play className="w-3 h-3 text-foreground ml-0.5" />
+                            <Play className="w-3 h-3 text-foreground ms-0.5" />
                           </div>
                         </motion.div>
                       )}
@@ -286,16 +286,16 @@ const ProjectCarousel = () => {
 
         {/* Navigation Arrows */}
         <motion.button
-          onClick={() => rotate('left')}
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-card/90 backdrop-blur-xl shadow-md flex items-center justify-center text-foreground z-20 border border-border/40"
+          onClick={() => rotate('right')}
+          className="absolute end-4 md:end-8 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-card/90 backdrop-blur-xl shadow-md flex items-center justify-center text-foreground z-20 border border-border/40"
           whileHover={{ scale: 1.06, boxShadow: '0 10px 25px -8px rgba(0,0,0,0.15)' }}
           whileTap={{ scale: 0.95 }}
         >
           <ChevronLeft className="w-5 h-5" />
         </motion.button>
         <motion.button
-          onClick={() => rotate('right')}
-          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-card/90 backdrop-blur-xl shadow-md flex items-center justify-center text-foreground z-20 border border-border/40"
+          onClick={() => rotate('left')}
+          className="absolute start-4 md:start-8 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-card/90 backdrop-blur-xl shadow-md flex items-center justify-center text-foreground z-20 border border-border/40"
           whileHover={{ scale: 1.06, boxShadow: '0 10px 25px -8px rgba(0,0,0,0.15)' }}
           whileTap={{ scale: 0.95 }}
         >
@@ -303,7 +303,7 @@ const ProjectCarousel = () => {
         </motion.button>
 
         {/* Progress bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-border/50">
+        <div className="absolute bottom-0 inset-x-0 h-[3px] bg-border/50">
           <motion.div
             className="h-full rounded-full"
             style={{ backgroundColor: activeProject.accentColor }}
@@ -334,7 +334,7 @@ const ProjectCarousel = () => {
               transition={{ type: 'spring', stiffness: 200, damping: 22 }}
             />
             <button
-              className="absolute top-6 right-6 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all"
+              className="absolute top-6 end-6 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all"
               onClick={() => setSelectedImage(null)}
             >
               ✕

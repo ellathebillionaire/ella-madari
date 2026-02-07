@@ -17,8 +17,10 @@ const PrintDesignSection = ({ designs }: PrintDesignSectionProps) => {
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const scrollAmount = 300;
+      const isRtl = document.documentElement.dir === 'rtl';
+      const multiplier = direction === "left" ? -1 : 1;
       scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
+        left: isRtl ? -multiplier * scrollAmount : multiplier * scrollAmount,
         behavior: "smooth",
       });
     }
@@ -83,7 +85,7 @@ const PrintDesignSection = ({ designs }: PrintDesignSectionProps) => {
                 
                 {/* Paper edge effect */}
                 <div 
-                  className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-l from-gray-300 to-transparent"
+                  className="absolute end-0 top-0 bottom-0 w-1 bg-gradient-to-l from-gray-300 to-transparent"
                   style={{ transform: "translateZ(-2px)" }}
                 />
                 
@@ -101,7 +103,7 @@ const PrintDesignSection = ({ designs }: PrintDesignSectionProps) => {
                 
                 {/* Page fold effect */}
                 <div 
-                  className="absolute top-0 right-0 w-6 h-6 bg-gradient-to-bl from-gray-200 to-white opacity-60"
+                  className="absolute top-0 end-0 w-6 h-6 bg-gradient-to-bl from-gray-200 to-white opacity-60"
                   style={{
                     clipPath: "polygon(100% 0, 0 0, 100% 100%)",
                   }}
