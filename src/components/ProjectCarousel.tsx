@@ -186,12 +186,12 @@ const ProjectCarousel = () => {
                       {/* Video indicator */}
                       {project.video && isActive && (
                         <motion.div 
-                          className="absolute top-2.5 right-2.5 z-10"
+                          className="absolute top-2.5 start-2.5 z-10"
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                         >
                           <div className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
-                            <Play className="w-3 h-3 text-foreground ml-0.5" />
+                            <Play className="w-3 h-3 text-foreground ms-0.5" />
                           </div>
                         </motion.div>
                       )}
