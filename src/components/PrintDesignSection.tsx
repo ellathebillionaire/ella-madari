@@ -17,8 +17,10 @@ const PrintDesignSection = ({ designs }: PrintDesignSectionProps) => {
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const scrollAmount = 300;
+      const isRtl = document.documentElement.dir === 'rtl';
+      const multiplier = direction === "left" ? -1 : 1;
       scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
+        left: isRtl ? -multiplier * scrollAmount : multiplier * scrollAmount,
         behavior: "smooth",
       });
     }
