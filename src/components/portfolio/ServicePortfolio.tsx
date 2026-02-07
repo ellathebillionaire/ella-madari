@@ -106,7 +106,7 @@ const DesktopMockup = ({ image, name, onClick, aspectRatio = '16/9' }: { image: 
     >
       <div className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] transition-all duration-500 ease-out group-hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] group-hover:-translate-y-2">
         {/* Browser Bar - Apple-style */}
-        <div className="bg-gradient-to-b from-neutral-100 to-neutral-200/80 flex items-center h-5 sm:h-6 px-2.5 gap-1.5 border-b border-neutral-200/50">
+        <div className="bg-gradient-to-b from-neutral-100 to-neutral-200/80 flex items-center h-5 sm:h-6 px-2.5 gap-1.5 border-b border-neutral-200/50" dir="ltr">
           <div className="rounded-full bg-[#FF5F57] w-2 h-2 sm:w-2.5 sm:h-2.5 shadow-sm" />
           <div className="rounded-full bg-[#FEBC2E] w-2 h-2 sm:w-2.5 sm:h-2.5 shadow-sm" />
           <div className="rounded-full bg-[#28C840] w-2 h-2 sm:w-2.5 sm:h-2.5 shadow-sm" />
