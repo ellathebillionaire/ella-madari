@@ -214,8 +214,8 @@ const Index = () => {
           <div className="md:col-span-9">
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
+              animate={{ opacity: 1, y: 0 }}
+              
               transition={{ duration: 1, ease }}
               className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.1] tracking-[-0.015em]"
             >
@@ -291,8 +291,8 @@ const Index = () => {
               <motion.article
                 key={pkg.name}
                 initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
+                animate={{ opacity: 1, y: 0 }}
+                
                 transition={{ duration: 0.8, delay: i * 0.08, ease }}
                 className={`group grid md:grid-cols-12 gap-6 md:gap-8 py-12 md:py-16 border-b border-border/80 transition-colors ${
                   pkg.featured ? 'bg-background -mx-6 md:-mx-8 px-6 md:px-8' : ''
