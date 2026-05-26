@@ -12,7 +12,7 @@ const packages = [
     price: '$650 – $2,000',
     tagline: 'Entry diagnostic',
     description:
-      'A sharp audit of your brand, product, Shopify store, product page, offer, copy, UX and AI readiness — delivered as a premium PDF scorecard with quick wins and a clear action plan.',
+      'A sharp audit of your brand, product, Shopify store, product page, offer, copy, UX and AI readiness - delivered as a premium PDF scorecard with quick wins and a clear action plan.',
     bullets: [
       '25-point Brand-to-Commerce Scorecard',
       'Conversion & trust gap analysis',
@@ -84,7 +84,7 @@ const Index = () => {
             transition={{ duration: 0.8 }}
             className="text-xs md:text-sm tracking-[0.3em] uppercase text-muted-foreground font-light mb-8"
           >
-            Premium Product Brand Architect — Shopify & AI Commerce
+            Premium Product Brand Architect - Shopify & AI Commerce
           </motion.p>
           <motion.h1
             initial="hidden"
@@ -104,7 +104,7 @@ const Index = () => {
             className="mt-10 max-w-2xl mx-auto text-base md:text-lg text-muted-foreground font-light leading-relaxed"
           >
             I take product brands that look half-baked and turn them into premium,
-            launch-ready businesses — with branding, product, Shopify, copy, AI
+            launch-ready businesses - with branding, product, Shopify, copy, AI
             and a full launch system.
           </motion.p>
           <motion.div
@@ -153,7 +153,7 @@ const Index = () => {
           >
             Not a design studio. Not an AI consultant. Not a Shopify shop.
             <span className="block mt-6 text-muted-foreground">
-              A product-brand architect for premium DTC and Shopify brands —
+              A product-brand architect for premium DTC and Shopify brands -
               branding, product, copy, AI and launch, in one system.
             </span>
           </motion.h2>
@@ -233,7 +233,7 @@ const Index = () => {
             <p className="text-base md:text-lg text-muted-foreground font-light leading-relaxed mb-8">
               25 criteria across positioning, product, offer, UX, copy, trust and
               AI readiness. A single score that tells you exactly where your
-              brand is leaking conversions — and what to fix first.
+              brand is leaking conversions - and what to fix first.
             </p>
             <a
               href="#contact"
@@ -264,12 +264,12 @@ const Index = () => {
             The promise
           </p>
           <p className="text-2xl md:text-4xl font-extralight tracking-[-0.02em] leading-snug">
-            “I walk into a product brand that looks half-baked — and walk out
+            “I walk into a product brand that looks half-baked - and walk out
             with a premium brand ready to sell: identity, product, site, copy,
             AI and a launch system.”
           </p>
           <p className="mt-10 text-sm tracking-[0.25em] uppercase text-muted-foreground">
-            — Ella Madari
+            - Ella Madari
           </p>
         </div>
       </section>
