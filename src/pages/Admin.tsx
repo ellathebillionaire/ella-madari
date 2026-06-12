@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useProjects, ProjectWithImages } from '@/hooks/useProjects';
 import { Button } from '@/components/ui/button';
@@ -538,6 +539,14 @@ const SortableProjectCard = ({
 // ============ MAIN ADMIN COMPONENT ============
 const Admin = () => {
   const { user, isAdmin, loading: authLoading, signIn, signUp, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect authenticated non-admin users away from the admin route (defense-in-depth; RLS is the primary control)
+  useEffect(() => {
+    if (!authLoading && user && !isAdmin) {
+      navigate('/', { replace: true });
+    }
+  }, [authLoading, user, isAdmin, navigate]);
   const { 
     projects, 
     loading: projectsLoading, 
