@@ -53,6 +53,11 @@
     --shadow-soft: 0 2px 40px -12px hsl(0 0% 0% / 0.15);
     --shadow-elevated: 0 25px 80px -20px hsl(0 0% 0% / 0.2);
     --shadow-glow: 0 0 60px -15px hsl(0 0% 0% / 0.1);
+    --browser-red: 2 100% 67%;
+    --browser-yellow: 40 99% 59%;
+    --browser-green: 128 58% 47%;
+    --phone-frame: 0 0% 10%;
+    --phone-frame-soft: 0 0% 16%;
   }
 
   .dark {
@@ -77,6 +82,11 @@
     --ring: 0 0% 85%;
     --surface-elevated: 0 0% 6%;
     --text-secondary: 0 0% 60%;
+    --browser-red: 2 100% 67%;
+    --browser-yellow: 40 99% 59%;
+    --browser-green: 128 58% 47%;
+    --phone-frame: 0 0% 10%;
+    --phone-frame-soft: 0 0% 16%;
   }
 }
 
@@ -87,14 +97,14 @@
 
   html {
     scroll-behavior: smooth;
-    direction: ltr;
+    direction: rtl;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
     font-feature-settings: 'cv11', 'ss01', 'ss03';
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     text-align: start;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

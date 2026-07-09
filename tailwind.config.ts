@@ -61,6 +61,15 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        browser: {
+          red: "hsl(var(--browser-red))",
+          yellow: "hsl(var(--browser-yellow))",
+          green: "hsl(var(--browser-green))",
+        },
+        phone: {
+          frame: "hsl(var(--phone-frame))",
+          "frame-soft": "hsl(var(--phone-frame-soft))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
