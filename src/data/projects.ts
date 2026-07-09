@@ -11,6 +11,13 @@ import sfdSymbol from '@/assets/sfd/symbol.jpg';
 import sfdWebsiteDesktopNew from '@/assets/sfd/website-desktop-new.png';
 import sfdWebsiteMobileNew from '@/assets/sfd/website-mobile-new.png';
 import sfdBandsProduct from '@/assets/sfd-bands-product.png';
+// SFD - Real live website assets (strengthfordancers.com)
+import sfdRealWebsiteDesktop from '@/assets/sfd/real-website-desktop.png';
+import sfdRealWebsiteMobile from '@/assets/sfd/real-website-mobile.png';
+import sfdRealStats from '@/assets/sfd/real-stats.png';
+import sfdRealHeroWeb from '@/assets/sfd/real-hero-web.jpg';
+import sfdRealHeroMobile from '@/assets/sfd/real-hero-mobile.jpg';
+
 
 // Meshek 27 - New organized assets
 import meshek27WallLogo from '@/assets/meshek27/wall-logo.png';
@@ -121,10 +128,10 @@ export const projects: Project[] = [
     slug: 'sfd',
     name: 'SFD',
     category: 'branding',
-    description: 'מיתוג מחדש (REBRANDING) מלא וייבוא ליין מוצרים ממותג',
+    description: 'מיתוג מלא ובניית אתר איקומרס חי לשיטת אימון לרקדנים (strengthfordancers.com)',
     logo: sfdLogoTransparent,
     monogram: sfdSymbol,
-    heroImage: sfdBrandingSet,
+    heroImage: sfdRealHeroWeb,
     bgColor: '#F5F5F7',
     accentColor: '#1A1A1A',
     colors: ['#1A1A1A', '#FFFFFF', '#4A5568'],
@@ -132,11 +139,12 @@ export const projects: Project[] = [
       sfdMainLogo,
       sfdSecondaryLogo,
       sfdSymbol,
-      sfdTshirtMockup,
+      sfdRealStats,
+      sfdRealHeroMobile,
       sfdBandsProduct,
     ],
-    websiteImage: sfdWebsiteDesktopNew,
-    mobileImage: sfdWebsiteMobileNew,
+    websiteImage: sfdRealWebsiteDesktop,
+    mobileImage: sfdRealWebsiteMobile,
   },
   // Meshek 27 - 6 images
   {
