@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Monitor, Palette, Smartphone, X } from 'lucide-react';
 import { projects as staticProjects } from '@/data/projects';
@@ -35,7 +36,7 @@ const SectionTitle = ({
 }: {
   title: string;
   subtitle: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }) => (
   <motion.div
     initial={{ opacity: 0, y: 25 }}
