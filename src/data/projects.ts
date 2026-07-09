@@ -17,7 +17,7 @@ import sfdRealWebsiteMobile from '@/assets/sfd/real-website-mobile.png';
 import sfdRealStats from '@/assets/sfd/real-stats.png';
 import sfdRealHeroWeb from '@/assets/sfd/real-hero-web.jpg';
 import sfdRealHeroMobile from '@/assets/sfd/real-hero-mobile.jpg';
-import sfdRealTestimonial from '@/assets/sfd/real-testimonial.jpg';
+
 
 // Meshek 27 - New organized assets
 import meshek27WallLogo from '@/assets/meshek27/wall-logo.png';
