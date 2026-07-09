@@ -1,518 +1,488 @@
-import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Monitor, Palette, Smartphone, X } from 'lucide-react';
+import { projects as staticProjects } from '@/data/projects';
+import { useProjects, type ProjectWithImages } from '@/hooks/useProjects';
+import { resolveImageUrl } from '@/lib/imageResolver';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const packages = [
-  {
-    index: '01',
-    name: 'Brand-to-Commerce Audit',
-    kind: 'Diagnostic',
-    duration: '1 week',
-    price: '$650 – $2,000',
-    description:
-      'A sharp diagnostic of your brand, product, Shopify store, offer, copy, UX and AI readiness. Delivered as a premium scorecard with quick wins and a 90-day action plan.',
-    deliverables: [
-      '25-point Brand-to-Commerce Scorecard',
-      'Conversion & trust gap analysis',
-      'Prioritized 90-day action plan',
-    ],
-  },
-  {
-    index: '02',
-    name: 'Premium Product Launch Sprint',
-    kind: 'Flagship',
-    duration: '2 – 4 weeks',
-    price: '$4,800 – $12,000',
-    featured: true,
-    description:
-      'An intensive sprint that takes a product brand from half-baked to premium and launch-ready. Identity, product language, Shopify pages, copy, packaging, AI workflow and launch.',
-    deliverables: [
-      'Brand identity or focused rebrand',
-      'Shopify product & landing pages',
-      'Launch-ready content & AI workflow',
-    ],
-  },
-  {
-    index: '03',
-    name: 'AI Commerce Brand System',
-    kind: 'System',
-    duration: '6 – 12 weeks',
-    price: '$9,500 – $24,000',
-    description:
-      'A full operating system for serious product brands. Brand DNA, Shopify UX, prompt library, copy and design templates, content engine and a launch playbook for your team.',
-    deliverables: [
-      'Brand DNA & visual system',
-      'Prompt library & content engine',
-      'Team playbook & launch ops',
-    ],
-  },
-];
+type DisplayProject = {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  description: string | null;
+  website_image: string | null;
+  mobile_image: string | null;
+  aspect_ratio: string;
+  colors: string[] | null;
+  images: string[];
+  video?: string;
+};
 
-const scorecardPillars = [
-  'Positioning',
-  'Differentiation',
-  'Value proposition',
-  'Packaging',
-  'Product page',
-  'Sales copy',
-  'UX & trust',
-  'AI readiness',
-  'Content system',
-  'Launch ops',
-];
+type LightboxImage = {
+  image: string;
+  name: string;
+};
 
-const principles = [
-  {
-    n: '01',
-    t: 'Brand is built to sell.',
-    d: 'Identity, copy and UX are designed against the same target: a premium brand that converts.',
-  },
-  {
-    n: '02',
-    t: 'One system, not a service menu.',
-    d: 'A small set of high-leverage deliverables instead of an endless list of tasks.',
-  },
-  {
-    n: '03',
-    t: 'AI is infrastructure, not decoration.',
-    d: 'Prompt libraries, content engines and workflows your team can actually operate.',
-  },
-  {
-    n: '04',
-    t: 'Premium is in the details.',
-    d: 'Typography, rhythm, restraint. Nothing on the page is accidental.',
-  },
-];
+const assetUrl = (url: string | null | undefined) => resolveImageUrl(url) || url || null;
 
-const Index = () => {
+const SectionTitle = ({
+  title,
+  subtitle,
+  icon,
+}: {
+  title: string;
+  subtitle: string;
+  icon: ReactNode;
+}) => (
+  <motion.div
+    initial={{ opacity: 0, y: 25 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.7, ease }}
+    className="mb-10 border-t border-border pt-8 sm:mb-14 sm:pt-10 md:mb-20"
+  >
+    <div className="mb-4 flex items-center gap-3 sm:mb-5 sm:gap-4">
+      <div className="rounded-xl bg-muted p-2.5 text-muted-foreground shadow-[0_2px_8px_-2px_hsl(var(--foreground)/0.06)] sm:rounded-2xl sm:p-3">
+        {icon}
+      </div>
+      <span className="text-[9px] font-medium uppercase tracking-[0.35em] text-muted-foreground/70 sm:text-[10px] sm:tracking-[0.4em]">
+        {subtitle}
+      </span>
+    </div>
+    <h2 className="text-2xl font-extralight tracking-tight text-foreground/90 sm:text-4xl md:text-5xl">
+      {title}
+    </h2>
+  </motion.div>
+);
+
+const Lightbox = ({ image, name, onClose }: LightboxImage & { onClose: () => void }) => {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-foreground selection:text-background">
-      {/* Top utility bar */}
-      <div className="hidden md:block fixed top-0 inset-x-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-xl">
-        <div className="max-w-[1400px] mx-auto px-8 h-8 flex items-center justify-between text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
-          <span>Est. Tel Aviv</span>
-          <span>Premium Product Brand System / Vol. I</span>
-          <span>{new Date().getFullYear()}</span>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, ease }}
+      onClick={onClose}
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-foreground/90 p-6 backdrop-blur-2xl sm:p-10"
+    >
+      <motion.button
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.1 }}
+        onClick={onClose}
+        className="absolute end-4 top-4 rounded-full bg-background/10 p-3 backdrop-blur-lg transition-all duration-300 hover:bg-background/20 sm:end-8 sm:top-8"
+        aria-label="סגור"
+      >
+        <X className="h-5 w-5 text-background transition-transform duration-300 group-hover:rotate-90" />
+      </motion.button>
+      <motion.span
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="absolute start-4 top-4 text-sm font-light tracking-wide text-background/70 sm:start-8 sm:top-8"
+      >
+        {name}
+      </motion.span>
+      <motion.img
+        initial={{ scale: 0.92, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.4, ease }}
+        src={image}
+        alt={name}
+        className="max-h-full max-w-full rounded-xl object-contain shadow-2xl sm:rounded-2xl"
+        onClick={(event) => event.stopPropagation()}
+      />
+    </motion.div>
+  );
+};
+
+const DesktopMockup = ({
+  image,
+  name,
+  onClick,
+  aspectRatio = '16/9',
+}: {
+  image: string;
+  name: string;
+  onClick: () => void;
+  aspectRatio?: string;
+}) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, ease }}
+    onClick={onClick}
+    className="group w-full cursor-pointer"
+  >
+    <div className="overflow-hidden rounded-xl bg-card shadow-[0_4px_20px_-4px_hsl(var(--foreground)/0.1)] transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_hsl(var(--foreground)/0.2)] sm:rounded-2xl">
+      <div className="flex h-5 items-center gap-1.5 border-b border-border bg-gradient-to-b from-muted to-muted/80 px-2.5 sm:h-6" dir="ltr">
+        <span className="h-2 w-2 rounded-full bg-browser-red shadow-sm sm:h-2.5 sm:w-2.5" />
+        <span className="h-2 w-2 rounded-full bg-browser-yellow shadow-sm sm:h-2.5 sm:w-2.5" />
+        <span className="h-2 w-2 rounded-full bg-browser-green shadow-sm sm:h-2.5 sm:w-2.5" />
+        <div className="mx-3 flex-1 sm:mx-6">
+          <div className="mx-auto h-2.5 max-w-[100px] rounded-md bg-border/60 sm:h-3 sm:max-w-[140px]" />
         </div>
       </div>
+      <div className="overflow-hidden" style={{ aspectRatio }}>
+        <img
+          src={image}
+          alt={name}
+          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+    {name && (
+      <p className="mt-3 text-center text-[10px] font-light tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
+        {name}
+      </p>
+    )}
+  </motion.div>
+);
 
-      {/* Header */}
-      <header className="fixed top-0 md:top-8 inset-x-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-xl">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-8 h-16 flex items-center justify-between">
-          <a href="#top" className="flex items-baseline gap-2">
-            <span className="font-serif text-2xl leading-none tracking-tight">Ella</span>
-            <span className="font-serif italic text-2xl leading-none tracking-tight text-muted-foreground">
-              Madari
-            </span>
-          </a>
-          <nav className="hidden md:flex items-center gap-10 text-xs tracking-[0.2em] uppercase text-muted-foreground">
-            <a href="#principles" className="hover:text-foreground transition-colors">Principles</a>
-            <a href="#packages" className="hover:text-foreground transition-colors">System</a>
-            <a href="#scorecard" className="hover:text-foreground transition-colors">Scorecard</a>
-          </nav>
-          <a
-            href="#contact"
-            className="text-xs tracking-[0.2em] uppercase border-b border-foreground/40 pb-0.5 hover:border-foreground transition-colors"
-          >
-            Enquire
-          </a>
-        </div>
-      </header>
+const MobileMockup = ({ image, name, onClick }: { image: string; name: string; onClick: () => void }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, ease }}
+    onClick={onClick}
+    className="group flex cursor-pointer flex-col items-center"
+  >
+    <div className="relative rounded-[1.5rem] bg-gradient-to-b from-phone-frame to-phone-frame-soft p-[3px] shadow-[0_8px_30px_-8px_hsl(var(--foreground)/0.3)] transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_hsl(var(--foreground)/0.4)] sm:rounded-[2.5rem] sm:p-1">
+      <div className="absolute left-1/2 top-2 z-10 flex h-4 w-14 -translate-x-1/2 items-center justify-center rounded-full bg-phone-frame sm:h-5 sm:w-20">
+        <div className="h-2 w-2 rounded-full bg-phone-frame-soft ring-1 ring-border/20" />
+      </div>
+      <div className="aspect-[9/19.5] w-24 overflow-hidden rounded-[1.3rem] bg-card sm:w-28 sm:rounded-[2.25rem] md:w-32">
+        <img
+          src={image}
+          alt={name}
+          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div className="absolute bottom-2 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full bg-background/20 sm:w-12" />
+    </div>
+    {name && (
+      <p className="mt-3 text-center text-[10px] font-light tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
+        {name}
+      </p>
+    )}
+  </motion.div>
+);
 
-      {/* Hero */}
-      <section id="top" className="pt-44 md:pt-64 pb-32 md:pb-48 px-6 md:px-8">
-        <div className="max-w-[1400px] mx-auto">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center gap-4 text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-16"
-          >
-            <span className="w-12 h-px bg-foreground/40" />
-            <span>A studio of one. For premium product brands.</span>
-          </motion.div>
+const PaletteDots = ({ colors }: { colors: string[] }) => (
+  <div className="flex flex-col items-end gap-2">
+    <span className="whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground/70">
+      Color Palette
+    </span>
+    <div className="flex gap-2 sm:gap-2.5">
+      {colors.map((color, index) => (
+        <motion.div
+          key={`${color}-${index}`}
+          initial={{ scale: 0, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: index * 0.08, ease }}
+          className="h-6 w-6 cursor-pointer rounded-full shadow-[0_2px_8px_-2px_hsl(var(--foreground)/0.15),inset_0_1px_2px_hsl(var(--background)/0.3)] ring-1 ring-foreground/5 transition-transform duration-300 hover:scale-110 sm:h-7 sm:w-7"
+          style={{ backgroundColor: color }}
+          title={color}
+        />
+      ))}
+    </div>
+  </div>
+);
 
-          <motion.h1
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease }}
-            className="font-serif text-[clamp(2.75rem,9vw,9rem)] leading-[0.95] tracking-[-0.02em]"
-          >
-            Premium product brands,
-            <br />
-            <span className="italic text-muted-foreground">engineered to sell.</span>
-          </motion.h1>
+const ProjectBlock = ({
+  project,
+  onImageClick,
+}: {
+  project: DisplayProject;
+  onImageClick: (image: string, name: string) => void;
+}) => {
+  const hasDevices = Boolean(project.website_image || project.mobile_image);
+  const colors = project.colors || [];
 
-          <div className="mt-20 md:mt-24 grid md:grid-cols-12 gap-8 md:gap-12">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.3, ease }}
-              className="md:col-span-5 md:col-start-1"
-            >
-              <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-4">
-                The practice
-              </p>
-              <p className="text-base md:text-lg font-light leading-relaxed text-foreground/80">
-                I take product brands that look half-baked and turn them into
-                premium, launch-ready businesses. Branding, Shopify, copy, AI
-                and a full launch system - delivered as one quiet, considered
-                whole.
-              </p>
-            </motion.div>
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6 }}
+      className="mb-12 sm:mb-16 md:mb-20"
+    >
+      <div className="mb-4 sm:mb-6">
+        <h3 className="text-lg font-light tracking-tight sm:text-xl md:text-2xl">{project.name}</h3>
+        {project.description && (
+          <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{project.description}</p>
+        )}
+      </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.45, ease }}
-              className="md:col-span-5 md:col-start-8 flex md:justify-end items-end gap-6"
-            >
-              <a
-                href="#packages"
-                className="group inline-flex items-center gap-3 bg-foreground text-background px-7 py-4 rounded-full text-sm tracking-tight hover:opacity-90 transition-opacity"
-              >
-                See the system
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href="#scorecard"
-                className="text-xs tracking-[0.25em] uppercase border-b border-foreground/40 pb-0.5 hover:border-foreground transition-colors"
-              >
-                The Scorecard
-              </a>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Marquee strip */}
-      <section className="border-y border-border/60 overflow-hidden">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-8 py-6 flex flex-wrap items-center justify-between gap-x-10 gap-y-3 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-          <span>Brand strategy</span>
-          <span>·</span>
-          <span>Shopify systems</span>
-          <span>·</span>
-          <span>Conversion copy</span>
-          <span>·</span>
-          <span>AI workflows</span>
-          <span>·</span>
-          <span>Launch ops</span>
-          <span>·</span>
-          <span>Packaging</span>
-        </div>
-      </section>
-
-      {/* Positioning manifesto */}
-      <section className="py-32 md:py-48 px-6 md:px-8">
-        <div className="max-w-[1400px] mx-auto grid md:grid-cols-12 gap-8">
-          <div className="md:col-span-2">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              § 01 / Manifesto
-            </p>
-          </div>
-          <div className="md:col-span-9">
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              
-              transition={{ duration: 1, ease }}
-              className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.1] tracking-[-0.015em]"
-            >
-              Not a design studio. Not an AI consultant. Not a Shopify shop.
-              <span className="block mt-8 italic text-muted-foreground">
-                A product-brand architect for premium DTC and Shopify brands -
-                branding, product, copy, AI and launch, in one considered
-                system.
-              </span>
-            </motion.h2>
-          </div>
-        </div>
-      </section>
-
-      {/* Principles */}
-      <section id="principles" className="py-24 md:py-32 px-6 md:px-8 border-t border-border/60">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid md:grid-cols-12 gap-8 mb-16 md:mb-24">
-            <div className="md:col-span-2">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-                § 02 / Principles
-              </p>
-            </div>
-            <h3 className="md:col-span-9 font-serif text-2xl md:text-3xl tracking-tight">
-              Four ideas that shape every engagement.
-            </h3>
-          </div>
-          <div className="grid md:grid-cols-2 gap-px bg-border/80">
-            {principles.map((p) => (
-              <div
-                key={p.n}
-                className="bg-background p-8 md:p-12 min-h-[220px] flex flex-col"
-              >
-                <span className="font-serif italic text-sm text-muted-foreground mb-6">
-                  {p.n}
-                </span>
-                <h4 className="font-serif text-2xl md:text-3xl tracking-tight leading-tight mb-4">
-                  {p.t}
-                </h4>
-                <p className="text-sm font-light leading-relaxed text-muted-foreground max-w-md">
-                  {p.d}
-                </p>
+      {hasDevices && (
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-4 flex flex-wrap items-start gap-3 sm:mb-6 sm:gap-4"
+        >
+          <div className="flex flex-1 flex-wrap items-end gap-3 sm:gap-4">
+            {project.website_image && (
+              <div className="min-w-[160px] flex-1 sm:min-w-[200px] md:max-w-md">
+                <DesktopMockup
+                  image={project.website_image}
+                  name=""
+                  aspectRatio={project.aspect_ratio}
+                  onClick={() => onImageClick(project.website_image as string, project.name)}
+                />
               </div>
-            ))}
+            )}
+            {project.mobile_image && (
+              <MobileMockup
+                image={project.mobile_image}
+                name=""
+                onClick={() => onImageClick(project.mobile_image as string, project.name)}
+              />
+            )}
           </div>
+          {colors.length > 0 && (
+            <div className="pt-1">
+              <PaletteDots colors={colors} />
+            </div>
+          )}
+        </motion.div>
+      )}
+
+      {!hasDevices && colors.length > 0 && (
+        <div className="mb-4 flex justify-end sm:mb-6">
+          <PaletteDots colors={colors} />
         </div>
-      </section>
+      )}
 
-      {/* Packages */}
-      <section id="packages" className="py-32 md:py-48 px-6 md:px-8 border-t border-border/60 bg-[hsl(var(--surface-elevated))]">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid md:grid-cols-12 gap-8 mb-20 md:mb-28">
-            <div className="md:col-span-2">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-                § 03 / The System
-              </p>
-            </div>
-            <div className="md:col-span-9">
-              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.02em]">
-                The Premium Product
-                <br />
-                <span className="italic text-muted-foreground">Brand System.</span>
-              </h2>
-              <p className="mt-8 max-w-xl text-sm md:text-base font-light text-muted-foreground leading-relaxed">
-                Three engagements. One trajectory - from diagnostic to launch
-                to fully systemised brand operations.
-              </p>
-            </div>
+      {(project.images.length > 0 || project.video) && (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+          {project.images.map((image, index) => (
+            <motion.div
+              key={`${image}-${index}`}
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.06, ease }}
+              onClick={() => onImageClick(image, project.name)}
+              className="group aspect-[4/3] cursor-pointer overflow-hidden rounded-xl bg-muted shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_12px_32px_-8px_hsl(var(--foreground)/0.15)] sm:rounded-2xl"
+            >
+              <img
+                src={image}
+                alt={project.name}
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                loading="lazy"
+                decoding="async"
+              />
+            </motion.div>
+          ))}
+          {project.video && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, ease }}
+              className="aspect-[4/3] overflow-hidden rounded-xl bg-muted shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)] sm:rounded-2xl"
+            >
+              <video
+                src={project.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              />
+            </motion.div>
+          )}
+        </div>
+      )}
+    </motion.div>
+  );
+};
+
+const fromStaticProject = (project: (typeof staticProjects)[number]): DisplayProject => ({
+  id: project.slug,
+  slug: project.slug,
+  name: project.name,
+  category: project.category,
+  description: project.description || null,
+  website_image: project.websiteImage || null,
+  mobile_image: project.mobileImage || null,
+  aspect_ratio: '16/9',
+  colors: project.colors || null,
+  images: project.images,
+  video: project.video,
+});
+
+const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
+  const fallback = staticProjects.find((item) => item.slug === project.slug);
+  const projectImages = [...(project.project_images || [])]
+    .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
+    .map((image) => assetUrl(image.image_url) || image.image_url)
+    .filter(Boolean) as string[];
+
+  return {
+    id: project.id,
+    slug: project.slug,
+    name: project.name,
+    category: project.category,
+    description: project.description,
+    website_image: assetUrl(project.website_image) || fallback?.websiteImage || null,
+    mobile_image: assetUrl(project.mobile_image) || fallback?.mobileImage || null,
+    aspect_ratio: project.aspect_ratio || '16/9',
+    colors: project.colors || fallback?.colors || null,
+    images: projectImages.length > 0 ? projectImages : fallback?.images || [],
+    video: fallback?.video,
+  };
+};
+
+const Index = () => {
+  const { projects, loading } = useProjects();
+  const [lightbox, setLightbox] = useState<LightboxImage | null>(null);
+
+  const displayProjects = useMemo(() => {
+    const visibleCmsProjects = projects.filter((project) => project.is_visible !== false);
+
+    if (visibleCmsProjects.length > 0) {
+      return visibleCmsProjects.map(fromCmsProject);
+    }
+
+    return staticProjects.map(fromStaticProject);
+  }, [projects]);
+
+  const brandingProjects = displayProjects.filter((project) => project.category === 'branding');
+  const websiteProjects = displayProjects.filter((project) => project.website_image);
+  const mobileProjects = displayProjects.filter((project) => project.mobile_image);
+
+  const openLightbox = (image: string, name: string) => setLightbox({ image, name });
+
+  if (loading && projects.length === 0) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-foreground" />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <AnimatePresence>
+        {lightbox && (
+          <Lightbox image={lightbox.image} name={lightbox.name} onClose={() => setLightbox(null)} />
+        )}
+      </AnimatePresence>
+
+      <div className="min-h-screen bg-background">
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease }}
+          className="sticky top-0 z-50 border-b border-border/60 bg-background/70 shadow-[0_1px_3px_hsl(var(--foreground)/0.04)] backdrop-blur-2xl"
+        >
+          <div className="mx-auto flex max-w-6xl items-center justify-center px-4 py-4 sm:px-6 sm:py-5 md:px-10">
+            <h1 className="text-xs font-medium tracking-[0.15em] text-foreground/90 sm:text-sm sm:tracking-[0.2em]">
+              ELLA MADARI
+            </h1>
           </div>
+        </motion.header>
 
-          <div className="border-t border-border/80">
-            {packages.map((pkg, i) => (
-              <motion.article
-                key={pkg.name}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                
-                transition={{ duration: 0.8, delay: i * 0.08, ease }}
-                className={`group grid md:grid-cols-12 gap-6 md:gap-8 py-12 md:py-16 border-b border-border/80 transition-colors ${
-                  pkg.featured ? 'bg-background -mx-6 md:-mx-8 px-6 md:px-8' : ''
-                }`}
-              >
-                <div className="md:col-span-1">
-                  <span className="font-serif italic text-base text-muted-foreground">
-                    {pkg.index}
+        <div className="h-4 sm:h-6" />
+
+        <main className="mx-auto max-w-6xl px-4 sm:px-6 md:px-10">
+          <section id="branding" className="py-8 sm:py-12 md:py-16">
+            <SectionTitle
+              title="מיתוג וזהות חזותית"
+              subtitle="Branding"
+              icon={<Palette className="h-4 w-4 sm:h-5 sm:w-5" />}
+            />
+            {brandingProjects.map((project) => (
+              <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
+            ))}
+          </section>
+
+          <section id="websites" className="py-8 sm:py-12">
+            <SectionTitle
+              title="עיצוב אתרים"
+              subtitle="Web Design"
+              icon={<Monitor className="h-4 w-4" />}
+            />
+            {websiteProjects.length > 0 && (
+              <div className="mb-8 grid grid-cols-1 gap-3 sm:mb-12 sm:grid-cols-2 sm:gap-4 md:gap-6 lg:grid-cols-3">
+                {websiteProjects.map((project) => (
+                  <DesktopMockup
+                    key={project.id}
+                    image={project.website_image as string}
+                    name={project.name}
+                    aspectRatio={project.aspect_ratio}
+                    onClick={() => openLightbox(project.website_image as string, project.name)}
+                  />
+                ))}
+              </div>
+            )}
+
+            {mobileProjects.length > 0 && (
+              <div className="mt-8 sm:mt-12">
+                <div className="mb-4 flex items-center gap-2 sm:mb-6">
+                  <Smartphone className="h-3 w-3 text-muted-foreground sm:h-3.5 sm:w-3.5" />
+                  <span className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground sm:text-[9px]">
+                    Mobile
                   </span>
                 </div>
-                <div className="md:col-span-4">
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-4 flex items-center gap-3">
-                    <span>{pkg.kind}</span>
-                    {pkg.featured && (
-                      <span className="px-2 py-0.5 border border-foreground/30 rounded-full text-foreground/70 text-[9px]">
-                        Flagship
-                      </span>
-                    )}
-                  </p>
-                  <h3 className="font-serif text-3xl md:text-4xl leading-tight tracking-tight">
-                    {pkg.name}
-                  </h3>
-                  <p className="mt-4 text-xs tracking-[0.2em] uppercase text-muted-foreground">
-                    {pkg.duration}
-                  </p>
+                <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8">
+                  {mobileProjects.map((project) => (
+                    <MobileMockup
+                      key={project.id}
+                      image={project.mobile_image as string}
+                      name={project.name}
+                      onClick={() => openLightbox(project.mobile_image as string, project.name)}
+                    />
+                  ))}
                 </div>
-                <div className="md:col-span-4">
-                  <p className="text-sm md:text-base font-light leading-relaxed text-foreground/80 mb-6">
-                    {pkg.description}
-                  </p>
-                  <ul className="space-y-2 text-sm font-light text-muted-foreground">
-                    {pkg.deliverables.map((d) => (
-                      <li key={d} className="flex gap-3">
-                        <span className="text-foreground/40">—</span>
-                        <span>{d}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="md:col-span-3 flex md:flex-col md:items-end justify-between md:justify-start gap-4">
-                  <div className="md:text-right">
-                    <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-2">
-                      Investment
-                    </p>
-                    <p className="font-serif text-2xl md:text-3xl tracking-tight">
-                      {pkg.price}
-                    </p>
-                  </div>
-                  <a
-                    href="#contact"
-                    className="md:mt-auto inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase border-b border-foreground/40 pb-0.5 hover:border-foreground transition-colors"
-                  >
-                    Enquire
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
+              </div>
+            )}
+          </section>
+        </main>
 
-      {/* Scorecard */}
-      <section id="scorecard" className="py-32 md:py-48 px-6 md:px-8 border-t border-border/60">
-        <div className="max-w-[1400px] mx-auto grid md:grid-cols-12 gap-8 md:gap-16">
-          <div className="md:col-span-2">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              § 04 / Diagnostic
-            </p>
-          </div>
-          <div className="md:col-span-5">
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-[-0.02em]">
-              The Brand-to-Commerce
-              <span className="italic text-muted-foreground"> Scorecard.</span>
-            </h2>
-            <p className="mt-8 text-base md:text-lg font-light leading-relaxed text-muted-foreground max-w-md">
-              Twenty-five criteria across positioning, product, offer, UX, copy,
-              trust and AI readiness. A single score that tells you exactly
-              where your brand is leaking conversions - and what to fix first.
-            </p>
+        <footer className="mt-12 border-t border-border/60 bg-gradient-to-b from-transparent to-muted/40 py-8 sm:mt-20 sm:py-12">
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 md:px-10">
             <a
-              href="#contact"
-              className="mt-10 group inline-flex items-center gap-3 text-sm tracking-tight border-b border-foreground/40 pb-1 hover:border-foreground transition-colors"
+              href="mailto:hello@ellamadari.com"
+              className="text-xs text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:text-foreground sm:text-sm"
             >
-              Request the scorecard
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              hello@ellamadari.com
             </a>
+            <span className="text-[9px] tracking-wider text-muted-foreground/60 sm:text-[10px]">
+              © {new Date().getFullYear()} Ella Madari
+            </span>
           </div>
-
-          <ol className="md:col-span-5">
-            {scorecardPillars.map((p, i) => (
-              <li
-                key={p}
-                className="flex items-baseline justify-between gap-6 py-4 border-b border-border/80"
-              >
-                <span className="font-serif italic text-sm text-muted-foreground w-8">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="font-serif text-xl md:text-2xl tracking-tight flex-1">
-                  {p}
-                </span>
-                <span className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-                  Pillar
-                </span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* Promise / pull quote */}
-      <section className="py-32 md:py-48 px-6 md:px-8 border-t border-border/60 bg-[hsl(var(--surface-elevated))]">
-        <div className="max-w-[1400px] mx-auto grid md:grid-cols-12 gap-8">
-          <div className="md:col-span-2">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              § 05 / Promise
-            </p>
-          </div>
-          <div className="md:col-span-9">
-            <blockquote className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.1] tracking-[-0.015em]">
-              <span className="text-muted-foreground">"</span>
-              I walk into a product brand that looks half-baked
-              <span className="italic"> and walk out with a premium brand ready to sell </span>
-              - identity, product, site, copy, AI and a launch system.
-              <span className="text-muted-foreground">"</span>
-            </blockquote>
-            <p className="mt-10 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              — Ella Madari, founder
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section id="contact" className="py-32 md:py-48 px-6 md:px-8 border-t border-border/60">
-        <div className="max-w-[1400px] mx-auto grid md:grid-cols-12 gap-8">
-          <div className="md:col-span-2">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              § 06 / Enquire
-            </p>
-          </div>
-          <div className="md:col-span-9">
-            <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl leading-[1.0] tracking-[-0.02em]">
-              Ready to look premium
-              <br />
-              <span className="italic text-muted-foreground">and sell like it?</span>
-            </h2>
-            <p className="mt-10 max-w-xl text-base md:text-lg font-light text-muted-foreground leading-relaxed">
-              Start with a Brand-to-Commerce Audit. A sharp, honest view of your
-              brand - and a clear plan to launch.
-            </p>
-            <div className="mt-14 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <a
-                href="mailto:hello@ellamadari.com?subject=Brand-to-Commerce%20Audit"
-                className="group inline-flex items-center gap-3 bg-foreground text-background px-8 py-4 rounded-full text-sm tracking-tight hover:opacity-90 transition-opacity"
-              >
-                Book an audit
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href="mailto:hello@ellamadari.com"
-                className="text-sm tracking-tight border-b border-foreground/40 pb-0.5 hover:border-foreground transition-colors"
-              >
-                hello@ellamadari.com
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-border/60 py-16 px-6 md:px-8">
-        <div className="max-w-[1400px] mx-auto grid md:grid-cols-12 gap-8 mb-16">
-          <div className="md:col-span-4">
-            <a href="#top" className="flex items-baseline gap-2">
-              <span className="font-serif text-3xl leading-none tracking-tight">Ella</span>
-              <span className="font-serif italic text-3xl leading-none tracking-tight text-muted-foreground">
-                Madari
-              </span>
-            </a>
-            <p className="mt-6 max-w-sm text-sm font-light text-muted-foreground leading-relaxed">
-              A studio of one designing premium product brands for Shopify and
-              AI commerce.
-            </p>
-          </div>
-          <div className="md:col-span-2 md:col-start-7">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-4">
-              Navigate
-            </p>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#principles" className="hover:text-muted-foreground transition-colors">Principles</a></li>
-              <li><a href="#packages" className="hover:text-muted-foreground transition-colors">System</a></li>
-              <li><a href="#scorecard" className="hover:text-muted-foreground transition-colors">Scorecard</a></li>
-            </ul>
-          </div>
-          <div className="md:col-span-2">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-4">
-              Contact
-            </p>
-            <ul className="space-y-2 text-sm">
-              <li><a href="mailto:hello@ellamadari.com" className="hover:text-muted-foreground transition-colors">hello@ellamadari.com</a></li>
-              <li className="text-muted-foreground">Tel Aviv / Worldwide</li>
-            </ul>
-          </div>
-          <div className="md:col-span-2">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-4">
-              Index
-            </p>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Vol. I</li>
-              <li>{new Date().getFullYear()}</li>
-            </ul>
-          </div>
-        </div>
-        <div className="pt-8 border-t border-border/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-          <span>© {new Date().getFullYear()} Ella Madari. All rights reserved.</span>
-          <span>Premium Product Brand System</span>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </div>
+    </>
   );
 };
 
