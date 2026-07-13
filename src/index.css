@@ -92,6 +92,12 @@
     --ring: 0 0% 85%;
     --surface-elevated: 0 0% 6%;
     --text-secondary: 0 0% 60%;
+    --brand-accent: 14 80% 56%;
+    --brand-accent-foreground: 0 0% 100%;
+    --success: 152 52% 46%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 12%;
     --browser-red: 2 100% 67%;
     --browser-yellow: 40 99% 59%;
     --browser-green: 128 58% 47%;
