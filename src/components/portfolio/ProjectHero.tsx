@@ -27,11 +27,11 @@ const ProjectHero = ({ project, index }: ProjectHeroProps) => {
           <span className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3 block">
             {project.category === 'branding' ? 'Branding' : project.category === 'website' ? 'Web Design' : 'Print'}
           </span>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-extralight tracking-tight">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-normal tracking-tight">
             {project.name}
           </h2>
           {project.description && (
-            <p className="text-muted-foreground text-sm md:text-base mt-3 font-light max-w-md">
+            <p className="text-muted-foreground text-sm md:text-base mt-3 font-normal max-w-md">
               {project.description}
             </p>
           )}

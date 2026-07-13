@@ -38,11 +38,11 @@ const FullProjectSection = ({
             headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight tracking-[-0.03em] mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal tracking-[-0.03em] mb-4">
             {name}
           </h2>
           {description && (
-            <p className="text-muted-foreground text-sm md:text-base tracking-wide font-light">
+            <p className="text-muted-foreground text-sm md:text-base tracking-wide font-normal">
               {description}
             </p>
           )}
