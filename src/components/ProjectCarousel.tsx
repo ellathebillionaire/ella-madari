@@ -116,7 +116,7 @@ const ProjectCarousel = () => {
         {/* Clean Header */}
         <header className="absolute top-0 inset-x-0 px-6 md:px-12 py-6 z-30 flex items-center justify-between">
           <div>
-            <h1 className="text-lg md:text-xl font-semibold tracking-tight text-foreground">Ella Madari</h1>
+            <h1 className="text-lg md:text-xl font-medium tracking-tight text-foreground">Ella Madari</h1>
             <p className="text-[9px] md:text-[10px] text-muted-foreground tracking-[0.25em] uppercase mt-1">Design & Branding</p>
           </div>
           
@@ -248,7 +248,7 @@ const ProjectCarousel = () => {
 
               {/* Category */}
               <div className="px-3 py-2 bg-card/80 backdrop-blur-xl rounded-full shadow-sm border border-border/40">
-                <span className="text-[9px] text-muted-foreground font-semibold tracking-widest uppercase">
+                <span className="text-[9px] text-muted-foreground font-medium tracking-widest uppercase">
                   {activeProject.category === 'branding' ? 'BRANDING' : 'WEBSITE'}
                 </span>
               </div>

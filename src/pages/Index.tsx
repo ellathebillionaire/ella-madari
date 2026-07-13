@@ -53,7 +53,7 @@ const SectionTitle = ({
         {subtitle}
       </span>
     </div>
-    <h2 className="text-2xl font-extralight tracking-tight text-foreground/90 sm:text-4xl md:text-5xl">
+    <h2 className="text-2xl font-normal tracking-tight text-foreground/90 sm:text-4xl md:text-5xl">
       {title}
     </h2>
   </motion.div>
@@ -97,7 +97,7 @@ const Lightbox = ({ image, name, onClose }: LightboxImage & { onClose: () => voi
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="absolute start-4 top-4 text-sm font-light tracking-wide text-background/70 sm:start-8 sm:top-8"
+        className="absolute start-4 top-4 text-sm font-normal tracking-wide text-background/70 sm:start-8 sm:top-8"
       >
         {name}
       </motion.span>
@@ -153,7 +153,7 @@ const DesktopMockup = ({
       </div>
     </div>
     {name && (
-      <p className="mt-3 text-center text-[10px] font-light tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
+      <p className="mt-3 text-center text-[10px] font-normal tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
         {name}
       </p>
     )}
@@ -185,7 +185,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
       <div className="absolute bottom-2 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full bg-background/20 sm:w-12" />
     </div>
     {name && (
-      <p className="mt-3 text-center text-[10px] font-light tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
+      <p className="mt-3 text-center text-[10px] font-normal tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
         {name}
       </p>
     )}
@@ -233,7 +233,7 @@ const ProjectBlock = ({
       className="mb-12 sm:mb-16 md:mb-20"
     >
       <div className="mb-4 sm:mb-6">
-        <h3 className="text-lg font-light tracking-tight sm:text-xl md:text-2xl">{project.name}</h3>
+        <h3 className="text-lg font-normal tracking-tight sm:text-xl md:text-2xl">{project.name}</h3>
         {project.description && (
           <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{project.description}</p>
         )}

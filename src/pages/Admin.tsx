@@ -695,7 +695,7 @@ const Admin = () => {
       <main className="max-w-5xl mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h2 className="text-xl font-light">פרויקטים</h2>
+            <h2 className="text-xl font-normal">פרויקטים</h2>
             <p className="text-xs text-muted-foreground mt-1">גרור לשינוי סדר • לחץ על חץ להרחבה</p>
           </div>
           <Button onClick={() => setShowAddForm(!showAddForm)}>

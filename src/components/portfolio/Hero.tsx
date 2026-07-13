@@ -8,7 +8,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-extralight tracking-[-0.04em]"
+          className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-normal tracking-[-0.04em]"
         >
           Ella Madari
         </motion.h1>
@@ -17,7 +17,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 text-muted-foreground text-sm tracking-[0.2em] uppercase font-light"
+          className="mt-6 text-muted-foreground text-sm tracking-[0.2em] uppercase font-normal"
         >
           Graphic Design & Branding
         </motion.p>

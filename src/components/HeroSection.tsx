@@ -19,7 +19,7 @@ const HeroSection = () => {
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extralight tracking-[-0.04em] text-foreground">
+          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-normal tracking-[-0.04em] text-foreground">
             Ella Madari
           </h1>
         </div>
@@ -29,7 +29,7 @@ const HeroSection = () => {
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <p className="mt-6 md:mt-8 text-sm md:text-base text-muted-foreground tracking-[0.3em] uppercase font-light">
+          <p className="mt-6 md:mt-8 text-sm md:text-base text-muted-foreground tracking-[0.3em] uppercase font-normal">
             Design Portfolio
           </p>
         </div>
