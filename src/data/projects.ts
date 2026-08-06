@@ -32,7 +32,9 @@ import meshek27BoxDesign from '@/assets/meshek27/box-design.jpg';
 
 // Si Señora
 import sisenoraWebsiteNew from "@/assets/sisenora-website-new.png";
+import sisenoraWebsiteOld from "@/assets/website-sisenora.png";
 import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
+import sisenoraLogoOld from "@/assets/sisenora-logo.jpg";
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
 // Learn AI / DotAi
@@ -49,6 +51,7 @@ import taliterBottleMockup from '@/assets/taliter/bottle-mockup.jpg';
 
 // EBrider
 import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
+import ebriderLogoOld from "@/assets/ebrider-logo.jpg";
 import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
 import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 import ebriderMobile from "@/assets/ebrider-mobile.png";
@@ -78,10 +81,25 @@ import ascolaBrandingMockup from "@/assets/ascola/branding-mockup.jpg";
 
 // ============ TYPES ============
 
+// displayType controls WHICH presentation component renders this project.
+// This is separate from `category` (kept for backward compatibility / CMS fallback filtering).
+//   'website'          -> single website showcase (desktop + mobile mockup), no known before/after
+//   'website_redesign' -> before/after website transformation (toggle mockup)
+//   'branding'         -> full branding-from-scratch story (values + process + result)
+//   'rebranding'       -> old identity -> new identity, with the reasoning behind the change
+//   'story'            -> narrative-driven project (product import, custom dev, multi-service work)
+export type DisplayType = 'website' | 'website_redesign' | 'branding' | 'rebranding' | 'story';
+
+export interface StoryStep {
+  title: string;
+  text: string;
+}
+
 export interface Project {
   slug: string;
   name: string;
   category: 'branding' | 'website' | 'print';
+  displayType: DisplayType;
   description?: string;
   logo: string;
   monogram?: string;
@@ -93,6 +111,29 @@ export interface Project {
   video?: string;
   websiteImage?: string;
   mobileImage?: string;
+
+  // needsReview: I (Claude) assigned a displayType / wrote copy based on limited info in the
+  // existing code. Flagged projects should be double-checked by Ella before going live.
+  needsReview?: boolean;
+
+  // ---- branding: full identity built from scratch ----
+  values?: string[]; // short value words/phrases
+  process?: string; // 1-2 sentence description of the thinking behind the identity
+
+  // ---- rebranding: old identity -> new ----
+  before?: {
+    logo?: string;
+    website?: string;
+  };
+  changeReason?: string; // what led to the change
+
+  // ---- website_redesign: before/after site ----
+  beforeWebsiteImage?: string;
+  beforeMobileImage?: string;
+
+  // ---- story: narrative-driven (import / custom dev / multi-service) ----
+  storyIntro?: string;
+  storySteps?: StoryStep[];
 }
 
 // ============ BRANDING PROJECTS ============
@@ -106,6 +147,8 @@ export const projects: Project[] = [
     slug: 'betterseeds',
     name: 'BetterSeeds',
     category: 'branding',
+    displayType: 'website',
+    needsReview: true, // TODO Ella: זה בעצם מיתוג + ויזואלים AI, או שהשירות המרכזי היה משהו אחר? יש גם ליין עבודה פנימי מתמשך - כדאי לספר את זה?
     description: 'אתר ויזואלים AI לחברת טכנולוגיה חקלאית',
     logo: betterseedsHero,
     heroImage: betterseedsHero,
@@ -128,7 +171,24 @@ export const projects: Project[] = [
     slug: 'sfd',
     name: 'SFD',
     category: 'branding',
-    description: 'מיתוג מלא ובניית אתר איקומרס חי לשיטת אימון לרקדנים (strengthfordancers.com)',
+    displayType: 'story',
+    description: 'מיתוג מלא, ייבוא קיט מוצרים ממותג, ובניית פורטל אימונים אישי - שיטת אימון לרקדנים (strengthfordancers.com)',
+    storyIntro:
+      'פרויקט שהתחיל ממיתוג מלא, המשיך לייבוא קיט מוצרים ממותג מסין, והסתיים בפורטל אימונים דיגיטלי אישי שנפתח לכל לקוחה שרוכשת את הקיט.',
+    storySteps: [
+      {
+        title: 'מיתוג',
+        text: 'קודם כל בנינו זהות מלאה - לוגו, פלטת צבעים (שחור, אפור כהה, לבן) וניסוח. הצבעים האלה הפכו אחר כך לקו המנחה של כל שלב בפרויקט.',
+      },
+      {
+        title: 'ייבוא ממותג בתקציב מוגבל',
+        text: 'הלקוחה רצתה קיט שלם - 5 סטים של גומיות התנגדות, גומיית לולאות עם 11 מספרים, שתי קוביות בלוק יוגה ותיק שמאחד הכל. יצרן שנבדק קודם דרש כמויות ייצור מאפס שלא תאמו את התקציב. במקום זה חיפשתי בשוק הסיני מוצרים קיימים שכבר תואמים לצבעי המותג ול-MOQ נמוך (100-200 יחידות למוצר), ופיצלתי את ההזמנה בין כמה ספקים רלוונטיים כדי להתאים לוגו לכל פריט.',
+      },
+      {
+        title: 'פורטל אימונים אישי',
+        text: 'כל רכישת קיט פותחת ללקוחה אזור אישי בפורטל וידאו: עמוד קורסים, מאגר שיעורים, ועמוד נגן עם רשימת שיעורים הבאה/קודמת. המערכת שבה עבדנו הייתה סגורה ברובה (HTML נעול, רק CSS פתוח לעריכה) - כך שקודם מיפיתי את מבנה הקוד כדי להבין מה אפשר לגעת בו, ורק אז בניתי את ההתאמה האישית: אבטחה, הגבלת שיתוף, והתאמה מלאה למובייל ולדסקטופ.',
+      },
+    ],
     logo: sfdLogoTransparent,
     monogram: sfdSymbol,
     heroImage: sfdRealHeroWeb,
@@ -151,7 +211,11 @@ export const projects: Project[] = [
     slug: 'meshek27',
     name: 'משק 27',
     category: 'branding',
+    displayType: 'branding',
+    needsReview: true, // TODO Ella: אשרי/עדכני את הערכים והתהליך - ניחשתי לפי התיאור הקיים בקוד
     description: 'מיתוג מלא למשק חקלאי - משלוחי ירקות',
+    values: ['טריות', 'ישירות מהשדה', 'אמינות מקומית'],
+    process: 'זהות שדוברת חקלאות אמיתית - צבעי אדמה וירק, לוגו שמרגיש ביתי ולא תעשייתי, ויישום עקבי על כל נקודות המגע: אריזות, שילוט וביגוד.',
     logo: meshek27LogoClean,
     monogram: meshek27LogoGraphic,
     heroImage: meshek27BrandingFull,
@@ -172,7 +236,11 @@ export const projects: Project[] = [
     slug: 'learnai',
     name: 'Learn AI',
     category: 'branding',
+    displayType: 'branding',
+    needsReview: true, // TODO Ella: אשרי/עדכני את הערכים והתהליך
     description: 'מיתוג ואנימציה לפלטפורמת לימוד AI',
+    values: ['נגישות', 'טכנולוגיה חדה', 'תנועה ובהירות'],
+    process: 'זהות דיגיטלית קרה וחדה שמדברת טכנולוגיה, עם אנימציית לוגו שממחישה תנועה ולמידה מתמשכת.',
     logo: learnaiLogoFull,
     monogram: dotaiMonogram,
     heroImage: dotaiLogoFull,
@@ -191,7 +259,14 @@ export const projects: Project[] = [
     slug: 'sisenora',
     name: 'Si Señora',
     category: 'branding',
-    description: 'מיתוג ובניית אתר מכירות לעסק לייבוא תיקים בעבודת יד',
+    displayType: 'rebranding',
+    needsReview: true, // TODO Ella: מצאתי קבצי לוגו/אתר "ישן" ו"חדש" בנכסים - זה אכן ריברנד? מה הוביל לשינוי? כתבי לי משפט ואני אכניס
+    description: 'ריברנד ובניית אתר מכירות לעסק לייבוא תיקים בעבודת יד',
+    before: {
+      logo: sisenoraLogoOld,
+      website: sisenoraWebsiteOld,
+    },
+    changeReason: 'המיתוג הקודם לא שיקף את איכות המוצר בעבודת יד - חידשנו את הזהות והאתר כדי שיתאימו לרמת המותג.',
     logo: sisenoraLogo,
     heroImage: mockupSisenoraShop,
     bgColor: '#FAF8F5',
@@ -208,6 +283,7 @@ export const projects: Project[] = [
     slug: 'ascola',
     name: 'Ascola Garden',
     category: 'branding',
+    displayType: 'website',
     description: 'לוגו ובניית אתר תדמית לעסק של מתחם אירועים טוסקני',
     logo: ascolaLogo,
     heroImage: ascolaWebsite,
@@ -225,7 +301,11 @@ export const projects: Project[] = [
     slug: 'taliter',
     name: 'Tali Ter',
     category: 'branding',
+    displayType: 'branding',
+    needsReview: true, // TODO Ella: אשרי/עדכני את הערכים והתהליך
     description: 'מיתוג למאמנת בר',
+    values: ['אנרגטי', 'אישי', 'מזמין'],
+    process: 'זהות חמה וצבעונית שמדברת אימון אישי ולא מכון כושר תעשייתי - מותאמת לביגוד, שילוט ואריזות.',
     logo: taliterBrandingSet,
     heroImage: taliterBrandingSet,
     bgColor: '#FFFBF5',
@@ -242,7 +322,13 @@ export const projects: Project[] = [
     slug: 'ebrider',
     name: 'EBrider',
     category: 'branding',
-    description: 'לוגו ובניית אתר חנות - חלקי חילוף לאופניים',
+    displayType: 'rebranding',
+    needsReview: true, // TODO Ella: מצאתי לוגו "ישן" ו"חדש" בנכסים - זה אכן ריברנד? מה הוביל לשינוי? כתבי לי משפט ואני אכניס
+    description: 'ריברנד ובניית אתר חנות - חלקי חילוף לאופניים',
+    before: {
+      logo: ebriderLogoOld,
+    },
+    changeReason: 'הלוגו הקודם לא עמד בקצב עם המותג - חידשנו אותו לזהות חדה וברורה יותר שמתאימה לחנות אונליין.',
     logo: ebriderLogoNew,
     monogram: ebriderSymbol,
     heroImage: ebriderMockupHero,
@@ -261,7 +347,11 @@ export const projects: Project[] = [
     slug: 'studioalef',
     name: 'Studio Alef',
     category: 'branding',
+    displayType: 'branding',
+    needsReview: true, // TODO Ella: אשרי/עדכני את הערכים והתהליך
     description: 'מיתוג קיר חיצוני לסטודיו עיצוב + הדמיה',
+    values: ['מינימליזם', 'אדריכלי', 'שקט חזותי'],
+    process: 'זהות מינימליסטית שמתפקדת גם כאלמנט עיצובי פיזי - הודמתה על הקיר לפני היישום כדי לוודא שהיא עומדת בקנה מידה גדול.',
     logo: studioalefLogo,
     heroImage: studioalefWallMockup,
     bgColor: '#F8F8F8',
@@ -277,6 +367,7 @@ export const projects: Project[] = [
     slug: 'sen',
     name: 'SEN Jewelry',
     category: 'website',
+    displayType: 'website',
     description: 'עיצוב אתר לחנות תכשיטים',
     logo: websiteSenMobile,
     heroImage: websiteSenMobile,

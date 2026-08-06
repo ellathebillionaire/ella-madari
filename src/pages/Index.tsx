@@ -1,10 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Monitor, Palette, Smartphone, X } from 'lucide-react';
-import { projects as staticProjects } from '@/data/projects';
+import { Monitor, Palette, Smartphone, X, Sparkles, RefreshCw, BookOpen } from 'lucide-react';
+import { projects as staticProjects, type DisplayType, type StoryStep } from '@/data/projects';
 import { useProjects, type ProjectWithImages } from '@/hooks/useProjects';
 import { resolveImageUrl } from '@/lib/imageResolver';
+import {
+  BrandingStory,
+  RebrandCompare,
+  WebsiteBeforeAfter,
+  ProjectStory,
+  NeedsReviewBadge,
+} from '@/components/ProjectDisplays';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -13,6 +20,7 @@ type DisplayProject = {
   slug: string;
   name: string;
   category: string;
+  displayType: DisplayType;
   description: string | null;
   website_image: string | null;
   mobile_image: string | null;
@@ -20,6 +28,14 @@ type DisplayProject = {
   colors: string[] | null;
   images: string[];
   video?: string;
+  needsReview?: boolean;
+  values?: string[];
+  process?: string;
+  beforeLogo?: string;
+  beforeWebsite?: string;
+  changeReason?: string;
+  storyIntro?: string;
+  storySteps?: StoryStep[];
 };
 
 type LightboxImage = {
@@ -223,6 +239,7 @@ const ProjectBlock = ({
 }) => {
   const hasDevices = Boolean(project.website_image || project.mobile_image);
   const colors = project.colors || [];
+  const isWebsiteRedesign = project.displayType === 'website_redesign' && project.beforeWebsite && project.website_image;
 
   return (
     <motion.div
@@ -233,13 +250,51 @@ const ProjectBlock = ({
       className="mb-12 sm:mb-16 md:mb-20"
     >
       <div className="mb-4 sm:mb-6">
-        <h3 className="text-lg font-normal tracking-tight sm:text-xl md:text-2xl">{project.name}</h3>
+        <h3 className="flex items-center text-lg font-normal tracking-tight sm:text-xl md:text-2xl">
+          {project.name}
+          {project.needsReview && <NeedsReviewBadge />}
+        </h3>
         {project.description && (
           <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{project.description}</p>
         )}
       </div>
 
-      {hasDevices && (
+      {project.displayType === 'branding' && (
+        <BrandingStory values={project.values} process={project.process} />
+      )}
+
+      {project.displayType === 'rebranding' && project.website_image && (
+        <RebrandCompare
+          beforeLogo={project.beforeLogo}
+          afterLogo={project.website_image}
+          changeReason={project.changeReason}
+        />
+      )}
+      {project.displayType === 'rebranding' && !project.website_image && project.images[0] && (
+        <RebrandCompare
+          beforeLogo={project.beforeLogo}
+          afterLogo={project.images[0]}
+          changeReason={project.changeReason}
+        />
+      )}
+
+      {project.displayType === 'story' && (
+        <ProjectStory intro={project.storyIntro} steps={project.storySteps} />
+      )}
+
+      {isWebsiteRedesign && (
+        <div className="mb-6 max-w-xl sm:mb-8">
+          <WebsiteBeforeAfter
+            beforeImage={project.beforeWebsite as string}
+            afterImage={project.website_image as string}
+            name={project.name}
+            aspectRatio={project.aspect_ratio}
+            onImageClick={(image) => onImageClick(image, project.name)}
+          />
+        </div>
+      )}
+
+      {hasDevices && !isWebsiteRedesign && (
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -330,6 +385,7 @@ const fromStaticProject = (project: (typeof staticProjects)[number]): DisplayPro
   slug: project.slug,
   name: project.name,
   category: project.category,
+  displayType: project.displayType,
   description: project.description || null,
   website_image: project.websiteImage || null,
   mobile_image: project.mobileImage || null,
@@ -337,8 +393,18 @@ const fromStaticProject = (project: (typeof staticProjects)[number]): DisplayPro
   colors: project.colors || null,
   images: project.images,
   video: project.video,
+  needsReview: project.needsReview,
+  values: project.values,
+  process: project.process,
+  beforeLogo: project.before?.logo,
+  beforeWebsite: project.before?.website,
+  changeReason: project.changeReason,
+  storyIntro: project.storyIntro,
+  storySteps: project.storySteps,
 });
 
+// CMS (Supabase) projects don't yet have displayType / story columns, so we fall back to the
+// static project of the same slug for that content. New CMS-only projects default to 'website'.
 const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
   const fallback = staticProjects.find((item) => item.slug === project.slug);
   const projectImages = [...(project.project_images || [])]
@@ -351,6 +417,7 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
     slug: project.slug,
     name: project.name,
     category: project.category,
+    displayType: fallback?.displayType || 'website',
     description: project.description,
     website_image: assetUrl(project.website_image) || fallback?.websiteImage || null,
     mobile_image: assetUrl(project.mobile_image) || fallback?.mobileImage || null,
@@ -358,6 +425,14 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
     colors: project.colors || fallback?.colors || null,
     images: projectImages.length > 0 ? projectImages : fallback?.images || [],
     video: fallback?.video,
+    needsReview: fallback?.needsReview,
+    values: fallback?.values,
+    process: fallback?.process,
+    beforeLogo: fallback?.before?.logo,
+    beforeWebsite: fallback?.before?.website,
+    changeReason: fallback?.changeReason,
+    storyIntro: fallback?.storyIntro,
+    storySteps: fallback?.storySteps,
   };
 };
 
@@ -375,9 +450,17 @@ const Index = () => {
     return staticProjects.map(fromStaticProject);
   }, [projects]);
 
-  const brandingProjects = displayProjects.filter((project) => project.category === 'branding');
-  const websiteProjects = displayProjects.filter((project) => project.website_image);
-  const mobileProjects = displayProjects.filter((project) => project.mobile_image);
+  // Group by the SERVICE that was actually performed, not a flat "branding/website" split.
+  const brandingProjects = displayProjects.filter((project) => project.displayType === 'branding');
+  const rebrandingProjects = displayProjects.filter((project) => project.displayType === 'rebranding');
+  const storyProjects = displayProjects.filter((project) => project.displayType === 'story');
+  const websiteTypeProjects = displayProjects.filter(
+    (project) => project.displayType === 'website' || project.displayType === 'website_redesign'
+  );
+  const websiteProjects = websiteTypeProjects.filter(
+    (project) => project.website_image && project.displayType !== 'website_redesign'
+  );
+  const mobileProjects = websiteTypeProjects.filter((project) => project.mobile_image);
 
   const openLightbox = (image: string, name: string) => setLightbox({ image, name });
 
@@ -414,16 +497,44 @@ const Index = () => {
         <div className="h-4 sm:h-6" />
 
         <main className="mx-auto max-w-6xl px-4 sm:px-6 md:px-10">
-          <section id="branding" className="py-8 sm:py-12 md:py-16">
-            <SectionTitle
-              title="מיתוג וזהות חזותית"
-              subtitle="Branding"
-              icon={<Palette className="h-4 w-4 sm:h-5 sm:w-5" />}
-            />
-            {brandingProjects.map((project) => (
-              <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
-            ))}
-          </section>
+          {brandingProjects.length > 0 && (
+            <section id="branding" className="py-8 sm:py-12 md:py-16">
+              <SectionTitle
+                title="מיתוג מאפס"
+                subtitle="Branding"
+                icon={<Palette className="h-4 w-4 sm:h-5 sm:w-5" />}
+              />
+              {brandingProjects.map((project) => (
+                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
+              ))}
+            </section>
+          )}
+
+          {rebrandingProjects.length > 0 && (
+            <section id="rebranding" className="py-8 sm:py-12 md:py-16">
+              <SectionTitle
+                title="ריברנד"
+                subtitle="Rebranding"
+                icon={<RefreshCw className="h-4 w-4 sm:h-5 sm:w-5" />}
+              />
+              {rebrandingProjects.map((project) => (
+                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
+              ))}
+            </section>
+          )}
+
+          {storyProjects.length > 0 && (
+            <section id="projects" className="py-8 sm:py-12 md:py-16">
+              <SectionTitle
+                title="פרויקטים מקצה לקצה"
+                subtitle="Full Scope"
+                icon={<BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />}
+              />
+              {storyProjects.map((project) => (
+                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
+              ))}
+            </section>
+          )}
 
           <section id="websites" className="py-8 sm:py-12">
             <SectionTitle
@@ -431,6 +542,11 @@ const Index = () => {
               subtitle="Web Design"
               icon={<Monitor className="h-4 w-4" />}
             />
+            {websiteTypeProjects
+              .filter((project) => project.displayType === 'website_redesign')
+              .map((project) => (
+                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
+              ))}
             {websiteProjects.length > 0 && (
               <div className="mb-8 grid grid-cols-1 gap-3 sm:mb-12 sm:grid-cols-2 sm:gap-4 md:gap-6 lg:grid-cols-3">
                 {websiteProjects.map((project) => (
