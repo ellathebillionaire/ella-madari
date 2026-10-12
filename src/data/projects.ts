@@ -249,18 +249,14 @@ export const projects: Project[] = [
     description: 'מיתוג ואנימציה לפלטפורמת לימוד AI',
     values: ['נגישות', 'טכנולוגיה חדה', 'תנועה ובהירות'],
     process: 'זהות דיגיטלית קרה וחדה שמדברת טכנולוגיה, עם אנימציית לוגו שממחישה תנועה ולמידה מתמשכת.',
-    logo: learnaiLogoFull,
-    monogram: dotaiMonogram,
-    heroImage: dotaiLogoFull,
+    logo: learnaiLogoFull.url,
+    heroImage: learnaiLogoFull.url,
     bgColor: '#F0FAFB',
     accentColor: '#00D4E5',
     colors: ['#00D4E5', '#1A365D', '#F8FAFC'],
-    images: [
-      learnaiLogoFull,
-      dotaiMonogram,
-    ],
+    images: [],
     video: learnaiAnimation,
-    websiteImage: learnaiWebsiteDesktop,
+    websiteImage: learnaiPlatformHero.url,
   },
   // Si Señora - 2 images + desktop = 3 items
   {
