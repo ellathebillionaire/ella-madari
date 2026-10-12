@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Monitor, Palette, RefreshCw, BookOpen } from 'lucide-react';
+import { Monitor, Palette, RefreshCw, BookOpen, ArrowUpLeft } from 'lucide-react';
 import { projects as staticProjects, type DisplayType, type StoryStep } from '@/data/projects';
+import { liveSites } from '@/data/liveSites';
 import { useProjects, type ProjectWithImages } from '@/hooks/useProjects';
 import { resolveImageUrl } from '@/lib/imageResolver';
 import { groupProjectMedia } from '@/lib/mediaGroups';
