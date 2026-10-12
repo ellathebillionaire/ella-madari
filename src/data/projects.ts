@@ -38,7 +38,7 @@ import sisenoraLogoOld from "@/assets/sisenora-logo.jpg";
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
 // Learn AI / DotAi
-import learnaiLogoFull from '@/assets/media/LearnAI__brand_logo_full.webp.asset.json';
+import learnaiLogoFull from '@/assets/media/LearnAI__dotai_avatar_character_original.webp.asset.json';
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
 import learnaiPlatformHero from '@/assets/media/LearnAI__platform_hero_dotai_learning_companion.webp.asset.json';
 
