@@ -186,13 +186,13 @@ export const ProjectStory = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="mb-6 sm:mb-8"
+      className="mb-4 sm:mb-5"
     >
       {intro && (
-        <p className="mb-5 text-sm leading-relaxed text-foreground/80 sm:mb-6 sm:text-base">{intro}</p>
+        <p className="mb-3 text-sm leading-relaxed text-foreground/80 sm:mb-4 sm:text-base">{intro}</p>
       )}
       {steps && steps.length > 0 && (
-        <div className="space-y-4 sm:space-y-5">
+        <div className="grid gap-3 sm:grid-cols-3 sm:gap-5">
           {steps.map((step, index) => (
             <div key={step.title} className="flex gap-3 sm:gap-4">
               <div className="flex-shrink-0">

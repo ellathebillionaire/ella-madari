@@ -64,7 +64,7 @@ const SectionTitle = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.7, ease }}
-    className="mb-10 border-t border-border pt-8 sm:mb-14 sm:pt-10 md:mb-20"
+    className="mb-6 border-t border-border pt-5 sm:mb-8 sm:pt-6"
   >
     <div className="mb-4 flex items-center gap-3 sm:mb-5 sm:gap-4">
       <div className="rounded-xl bg-muted p-2.5 text-muted-foreground shadow-[0_2px_8px_-2px_hsl(var(--foreground)/0.06)] sm:rounded-2xl sm:p-3">
@@ -87,7 +87,7 @@ const SubLabel = ({ children }: { children: ReactNode }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, ease }}
-    className="mb-4 flex items-center gap-3 sm:mb-5"
+    className="mb-2.5 flex items-center gap-3 sm:mb-3"
   >
     <span className="shrink-0 text-[10px] font-medium tracking-[0.2em] text-muted-foreground/70 sm:text-[11px]">
       {children}
@@ -272,10 +272,10 @@ const ProjectBlock = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6 }}
-      className="mb-20 min-w-0 sm:mb-16 md:mb-20"
+      className="mb-12 min-w-0 sm:mb-14 last:mb-0"
       data-project={project.slug}
     >
-      <div className="mb-4 sm:mb-6">
+      <div className="mb-3 sm:mb-4">
         <h3 className="flex flex-wrap items-center gap-y-2 text-lg font-normal sm:text-xl md:text-2xl">
           {project.name}
         </h3>
@@ -294,9 +294,9 @@ const ProjectBlock = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-6 flex flex-col gap-5 sm:mb-6 sm:flex-row sm:flex-wrap sm:items-start sm:gap-4"
+            className="mb-4 flex flex-row flex-wrap items-start gap-3 sm:mb-5 sm:gap-4"
           >
-            <div className={`grid w-full min-w-0 items-center gap-4 sm:flex sm:flex-1 sm:flex-wrap sm:items-end ${hasBothScreens ? "grid-cols-1" : "grid-cols-2"}`}>
+            <div className={`grid w-full min-w-0 items-center gap-3 sm:flex sm:flex-1 sm:flex-wrap sm:items-end ${hasBothScreens ? "grid-cols-[minmax(0,1fr)_auto]" : "grid-cols-2"}`}>
               {project.website_image && (
                 <div className="min-w-0 flex-1 sm:min-w-[200px] md:max-w-md">
                   <DesktopMockup
@@ -365,9 +365,9 @@ const ProjectBlock = ({
       )}
 
       {(project.images.length > 0 || project.video) && (
-        <div className="space-y-6 sm:space-y-8">
+        <div className="grid grid-cols-2 items-start gap-x-3 gap-y-4 sm:grid-cols-12 sm:gap-x-4 sm:gap-y-5">
           {galleryGroups.map((group) => (
-            <section key={group.label} aria-label={`${project.name} - ${group.label}`}>
+            <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
               <SubLabel>{group.label}</SubLabel>
               <ProjectMediaGroup
                 group={group}
@@ -377,7 +377,7 @@ const ProjectBlock = ({
             </section>
           ))}
           {project.video && (
-            <section aria-label={`${project.name} - אנימציה`}>
+            <section aria-label={`${project.name} - אנימציה`} className="col-span-1 sm:col-span-4">
               <SubLabel>אנימציה</SubLabel>
               <ProjectMediaGroup
                 group={{ label: 'אנימציה', images: [project.video] }}
@@ -510,7 +510,7 @@ const Index = () => {
 
         <main className="mx-auto max-w-6xl px-4 sm:px-6 md:px-10">
           {storyProjects.length > 0 && (
-            <section id="projects" className="py-8 sm:py-12 md:py-16">
+            <section id="projects" className="py-5 sm:py-8">
               <SectionTitle
                 title="פרויקטים מקצה לקצה"
                 subtitle="Full Scope"
@@ -523,7 +523,7 @@ const Index = () => {
           )}
 
           {brandingProjects.length > 0 && (
-            <section id="branding" className="py-8 sm:py-12 md:py-16">
+            <section id="branding" className="py-5 sm:py-8">
               <SectionTitle
                 title="מיתוג מאפס"
                 subtitle="Branding"
@@ -536,7 +536,7 @@ const Index = () => {
           )}
 
           {rebrandingProjects.length > 0 && (
-            <section id="rebranding" className="py-8 sm:py-12 md:py-16">
+            <section id="rebranding" className="py-5 sm:py-8">
               <SectionTitle
                 title="ריברנד"
                 subtitle="Rebranding"
@@ -548,7 +548,7 @@ const Index = () => {
             </section>
           )}
 
-          <section id="websites" className="py-8 sm:py-12">
+          <section id="websites" className="py-5 sm:py-8">
             <SectionTitle
               title="עיצוב אתרים"
               subtitle="Web Design"
