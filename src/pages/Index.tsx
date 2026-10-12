@@ -341,9 +341,12 @@ const ProjectBlock = ({
                 <div className="min-w-0 flex-1 self-center sm:min-w-[220px] [&_img]:max-w-full">{logoBlock}</div>
               )}
             </div>
-            {colors.length > 0 && (
-              <div className="self-end pt-1 sm:self-auto">
-                <PaletteDots colors={colors} />
+            {(colors.length > 0 || (project.displayType === 'story' && (project.storyIntro || project.storySteps?.length))) && (
+              <div className="flex w-full flex-col items-end gap-4 self-end pt-1 sm:w-auto sm:self-auto">
+                {colors.length > 0 && <PaletteDots colors={colors} />}
+                {project.displayType === 'story' && (project.storyIntro || project.storySteps?.length) && (
+                  <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />
+                )}
               </div>
             )}
           </motion.div>
@@ -358,13 +361,6 @@ const ProjectBlock = ({
       )}
 
       {hasBothScreens && logoBlock}
-
-      {project.displayType === 'story' && (project.storyIntro || project.storySteps?.length) && (
-        <>
-          <SubLabel>הסיפור</SubLabel>
-          <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />
-        </>
-      )}
 
       {isWebsiteRedesign && (
         <>
@@ -381,9 +377,12 @@ const ProjectBlock = ({
         </>
       )}
 
-      {!hasDevices && colors.length > 0 && (
-        <div className="mb-4 flex justify-end sm:mb-6">
-          <PaletteDots colors={colors} />
+      {!hasDevices && (colors.length > 0 || (project.displayType === 'story' && (project.storyIntro || project.storySteps?.length))) && (
+        <div className="mb-4 flex flex-col items-end gap-4 sm:mb-6">
+          {colors.length > 0 && <PaletteDots colors={colors} />}
+          {project.displayType === 'story' && (project.storyIntro || project.storySteps?.length) && (
+            <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />
+          )}
         </div>
       )}
 
