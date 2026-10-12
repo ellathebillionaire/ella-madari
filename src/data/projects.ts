@@ -55,7 +55,8 @@ import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 import ebriderMobile from "@/assets/ebrider-mobile.png";
 
 // Studio Alef
-import studioalefLogo from "@/assets/studioalef-logo.png";
+import studioalefLogoAsset from '@/assets/media/StudioAlef__logo_clean_presentation.webp.asset.json';
+const studioalefLogo = studioalefLogoAsset.url;
 import studioalefWallMockup from "@/assets/studioalef-wall-mockup.png";
 
 // SEN Jewelry
