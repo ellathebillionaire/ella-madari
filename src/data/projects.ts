@@ -350,22 +350,6 @@ export const projects: Project[] = [
       studioalefLogo,
     ],
   },
-  // SEN Jewelry - 1 image
-  {
-    slug: 'sen',
-    name: 'SEN Jewelry',
-    category: 'website',
-    displayType: 'website',
-    description: 'עיצוב אתר לחנות תכשיטים',
-    logo: '',
-    heroImage: websiteSenMobile,
-    bgColor: '#0D2847',
-    accentColor: '#C9A86C',
-    colors: ['#0D2847', '#C9A86C', '#E8B4B8'],
-    images: [
-      websiteSenMobile,
-    ],
-  },
   // NOMA - custom dog collars brand (gallery + screens come from the CMS; this entry
   // promotes it from a small web tile to a full end-to-end project block)
   {
