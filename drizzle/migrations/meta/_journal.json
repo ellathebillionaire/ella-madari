@@ -50,6 +50,13 @@
       "when": 1791810491349,
       "tag": "0006_remove_noma_logo_from_gallery",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1791810696489,
+      "tag": "0007_replace_learnai_screens",
+      "breakpoints": true
     }
   ]
 }
