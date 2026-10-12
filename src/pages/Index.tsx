@@ -24,6 +24,7 @@ type DisplayProject = {
   description: string | null;
   website_image: string | null;
   mobile_image: string | null;
+  logo?: string | null;
   aspect_ratio: string;
   colors: string[] | null;
   images: string[];
@@ -281,6 +282,12 @@ const ProjectBlock = ({
   const isWebsiteRedesign = project.displayType === 'website_redesign' && project.beforeWebsite && project.website_image;
   const hasBothScreens = Boolean(project.website_image && project.mobile_image);
 
+  const plainLogo =
+    project.displayType !== 'rebranding' &&
+    project.logo &&
+    project.logo !== project.website_image &&
+    project.logo !== project.mobile_image &&
+    !project.images.includes(project.logo as string);
   const logoBlock = (
     <>
       {project.displayType === 'rebranding' && project.beforeLogo && project.website_image && !isVideo(project.website_image) && (
@@ -300,6 +307,16 @@ const ProjectBlock = ({
             beforeLogo={project.beforeLogo}
             afterLogo={project.images[0]}
             changeReason={project.changeReason}
+          />
+        </>
+      )}
+      {plainLogo && (
+        <>
+          <SubLabel>הלוגו</SubLabel>
+          <img
+            src={project.logo as string}
+            alt={`${project.name} logo`}
+            className="max-h-16 w-auto max-w-[240px] object-contain sm:max-h-20"
           />
         </>
       )}
@@ -473,6 +490,7 @@ const fromStaticProject = (project: (typeof staticProjects)[number]): DisplayPro
   description: project.description || null,
   website_image: project.websiteImage || null,
   mobile_image: project.mobileImage || null,
+  logo: project.logo || null,
   aspect_ratio: '16/9',
   colors: project.colors || null,
   images: project.images,
@@ -504,7 +522,8 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
     displayType: fallback?.displayType || 'website',
     description: project.description,
     website_image: assetUrl(project.website_image) || fallback?.websiteImage || null,
-    mobile_image: assetUrl(project.mobile_image) || fallback?.mobileImage || null,
+  mobile_image: assetUrl(project.mobile_image) || fallback?.mobileImage || null,
+  logo: fallback?.logo || null,
     aspect_ratio: project.aspect_ratio || '16/9',
     colors: project.colors || fallback?.colors || null,
     images: projectImages.length > 0 ? projectImages : fallback?.images || [],

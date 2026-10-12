@@ -43,6 +43,13 @@
       "when": 1791810022960,
       "tag": "0005_archive3_media_update",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791810491349,
+      "tag": "0006_remove_noma_logo_from_gallery",
+      "breakpoints": true
     }
   ]
 }
