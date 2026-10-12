@@ -152,7 +152,7 @@ export const projects: Project[] = [
     displayType: 'story', // shown in Full Scope, right after SFD (Ella: מרשים מאוד)
     needsReview: true, // TODO Ella: זה בעצם מיתוג + ויזואלים AI, או שהשירות המרכזי היה משהו אחר? יש גם ליין עבודה פנימי מתמשך - כדאי לספר את זה?
     description: 'אתר ויזואלים AI לחברת טכנולוגיה חקלאית',
-    logo: betterseedsHero,
+    logo: '', // No logo - Ella did not design BetterSeeds' logo
     heroImage: betterseedsHero,
     bgColor: '#F5F8F3',
     accentColor: '#3D7C3F',
