@@ -347,13 +347,25 @@ const ProjectBlock = ({
               onClick={() => onImageClick(image, project.name)}
               className="group aspect-[4/3] cursor-pointer overflow-hidden rounded-xl bg-muted shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_12px_32px_-8px_hsl(var(--foreground)/0.15)] sm:rounded-2xl"
             >
-              <img
-                src={image}
-                alt={project.name}
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                loading="lazy"
-                decoding="async"
-              />
+              {/\.(mp4|webm|mov)$/i.test(image) ? (
+                <video
+                  src={image}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full object-cover object-top"
+                />
+              ) : (
+                <img
+                  src={image}
+                  alt={project.name}
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
             </motion.div>
           ))}
           {project.video && (
