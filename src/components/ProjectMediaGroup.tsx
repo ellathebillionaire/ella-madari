@@ -14,7 +14,7 @@ export function ProjectMediaGroup({ group, name, onOpen }: {
   const portraits = /דיוקנאות|סטודיו - נוצר|חוץ - נוצר|קמפיין/.test(group.label);
   const screens = /מסכים|פלטפורמה|עמודי החנות|דפי נחיתה|מדרי/.test(group.label);
   return (
-    <div className={cn('grid gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4', portraits ? 'grid-cols-2' : 'grid-cols-1')}>
+    <div className={cn('grid gap-2.5 sm:gap-3', group.images.length === 1 ? 'grid-cols-1' : group.images.length === 3 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2', group.images.length >= 4 && 'sm:grid-cols-3 lg:grid-cols-4')}>
       {group.images.map((image, index) => (
         <MotionButton
           key={image}
@@ -26,9 +26,9 @@ export function ProjectMediaGroup({ group, name, onOpen }: {
           onClick={() => onOpen(image)}
           aria-label={`הגדלת ${name} - ${group.label} - ${index + 1}`}
           className={cn(
-            'group block h-auto w-full min-w-0 overflow-hidden rounded-lg bg-muted p-0 shadow-sm transition-shadow hover:bg-muted focus-visible:ring-offset-2 sm:aspect-[4/3] sm:rounded-2xl',
+            'group block h-auto w-full min-w-0 overflow-hidden rounded-lg bg-muted p-0 shadow-sm transition-shadow hover:bg-muted focus-visible:ring-offset-2',
             portraits ? 'aspect-[4/5]' : screens ? 'aspect-[16/10]' : 'aspect-[4/3]',
-            portraits && group.images.length % 2 !== 0 && index === 0 && 'col-span-2 aspect-[4/3] sm:col-span-1',
+            portraits && group.images.length > 1 && group.images.length % 2 !== 0 && index === 0 && 'col-span-2 aspect-[4/3] sm:col-span-1',
           )}
         >
           {/\.(mp4|webm|mov)(\?|$)/i.test(image) ? (
