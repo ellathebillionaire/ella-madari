@@ -31,7 +31,7 @@ describe('Aurel groups', () => {
       '/x/Aurel__atelier_client_consultation.jpg',
       '/x/Aurel__product_ring_leather_hero.jpg',
     ]);
-    expect(groups.map((g) => [g.label, g.items.length])).toEqual([
+    expect(groups.map((g) => [g.label, g.images.length])).toEqual([
       ['קמפיין צילום - נוצר ב-AI', 2],
       ['תמונות מוצר - נוצרו ב-AI', 1],
     ]);
