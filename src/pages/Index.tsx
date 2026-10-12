@@ -282,7 +282,12 @@ const ProjectBlock = ({
   const isWebsiteRedesign = project.displayType === 'website_redesign' && project.beforeWebsite && project.website_image;
   const hasBothScreens = Boolean(project.website_image && project.mobile_image);
 
-  const plainLogo = project.displayType !== 'rebranding' && project.logo;
+  const plainLogo =
+    project.displayType !== 'rebranding' &&
+    project.logo &&
+    project.logo !== project.website_image &&
+    project.logo !== project.mobile_image &&
+    !project.images.includes(project.logo as string);
   const logoBlock = (
     <>
       {project.displayType === 'rebranding' && project.beforeLogo && project.website_image && !isVideo(project.website_image) && (
