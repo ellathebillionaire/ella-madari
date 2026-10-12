@@ -19,3 +19,5 @@
 
 - [x] Remove the two-dancers studio photo from SFD's "קיט המוצרים" section everywhere (database, CDN storage, migration record).
 - [x] Verify the section now shows only the two remaining product images.
+- [ ] תגיות הסבר ברורות ללחיצה
+- [ ] לוגואים לצד שמאל (ממתין להבהרה)
