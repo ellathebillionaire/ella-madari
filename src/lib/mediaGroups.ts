@@ -10,7 +10,8 @@ const projectRules: Record<string, MediaGroupRule[]> = {
   ],
   aurel: [
     { label: 'עמודי האתר', match: /_page_desktop/ },
-    { label: 'תמונות - נוצרו ב-AI', match: /Aurel__(?!.*_page_desktop)(?!homepage)/ },
+    { label: 'קמפיין צילום - נוצר ב-AI', match: /Aurel__(lifestyle_|atelier_client)/ },
+    { label: 'תמונות מוצר - נוצרו ב-AI', match: /Aurel__(?!.*_page_desktop)(?!homepage)/ },
   ],
   betterseeds: [
     { label: 'ויזואלים - נוצרו ב-AI', match: /__ai_|ai-(gene|dna|plant|drone|crispr)|betterseeds-hero/i },
