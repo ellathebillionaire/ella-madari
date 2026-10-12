@@ -67,7 +67,6 @@ const projectRules: Record<string, MediaGroupRule[]> = {
     { label: 'חוץ - נוצר ב-AI', match: /ai_outdoor/ },
     { label: 'תמונות מוצר', match: /white_background_product/ },
   ],
-  harelamir: [{ label: 'תיעוד אירועים', match: /euforia/ }],
 };
 
 const sharedRules: MediaGroupRule[] = [
