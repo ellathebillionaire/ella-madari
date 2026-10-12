@@ -38,11 +38,9 @@ import sisenoraLogoOld from "@/assets/sisenora-logo.jpg";
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
 // Learn AI / DotAi
-import learnaiLogoFull from "@/assets/learnai-logo-full.jpg";
-import dotaiMonogram from "@/assets/dotai-monogram.jpg";
+import learnaiLogoFull from '@/assets/media/LearnAI__brand_logo_full.webp.asset.json';
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
-import dotaiLogoFull from "@/assets/dotai-logo-full.jpg";
-import learnaiWebsiteDesktop from "@/assets/learnai-website-cropped.png";
+import learnaiPlatformHero from '@/assets/media/LearnAI__platform_hero_dotai_learning_companion.webp.asset.json';
 
 // Tali Ter - New organized assets
 import taliterBrandingSet from '@/assets/taliter/branding-set.jpg';
