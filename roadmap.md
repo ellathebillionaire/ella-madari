@@ -6,6 +6,6 @@
 
 # Logo accuracy
 
-- [ ] Replace Tali Ter's incorrect logo media with the supplied actual logo.
-- [ ] Audit every project's logo selection against supplied media and correct confirmed mismatches.
-- [ ] Verify logo rendering and relevant tests.
+- [x] Replace Tali Ter's incorrect logo media with the supplied actual logo.
+- [x] Audit every project's logo selection against supplied media and correct confirmed mismatches.
+- [x] Verify logo rendering and relevant tests.
