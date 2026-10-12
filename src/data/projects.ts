@@ -59,8 +59,6 @@ import studioalefLogoAsset from '@/assets/media/StudioAlef__logo_clean_presentat
 const studioalefLogo = studioalefLogoAsset.url;
 import studioalefWallMockup from "@/assets/studioalef-wall-mockup.png";
 
-// SEN Jewelry
-import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
 // BetterSeeds - AI generated images for website
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
@@ -350,22 +348,6 @@ export const projects: Project[] = [
     colors: ['#5A5A5A', '#FFFFFF', '#E0E0E0'],
     images: [
       studioalefLogo,
-    ],
-  },
-  // SEN Jewelry - 1 image
-  {
-    slug: 'sen',
-    name: 'SEN Jewelry',
-    category: 'website',
-    displayType: 'website',
-    description: 'עיצוב אתר לחנות תכשיטים',
-    logo: '',
-    heroImage: websiteSenMobile,
-    bgColor: '#0D2847',
-    accentColor: '#C9A86C',
-    colors: ['#0D2847', '#C9A86C', '#E8B4B8'],
-    images: [
-      websiteSenMobile,
     ],
   },
   // NOMA - custom dog collars brand (gallery + screens come from the CMS; this entry

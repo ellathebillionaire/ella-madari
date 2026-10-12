@@ -27,8 +27,8 @@ const getLayoutType = (slug: string): LayoutType => {
     'taliter': 'boutique',
     'learnai': 'tech',
     'studioalef': 'minimal',
-    'sen': 'luxury',
     'ebrider': 'mobility',
+
     'sisenora': 'fashion',
     'betterseeds': 'agritech',
   };
