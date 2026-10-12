@@ -8,6 +8,13 @@
       "when": 1791807069480,
       "tag": "0000_update_project_media",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791807363461,
+      "tag": "0001_videos_into_device_frames",
+      "breakpoints": true
     }
   ]
 }

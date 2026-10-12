@@ -1,0 +1,4 @@
+update projects set website_image='/__l5e/assets-v1/d3a29963-4eb4-4408-b027-d03530e8c03b/BetterSeeds__official_live_website_scroll_capture.mp4', mobile_image='/__l5e/assets-v1/f89309c1-d478-44b6-95e4-ebbecbfdfb8d/BetterSeeds__official_live_website_mobile_scroll_capture.mp4' where slug='betterseeds';
+update projects set website_image='/__l5e/assets-v1/b6d5dad4-38d7-4619-8487-bdb4019de876/SiSenora__new_lovable_ecommerce_site_scroll_capture.mp4', mobile_image='/__l5e/assets-v1/ed6f34d9-5140-4d47-b428-615950259f7c/SiSenora__new_lovable_ecommerce_site_mobile_scroll_capture.mp4' where slug='sisenora';
+update projects set website_image='/__l5e/assets-v1/c59113b5-4a52-432d-91e7-f418a4825291/SFD__official_live_shopify_site_scroll_capture.mp4', mobile_image='/__l5e/assets-v1/66f7c39b-0638-4aea-87d2-214aa31315a5/SFD__official_live_shopify_site_mobile_scroll_capture.mp4' where slug='sfd';
+delete from project_images where image_url like '%.mp4';
