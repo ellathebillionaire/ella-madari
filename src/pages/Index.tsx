@@ -260,7 +260,7 @@ const ProjectBlock = ({
       )}
       {plainLogo && (
         <>
-          <SubLabel>הלוגו</SubLabel>
+          {!hasBothScreens && <SubLabel>הלוגו</SubLabel>}
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             {[project.logo as string, ...(project.extraLogos || [])].map((src, index) => (
               <img
