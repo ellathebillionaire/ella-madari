@@ -79,6 +79,10 @@ import ascolaWebsite from "@/assets/ascola/website-screen.png";
 import ascolaLogo from "@/assets/ascola/logo.jpg";
 import ascolaBrandingMockup from "@/assets/ascola/branding-mockup.jpg";
 
+// NOMA - Custom dog collars brand (media served from CMS / CDN asset pointers)
+import nomaLogoTagline from '@/assets/media/NOMA__brand_logo_tagline.png.asset.json';
+import nomaShopifyConfigurator from '@/assets/media/NOMA__shopify_landing_page_configurator.png.asset.json';
+
 // ============ TYPES ============
 
 // displayType controls WHICH presentation component renders this project.
