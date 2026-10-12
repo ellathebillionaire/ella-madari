@@ -1,8 +1,10 @@
 import learnaiBrandLogo from '@/assets/media/LearnAI__brand_logo_full.jpg.asset.json';
+import sfdSummerCourseCapture from '@/assets/media/SFD__summer_course_2026_mobile_scroll.mp4.asset.json';
 import betterseedsMobileCapture from '@/assets/media/BetterSeeds__official_live_website_mobile_scroll_capture.mp4.asset.json';
 
 // Preserve the CMS path while serving the corrected portrait recording.
 const mediaReplacements: Record<string, string> = {
+  '/assets/sfd/summer-course-2026.jpg': sfdSummerCourseCapture.url,
   '/assets/videos/BetterSeeds__official_live_website_mobile_scroll_capture.mp4': betterseedsMobileCapture.url,
   '/__l5e/assets-v1/97820109-ead0-4366-8084-3d2e87370112/LearnAI__brand_logo_full.webp': learnaiBrandLogo.url,
 };

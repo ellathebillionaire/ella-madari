@@ -21,3 +21,4 @@
 - [x] Verify the section now shows only the two remaining product images.
 - [x] תגיות הסבר ברורות ללחיצה
 - [ ] לוגואים לצד שמאל (ממתין להבהרה)
+- [x] SFD: סרטון גלילה של דף הנחיתה במסגרת טלפון

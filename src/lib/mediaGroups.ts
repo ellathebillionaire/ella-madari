@@ -21,7 +21,7 @@ const projectRules: Record<string, MediaGroupRule[]> = {
     { label: 'זהות המותג', match: /rebrand_|logo|symbol|monogram/i },
     { label: 'קיט המוצרים', match: /bands|product.*flatlay|kit_flatlay/i },
     { label: 'המותג בסטודיו', match: /studio_|class_studio/i },
-    { label: 'דפי נחיתה', match: /summer-course|hero|stats/i },
+    { label: 'דפי נחיתה', match: /summer[-_]course|hero|stats/i },
   ],
   sisenora: [
     { label: 'זהות המותג', match: /logo/i },
