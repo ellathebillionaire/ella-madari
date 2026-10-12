@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Monitor, Palette, Smartphone, X, Sparkles, RefreshCw, BookOpen } from 'lucide-react';
@@ -37,6 +37,7 @@ type DisplayProject = {
   changeReason?: string;
   storyIntro?: string;
   storySteps?: StoryStep[];
+  galleryGroups?: { label: string; match: RegExp }[];
 };
 
 type LightboxImage = {
@@ -503,6 +504,7 @@ const fromStaticProject = (project: (typeof staticProjects)[number]): DisplayPro
   changeReason: project.changeReason,
   storyIntro: project.storyIntro,
   storySteps: project.storySteps,
+  galleryGroups: project.galleryGroups,
 });
 
 // CMS (Supabase) projects don't yet have displayType / story columns, so we fall back to the
@@ -535,7 +537,8 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
     beforeWebsite: fallback?.before?.website,
     changeReason: fallback?.changeReason,
     storyIntro: fallback?.storyIntro,
-    storySteps: fallback?.storySteps,
+  storySteps: fallback?.storySteps,
+  galleryGroups: fallback?.galleryGroups,
   };
 };
 
