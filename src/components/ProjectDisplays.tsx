@@ -74,14 +74,6 @@ export const BrandingStory = ({
       className="mb-6 sm:mb-8"
     >
       <div className="flex flex-wrap items-center gap-2">
-        {values?.map((value) => (
-          <span
-            key={value}
-            className="rounded-full bg-muted/50 px-3 py-1.5 text-[11px] font-medium text-foreground/80 shadow-sm ring-1 ring-border/60 sm:text-xs"
-          >
-            {value}
-          </span>
-        ))}
         {process && (
           <button
             type="button"
@@ -251,25 +243,25 @@ export const ProjectStory = ({
       transition={{ duration: 0.5 }}
       className="w-full min-w-0 sm:w-64"
     >
-      <span className="mb-1 block text-[11px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
+      <span className="mb-2 block text-[11px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
         הסיפור
       </span>
-      <div className="border-t border-border/70">
+      <div className="grid gap-1.5">
         {steps?.map((step, index) => (
           <button
             key={step.title}
             type="button"
             onClick={() => setOpen(true)}
             aria-label={`הסבר על ${step.title}`}
-            className="group flex w-full cursor-pointer items-baseline gap-3 border-b border-border/70 py-2 text-right transition-colors duration-300 hover:border-foreground/40 sm:py-2.5"
+            className="group flex w-full cursor-pointer items-center gap-3 rounded-xl bg-foreground px-3.5 py-2.5 text-right shadow-[0_6px_18px_-8px_hsl(var(--foreground)/0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_-8px_hsl(var(--foreground)/0.55)] sm:px-4 sm:py-3"
           >
-            <span className="text-[11px] font-medium tabular-nums tracking-wider text-muted-foreground/70 transition-colors group-hover:text-foreground sm:text-[11px]">
-              {String(index + 1).padStart(2, '0')}
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-background text-[11px] font-semibold tabular-nums text-foreground sm:h-7 sm:w-7 sm:text-xs">
+              {index + 1}
             </span>
-            <span className="flex-1 text-xs font-medium leading-snug text-foreground/85 transition-colors group-hover:text-foreground sm:text-[13px]">
+            <span className="flex-1 text-xs font-medium leading-snug text-background sm:text-[13px]">
               {step.title}
             </span>
-            <Plus className="h-3 w-3 shrink-0 self-center text-muted-foreground/60 transition-all duration-300 group-hover:rotate-90 group-hover:text-foreground" />
+            <Plus className="h-3.5 w-3.5 shrink-0 text-background/70 transition-all duration-300 group-hover:rotate-90 group-hover:text-background" />
           </button>
         ))}
       </div>
