@@ -400,6 +400,37 @@ export const projects: Project[] = [
       { label: 'חוץ - נוצר ב-AI', match: /ai_lifestyle/ },
     ],
   },
+  // Aurel Fine Jewelry - diamond & gemstone site from scratch (media comes from the CMS)
+  {
+    slug: 'aurel',
+    name: 'Aurel Fine Jewelry',
+    category: 'branding',
+    displayType: 'story',
+    needsReview: true, // TODO Ella: אשרי/עדכני את הסיפור - כתבתי לפי התוכן שהעלית
+    description: 'אתר לתכשיטי יהלומים ואבני חן - אסטרטגיה, ויזואל וחוויה מאפס, כולל עיצוב תמונות AI',
+    storyIntro:
+      'פרויקט מאפס: אסטרטגיה, שפה חזותית ואתר לבית תכשיטים של יהלומים ואבני חן נדירות, עם חוויה שקטה, יוקרתית ואישית.',
+    storySteps: [
+      {
+        title: 'אסטרטגיה',
+        text: 'הגדרת החוויה שהמותג משדר - נדירות, אומנות ותכשיט שנבנה סביב הלקוח - כבסיס לכל החלטה בעיצוב.',
+      },
+      {
+        title: 'ויזואל ואתר',
+        text: 'כחול לילה עמוק שמבליט את צבעי האבנים, טיפוגרפיה אלגנטית, ומסלול באתר מהקולקציות ועד תהליך העיצוב האישי.',
+      },
+      {
+        title: 'תמונות AI',
+        text: 'סדרת תמונות מוצר, אבני חן, לייף-סטייל ואטלייה שנוצרו ב-AI בשפה אחידה, כדי שהמותג ייראה מלא ויוקרתי מהיום הראשון.',
+      },
+    ],
+    logo: '',
+    heroImage: '',
+    bgColor: '#F4F2EE',
+    accentColor: '#0E1A33',
+    colors: ['#0E1A33', '#F4F1EA', '#1F7A4D', '#B3122E'],
+    images: [],
+  },
   // Dresses 2026 - AI fashion catalog (gallery comes from the CMS)
   {
     slug: 'dresses2026',
