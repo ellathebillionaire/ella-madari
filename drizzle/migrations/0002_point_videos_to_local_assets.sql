@@ -1,0 +1,3 @@
+UPDATE projects SET website_image='/assets/videos/BetterSeeds__official_live_website_scroll_capture.mp4', mobile_image='/assets/videos/BetterSeeds__official_live_website_mobile_scroll_capture.mp4' WHERE slug='betterseeds';
+UPDATE projects SET website_image='/assets/videos/SiSenora__new_lovable_ecommerce_site_scroll_capture.mp4', mobile_image='/assets/videos/SiSenora__new_lovable_ecommerce_site_mobile_scroll_capture.mp4' WHERE slug='sisenora';
+UPDATE projects SET website_image='/assets/videos/SFD__official_live_shopify_site_scroll_capture.mp4', mobile_image='/assets/videos/SFD__official_live_shopify_site_mobile_scroll_capture.mp4' WHERE slug='sfd';
