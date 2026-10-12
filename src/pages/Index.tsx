@@ -1,11 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Monitor, Palette, Smartphone, X, Sparkles, RefreshCw, BookOpen } from 'lucide-react';
+import { Monitor, Palette, RefreshCw, BookOpen } from 'lucide-react';
 import { projects as staticProjects, type DisplayType, type StoryStep } from '@/data/projects';
 import { useProjects, type ProjectWithImages } from '@/hooks/useProjects';
 import { resolveImageUrl } from '@/lib/imageResolver';
 import { groupProjectMedia } from '@/lib/mediaGroups';
+import { Button } from '@/components/ui/button';
+import { ProjectMediaGroup } from '@/components/ProjectMediaGroup';
+import { PortfolioLightbox, type PortfolioSelection } from '@/components/PortfolioLightbox';
 import {
   BrandingStory,
   RebrandCompare,
@@ -41,10 +44,7 @@ type DisplayProject = {
   galleryGroups?: { label: string; match: RegExp }[];
 };
 
-type LightboxImage = {
-  image: string;
-  name: string;
-};
+const MotionButton = motion.create(Button);
 
 const isVideo = (url?: string | null) => Boolean(url && /\.(mp4|webm|mov)(\?|$)/i.test(url));
 
@@ -96,74 +96,6 @@ const SubLabel = ({ children }: { children: ReactNode }) => (
   </motion.div>
 );
 
-const Lightbox = ({ image, name, onClose }: LightboxImage & { onClose: () => void }) => {
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
-    };
-  }, [onClose]);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3, ease }}
-      onClick={onClose}
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-foreground/90 p-6 backdrop-blur-2xl sm:p-10"
-    >
-      <motion.button
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.1 }}
-        onClick={onClose}
-        className="absolute end-4 top-4 rounded-full bg-background/10 p-3 backdrop-blur-lg transition-all duration-300 hover:bg-background/20 sm:end-8 sm:top-8"
-        aria-label="סגור"
-      >
-        <X className="h-5 w-5 text-background transition-transform duration-300 group-hover:rotate-90" />
-      </motion.button>
-      <motion.span
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.15 }}
-        className="absolute start-4 top-4 text-sm font-normal tracking-wide text-background/70 sm:start-8 sm:top-8"
-      >
-        {name}
-      </motion.span>
-      {isVideo(image) ? (
-        <video
-          src={image}
-          autoPlay
-          loop
-          muted
-          playsInline
-          controls
-          className="max-h-full max-w-full rounded-xl object-contain shadow-2xl sm:rounded-2xl"
-          onClick={(event) => event.stopPropagation()}
-        />
-      ) : (
-      <motion.img
-        initial={{ scale: 0.92, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.4, ease }}
-        src={image}
-        alt={name}
-        className="max-h-full max-w-full rounded-xl object-contain shadow-2xl sm:rounded-2xl"
-        onClick={(event) => event.stopPropagation()}
-      />
-      )}
-    </motion.div>
-  );
-};
-
 const DesktopMockup = ({
   image,
   name,
@@ -175,15 +107,17 @@ const DesktopMockup = ({
   onClick: () => void;
   aspectRatio?: string;
 }) => (
-  <motion.div
+  <MotionButton
+    variant="ghost"
+    aria-label={`הגדלת מסך ${name || "המחשב"}`}
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6, ease }}
     onClick={onClick}
-    className="group w-full cursor-pointer"
+    className="group block h-auto w-full min-w-0 whitespace-normal p-0 hover:bg-transparent"
   >
-    <div className="overflow-hidden rounded-xl bg-card shadow-[0_4px_20px_-4px_hsl(var(--foreground)/0.1)] transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_hsl(var(--foreground)/0.2)] sm:rounded-2xl">
+    <div className="overflow-hidden rounded-xl bg-card shadow-[0_4px_20px_-4px_hsl(var(--foreground)/0.1)] transition-all duration-500 ease-out [@media(hover:hover)]:group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_hsl(var(--foreground)/0.2)] sm:rounded-2xl">
       <div className="flex h-5 items-center gap-1.5 border-b border-border bg-gradient-to-b from-muted to-muted/80 px-2.5 sm:h-6" dir="ltr">
         <span className="h-2 w-2 rounded-full bg-browser-red shadow-sm sm:h-2.5 sm:w-2.5" />
         <span className="h-2 w-2 rounded-full bg-browser-yellow shadow-sm sm:h-2.5 sm:w-2.5" />
@@ -199,7 +133,7 @@ const DesktopMockup = ({
         <img
           src={image}
           alt={name}
-          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out [@media(hover:hover)]:group-hover:scale-[1.03]"
           loading="lazy"
           decoding="async"
         />
@@ -211,30 +145,32 @@ const DesktopMockup = ({
         {name}
       </p>
     )}
-  </motion.div>
+  </MotionButton>
 );
 
 const MobileMockup = ({ image, name, onClick }: { image: string; name: string; onClick: () => void }) => (
-  <motion.div
+  <MotionButton
+    variant="ghost"
+    aria-label={`הגדלת מסך ${name || "האייפון"}`}
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6, ease }}
     onClick={onClick}
-    className="group flex cursor-pointer flex-col items-center"
+    className="group flex h-auto min-w-0 flex-col items-center whitespace-normal p-0 hover:bg-transparent"
   >
-    <div className="relative rounded-[1.5rem] bg-gradient-to-b from-phone-frame to-phone-frame-soft p-[3px] shadow-[0_8px_30px_-8px_hsl(var(--foreground)/0.3)] transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_hsl(var(--foreground)/0.4)] sm:rounded-[2.5rem] sm:p-1">
+    <div className="relative rounded-[1.5rem] bg-gradient-to-b from-phone-frame to-phone-frame-soft p-[3px] shadow-[0_8px_30px_-8px_hsl(var(--foreground)/0.3)] transition-all duration-500 ease-out [@media(hover:hover)]:group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_hsl(var(--foreground)/0.4)] sm:rounded-[2.5rem] sm:p-1">
       <div className="absolute left-1/2 top-2 z-10 flex h-4 w-14 -translate-x-1/2 items-center justify-center rounded-full bg-phone-frame sm:h-5 sm:w-20">
         <div className="h-2 w-2 rounded-full bg-phone-frame-soft ring-1 ring-border/20" />
       </div>
-      <div className="aspect-[9/19.5] w-24 overflow-hidden rounded-[1.3rem] bg-card sm:w-28 sm:rounded-[2.25rem] md:w-32">
+      <div className="aspect-[9/19.5] w-36 overflow-hidden rounded-[1.3rem] bg-card sm:w-28 sm:rounded-[2.25rem] md:w-32">
         {isVideo(image) ? (
           <video src={image} autoPlay loop muted playsInline preload="metadata" className="h-full w-full object-cover object-top" />
         ) : (
         <img
           src={image}
           alt={name}
-          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out [@media(hover:hover)]:group-hover:scale-[1.02]"
           loading="lazy"
           decoding="async"
         />
@@ -247,7 +183,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
         {name}
       </p>
     )}
-  </motion.div>
+  </MotionButton>
 );
 
 const PaletteDots = ({ colors }: { colors: string[] }) => (
@@ -277,7 +213,7 @@ const ProjectBlock = ({
   onImageClick,
 }: {
   project: DisplayProject;
-  onImageClick: (image: string, name: string) => void;
+  onImageClick: (image: string, name: string, images?: string[]) => void;
 }) => {
   const hasDevices = Boolean(project.website_image || project.mobile_image);
   const colors = project.colors || [];
@@ -323,7 +259,7 @@ const ProjectBlock = ({
           <img
             src={project.logo as string}
             alt={`${project.name} logo`}
-            className="max-h-16 w-auto max-w-[240px] object-contain sm:max-h-20"
+            className="max-h-28 w-auto max-w-full object-contain sm:max-h-20 sm:max-w-[240px]"
           />
         </>
       )}
@@ -336,15 +272,16 @@ const ProjectBlock = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6 }}
-      className="mb-12 sm:mb-16 md:mb-20"
+      className="mb-20 min-w-0 sm:mb-16 md:mb-20"
+      data-project={project.slug}
     >
       <div className="mb-4 sm:mb-6">
-        <h3 className="flex items-center text-lg font-normal tracking-tight sm:text-xl md:text-2xl">
+        <h3 className="flex flex-wrap items-center gap-y-2 text-lg font-normal sm:text-xl md:text-2xl">
           {project.name}
           {project.needsReview && <NeedsReviewBadge />}
         </h3>
         {project.description && (
-          <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{project.description}</p>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">{project.description}</p>
         )}
       </div>
 
@@ -358,11 +295,11 @@ const ProjectBlock = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-4 flex flex-wrap items-start gap-3 sm:mb-6 sm:gap-4"
+            className="mb-6 flex flex-col gap-5 sm:mb-6 sm:flex-row sm:flex-wrap sm:items-start sm:gap-4"
           >
-            <div className="flex flex-1 flex-wrap items-end gap-3 sm:gap-4">
+            <div className={`grid w-full min-w-0 items-center gap-4 sm:flex sm:flex-1 sm:flex-wrap sm:items-end ${hasBothScreens ? "grid-cols-1" : "grid-cols-2"}`}>
               {project.website_image && (
-                <div className="min-w-[160px] flex-1 sm:min-w-[200px] md:max-w-md">
+                <div className="min-w-0 flex-1 sm:min-w-[200px] md:max-w-md">
                   <DesktopMockup
                     image={project.website_image}
                     name=""
@@ -379,11 +316,11 @@ const ProjectBlock = ({
                 />
               )}
               {!hasBothScreens && (
-                <div className="min-w-[220px] flex-1 self-center">{logoBlock}</div>
+                <div className="min-w-0 flex-1 self-center sm:min-w-[220px] [&_img]:max-w-full">{logoBlock}</div>
               )}
             </div>
             {colors.length > 0 && (
-              <div className="pt-1">
+              <div className="self-end pt-1 sm:self-auto">
                 <PaletteDots colors={colors} />
               </div>
             )}
@@ -433,62 +370,21 @@ const ProjectBlock = ({
           {galleryGroups.map((group) => (
             <section key={group.label} aria-label={`${project.name} - ${group.label}`}>
               <SubLabel>{group.label}</SubLabel>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-                {group.images.map((image, index) => (
-                <motion.div
-                  key={image}
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.06, ease }}
-                  onClick={() => onImageClick(image, project.name)}
-                  className="group aspect-[4/3] cursor-pointer overflow-hidden rounded-xl bg-muted shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_12px_32px_-8px_hsl(var(--foreground)/0.15)] sm:rounded-2xl"
-                >
-                  {isVideo(image) ? (
-                    <video
-                      src={image}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      preload="metadata"
-                      className="h-full w-full object-cover object-top"
-                    />
-                  ) : (
-                    <img
-                      src={image}
-                      alt={`${project.name} - ${group.label} - ${index + 1}`}
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  )}
-                </motion.div>
-                ))}
-              </div>
+              <ProjectMediaGroup
+                group={group}
+                name={project.name}
+                onOpen={(image) => onImageClick(image, `${project.name} - ${group.label}`, group.images)}
+              />
             </section>
           ))}
           {project.video && (
             <section aria-label={`${project.name} - אנימציה`}>
               <SubLabel>אנימציה</SubLabel>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, ease }}
-              className="aspect-[4/3] overflow-hidden rounded-xl bg-muted shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)] sm:rounded-2xl"
-            >
-              <video
-                src={project.video}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="h-full w-full object-cover"
+              <ProjectMediaGroup
+                group={{ label: 'אנימציה', images: [project.video] }}
+                name={project.name}
+                onOpen={(image) => onImageClick(image, project.name, [image])}
               />
-            </motion.div>
-              </div>
             </section>
           )}
         </div>
@@ -559,7 +455,7 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
 
 const Index = () => {
   const { projects, loading } = useProjects();
-  const [lightbox, setLightbox] = useState<LightboxImage | null>(null);
+  const [lightbox, setLightbox] = useState<PortfolioSelection | null>(null);
 
   const displayProjects = useMemo(() => {
     const visibleCmsProjects = projects.filter((project) => project.is_visible !== false);
@@ -579,7 +475,7 @@ const Index = () => {
     (project) => project.displayType === 'website' || project.displayType === 'website_redesign'
   );
 
-  const openLightbox = (image: string, name: string) => setLightbox({ image, name });
+  const openLightbox = (image: string, name: string, images: string[] = [image]) => setLightbox({ image, name, images });
 
   if (loading && projects.length === 0) {
     return (
@@ -593,7 +489,7 @@ const Index = () => {
     <>
       <AnimatePresence>
         {lightbox && (
-          <Lightbox image={lightbox.image} name={lightbox.name} onClose={() => setLightbox(null)} />
+          <PortfolioLightbox selection={lightbox} onChange={(image) => setLightbox((current) => current ? { ...current, image } : null)} onClose={() => setLightbox(null)} />
         )}
       </AnimatePresence>
 
