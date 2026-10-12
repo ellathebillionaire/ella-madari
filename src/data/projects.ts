@@ -414,6 +414,21 @@ export const projects: Project[] = [
     colors: ['#1F2A44', '#FFFFFF', '#E8B4B8'],
     images: [],
   },
+  // Dresses 2026 - AI fashion catalog (gallery comes from the CMS)
+  {
+    slug: 'dresses2026',
+    name: 'Dresses 2026',
+    category: 'branding',
+    displayType: 'branding',
+    needsReview: true, // TODO Ella: שם הלקוח ותיאור
+    description: 'קטלוג שמלות בצילומי AI - סטודיו, לוקיישן ורקע לבן',
+    logo: '',
+    heroImage: '',
+    bgColor: '#F7F4EF',
+    accentColor: '#1A1A1A',
+    colors: ['#E8DCCB', '#1A1A1A', '#FFFFFF'],
+    images: [],
+  },
 ];
 
 // ============ ADDITIONAL WORK (Websites only - Print section removed) ============
