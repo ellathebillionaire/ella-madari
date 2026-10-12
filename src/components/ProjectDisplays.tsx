@@ -5,14 +5,6 @@ import { Button } from '@/components/ui/button';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-// ============ SHARED: needs-review badge ============
-// Shown only in dev/preview so Ella can spot which projects still need her
-// confirmation on copy/categorisation before the site goes live.
-export const NeedsReviewBadge = () => (
-  <span className="ms-2 inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-[9px] font-medium uppercase tracking-wider text-amber-700 ring-1 ring-amber-300/60">
-    לבדיקה
-  </span>
-);
 
 // ============ BRANDING FROM SCRATCH ============
 // Values + short process paragraph, kept light and easy to scan - not a wall of text.
