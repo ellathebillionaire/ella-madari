@@ -36,7 +36,7 @@ const StoryDialog = ({
         <div className="grid gap-4">
           {steps.map((step, index) => (
             <div key={step.title} className="flex gap-3">
-              <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-medium text-muted-foreground sm:h-7 sm:w-7 sm:text-xs">
+              <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-medium text-muted-foreground sm:h-7 sm:w-7 sm:text-xs">
                 {index + 1}
               </div>
               <div>
@@ -125,7 +125,7 @@ export const RebrandCompare = ({
     >
       <div className="grid grid-cols-2 gap-3 sm:gap-4">
         <div>
-          <div className="mb-2 flex items-center gap-1.5 text-[9px] uppercase tracking-[0.2em] text-muted-foreground/70 sm:text-[10px]">
+          <div className="mb-2 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.12em] text-muted-foreground/70 sm:text-[11px]">
             לפני
           </div>
           <div className="flex aspect-square items-center justify-center overflow-hidden rounded-xl bg-muted p-6 shadow-inner sm:rounded-2xl sm:p-10">
@@ -133,7 +133,7 @@ export const RebrandCompare = ({
           </div>
         </div>
         <div>
-          <div className="mb-2 flex items-center gap-1.5 text-[9px] uppercase tracking-[0.2em] text-foreground/70 sm:text-[10px]">
+          <div className="mb-2 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.12em] text-foreground/70 sm:text-[11px]">
             <ArrowLeftRight className="h-3 w-3" />
             אחרי
           </div>
@@ -251,7 +251,7 @@ export const ProjectStory = ({
       transition={{ duration: 0.5 }}
       className="w-full min-w-0 sm:w-64"
     >
-      <span className="mb-1 block text-[10px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
+      <span className="mb-1 block text-[11px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
         הסיפור
       </span>
       <div className="border-t border-border/70">
@@ -263,7 +263,7 @@ export const ProjectStory = ({
             aria-label={`הסבר על ${step.title}`}
             className="group flex w-full cursor-pointer items-baseline gap-3 border-b border-border/70 py-2 text-right transition-colors duration-300 hover:border-foreground/40 sm:py-2.5"
           >
-            <span className="text-[10px] font-medium tabular-nums tracking-wider text-muted-foreground/70 transition-colors group-hover:text-foreground sm:text-[11px]">
+            <span className="text-[11px] font-medium tabular-nums tracking-wider text-muted-foreground/70 transition-colors group-hover:text-foreground sm:text-[11px]">
               {String(index + 1).padStart(2, '0')}
             </span>
             <span className="flex-1 text-xs font-medium leading-snug text-foreground/85 transition-colors group-hover:text-foreground sm:text-[13px]">
