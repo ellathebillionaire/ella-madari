@@ -407,10 +407,7 @@ const ProjectBlock = ({
                     )}
                     {hasStory && <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />}
                     {hasBranding && (
-                      <div>
-                        <SubLabel>ערכים ותהליך</SubLabel>
-                        <BrandingStory name={project.name} values={project.values} process={project.process} />
-                      </div>
+                      <BrandingStory name={project.name} values={project.values} process={project.process} />
                     )}
                   </aside>
                 )}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowLeftRight, Plus, Sparkles } from 'lucide-react';
+import { ArrowLeftRight, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
@@ -52,8 +52,37 @@ const StoryDialog = ({
   </Dialog>
 );
 
+// ============ SHARED ROW: one clickable line, used by both the story steps and the process ============
+const StoryRow = ({
+  index,
+  title,
+  onClick,
+}: {
+  index?: string;
+  title: string;
+  onClick: () => void;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    aria-label={`הסבר על ${title}`}
+    className="group flex min-h-[46px] w-full cursor-pointer items-center gap-3 rounded-2xl border border-foreground/10 bg-background px-4 py-3 text-right shadow-[0_2px_10px_-6px_hsl(var(--foreground)/0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[0_10px_24px_-10px_hsl(var(--foreground)/0.25)]"
+  >
+    {index && (
+      <>
+        <span className="text-sm font-light tabular-nums text-muted-foreground/60 transition-colors group-hover:text-foreground">
+          {index}
+        </span>
+        <span className="h-4 w-px shrink-0 bg-foreground/10" />
+      </>
+    )}
+    <span className="flex-1 text-[13px] font-normal leading-snug text-foreground">{title}</span>
+    <Plus className="h-3.5 w-3.5 shrink-0 text-muted-foreground/50 transition-all duration-300 group-hover:rotate-90 group-hover:text-foreground" />
+  </button>
+);
+
 // ============ BRANDING FROM SCRATCH ============
-// Value chips stay visible; the process paragraph opens only on click.
+// The process opens through the same row design as the numbered story steps.
 export const BrandingStory = ({
   name,
   values,
@@ -72,20 +101,9 @@ export const BrandingStory = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="mb-6 sm:mb-8"
+      className="w-full min-w-0"
     >
-      <div className="flex flex-wrap items-center gap-2">
-        {process && (
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="group flex items-center gap-1 px-1 text-[11px] font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground sm:text-xs"
-          >
-            לקריאה על התהליך
-            <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5" />
-          </button>
-        )}
-      </div>
+      <StoryRow title="התהליך" onClick={() => setOpen(true)} />
       <StoryDialog
         open={open}
         onOpenChange={setOpen}
@@ -242,29 +260,19 @@ export const ProjectStory = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="w-full min-w-0 sm:w-64"
+      className="w-full min-w-0"
     >
       <span className="mb-2 block text-[11px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
         הסיפור
       </span>
       <div className="grid gap-2">
         {steps?.map((step, index) => (
-          <button
+          <StoryRow
             key={step.title}
-            type="button"
+            index={String(index + 1).padStart(2, '0')}
+            title={step.title}
             onClick={() => setOpen(true)}
-            aria-label={`הסבר על ${step.title}`}
-            className="group flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-foreground/10 bg-background px-4 py-3 text-right shadow-[0_2px_10px_-6px_hsl(var(--foreground)/0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[0_10px_24px_-10px_hsl(var(--foreground)/0.25)]"
-          >
-            <span className="text-sm font-light tabular-nums text-muted-foreground/60 transition-colors group-hover:text-foreground">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-            <span className="h-4 w-px shrink-0 bg-foreground/10" />
-            <span className="flex-1 text-[13px] font-normal leading-snug text-foreground">
-              {step.title}
-            </span>
-            <Plus className="h-3.5 w-3.5 shrink-0 text-muted-foreground/50 transition-all duration-300 group-hover:rotate-90 group-hover:text-foreground" />
-          </button>
+          />
         ))}
       </div>
       <StoryDialog open={open} onOpenChange={setOpen} title={name || 'הפרויקט'} intro={intro} steps={steps} />
