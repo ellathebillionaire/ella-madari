@@ -64,6 +64,13 @@
       "when": 1791811084293,
       "tag": "0008_replace_meshek27_logo_lossless",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1791821672422,
+      "tag": "0009_reorder_projects_strongest_first",
+      "breakpoints": true
     }
   ]
 }
