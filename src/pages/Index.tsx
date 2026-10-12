@@ -84,7 +84,7 @@ const SubLabel = ({ children }: { children: ReactNode }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, ease }}
-    className="mb-3 flex items-center gap-3 sm:mb-4"
+    className="mb-4 flex items-center gap-3 sm:mb-5"
   >
     <span className="shrink-0 text-[10px] font-medium tracking-[0.2em] text-muted-foreground/70 sm:text-[11px]">
       {children}
