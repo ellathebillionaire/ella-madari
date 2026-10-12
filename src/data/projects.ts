@@ -79,6 +79,10 @@ import ascolaWebsite from "@/assets/ascola/website-screen.png";
 import ascolaLogo from "@/assets/ascola/logo.jpg";
 import ascolaBrandingMockup from "@/assets/ascola/branding-mockup.jpg";
 
+// NOMA - Custom dog collars brand (media served from CMS / CDN asset pointers)
+import nomaLogoTagline from '@/assets/media/NOMA__brand_logo_tagline.png.asset.json';
+import nomaShopifyConfigurator from '@/assets/media/NOMA__shopify_landing_page_configurator.png.asset.json';
+
 // ============ TYPES ============
 
 // displayType controls WHICH presentation component renders this project.
@@ -377,6 +381,38 @@ export const projects: Project[] = [
     images: [
       websiteSenMobile,
     ],
+  },
+  // NOMA - custom dog collars brand (gallery + screens come from the CMS; this entry
+  // promotes it from a small web tile to a full end-to-end project block)
+  {
+    slug: 'noma',
+    name: 'NOMA',
+    category: 'website',
+    displayType: 'story',
+    needsReview: true, // TODO Ella: אשרי/עדכני את הסיפור והצבעים - כתבתי לפי התוכן שהעלית
+    description: 'מותג קולרים מותאמים אישית לכלבים - מיתוג, חנות Shopify וקמפיין AI',
+    storyIntro:
+      'פרויקט מקצה לקצה: זהות מותג חדשה, חנות Shopify עם קונפיגורטור להתאמה אישית של הקולר, וקמפיין תמונות AI שמציג את המוצרים על כלבים אמיתיים.',
+    storySteps: [
+      {
+        title: 'מיתוג',
+        text: 'זהות חדשה מהיסוד - לוגו, טיפוגרפיה ופלטת צבעים (נייבי, לבן וורוד) שמאזנת בין פרימיום לחמימות, בדיוק כמו המוצר עצמו.',
+      },
+      {
+        title: 'חנות Shopify',
+        text: 'בניתי חנות עם עמוד מוצר שמאפשר להתאים את הקולר אישית - בחירת מידה, צבע וחריטת שם - כך שהלקוח רואה את המוצר שלו עוד לפני ההזמנה.',
+      },
+      {
+        title: 'קמפיין AI',
+        text: 'במקום צילומי סטודיו יקרים, ייצרתי סדרת דיוקנאות ותמונות לייף-סטייל ב-AI - כלבים מגזעים שונים עם הקולרים, שמאפשרת למותג להיראות גדול מיום ראשון.',
+      },
+    ],
+    logo: nomaLogoTagline.url,
+    heroImage: nomaShopifyConfigurator.url,
+    bgColor: '#F7F5F2',
+    accentColor: '#1F2A44',
+    colors: ['#1F2A44', '#FFFFFF', '#E8B4B8'],
+    images: [],
   },
 ];
 
