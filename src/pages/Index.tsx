@@ -43,6 +43,8 @@ type LightboxImage = {
   name: string;
 };
 
+const isVideo = (url?: string | null) => Boolean(url && /\.(mp4|webm|mov)(\?|$)/i.test(url));
+
 const assetUrl = (url: string | null | undefined) => resolveImageUrl(url) || url || null;
 
 const SectionTitle = ({
@@ -117,6 +119,18 @@ const Lightbox = ({ image, name, onClose }: LightboxImage & { onClose: () => voi
       >
         {name}
       </motion.span>
+      {isVideo(image) ? (
+        <video
+          src={image}
+          autoPlay
+          loop
+          muted
+          playsInline
+          controls
+          className="max-h-full max-w-full rounded-xl object-contain shadow-2xl sm:rounded-2xl"
+          onClick={(event) => event.stopPropagation()}
+        />
+      ) : (
       <motion.img
         initial={{ scale: 0.92, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -126,6 +140,7 @@ const Lightbox = ({ image, name, onClose }: LightboxImage & { onClose: () => voi
         className="max-h-full max-w-full rounded-xl object-contain shadow-2xl sm:rounded-2xl"
         onClick={(event) => event.stopPropagation()}
       />
+      )}
     </motion.div>
   );
 };
@@ -159,6 +174,9 @@ const DesktopMockup = ({
         </div>
       </div>
       <div className="overflow-hidden" style={{ aspectRatio }}>
+        {isVideo(image) ? (
+          <video src={image} autoPlay loop muted playsInline preload="metadata" className="h-full w-full object-cover object-top" />
+        ) : (
         <img
           src={image}
           alt={name}
@@ -166,6 +184,7 @@ const DesktopMockup = ({
           loading="lazy"
           decoding="async"
         />
+        )}
       </div>
     </div>
     {name && (
@@ -190,6 +209,9 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
         <div className="h-2 w-2 rounded-full bg-phone-frame-soft ring-1 ring-border/20" />
       </div>
       <div className="aspect-[9/19.5] w-24 overflow-hidden rounded-[1.3rem] bg-card sm:w-28 sm:rounded-[2.25rem] md:w-32">
+        {isVideo(image) ? (
+          <video src={image} autoPlay loop muted playsInline preload="metadata" className="h-full w-full object-cover object-top" />
+        ) : (
         <img
           src={image}
           alt={name}
@@ -197,6 +219,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
           loading="lazy"
           decoding="async"
         />
+        )}
       </div>
       <div className="absolute bottom-2 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full bg-background/20 sm:w-12" />
     </div>
@@ -263,14 +286,14 @@ const ProjectBlock = ({
         <BrandingStory values={project.values} process={project.process} />
       )}
 
-      {project.displayType === 'rebranding' && project.website_image && (
+      {project.displayType === 'rebranding' && project.website_image && !isVideo(project.website_image) && (
         <RebrandCompare
           beforeLogo={project.beforeLogo}
           afterLogo={project.website_image}
           changeReason={project.changeReason}
         />
       )}
-      {project.displayType === 'rebranding' && !project.website_image && project.images[0] && (
+      {project.displayType === 'rebranding' && (!project.website_image || isVideo(project.website_image)) && project.images[0] && (
         <RebrandCompare
           beforeLogo={project.beforeLogo}
           afterLogo={project.images[0]}
