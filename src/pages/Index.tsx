@@ -285,9 +285,22 @@ const ProjectBlock = ({
       data-project={project.slug}
     >
       <div className="mb-3 sm:mb-4">
-        <h3 className="flex flex-wrap items-center gap-y-2 text-lg font-normal sm:text-xl md:text-2xl">
-          {project.name}
-        </h3>
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="flex flex-wrap items-center gap-y-2 text-lg font-normal sm:text-xl md:text-2xl">
+            {project.name}
+          </h3>
+          {liveSites[project.slug] && (
+            <a
+              href={liveSites[project.slug]}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:text-sm"
+            >
+              למעבר לאתר
+              <ArrowUpLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          )}
+        </div>
         {project.description && (
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">{project.description}</p>
         )}
