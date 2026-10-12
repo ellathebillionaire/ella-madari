@@ -32,9 +32,7 @@ import meshek27BoxDesign from '@/assets/meshek27/box-design.jpg';
 
 // Si Señora
 import sisenoraWebsiteNew from "@/assets/sisenora-website-new.png";
-import sisenoraWebsiteOld from "@/assets/website-sisenora.png";
 import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
-import sisenoraLogoOld from "@/assets/sisenora-logo.jpg";
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
 // Learn AI / DotAi
@@ -49,7 +47,6 @@ import taliterBottleMockup from '@/assets/taliter/bottle-mockup.jpg';
 
 // EBrider
 import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
-import ebriderLogoOld from "@/assets/ebrider-logo.jpg";
 import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
 import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 import ebriderMobile from "@/assets/ebrider-mobile.png";
@@ -260,14 +257,8 @@ export const projects: Project[] = [
     slug: 'sisenora',
     name: 'Si Señora',
     category: 'branding',
-    displayType: 'rebranding',
-    needsReview: true, // TODO Ella: מצאתי קבצי לוגו/אתר "ישן" ו"חדש" בנכסים - זה אכן ריברנד? מה הוביל לשינוי? כתבי לי משפט ואני אכניס
-    description: 'ריברנד ובניית אתר מכירות לעסק לייבוא תיקים בעבודת יד',
-    before: {
-      logo: sisenoraLogoOld,
-      website: sisenoraWebsiteOld,
-    },
-    changeReason: 'המיתוג הקודם לא שיקף את איכות המוצר בעבודת יד - חידשנו את הזהות והאתר כדי שיתאימו לרמת המותג.',
+    displayType: 'website',
+    description: 'מיתוג ובניית אתר מכירות לעסק לייבוא תיקים בעבודת יד',
     logo: sisenoraLogo,
     heroImage: mockupSisenoraShop,
     bgColor: '#FAF8F5',
@@ -323,13 +314,8 @@ export const projects: Project[] = [
     slug: 'ebrider',
     name: 'EBrider',
     category: 'branding',
-    displayType: 'rebranding',
-    needsReview: true, // TODO Ella: מצאתי לוגו "ישן" ו"חדש" בנכסים - זה אכן ריברנד? מה הוביל לשינוי? כתבי לי משפט ואני אכניס
-    description: 'ריברנד ובניית אתר חנות - חלקי חילוף לאופניים',
-    before: {
-      logo: ebriderLogoOld,
-    },
-    changeReason: 'הלוגו הקודם לא עמד בקצב עם המותג - חידשנו אותו לזהות חדה וברורה יותר שמתאימה לחנות אונליין.',
+    displayType: 'website',
+    description: 'מיתוג ובניית אתר חנות - חלקי חילוף לאופניים',
     logo: ebriderLogoNew,
     monogram: ebriderSymbol,
     heroImage: ebriderMockupHero,
