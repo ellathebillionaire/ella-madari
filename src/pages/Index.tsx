@@ -222,14 +222,14 @@ const ProjectBlock = ({
     project.website_image,
     project.mobile_image,
     project.video,
+    project.logo,
   ]);
 
   const plainLogo =
     project.displayType !== 'rebranding' &&
     project.logo &&
     project.logo !== project.website_image &&
-    project.logo !== project.mobile_image &&
-    !project.images.includes(project.logo as string);
+    project.logo !== project.mobile_image;
   const logoBlock = (
     <>
       {project.displayType === 'rebranding' && project.beforeLogo && project.website_image && !isVideo(project.website_image) && (
