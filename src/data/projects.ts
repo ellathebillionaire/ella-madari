@@ -152,7 +152,7 @@ export const projects: Project[] = [
     slug: 'betterseeds',
     name: 'BetterSeeds',
     category: 'branding',
-    displayType: 'website',
+    displayType: 'story', // shown in Full Scope, right after SFD (Ella: מרשים מאוד)
     needsReview: true, // TODO Ella: זה בעצם מיתוג + ויזואלים AI, או שהשירות המרכזי היה משהו אחר? יש גם ליין עבודה פנימי מתמשך - כדאי לספר את זה?
     description: 'אתר ויזואלים AI לחברת טכנולוגיה חקלאית',
     logo: betterseedsHero,
