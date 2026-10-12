@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeftRight, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowLeftRight, Plus, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
@@ -86,10 +86,10 @@ export const BrandingStory = ({
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1.5 text-[11px] font-medium text-foreground/80 shadow-sm ring-1 ring-border/60 transition-colors hover:bg-muted sm:text-xs"
+            className="group flex items-center gap-1 px-1 text-[11px] font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground sm:text-xs"
           >
-            <Sparkles className="h-3 w-3 text-muted-foreground" />
-            התהליך
+            לקריאה על התהליך
+            <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5" />
           </button>
         )}
       </div>
@@ -252,21 +252,30 @@ export const ProjectStory = ({
       className="mb-4 sm:mb-5"
     >
       {steps && steps.length > 0 && (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {steps.map((step, index) => (
             <button
               key={step.title}
               type="button"
               onClick={() => setOpen(true)}
               aria-label={`הסבר על ${step.title}`}
-              className="group flex items-center gap-2 rounded-full bg-muted/50 py-1.5 pl-3.5 pr-2 text-xs shadow-sm ring-1 ring-border/60 transition-colors hover:bg-muted sm:text-[13px]"
+              className="group flex cursor-pointer items-center gap-2 rounded-full bg-background py-1.5 pl-2 pr-2 text-xs shadow-sm ring-1 ring-border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:ring-foreground/30 sm:text-[13px]"
             >
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-background text-[10px] font-medium text-muted-foreground ring-1 ring-border/60 sm:h-6 sm:w-6 sm:text-[11px]">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-muted text-[10px] font-medium text-muted-foreground sm:h-6 sm:w-6 sm:text-[11px]">
                 {index + 1}
               </span>
               <span className="font-medium text-foreground/85">{step.title}</span>
+              <Plus className="h-3.5 w-3.5 text-muted-foreground transition-transform duration-300 group-hover:rotate-90 group-hover:text-foreground" />
             </button>
           ))}
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="group flex items-center gap-1 px-1 text-xs font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground sm:text-[13px]"
+          >
+            לסיפור המלא
+            <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5" />
+          </button>
         </div>
       )}
       <StoryDialog open={open} onOpenChange={setOpen} title={name || 'הפרויקט'} intro={intro} steps={steps} />
