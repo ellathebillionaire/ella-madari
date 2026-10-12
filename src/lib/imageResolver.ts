@@ -1,3 +1,10 @@
+import betterseedsMobileCapture from '@/assets/media/BetterSeeds__official_live_website_mobile_scroll_capture.mp4.asset.json';
+
+// Preserve the CMS path while serving the corrected portrait recording.
+const mediaReplacements: Record<string, string> = {
+  '/assets/videos/BetterSeeds__official_live_website_mobile_scroll_capture.mp4': betterseedsMobileCapture.url,
+};
+
 // Map of static asset paths to their imports
 // This is needed because Vite requires static imports for assets in src/assets
 
@@ -11,6 +18,9 @@ const assetModules = import.meta.glob<{ default: string }>('/src/assets/**/*.{jp
  */
 export function resolveImageUrl(url: string | null | undefined): string | null {
   if (!url) return null;
+
+  const replacement = mediaReplacements[url];
+  if (replacement) return replacement;
   
   // Already a full URL (storage, external)
   if (url.startsWith('http://') || url.startsWith('https://')) {
