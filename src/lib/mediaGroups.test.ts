@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { groupProjectMedia } from './mediaGroups';
+import { galleryColumns, groupProjectMedia } from './mediaGroups';
 
 describe('project media grouping', () => {
   it('keeps four NOMA AI portraits together and outdoor media separate', () => {
