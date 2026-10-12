@@ -57,7 +57,6 @@ import ebriderMobile from "@/assets/ebrider-mobile.png";
 // Studio Alef
 import studioalefLogo from "@/assets/studioalef-logo.png";
 import studioalefWallMockup from "@/assets/studioalef-wall-mockup.png";
-import betterseedsAnimation from "@/assets/betterseeds-animation.mp4"; // Using for Studio Alef
 
 // SEN Jewelry
 import websiteSenMobile from "@/assets/website-sen-mobile.png";
@@ -362,7 +361,6 @@ export const projects: Project[] = [
     images: [
       studioalefLogo,
     ],
-    video: betterseedsAnimation,
   },
   // SEN Jewelry - 1 image
   {
@@ -371,7 +369,7 @@ export const projects: Project[] = [
     category: 'website',
     displayType: 'website',
     description: 'עיצוב אתר לחנות תכשיטים',
-    logo: websiteSenMobile,
+    logo: '',
     heroImage: websiteSenMobile,
     bgColor: '#0D2847',
     accentColor: '#C9A86C',

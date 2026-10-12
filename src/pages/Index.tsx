@@ -614,6 +614,19 @@ const Index = () => {
         <div className="h-4 sm:h-6" />
 
         <main className="mx-auto max-w-6xl px-4 sm:px-6 md:px-10">
+          {storyProjects.length > 0 && (
+            <section id="projects" className="py-8 sm:py-12 md:py-16">
+              <SectionTitle
+                title="פרויקטים מקצה לקצה"
+                subtitle="Full Scope"
+                icon={<BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />}
+              />
+              {storyProjects.map((project) => (
+                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
+              ))}
+            </section>
+          )}
+
           {brandingProjects.length > 0 && (
             <section id="branding" className="py-8 sm:py-12 md:py-16">
               <SectionTitle
@@ -635,19 +648,6 @@ const Index = () => {
                 icon={<RefreshCw className="h-4 w-4 sm:h-5 sm:w-5" />}
               />
               {rebrandingProjects.map((project) => (
-                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
-              ))}
-            </section>
-          )}
-
-          {storyProjects.length > 0 && (
-            <section id="projects" className="py-8 sm:py-12 md:py-16">
-              <SectionTitle
-                title="פרויקטים מקצה לקצה"
-                subtitle="Full Scope"
-                icon={<BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />}
-              />
-              {storyProjects.map((project) => (
                 <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
               ))}
             </section>
