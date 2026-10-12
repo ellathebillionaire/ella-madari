@@ -316,8 +316,8 @@ const ProjectBlock = ({
         const leadGroup = !showScreens && !isWebsiteRedesign && !hasRebrandLogo ? galleryGroups[0] : undefined;
         const restGroups = leadGroup ? galleryGroups.slice(1) : galleryGroups;
 
-        const renderGroup = (group: typeof galleryGroups[number], full = false) => (
-          <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={full ? 'col-span-2 sm:col-span-12' : group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
+        const renderGroup = (group: typeof galleryGroups[number], full = false, half = false) => (
+          <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={full ? 'col-span-2 sm:col-span-12' : half ? 'col-span-2 sm:col-span-7' : group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
             {group.label ? <SubLabel>{group.label}</SubLabel> : null}
             <ProjectMediaGroup
               group={group}
@@ -368,7 +368,7 @@ const ProjectBlock = ({
                 </div>
               </>
             )}
-            {leadGroup && <div className="grid grid-cols-2 gap-x-3 sm:grid-cols-12 sm:gap-x-4">{renderGroup(leadGroup, leadGroup.images.length >= 3)}</div>}
+            {leadGroup && <div className="grid grid-cols-2 gap-x-3 sm:grid-cols-12 sm:gap-x-4">{renderGroup(leadGroup, leadGroup.images.length >= 2, leadGroup.images.length === 1)}</div>}
           </div>
         );
 
