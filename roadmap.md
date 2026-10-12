@@ -2,8 +2,8 @@
 
 # Compact portfolio layout
 
-- [ ] Reduce vertical overhead and compose single-item topics side by side without mixing topics.
-- [ ] Verify page height, complete media, and touch viewing across screen sizes.
+- [x] Reduce vertical overhead and compose single-item topics side by side without mixing topics.
+- [x] Verify page height, complete media, and touch viewing across screen sizes.
 
 - [x] Adapt screen/logo compositions and topic galleries for narrow viewports without replacing media.
 - [x] Improve touch viewing, navigation and close controls.
