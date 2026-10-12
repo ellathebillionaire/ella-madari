@@ -337,12 +337,12 @@ const ProjectBlock = ({
                   onClick={() => onImageClick(project.mobile_image as string, project.name)}
                 />
               )}
-              {!hasBothScreens && (
-                <div className="min-w-0 flex-1 self-center sm:min-w-[220px] [&_img]:max-w-full">{logoBlock}</div>
+              {plainLogo && (
+                <div className={`min-w-0 self-center [&_img]:max-w-full ${hasBothScreens ? "col-span-2 sm:col-span-1 sm:max-w-[200px]" : "flex-1 sm:min-w-[220px]"}`}>{logoBlock}</div>
               )}
             </div>
             {(colors.length > 0 || (project.displayType === 'story' && (project.storyIntro || project.storySteps?.length))) && (
-              <div className="flex w-full flex-col items-end gap-4 self-end pt-1 sm:w-auto sm:self-auto">
+              <div className="flex w-full flex-col items-end justify-center gap-4 self-stretch pt-1 sm:w-auto">
                 {colors.length > 0 && <PaletteDots colors={colors} />}
                 {project.displayType === 'story' && (project.storyIntro || project.storySteps?.length) && (
                   <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />
@@ -359,8 +359,6 @@ const ProjectBlock = ({
           <BrandingStory name={project.name} values={project.values} process={project.process} />
         </>
       )}
-
-      {hasBothScreens && logoBlock}
 
       {isWebsiteRedesign && (
         <>
