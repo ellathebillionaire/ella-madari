@@ -653,19 +653,6 @@ const Index = () => {
             </section>
           )}
 
-          {storyProjects.length > 0 && (
-            <section id="projects" className="py-8 sm:py-12 md:py-16">
-              <SectionTitle
-                title="פרויקטים מקצה לקצה"
-                subtitle="Full Scope"
-                icon={<BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />}
-              />
-              {storyProjects.map((project) => (
-                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
-              ))}
-            </section>
-          )}
-
           <section id="websites" className="py-8 sm:py-12">
             <SectionTitle
               title="עיצוב אתרים"
