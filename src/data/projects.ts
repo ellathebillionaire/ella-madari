@@ -138,6 +138,10 @@ export interface Project {
   // ---- story: narrative-driven (import / custom dev / multi-service) ----
   storyIntro?: string;
   storySteps?: StoryStep[];
+
+  // ---- gallery grouping: small sub-headers inside the outputs gallery ----
+  // label shows once above the first image whose URL matches the pattern.
+  galleryGroups?: { label: string; match: RegExp }[];
 }
 
 // ============ BRANDING PROJECTS ============
@@ -413,6 +417,10 @@ export const projects: Project[] = [
     accentColor: '#1F2A44',
     colors: ['#1F2A44', '#FFFFFF', '#E8B4B8'],
     images: [],
+    galleryGroups: [
+      { label: 'דיוקנאות כלבים - נוצרו ב-AI', match: /ai_dog_portrait/ },
+      { label: 'חוץ - נוצר ב-AI', match: /ai_lifestyle/ },
+    ],
   },
   // Dresses 2026 - AI fashion catalog (gallery comes from the CMS)
   {
