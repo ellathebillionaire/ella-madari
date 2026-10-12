@@ -339,7 +339,7 @@ const ProjectBlock = ({
       {project.displayType === 'branding' && (project.values?.length || project.process) && (
         <>
           <SubLabel>ערכים ותהליך</SubLabel>
-          <BrandingStory values={project.values} process={project.process} />
+          <BrandingStory name={project.name} values={project.values} process={project.process} />
         </>
       )}
 
@@ -348,7 +348,7 @@ const ProjectBlock = ({
       {project.displayType === 'story' && (project.storyIntro || project.storySteps?.length) && (
         <>
           <SubLabel>הסיפור</SubLabel>
-          <ProjectStory intro={project.storyIntro} steps={project.storySteps} />
+          <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />
         </>
       )}
 

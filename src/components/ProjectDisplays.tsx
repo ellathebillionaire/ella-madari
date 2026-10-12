@@ -2,19 +2,68 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeftRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+// Glass explanation window: full detail stays behind a click, so the page itself stays
+// visual-first for international visitors who read only what they choose to open.
+const StoryDialog = ({
+  open,
+  onOpenChange,
+  title,
+  intro,
+  steps,
+  process,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title: string;
+  intro?: string;
+  steps?: { title: string; text: string }[];
+  process?: string;
+}) => (
+  <Dialog open={open} onOpenChange={onOpenChange}>
+    <DialogContent
+      dir="rtl"
+      className="max-h-[80vh] overflow-y-auto rounded-3xl border-border/60 bg-background/85 text-right shadow-[0_20px_60px_-15px_hsl(var(--foreground)/0.25)] backdrop-blur-xl [&>button]:left-4 [&>button]:right-auto"
+    >
+      <DialogTitle className="text-base font-normal tracking-wide text-foreground sm:text-lg">
+        {title}
+      </DialogTitle>
+      {intro && <p className="text-sm leading-relaxed text-foreground/80">{intro}</p>}
+      {steps && steps.length > 0 && (
+        <div className="grid gap-4">
+          {steps.map((step, index) => (
+            <div key={step.title} className="flex gap-3">
+              <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-medium text-muted-foreground sm:h-7 sm:w-7 sm:text-xs">
+                {index + 1}
+              </div>
+              <div>
+                <h4 className="mb-1 text-xs font-medium tracking-wide text-foreground sm:text-sm">{step.title}</h4>
+                <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {process && <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">{process}</p>}
+    </DialogContent>
+  </Dialog>
+);
 
 // ============ BRANDING FROM SCRATCH ============
-// Values + short process paragraph, kept light and easy to scan - not a wall of text.
+// Value chips stay visible; the process paragraph opens only on click.
 export const BrandingStory = ({
+  name,
   values,
   process,
 }: {
+  name?: string;
   values?: string[];
   process?: string;
 }) => {
+  const [open, setOpen] = useState(false);
   if (!values?.length && !process) return null;
   return (
     <motion.div
@@ -22,23 +71,34 @@ export const BrandingStory = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="mb-6 rounded-2xl bg-muted/50 p-4 sm:mb-8 sm:p-6"
+      className="mb-6 sm:mb-8"
     >
-      {values && values.length > 0 && (
-        <div className="mb-3 flex flex-wrap gap-2 sm:mb-4">
-          {values.map((value) => (
-            <span
-              key={value}
-              className="rounded-full bg-background px-3 py-1.5 text-[11px] font-medium text-foreground/80 shadow-sm ring-1 ring-border/60 sm:text-xs"
-            >
-              {value}
-            </span>
-          ))}
-        </div>
-      )}
-      {process && (
-        <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">{process}</p>
-      )}
+      <div className="flex flex-wrap items-center gap-2">
+        {values?.map((value) => (
+          <span
+            key={value}
+            className="rounded-full bg-muted/50 px-3 py-1.5 text-[11px] font-medium text-foreground/80 shadow-sm ring-1 ring-border/60 sm:text-xs"
+          >
+            {value}
+          </span>
+        ))}
+        {process && (
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1.5 text-[11px] font-medium text-foreground/80 shadow-sm ring-1 ring-border/60 transition-colors hover:bg-muted sm:text-xs"
+          >
+            <Sparkles className="h-3 w-3 text-muted-foreground" />
+            התהליך
+          </button>
+        )}
+      </div>
+      <StoryDialog
+        open={open}
+        onOpenChange={setOpen}
+        title={name ? `${name} - התהליך` : 'התהליך'}
+        process={process}
+      />
     </motion.div>
   );
 };
@@ -170,14 +230,17 @@ export const WebsiteBeforeAfter = ({
   );
 };
 
-// ============ STORY: narrative-driven (import / custom dev / multi-service) ============
+// ============ STORY: numbered points stay visible, full detail opens on click ============
 export const ProjectStory = ({
+  name,
   intro,
   steps,
 }: {
+  name?: string;
   intro?: string;
   steps?: { title: string; text: string }[];
 }) => {
+  const [open, setOpen] = useState(false);
   if (!intro && !steps?.length) return null;
 
   return (
@@ -188,28 +251,25 @@ export const ProjectStory = ({
       transition={{ duration: 0.5 }}
       className="mb-4 sm:mb-5"
     >
-      {intro && (
-        <p className="mb-3 text-sm leading-relaxed text-foreground/80 sm:mb-4 sm:text-base">{intro}</p>
-      )}
       {steps && steps.length > 0 && (
-        <div className="grid gap-3 sm:grid-cols-3 sm:gap-5">
+        <div className="flex flex-wrap gap-2">
           {steps.map((step, index) => (
-            <div key={step.title} className="flex gap-3 sm:gap-4">
-              <div className="flex-shrink-0">
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-[10px] font-medium text-muted-foreground sm:h-7 sm:w-7 sm:text-xs">
-                  {index + 1}
-                </div>
-              </div>
-              <div>
-                <h4 className="mb-1 text-xs font-medium tracking-wide text-foreground sm:text-sm">
-                  {step.title}
-                </h4>
-                <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">{step.text}</p>
-              </div>
-            </div>
+            <button
+              key={step.title}
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-label={`הסבר על ${step.title}`}
+              className="group flex items-center gap-2 rounded-full bg-muted/50 py-1.5 pl-3.5 pr-2 text-xs shadow-sm ring-1 ring-border/60 transition-colors hover:bg-muted sm:text-[13px]"
+            >
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-background text-[10px] font-medium text-muted-foreground ring-1 ring-border/60 sm:h-6 sm:w-6 sm:text-[11px]">
+                {index + 1}
+              </span>
+              <span className="font-medium text-foreground/85">{step.title}</span>
+            </button>
           ))}
         </div>
       )}
+      <StoryDialog open={open} onOpenChange={setOpen} title={name || 'הפרויקט'} intro={intro} steps={steps} />
     </motion.div>
   );
 };
