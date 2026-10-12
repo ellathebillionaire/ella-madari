@@ -282,41 +282,6 @@ const ProjectBlock = ({
         )}
       </div>
 
-      {project.displayType === 'branding' && (
-        <BrandingStory values={project.values} process={project.process} />
-      )}
-
-      {project.displayType === 'rebranding' && project.website_image && !isVideo(project.website_image) && (
-        <RebrandCompare
-          beforeLogo={project.beforeLogo}
-          afterLogo={project.website_image}
-          changeReason={project.changeReason}
-        />
-      )}
-      {project.displayType === 'rebranding' && (!project.website_image || isVideo(project.website_image)) && project.images[0] && (
-        <RebrandCompare
-          beforeLogo={project.beforeLogo}
-          afterLogo={project.images[0]}
-          changeReason={project.changeReason}
-        />
-      )}
-
-      {project.displayType === 'story' && (
-        <ProjectStory intro={project.storyIntro} steps={project.storySteps} />
-      )}
-
-      {isWebsiteRedesign && (
-        <div className="mb-6 max-w-xl sm:mb-8">
-          <WebsiteBeforeAfter
-            beforeImage={project.beforeWebsite as string}
-            afterImage={project.website_image as string}
-            name={project.name}
-            aspectRatio={project.aspect_ratio}
-            onImageClick={(image) => onImageClick(image, project.name)}
-          />
-        </div>
-      )}
-
       {hasDevices && !isWebsiteRedesign && (
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -350,6 +315,41 @@ const ProjectBlock = ({
             </div>
           )}
         </motion.div>
+      )}
+
+      {project.displayType === 'branding' && (
+        <BrandingStory values={project.values} process={project.process} />
+      )}
+
+      {project.displayType === 'rebranding' && project.website_image && !isVideo(project.website_image) && (
+        <RebrandCompare
+          beforeLogo={project.beforeLogo}
+          afterLogo={project.website_image}
+          changeReason={project.changeReason}
+        />
+      )}
+      {project.displayType === 'rebranding' && (!project.website_image || isVideo(project.website_image)) && project.images[0] && (
+        <RebrandCompare
+          beforeLogo={project.beforeLogo}
+          afterLogo={project.images[0]}
+          changeReason={project.changeReason}
+        />
+      )}
+
+      {project.displayType === 'story' && (
+        <ProjectStory intro={project.storyIntro} steps={project.storySteps} />
+      )}
+
+      {isWebsiteRedesign && (
+        <div className="mb-6 max-w-xl sm:mb-8">
+          <WebsiteBeforeAfter
+            beforeImage={project.beforeWebsite as string}
+            afterImage={project.website_image as string}
+            name={project.name}
+            aspectRatio={project.aspect_ratio}
+            onImageClick={(image) => onImageClick(image, project.name)}
+          />
+        </div>
       )}
 
       {!hasDevices && colors.length > 0 && (
