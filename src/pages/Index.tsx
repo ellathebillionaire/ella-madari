@@ -77,7 +77,7 @@ const SectionTitle = ({
         {subtitle}
       </span>
     </div>
-    <h2 className="text-2xl font-normal tracking-tight text-foreground/90 sm:text-4xl md:text-5xl">
+    <h2 className="text-xl font-normal tracking-tight text-foreground/90 sm:text-2xl md:text-3xl">
       {title}
     </h2>
   </motion.div>
@@ -287,7 +287,7 @@ const ProjectBlock = ({
     >
       <div className="mb-3 sm:mb-4">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="flex flex-wrap items-center gap-y-2 text-lg font-normal sm:text-xl md:text-2xl">
+          <h3 className="flex flex-wrap items-center gap-y-2 text-2xl font-normal tracking-tight sm:text-3xl">
             {project.name}
           </h3>
           {liveSites[project.slug] && (
