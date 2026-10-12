@@ -14,7 +14,6 @@ import {
   RebrandCompare,
   WebsiteBeforeAfter,
   ProjectStory,
-  NeedsReviewBadge,
 } from '@/components/ProjectDisplays';
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -278,7 +277,6 @@ const ProjectBlock = ({
       <div className="mb-4 sm:mb-6">
         <h3 className="flex flex-wrap items-center gap-y-2 text-lg font-normal sm:text-xl md:text-2xl">
           {project.name}
-          {project.needsReview && <NeedsReviewBadge />}
         </h3>
         {project.description && (
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">{project.description}</p>
