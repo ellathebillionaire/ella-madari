@@ -59,8 +59,6 @@ import studioalefLogoAsset from '@/assets/media/StudioAlef__logo_clean_presentat
 const studioalefLogo = studioalefLogoAsset.url;
 import studioalefWallMockup from "@/assets/studioalef-wall-mockup.png";
 
-// SEN Jewelry
-import websiteSenMobile from "@/assets/website-sen-mobile.png";
 
 // BetterSeeds - AI generated images for website
 import websiteBetterseeds from "@/assets/website-betterseeds.jpg";
