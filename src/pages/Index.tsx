@@ -427,37 +427,47 @@ const ProjectBlock = ({
           <div className="col-span-full">
             <SubLabel>תוצרים</SubLabel>
           </div>
-          {project.images.map((image, index) => (
-            <motion.div
-              key={`${image}-${index}`}
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.06, ease }}
-              onClick={() => onImageClick(image, project.name)}
-              className="group aspect-[4/3] cursor-pointer overflow-hidden rounded-xl bg-muted shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_12px_32px_-8px_hsl(var(--foreground)/0.15)] sm:rounded-2xl"
-            >
-              {/\.(mp4|webm|mov)$/i.test(image) ? (
-                <video
-                  src={image}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                  className="h-full w-full object-cover object-top"
-                />
-              ) : (
-                <img
-                  src={image}
-                  alt={project.name}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
-            </motion.div>
-          ))}
+          {project.images.map((image, index) => {
+            const group = project.galleryGroups?.find((entry) => entry.match.test(image));
+            const isGroupStart = Boolean(group) && project.images.findIndex((img) => group!.match.test(img)) === index;
+            return (
+              <Fragment key={`${image}-${index}`}>
+                {isGroupStart && (
+                  <div className="col-span-full pt-2">
+                    <SubLabel>{group!.label}</SubLabel>
+                  </div>
+                )}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.06, ease }}
+                  onClick={() => onImageClick(image, project.name)}
+                  className="group aspect-[4/3] cursor-pointer overflow-hidden rounded-xl bg-muted shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_12px_32px_-8px_hsl(var(--foreground)/0.15)] sm:rounded-2xl"
+                >
+                  {/\.(mp4|webm|mov)$/i.test(image) ? (
+                    <video
+                      src={image}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                      className="h-full w-full object-cover object-top"
+                    />
+                  ) : (
+                    <img
+                      src={image}
+                      alt={project.name}
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                </motion.div>
+              </Fragment>
+            );
+          })}
           {project.video && (
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
