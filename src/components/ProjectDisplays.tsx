@@ -66,7 +66,7 @@ const StoryRow = ({
     type="button"
     onClick={onClick}
     aria-label={`הסבר על ${title}`}
-    className="group flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-foreground/10 bg-background px-4 py-3 text-right shadow-[0_2px_10px_-6px_hsl(var(--foreground)/0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[0_10px_24px_-10px_hsl(var(--foreground)/0.25)]"
+    className="group flex min-h-[46px] w-full cursor-pointer items-center gap-3 rounded-2xl border border-foreground/10 bg-background px-4 py-3 text-right shadow-[0_2px_10px_-6px_hsl(var(--foreground)/0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[0_10px_24px_-10px_hsl(var(--foreground)/0.25)]"
   >
     {index && (
       <>
@@ -260,7 +260,7 @@ export const ProjectStory = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="w-full min-w-0 sm:w-64"
+      className="w-full min-w-0"
     >
       <span className="mb-2 block text-[11px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
         הסיפור
