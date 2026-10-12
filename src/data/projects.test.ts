@@ -21,3 +21,14 @@ describe('portfolio logo assignments', () => {
     expect(projects.find((project) => project.slug === 'betterseeds')?.logo).toBe('');
   });
 });
+describe('logo versions', () => {
+  it('uses the supplied LEARN AI logo, not the DotAi avatar', async () => {
+    const learnLogo = (await import('@/assets/media/LearnAI__brand_logo_full.jpg.asset.json')).default;
+    expect(projects.find((project) => project.slug === 'learnai')?.logo).toBe(learnLogo.url);
+  });
+
+  it('shows the short SFD logo beside the full logo', async () => {
+    const shortLogo = (await import('@/assets/media/SFD__rebrand_board_01.png.asset.json')).default;
+    expect(projects.find((project) => project.slug === 'sfd')?.extraLogos).toEqual([shortLogo.url]);
+  });
+});
