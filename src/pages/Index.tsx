@@ -29,6 +29,8 @@ type DisplayProject = {
   website_image: string | null;
   mobile_image: string | null;
   logo?: string | null;
+  extraLogos?: string[];
+  hiddenImages?: string[];
   aspect_ratio: string;
   colors: string[] | null;
   images: string[];
@@ -224,6 +226,8 @@ const ProjectBlock = ({
     project.mobile_image,
     project.video,
     project.logo,
+    ...(project.extraLogos || []),
+    ...(project.hiddenImages || []),
   ]);
 
   const plainLogo =
@@ -256,11 +260,16 @@ const ProjectBlock = ({
       {plainLogo && (
         <>
           <SubLabel>הלוגו</SubLabel>
-          <img
-            src={project.logo as string}
-            alt={`${project.name} logo`}
-            className="max-h-28 w-auto max-w-full object-contain sm:max-h-20 sm:max-w-[240px]"
-          />
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            {[project.logo as string, ...(project.extraLogos || [])].map((src, index) => (
+              <img
+                key={src}
+                src={src}
+                alt={`${project.name} logo${index ? ` ${index + 1}` : ''}`}
+                className={index ? "max-h-20 w-auto max-w-[45%] object-contain sm:max-h-16 sm:max-w-[140px]" : "max-h-28 w-auto max-w-full object-contain sm:max-h-20 sm:max-w-[240px]"}
+              />
+            ))}
+          </div>
         </>
       )}
     </>
@@ -402,6 +411,8 @@ const fromStaticProject = (project: (typeof staticProjects)[number]): DisplayPro
   website_image: project.websiteImage || null,
   mobile_image: project.mobileImage || null,
   logo: project.logo || null,
+  extraLogos: project.extraLogos,
+  hiddenImages: project.hiddenImages,
   aspect_ratio: '16/9',
   colors: project.colors || null,
   images: project.images,
@@ -436,6 +447,8 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
     website_image: assetUrl(project.website_image) || fallback?.websiteImage || null,
   mobile_image: assetUrl(project.mobile_image) || fallback?.mobileImage || null,
   logo: fallback?.logo || (project.slug === 'petplaypal' ? petPlayPalLogo.url : null),
+    extraLogos: fallback?.extraLogos,
+    hiddenImages: fallback?.hiddenImages,
     aspect_ratio: project.aspect_ratio || '16/9',
     colors: project.colors || fallback?.colors || null,
     images: projectImages.length > 0 ? projectImages : fallback?.images || [],

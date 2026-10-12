@@ -38,7 +38,9 @@ const sisenoraLogo = sisenoraLogoAsset.url;
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
 // Learn AI / DotAi
-import learnaiLogoFull from '@/assets/media/LearnAI__dotai_avatar_character_original.webp.asset.json';
+import learnaiLogoFull from '@/assets/media/LearnAI__brand_logo_full.jpg.asset.json';
+import sfdShortLogo from '@/assets/media/SFD__rebrand_board_01.png.asset.json';
+import sfdFullLogoBoard from '@/assets/media/SFD__rebrand_board_02.png.asset.json';
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
 import learnaiPlatformHero from '@/assets/media/LearnAI__platform_hero_dotai_learning_companion.webp.asset.json';
 
@@ -102,6 +104,10 @@ export interface Project {
   displayType: DisplayType;
   description?: string;
   logo: string;
+  // Additional supplied logo versions shown beside the main logo
+  extraLogos?: string[];
+  // Gallery items hidden because they duplicate a logo shown above
+  hiddenImages?: string[];
   monogram?: string;
   heroImage: string;
   bgColor: string;
@@ -194,6 +200,8 @@ export const projects: Project[] = [
       },
     ],
     logo: sfdLogoTransparent,
+    extraLogos: [sfdShortLogo.url],
+    hiddenImages: [sfdFullLogoBoard.url],
     monogram: sfdSymbol,
     heroImage: sfdRealHeroWeb,
     bgColor: '#F5F5F7',
