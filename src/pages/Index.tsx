@@ -1,10 +1,11 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Monitor, Palette, Smartphone, X, Sparkles, RefreshCw, BookOpen } from 'lucide-react';
 import { projects as staticProjects, type DisplayType, type StoryStep } from '@/data/projects';
 import { useProjects, type ProjectWithImages } from '@/hooks/useProjects';
 import { resolveImageUrl } from '@/lib/imageResolver';
+import { groupProjectMedia } from '@/lib/mediaGroups';
 import {
   BrandingStory,
   RebrandCompare,
@@ -282,6 +283,11 @@ const ProjectBlock = ({
   const colors = project.colors || [];
   const isWebsiteRedesign = project.displayType === 'website_redesign' && project.beforeWebsite && project.website_image;
   const hasBothScreens = Boolean(project.website_image && project.mobile_image);
+  const galleryGroups = groupProjectMedia(project.slug, project.images, project.galleryGroups, [
+    project.website_image,
+    project.mobile_image,
+    project.video,
+  ]);
 
   const plainLogo =
     project.displayType !== 'rebranding' &&
@@ -423,21 +429,14 @@ const ProjectBlock = ({
       )}
 
       {(project.images.length > 0 || project.video) && (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-          <div className="col-span-full">
-            <SubLabel>תוצרים</SubLabel>
-          </div>
-          {project.images.map((image, index) => {
-            const group = project.galleryGroups?.find((entry) => entry.match.test(image));
-            const isGroupStart = Boolean(group) && project.images.findIndex((img) => group!.match.test(img)) === index;
-            return (
-              <Fragment key={`${image}-${index}`}>
-                {isGroupStart && (
-                  <div className="col-span-full pt-2">
-                    <SubLabel>{group!.label}</SubLabel>
-                  </div>
-                )}
+        <div className="space-y-6 sm:space-y-8">
+          {galleryGroups.map((group) => (
+            <section key={group.label} aria-label={`${project.name} - ${group.label}`}>
+              <SubLabel>{group.label}</SubLabel>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+                {group.images.map((image, index) => (
                 <motion.div
+                  key={image}
                   initial={{ opacity: 0, scale: 0.96 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
@@ -445,7 +444,7 @@ const ProjectBlock = ({
                   onClick={() => onImageClick(image, project.name)}
                   className="group aspect-[4/3] cursor-pointer overflow-hidden rounded-xl bg-muted shadow-[0_2px_12px_-4px_hsl(var(--foreground)/0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_12px_32px_-8px_hsl(var(--foreground)/0.15)] sm:rounded-2xl"
                 >
-                  {/\.(mp4|webm|mov)$/i.test(image) ? (
+                  {isVideo(image) ? (
                     <video
                       src={image}
                       autoPlay
@@ -458,17 +457,21 @@ const ProjectBlock = ({
                   ) : (
                     <img
                       src={image}
-                      alt={project.name}
+                      alt={`${project.name} - ${group.label} - ${index + 1}`}
                       className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                       loading="lazy"
                       decoding="async"
                     />
                   )}
                 </motion.div>
-              </Fragment>
-            );
-          })}
+                ))}
+              </div>
+            </section>
+          ))}
           {project.video && (
+            <section aria-label={`${project.name} - אנימציה`}>
+              <SubLabel>אנימציה</SubLabel>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -485,6 +488,8 @@ const ProjectBlock = ({
                 className="h-full w-full object-cover"
               />
             </motion.div>
+              </div>
+            </section>
           )}
         </div>
       )}
@@ -573,10 +578,6 @@ const Index = () => {
   const websiteTypeProjects = displayProjects.filter(
     (project) => project.displayType === 'website' || project.displayType === 'website_redesign'
   );
-  const websiteProjects = websiteTypeProjects.filter(
-    (project) => project.website_image && project.displayType !== 'website_redesign'
-  );
-  const mobileProjects = websiteTypeProjects.filter((project) => project.mobile_image);
 
   const openLightbox = (image: string, name: string) => setLightbox({ image, name });
 
@@ -659,44 +660,9 @@ const Index = () => {
               icon={<Monitor className="h-4 w-4" />}
             />
             {websiteTypeProjects
-              .filter((project) => project.displayType === 'website_redesign')
               .map((project) => (
                 <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
               ))}
-            {websiteProjects.length > 0 && (
-              <div className="mb-8 grid grid-cols-1 gap-3 sm:mb-12 sm:grid-cols-2 sm:gap-4 md:gap-6 lg:grid-cols-3">
-                {websiteProjects.map((project) => (
-                  <DesktopMockup
-                    key={project.id}
-                    image={project.website_image as string}
-                    name={project.name}
-                    aspectRatio={project.aspect_ratio}
-                    onClick={() => openLightbox(project.website_image as string, project.name)}
-                  />
-                ))}
-              </div>
-            )}
-
-            {mobileProjects.length > 0 && (
-              <div className="mt-8 sm:mt-12">
-                <div className="mb-4 flex items-center gap-2 sm:mb-6">
-                  <Smartphone className="h-3 w-3 text-muted-foreground sm:h-3.5 sm:w-3.5" />
-                  <span className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground sm:text-[9px]">
-                    Mobile
-                  </span>
-                </div>
-                <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8">
-                  {mobileProjects.map((project) => (
-                    <MobileMockup
-                      key={project.id}
-                      image={project.mobile_image as string}
-                      name={project.name}
-                      onClick={() => openLightbox(project.mobile_image as string, project.name)}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
           </section>
         </main>
 
