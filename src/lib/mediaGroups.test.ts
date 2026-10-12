@@ -9,9 +9,16 @@ describe('project media grouping', () => {
     expect(groups.map((group) => group.images)).toEqual([portraits, [outdoor]]);
   });
 
-  it('groups interleaved studio, outdoor and product media by service', () => {
+  it('renders Dresses as one flat compact gallery without topic labels', () => {
     const images = ['/Dresses2026__ai_studio_a.webp', '/Dresses2026__ai_outdoor_a.webp', '/Dresses2026__white_background_product_a.webp', '/Dresses2026__ai_studio_b.webp'];
-    expect(groupProjectMedia('dresses2026', images).map((group) => group.images)).toEqual([[images[0], images[3]], [images[1]], [images[2]]]);
+    expect(groupProjectMedia('dresses2026', images)).toEqual([{ label: '', images }]);
+  });
+
+  it('keeps any gallery within two rows', () => {
+    expect(galleryColumns(1)).toBe(1);
+    expect(galleryColumns(4)).toBe(4);
+    expect(galleryColumns(9)).toBe(5);
+    expect(galleryColumns(13)).toBe(7);
   });
 
   it('preserves every unmatched image once without duplicating device media', () => {

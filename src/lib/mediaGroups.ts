@@ -61,11 +61,6 @@ const projectRules: Record<string, MediaGroupRule[]> = {
     { label: 'אריזות', match: /packaging/ },
     { label: 'לייף סטייל - נוצר ב-AI', match: /ai_lifestyle/ },
   ],
-  dresses2026: [
-    { label: 'סטודיו - נוצר ב-AI', match: /ai_studio/ },
-    { label: 'חוץ - נוצר ב-AI', match: /ai_outdoor/ },
-    { label: 'תמונות מוצר', match: /white_background_product/ },
-  ],
 };
 
 const sharedRules: MediaGroupRule[] = [
@@ -76,6 +71,12 @@ const sharedRules: MediaGroupRule[] = [
   { label: 'הדמיות המותג', match: /mockup|signage|wall|tshirt|bottle/i },
 ];
 
+// Flat compact galleries: the whole project renders as one small-image grid, no topic labels.
+const flatProjects = new Set(['dresses2026']);
+
+/** Cap any gallery at two rows: small counts keep one row, larger counts split evenly. */
+export const galleryColumns = (count: number) => (count <= 4 ? count : Math.ceil(count / 2));
+
 /** Classify once, then render whole groups. Never split a topic by source order. */
 export function groupProjectMedia(
   slug: string,
@@ -83,11 +84,14 @@ export function groupProjectMedia(
   overrides: MediaGroupRule[] = [],
   excludedImages: (string | null | undefined)[] = [],
 ): MediaGroup[] {
+  const excluded = new Set(excludedImages.filter(Boolean));
+  const visible = [...new Set(images)].filter((image) => !excluded.has(image));
+  if (flatProjects.has(slug)) {
+    return visible.length ? [{ label: '', images: visible }] : [];
+  }
   const rules = [...overrides, ...(projectRules[slug] || []), ...sharedRules];
   const buckets = new Map<string, string[]>();
-  const excluded = new Set(excludedImages.filter(Boolean));
-  for (const image of new Set(images)) {
-    if (excluded.has(image)) continue;
+  for (const image of visible) {
     let filename = image.split('?')[0].split('/').pop() || image;
     try { filename = decodeURIComponent(filename); } catch { /* Keep malformed filenames unchanged. */ }
     const rule = rules.find(({ match }) => {
