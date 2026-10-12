@@ -59,8 +59,6 @@ const projectRules: Record<string, MediaGroupRule[]> = {
     { label: 'עיצוב הדמויות', match: /character_/ },
     { label: 'אריזות', match: /packaging/ },
     { label: 'לייף סטייל - נוצר ב-AI', match: /ai_lifestyle/ },
-    { label: 'מדריכי שימוש', match: /instruction_steps/ },
-    { label: 'תהליך - לפני ואחרי', match: /before_after/ },
   ],
   dresses2026: [
     { label: 'סטודיו - נוצר ב-AI', match: /ai_studio/ },
