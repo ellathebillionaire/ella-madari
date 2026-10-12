@@ -77,6 +77,22 @@ const SectionTitle = ({
   </motion.div>
 );
 
+// Tiny in-project label so visitors always know what they are looking at.
+const SubLabel = ({ children }: { children: ReactNode }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, ease }}
+    className="mb-4 flex items-center gap-3 sm:mb-5"
+  >
+    <span className="shrink-0 text-[10px] font-medium tracking-[0.2em] text-muted-foreground/70 sm:text-[11px]">
+      {children}
+    </span>
+    <span aria-hidden="true" className="h-px flex-1 bg-border" />
+  </motion.div>
+);
+
 const Lightbox = ({ image, name, onClose }: LightboxImage & { onClose: () => void }) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -233,8 +249,8 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
 
 const PaletteDots = ({ colors }: { colors: string[] }) => (
   <div className="flex flex-col items-end gap-2">
-    <span className="whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground/70">
-      Color Palette
+    <span className="whitespace-nowrap text-[10px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
+      צבעים
     </span>
     <div className="flex gap-2 sm:gap-2.5">
       {colors.map((color, index) => (
@@ -283,73 +299,91 @@ const ProjectBlock = ({
       </div>
 
       {hasDevices && !isWebsiteRedesign && (
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-4 flex flex-wrap items-start gap-3 sm:mb-6 sm:gap-4"
-        >
-          <div className="flex flex-1 flex-wrap items-end gap-3 sm:gap-4">
-            {project.website_image && (
-              <div className="min-w-[160px] flex-1 sm:min-w-[200px] md:max-w-md">
-                <DesktopMockup
-                  image={project.website_image}
+        <>
+          <SubLabel>מסכים</SubLabel>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-4 flex flex-wrap items-start gap-3 sm:mb-6 sm:gap-4"
+          >
+            <div className="flex flex-1 flex-wrap items-end gap-3 sm:gap-4">
+              {project.website_image && (
+                <div className="min-w-[160px] flex-1 sm:min-w-[200px] md:max-w-md">
+                  <DesktopMockup
+                    image={project.website_image}
+                    name=""
+                    aspectRatio={project.aspect_ratio}
+                    onClick={() => onImageClick(project.website_image as string, project.name)}
+                  />
+                </div>
+              )}
+              {project.mobile_image && (
+                <MobileMockup
+                  image={project.mobile_image}
                   name=""
-                  aspectRatio={project.aspect_ratio}
-                  onClick={() => onImageClick(project.website_image as string, project.name)}
+                  onClick={() => onImageClick(project.mobile_image as string, project.name)}
                 />
+              )}
+            </div>
+            {colors.length > 0 && (
+              <div className="pt-1">
+                <PaletteDots colors={colors} />
               </div>
             )}
-            {project.mobile_image && (
-              <MobileMockup
-                image={project.mobile_image}
-                name=""
-                onClick={() => onImageClick(project.mobile_image as string, project.name)}
-              />
-            )}
-          </div>
-          {colors.length > 0 && (
-            <div className="pt-1">
-              <PaletteDots colors={colors} />
-            </div>
-          )}
-        </motion.div>
+          </motion.div>
+        </>
       )}
 
-      {project.displayType === 'branding' && (
-        <BrandingStory values={project.values} process={project.process} />
+      {project.displayType === 'branding' && (project.values?.length || project.process) && (
+        <>
+          <SubLabel>ערכים ותהליך</SubLabel>
+          <BrandingStory values={project.values} process={project.process} />
+        </>
       )}
 
-      {project.displayType === 'rebranding' && project.website_image && !isVideo(project.website_image) && (
-        <RebrandCompare
-          beforeLogo={project.beforeLogo}
-          afterLogo={project.website_image}
-          changeReason={project.changeReason}
-        />
+      {project.displayType === 'rebranding' && project.beforeLogo && project.website_image && !isVideo(project.website_image) && (
+        <>
+          <SubLabel>הלוגו</SubLabel>
+          <RebrandCompare
+            beforeLogo={project.beforeLogo}
+            afterLogo={project.website_image}
+            changeReason={project.changeReason}
+          />
+        </>
       )}
-      {project.displayType === 'rebranding' && (!project.website_image || isVideo(project.website_image)) && project.images[0] && (
-        <RebrandCompare
-          beforeLogo={project.beforeLogo}
-          afterLogo={project.images[0]}
-          changeReason={project.changeReason}
-        />
+      {project.displayType === 'rebranding' && project.beforeLogo && (!project.website_image || isVideo(project.website_image)) && project.images[0] && (
+        <>
+          <SubLabel>הלוגו</SubLabel>
+          <RebrandCompare
+            beforeLogo={project.beforeLogo}
+            afterLogo={project.images[0]}
+            changeReason={project.changeReason}
+          />
+        </>
       )}
 
-      {project.displayType === 'story' && (
-        <ProjectStory intro={project.storyIntro} steps={project.storySteps} />
+      {project.displayType === 'story' && (project.storyIntro || project.storySteps?.length) && (
+        <>
+          <SubLabel>הסיפור</SubLabel>
+          <ProjectStory intro={project.storyIntro} steps={project.storySteps} />
+        </>
       )}
 
       {isWebsiteRedesign && (
-        <div className="mb-6 max-w-xl sm:mb-8">
-          <WebsiteBeforeAfter
-            beforeImage={project.beforeWebsite as string}
-            afterImage={project.website_image as string}
-            name={project.name}
-            aspectRatio={project.aspect_ratio}
-            onImageClick={(image) => onImageClick(image, project.name)}
-          />
-        </div>
+        <>
+          <SubLabel>האתר</SubLabel>
+          <div className="mb-6 max-w-xl sm:mb-8">
+            <WebsiteBeforeAfter
+              beforeImage={project.beforeWebsite as string}
+              afterImage={project.website_image as string}
+              name={project.name}
+              aspectRatio={project.aspect_ratio}
+              onImageClick={(image) => onImageClick(image, project.name)}
+            />
+          </div>
+        </>
       )}
 
       {!hasDevices && colors.length > 0 && (
@@ -360,6 +394,9 @@ const ProjectBlock = ({
 
       {(project.images.length > 0 || project.video) && (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+          <div className="col-span-full">
+            <SubLabel>תוצרים</SubLabel>
+          </div>
           {project.images.map((image, index) => (
             <motion.div
               key={`${image}-${index}`}
