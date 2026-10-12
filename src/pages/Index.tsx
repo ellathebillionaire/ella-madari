@@ -249,8 +249,8 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
 
 const PaletteDots = ({ colors }: { colors: string[] }) => (
   <div className="flex flex-col items-end gap-2">
-    <span className="whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground/70">
-      Color Palette
+    <span className="whitespace-nowrap text-[10px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
+      צבעים
     </span>
     <div className="flex gap-2 sm:gap-2.5">
       {colors.map((color, index) => (
