@@ -377,7 +377,7 @@ const ProjectBlock = ({
         <div className="grid grid-cols-2 items-start gap-x-3 gap-y-4 sm:grid-cols-12 sm:gap-x-4 sm:gap-y-5">
           {galleryGroups.map((group) => (
             <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
-              <SubLabel>{group.label}</SubLabel>
+              {group.label ? <SubLabel>{group.label}</SubLabel> : null}
               <ProjectMediaGroup
                 group={group}
                 name={project.name}
