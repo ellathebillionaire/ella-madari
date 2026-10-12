@@ -1,0 +1,1 @@
+UPDATE public.projects SET colors = ARRAY['#0D1B36','#FFFFFF','#FF6B8E'] WHERE slug = 'noma';
