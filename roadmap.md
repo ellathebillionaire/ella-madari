@@ -1,5 +1,5 @@
 # Mobile portfolio
 
-- [ ] Adapt screen/logo compositions and topic galleries for narrow viewports without replacing media.
-- [ ] Improve touch viewing, navigation and close controls.
-- [ ] Verify real project media, mobile overflow, touch flows and existing grouping tests.
+- [x] Adapt screen/logo compositions and topic galleries for narrow viewports without replacing media.
+- [x] Improve touch viewing, navigation and close controls.
+- [x] Verify real project media, mobile overflow, touch flows and existing grouping tests.
