@@ -15,6 +15,13 @@
       "when": 1791807363461,
       "tag": "0001_videos_into_device_frames",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791807979739,
+      "tag": "0002_point_videos_to_local_assets",
+      "breakpoints": true
     }
   ]
 }
