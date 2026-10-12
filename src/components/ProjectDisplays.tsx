@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeftRight, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -146,30 +147,32 @@ export const WebsiteBeforeAfter = ({
       </div>
 
       <div className="mt-3 flex items-center justify-center gap-2 sm:mt-4">
-        <button
+        <Button
+          variant="ghost"
           type="button"
           onClick={(e) => {
             e.stopPropagation();
             setShowAfter(false);
           }}
-          className={`rounded-full px-3 py-1.5 text-[10px] font-medium tracking-wide transition-all sm:text-xs ${
+          className={`h-11 min-w-16 rounded-full px-4 text-xs font-medium transition-all ${
             !showAfter ? 'bg-foreground text-background shadow-sm' : 'bg-muted text-muted-foreground hover:text-foreground'
           }`}
         >
           לפני
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="ghost"
           type="button"
           onClick={(e) => {
             e.stopPropagation();
             setShowAfter(true);
           }}
-          className={`rounded-full px-3 py-1.5 text-[10px] font-medium tracking-wide transition-all sm:text-xs ${
+          className={`h-11 min-w-16 rounded-full px-4 text-xs font-medium transition-all ${
             showAfter ? 'bg-foreground text-background shadow-sm' : 'bg-muted text-muted-foreground hover:text-foreground'
           }`}
         >
           אחרי
-        </button>
+        </Button>
       </div>
     </motion.div>
   );
