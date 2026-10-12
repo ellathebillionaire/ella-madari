@@ -230,7 +230,7 @@ export const WebsiteBeforeAfter = ({
   );
 };
 
-// ============ STORY: numbered points stay visible, full detail opens on click ============
+// ============ STORY: editorial numbered list, sits under the palette on the left ============
 export const ProjectStory = ({
   name,
   intro,
@@ -249,35 +249,30 @@ export const ProjectStory = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="mb-4 sm:mb-5"
+      className="w-full min-w-0 sm:w-64"
     >
-      {steps && steps.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
-          {steps.map((step, index) => (
-            <button
-              key={step.title}
-              type="button"
-              onClick={() => setOpen(true)}
-              aria-label={`הסבר על ${step.title}`}
-              className="group flex cursor-pointer items-center gap-2 rounded-full bg-background py-1.5 pl-2 pr-2 text-xs shadow-sm ring-1 ring-border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:ring-foreground/30 sm:text-[13px]"
-            >
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-muted text-[10px] font-medium text-muted-foreground sm:h-6 sm:w-6 sm:text-[11px]">
-                {index + 1}
-              </span>
-              <span className="font-medium text-foreground/85">{step.title}</span>
-              <Plus className="h-3.5 w-3.5 text-muted-foreground transition-transform duration-300 group-hover:rotate-90 group-hover:text-foreground" />
-            </button>
-          ))}
+      <span className="mb-1 block text-[10px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
+        הסיפור
+      </span>
+      <div className="border-t border-border/70">
+        {steps?.map((step, index) => (
           <button
+            key={step.title}
             type="button"
             onClick={() => setOpen(true)}
-            className="group flex items-center gap-1 px-1 text-xs font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground sm:text-[13px]"
+            aria-label={`הסבר על ${step.title}`}
+            className="group flex w-full cursor-pointer items-baseline gap-3 border-b border-border/70 py-2 text-right transition-colors duration-300 hover:border-foreground/40 sm:py-2.5"
           >
-            לסיפור המלא
-            <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5" />
+            <span className="text-[10px] font-medium tabular-nums tracking-wider text-muted-foreground/70 transition-colors group-hover:text-foreground sm:text-[11px]">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span className="flex-1 text-xs font-medium leading-snug text-foreground/85 transition-colors group-hover:text-foreground sm:text-[13px]">
+              {step.title}
+            </span>
+            <Plus className="h-3 w-3 shrink-0 self-center text-muted-foreground/60 transition-all duration-300 group-hover:rotate-90 group-hover:text-foreground" />
           </button>
-        </div>
-      )}
+        ))}
+      </div>
       <StoryDialog open={open} onOpenChange={setOpen} title={name || 'הפרויקט'} intro={intro} steps={steps} />
     </motion.div>
   );
