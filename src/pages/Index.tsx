@@ -286,14 +286,14 @@ const ProjectBlock = ({
         <BrandingStory values={project.values} process={project.process} />
       )}
 
-      {project.displayType === 'rebranding' && project.website_image && (
+      {project.displayType === 'rebranding' && project.website_image && !isVideo(project.website_image) && (
         <RebrandCompare
           beforeLogo={project.beforeLogo}
           afterLogo={project.website_image}
           changeReason={project.changeReason}
         />
       )}
-      {project.displayType === 'rebranding' && !project.website_image && project.images[0] && (
+      {project.displayType === 'rebranding' && (!project.website_image || isVideo(project.website_image)) && project.images[0] && (
         <RebrandCompare
           beforeLogo={project.beforeLogo}
           afterLogo={project.images[0]}
