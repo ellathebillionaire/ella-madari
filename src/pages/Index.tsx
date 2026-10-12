@@ -6,6 +6,7 @@ import { projects as staticProjects, type DisplayType, type StoryStep } from '@/
 import { useProjects, type ProjectWithImages } from '@/hooks/useProjects';
 import { resolveImageUrl } from '@/lib/imageResolver';
 import { groupProjectMedia } from '@/lib/mediaGroups';
+import petPlayPalLogo from '@/assets/media/PlayPetPal__logo_color.webp.asset.json';
 import { Button } from '@/components/ui/button';
 import { ProjectMediaGroup } from '@/components/ProjectMediaGroup';
 import { PortfolioLightbox, type PortfolioSelection } from '@/components/PortfolioLightbox';
@@ -434,7 +435,7 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
     description: project.description,
     website_image: assetUrl(project.website_image) || fallback?.websiteImage || null,
   mobile_image: assetUrl(project.mobile_image) || fallback?.mobileImage || null,
-  logo: fallback?.logo || null,
+  logo: fallback?.logo || (project.slug === 'petplaypal' ? petPlayPalLogo.url : null),
     aspect_ratio: project.aspect_ratio || '16/9',
     colors: project.colors || fallback?.colors || null,
     images: projectImages.length > 0 ? projectImages : fallback?.images || [],
