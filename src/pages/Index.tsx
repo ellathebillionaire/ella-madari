@@ -354,6 +354,9 @@ const ProjectBlock = ({
                   onClick={() => onImageClick(project.mobile_image as string, project.name)}
                 />
               )}
+              {!hasBothScreens && (
+                <div className="min-w-[220px] flex-1 self-center">{logoBlock}</div>
+              )}
             </div>
             {colors.length > 0 && (
               <div className="pt-1">
