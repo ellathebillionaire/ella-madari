@@ -14,3 +14,8 @@
 - [x] Replace Tali Ter's incorrect logo media with the supplied actual logo.
 - [x] Audit every project's logo selection against supplied media and correct confirmed mismatches.
 - [x] Verify logo rendering and relevant tests.
+
+# SFD product kit cleanup
+
+- [x] Remove the two-dancers studio photo from SFD's "קיט המוצרים" section everywhere (database, CDN storage, migration record).
+- [x] Verify the section now shows only the two remaining product images.
