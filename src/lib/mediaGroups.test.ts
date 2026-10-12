@@ -18,9 +18,9 @@ describe('project media grouping', () => {
     expect(groupProjectMedia('unknown', ['/screen.png', '/custom.jpg', '/custom.jpg'], [], ['/screen.png']).flatMap((group) => group.images)).toEqual(['/custom.jpg']);
   });
 
-  it('does not mix Si Senora original photographs with AI campaign assets', () => {
-    const originals = '/SiSenora__historical_real_product_photo_provenance.jpg';
+  it('unifies Si Senora AI campaign and AI product media into one group', () => {
     const campaign = '/SiSenora__ai_campaign_collection_ladder_scene.png';
-    expect(groupProjectMedia('sisenora', [originals, campaign]).map((group) => group.images)).toEqual([[campaign], [originals]]);
+    const product = '/SiSenora__ai_product_detail_patterned_bag.png';
+    expect(groupProjectMedia('sisenora', [campaign, product]).map((group) => group.images)).toEqual([[campaign, product]]);
   });
 });

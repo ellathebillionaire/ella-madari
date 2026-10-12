@@ -20,10 +20,8 @@ const projectRules: Record<string, MediaGroupRule[]> = {
   ],
   sisenora: [
     { label: 'זהות המותג', match: /logo/i },
-    { label: 'קמפיין - נוצר ב-AI', match: /ai_campaign/ },
-    { label: 'תמונות מוצר - נוצרו ב-AI', match: /ai_product/ },
+    { label: 'תוצרים - נוצרו ב-AI', match: /ai_campaign|ai_product/ },
     { label: 'חלל מסחרי - נוצר ב-AI', match: /ai_retail/ },
-    { label: 'צילומי המקור', match: /historical_real/ },
   ],
   learnai: [
     { label: 'זהות המותג', match: /brand_logo/ },
