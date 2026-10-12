@@ -368,7 +368,7 @@ const ProjectBlock = ({
                 </div>
               </>
             )}
-            {leadGroup && <div className="grid grid-cols-2 sm:grid-cols-12">{renderGroup(leadGroup, true)}</div>}
+            {leadGroup && <div className="grid grid-cols-2 gap-x-3 sm:grid-cols-12 sm:gap-x-4">{renderGroup(leadGroup, leadGroup.images.length >= 3)}</div>}
           </div>
         );
 
@@ -403,10 +403,7 @@ const ProjectBlock = ({
                       </div>
                     )}
                     {colors.length > 0 && (
-                      <div>
-                        <SubLabel>צבעים</SubLabel>
-                        <PaletteDots colors={colors} />
-                      </div>
+                      <PaletteDots colors={colors} />
                     )}
                     {hasStory && <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />}
                     {hasBranding && (
