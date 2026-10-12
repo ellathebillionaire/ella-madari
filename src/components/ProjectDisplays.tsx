@@ -64,7 +64,8 @@ export const BrandingStory = ({
   process?: string;
 }) => {
   const [open, setOpen] = useState(false);
-  if (!values?.length && !process) return null;
+  void values;
+  if (!process) return null;
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
