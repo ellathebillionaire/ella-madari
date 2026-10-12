@@ -307,107 +307,137 @@ const ProjectBlock = ({
         )}
       </div>
 
-      {!hasDevices && logoBlock}
+      {(() => {
+        const hasStory = project.displayType === 'story' && (project.storyIntro || project.storySteps?.length);
+        const hasBranding = project.displayType === 'branding' && (project.values?.length || project.process);
+        const hasAside = Boolean(plainLogo || colors.length > 0 || hasStory || hasBranding);
+        const hasRebrandLogo = project.displayType === 'rebranding' && project.beforeLogo;
+        const showScreens = hasDevices && !isWebsiteRedesign;
+        const leadGroup = !showScreens && !isWebsiteRedesign && !hasRebrandLogo ? galleryGroups[0] : undefined;
+        const restGroups = leadGroup ? galleryGroups.slice(1) : galleryGroups;
 
-      {hasDevices && !isWebsiteRedesign && (
-        <>
-          <SubLabel>מסכים</SubLabel>
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-4 flex flex-row flex-wrap items-start gap-3 sm:mb-5 sm:gap-4"
-          >
-            <div className={`grid w-full min-w-0 items-center gap-3 sm:flex sm:flex-1 sm:flex-wrap sm:items-end ${hasBothScreens ? "grid-cols-[minmax(0,1fr)_auto]" : "grid-cols-2"}`}>
-              {project.website_image && (
-                <div className="min-w-0 flex-1 sm:min-w-[200px] md:max-w-md">
-                  <DesktopMockup
-                    image={project.website_image}
-                    name=""
+        const renderGroup = (group: typeof galleryGroups[number], full = false) => (
+          <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={full ? 'col-span-2 sm:col-span-12' : group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
+            {group.label ? <SubLabel>{group.label}</SubLabel> : null}
+            <ProjectMediaGroup
+              group={group}
+              name={project.name}
+              onOpen={(image) => onImageClick(image, `${project.name} - ${group.label}`, group.images)}
+            />
+          </section>
+        );
+
+        const main = (
+          <div className="min-w-0">
+            {hasRebrandLogo && logoBlock}
+            {showScreens && (
+              <>
+                <SubLabel>מסכים</SubLabel>
+                <div className={`grid min-w-0 items-end gap-3 sm:gap-4 ${project.website_image && project.mobile_image ? 'grid-cols-[minmax(0,1fr)_auto]' : 'grid-cols-1'}`}>
+                  {project.website_image && (
+                    <div className="min-w-0 md:max-w-lg">
+                      <DesktopMockup
+                        image={project.website_image}
+                        name=""
+                        aspectRatio={project.aspect_ratio}
+                        onClick={() => onImageClick(project.website_image as string, project.name)}
+                      />
+                    </div>
+                  )}
+                  {project.mobile_image && (
+                    <MobileMockup
+                      image={project.mobile_image}
+                      name=""
+                      onClick={() => onImageClick(project.mobile_image as string, project.name)}
+                    />
+                  )}
+                </div>
+              </>
+            )}
+            {isWebsiteRedesign && (
+              <>
+                <SubLabel>האתר</SubLabel>
+                <div className="max-w-xl">
+                  <WebsiteBeforeAfter
+                    beforeImage={project.beforeWebsite as string}
+                    afterImage={project.website_image as string}
+                    name={project.name}
                     aspectRatio={project.aspect_ratio}
-                    onClick={() => onImageClick(project.website_image as string, project.name)}
+                    onImageClick={(image) => onImageClick(image, project.name)}
                   />
                 </div>
-              )}
-              {project.mobile_image && (
-                <MobileMockup
-                  image={project.mobile_image}
-                  name=""
-                  onClick={() => onImageClick(project.mobile_image as string, project.name)}
-                />
-              )}
-              {plainLogo && (
-                <div className={`min-w-0 self-center [&_img]:max-w-full ${hasBothScreens ? "col-span-2 sm:col-span-1 sm:max-w-[200px]" : "flex-1 sm:min-w-[220px]"}`}>{logoBlock}</div>
-              )}
-            </div>
-            {(colors.length > 0 || (project.displayType === 'story' && (project.storyIntro || project.storySteps?.length))) && (
-              <div className="flex w-full flex-col items-end justify-center gap-4 self-stretch pt-1 sm:w-auto">
-                {colors.length > 0 && <PaletteDots colors={colors} />}
-                {project.displayType === 'story' && (project.storyIntro || project.storySteps?.length) && (
-                  <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />
+              </>
+            )}
+            {leadGroup && <div className="grid grid-cols-2 sm:grid-cols-12">{renderGroup(leadGroup, true)}</div>}
+          </div>
+        );
+
+        const hasMain = showScreens || isWebsiteRedesign || hasRebrandLogo || Boolean(leadGroup);
+
+        return (
+          <>
+            {(hasAside || hasMain) && (
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className={`mb-5 grid gap-5 sm:mb-6 sm:gap-8 ${hasAside && hasMain ? 'sm:grid-cols-[minmax(0,1fr)_220px]' : ''}`}
+              >
+                {hasMain && main}
+                {hasAside && (
+                  <aside className="order-first flex min-w-0 flex-col gap-5 sm:order-none" aria-label={`${project.name} - זהות`}>
+                    {plainLogo && (
+                      <div>
+                        <SubLabel>הלוגו</SubLabel>
+                        <div className="flex flex-wrap items-center gap-4">
+                          {[project.logo as string, ...(project.extraLogos || [])].map((src, index) => (
+                            <img
+                              key={src}
+                              src={src}
+                              alt={`${project.name} logo${index ? ` ${index + 1}` : ''}`}
+                              className={index ? 'max-h-12 w-auto max-w-[40%] object-contain' : 'max-h-20 w-auto max-w-full object-contain'}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {colors.length > 0 && (
+                      <div>
+                        <SubLabel>צבעים</SubLabel>
+                        <PaletteDots colors={colors} />
+                      </div>
+                    )}
+                    {hasStory && <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />}
+                    {hasBranding && (
+                      <div>
+                        <SubLabel>ערכים ותהליך</SubLabel>
+                        <BrandingStory name={project.name} values={project.values} process={project.process} />
+                      </div>
+                    )}
+                  </aside>
+                )}
+              </motion.div>
+            )}
+
+            {(restGroups.length > 0 || project.video) && (
+              <div className="grid grid-cols-2 items-start gap-x-3 gap-y-4 sm:grid-cols-12 sm:gap-x-4 sm:gap-y-5">
+                {restGroups.map((group) => renderGroup(group))}
+                {project.video && (
+                  <section aria-label={`${project.name} - אנימציה`} className="col-span-1 sm:col-span-4">
+                    <SubLabel>אנימציה</SubLabel>
+                    <ProjectMediaGroup
+                      group={{ label: 'אנימציה', images: [project.video] }}
+                      name={project.name}
+                      onOpen={(image) => onImageClick(image, project.name, [image])}
+                    />
+                  </section>
                 )}
               </div>
             )}
-          </motion.div>
-        </>
-      )}
-
-      {project.displayType === 'branding' && (project.values?.length || project.process) && (
-        <>
-          <SubLabel>ערכים ותהליך</SubLabel>
-          <BrandingStory name={project.name} values={project.values} process={project.process} />
-        </>
-      )}
-
-      {isWebsiteRedesign && (
-        <>
-          <SubLabel>האתר</SubLabel>
-          <div className="mb-6 max-w-xl sm:mb-8">
-            <WebsiteBeforeAfter
-              beforeImage={project.beforeWebsite as string}
-              afterImage={project.website_image as string}
-              name={project.name}
-              aspectRatio={project.aspect_ratio}
-              onImageClick={(image) => onImageClick(image, project.name)}
-            />
-          </div>
-        </>
-      )}
-
-      {!hasDevices && (colors.length > 0 || (project.displayType === 'story' && (project.storyIntro || project.storySteps?.length))) && (
-        <div className="mb-4 flex flex-col items-end gap-4 sm:mb-6">
-          {colors.length > 0 && <PaletteDots colors={colors} />}
-          {project.displayType === 'story' && (project.storyIntro || project.storySteps?.length) && (
-            <ProjectStory name={project.name} intro={project.storyIntro} steps={project.storySteps} />
-          )}
-        </div>
-      )}
-
-      {(project.images.length > 0 || project.video) && (
-        <div className="grid grid-cols-2 items-start gap-x-3 gap-y-4 sm:grid-cols-12 sm:gap-x-4 sm:gap-y-5">
-          {galleryGroups.map((group) => (
-            <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
-              {group.label ? <SubLabel>{group.label}</SubLabel> : null}
-              <ProjectMediaGroup
-                group={group}
-                name={project.name}
-                onOpen={(image) => onImageClick(image, `${project.name} - ${group.label}`, group.images)}
-              />
-            </section>
-          ))}
-          {project.video && (
-            <section aria-label={`${project.name} - אנימציה`} className="col-span-1 sm:col-span-4">
-              <SubLabel>אנימציה</SubLabel>
-              <ProjectMediaGroup
-                group={{ label: 'אנימציה', images: [project.video] }}
-                name={project.name}
-                onOpen={(image) => onImageClick(image, project.name, [image])}
-              />
-            </section>
-          )}
-        </div>
-      )}
+          </>
+        );
+      })()}
     </motion.div>
   );
 };
