@@ -71,6 +71,13 @@
       "when": 1791821672422,
       "tag": "0009_reorder_projects_strongest_first",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1791824892366,
+      "tag": "0010_remove_sfd_dancer_flatlay",
+      "breakpoints": true
     }
   ]
 }
