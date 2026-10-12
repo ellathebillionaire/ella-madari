@@ -324,7 +324,7 @@ const ProjectBlock = ({
         )}
       </div>
 
-      {!hasBothScreens && logoBlock}
+      {!hasDevices && logoBlock}
 
       {hasDevices && !isWebsiteRedesign && (
         <>
