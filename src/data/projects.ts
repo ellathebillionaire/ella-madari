@@ -429,6 +429,21 @@ export const projects: Project[] = [
     colors: ['#E8DCCB', '#1A1A1A', '#FFFFFF'],
     images: [],
   },
+  // Gazoz Patel - raspberry soda branding & packaging (gallery comes from the CMS)
+  {
+    slug: 'gazozpatel',
+    name: 'Gazoz Patel',
+    category: 'branding',
+    displayType: 'branding',
+    needsReview: true, // TODO Ella: תיאור וצבעים
+    description: 'מיתוג ואריזות למשקה גזוז פטל - מערכת פחיות, קמפיין וסושיאל',
+    logo: '',
+    heroImage: '',
+    bgColor: '#FBF3F5',
+    accentColor: '#D6336C',
+    colors: ['#D6336C', '#F8E1E7', '#1A1A1A'],
+    images: [],
+  },
 ];
 
 // ============ ADDITIONAL WORK (Websites only - Print section removed) ============
