@@ -21,7 +21,8 @@ import sfdRealHeroMobile from '@/assets/sfd/real-hero-mobile.jpg';
 
 // Meshek 27 - New organized assets
 import meshek27WallLogo from '@/assets/meshek27/wall-logo.png';
-import meshek27LogoClean from '@/assets/meshek27/logo-clean.jpg';
+import meshek27LogoAsset from '@/assets/media/Meshek27__final_logo_color.png.asset.json';
+const meshek27LogoClean = meshek27LogoAsset.url;
 import meshek27BrandingFull from '@/assets/meshek27/branding-full.jpg';
 import meshek27AppIcons from '@/assets/meshek27/app-icons.jpg';
 import meshek27BoxVegetables from '@/assets/meshek27/box-vegetables.jpg';
@@ -32,7 +33,8 @@ import meshek27BoxDesign from '@/assets/meshek27/box-design.jpg';
 
 // Si Señora
 import sisenoraWebsiteNew from "@/assets/sisenora-website-new.png";
-import sisenoraLogo from "@/assets/sisenora-logo-new.jpg";
+import sisenoraLogoAsset from '@/assets/media/SiSenora__brand_logo_transparent.png.asset.json';
+const sisenoraLogo = sisenoraLogoAsset.url;
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
 // Learn AI / DotAi
@@ -42,6 +44,7 @@ import learnaiPlatformHero from '@/assets/media/LearnAI__platform_hero_dotai_lea
 
 // Tali Ter - New organized assets
 import taliterBrandingSet from '@/assets/taliter/branding-set.jpg';
+import taliterFinalLogo from '@/assets/media/TaliTar__final_logo.webp.asset.json';
 import taliterWallSignage from '@/assets/taliter/wall-signage.jpg';
 import taliterBottleMockup from '@/assets/taliter/bottle-mockup.jpg';
 
@@ -52,7 +55,8 @@ import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 import ebriderMobile from "@/assets/ebrider-mobile.png";
 
 // Studio Alef
-import studioalefLogo from "@/assets/studioalef-logo.png";
+import studioalefLogoAsset from '@/assets/media/StudioAlef__logo_clean_presentation.webp.asset.json';
+const studioalefLogo = studioalefLogoAsset.url;
 import studioalefWallMockup from "@/assets/studioalef-wall-mockup.png";
 
 // SEN Jewelry
@@ -298,7 +302,7 @@ export const projects: Project[] = [
     description: 'מיתוג למאמנת בר',
     values: ['אנרגטי', 'אישי', 'מזמין'],
     process: 'זהות חמה וצבעונית שמדברת אימון אישי ולא מכון כושר תעשייתי - מותאמת לביגוד, שילוט ואריזות.',
-    logo: taliterBrandingSet,
+    logo: taliterFinalLogo.url,
     heroImage: taliterBrandingSet,
     bgColor: '#FFFBF5',
     accentColor: '#5CC8B5',
