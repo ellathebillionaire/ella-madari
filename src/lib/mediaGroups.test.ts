@@ -24,3 +24,16 @@ describe('project media grouping', () => {
     expect(groupProjectMedia('sisenora', [campaign, product]).map((group) => group.images)).toEqual([[campaign, product]]);
   });
 });
+describe('Aurel groups', () => {
+  it('puts model photos in their own campaign group, separate from product photos', () => {
+    const groups = groupProjectMedia('aurel', [
+      '/x/Aurel__lifestyle_model_portrait.jpg',
+      '/x/Aurel__atelier_client_consultation.jpg',
+      '/x/Aurel__product_ring_leather_hero.jpg',
+    ]);
+    expect(groups.map((g) => [g.label, g.items.length])).toEqual([
+      ['קמפיין צילום - נוצר ב-AI', 2],
+      ['תמונות מוצר - נוצרו ב-AI', 1],
+    ]);
+  });
+});
