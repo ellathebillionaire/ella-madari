@@ -73,7 +73,7 @@ const SectionTitle = ({
       <div className="rounded-xl bg-muted p-2.5 text-muted-foreground shadow-[0_2px_8px_-2px_hsl(var(--foreground)/0.06)] sm:rounded-2xl sm:p-3">
         {icon}
       </div>
-      <span className="text-[9px] font-medium uppercase tracking-[0.35em] text-muted-foreground/70 sm:text-[10px] sm:tracking-[0.4em]">
+      <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground/70 sm:text-[11px] sm:tracking-[0.12em]">
         {subtitle}
       </span>
     </div>
@@ -92,7 +92,7 @@ const SubLabel = ({ children }: { children: ReactNode }) => (
     transition={{ duration: 0.5, ease }}
     className="mb-2.5 flex items-center gap-3 sm:mb-3"
   >
-    <span className="shrink-0 text-[10px] font-medium tracking-[0.2em] text-muted-foreground/70 sm:text-[11px]">
+    <span className="shrink-0 text-[11px] font-medium tracking-[0.12em] text-muted-foreground/70 sm:text-[11px]">
       {children}
     </span>
     <span aria-hidden="true" className="h-px flex-1 bg-border" />
@@ -144,7 +144,7 @@ const DesktopMockup = ({
       </div>
     </div>
     {name && (
-      <p className="mt-3 text-center text-[10px] font-normal tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
+      <p className="mt-3 text-center text-[11px] font-normal tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
         {name}
       </p>
     )}
@@ -182,7 +182,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
       <div className="absolute bottom-2 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full bg-background/20 sm:w-12" />
     </div>
     {name && (
-      <p className="mt-3 text-center text-[10px] font-normal tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
+      <p className="mt-3 text-center text-[11px] font-normal tracking-wide text-muted-foreground sm:mt-4 sm:text-xs" dir="ltr">
         {name}
       </p>
     )}
@@ -191,7 +191,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
 
 const PaletteDots = ({ colors }: { colors: string[] }) => (
   <div className="flex flex-col items-end gap-2">
-    <span className="whitespace-nowrap text-[10px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
+    <span className="whitespace-nowrap text-[11px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
       צבעים
     </span>
     <div className="flex gap-2 sm:gap-2.5">
@@ -526,7 +526,7 @@ const Index = () => {
           className="sticky top-0 z-50 border-b border-border/60 bg-background/70 shadow-[0_1px_3px_hsl(var(--foreground)/0.04)] backdrop-blur-2xl"
         >
           <div className="mx-auto flex max-w-6xl items-center justify-center px-4 py-4 sm:px-6 sm:py-5 md:px-10">
-            <h1 className="text-xs font-medium tracking-[0.15em] text-foreground/90 sm:text-sm sm:tracking-[0.2em]">
+            <h1 className="text-xs font-medium tracking-[0.15em] text-foreground/90 sm:text-sm sm:tracking-[0.12em]">
               ELLA MADARI
             </h1>
           </div>
@@ -595,7 +595,7 @@ const Index = () => {
             >
               hello@ellamadari.com
             </a>
-            <span className="text-[9px] tracking-wider text-muted-foreground/60 sm:text-[10px]">
+            <span className="text-[11px] tracking-wider text-muted-foreground/60 sm:text-[11px]">
               © {new Date().getFullYear()} Ella Madari
             </span>
           </div>

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500&display=swap');
 
 /* Hide scrollbar for carousel */
 .scrollbar-hide {
@@ -118,7 +118,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     letter-spacing: 0;
     text-align: start;
     -webkit-font-smoothing: antialiased;
@@ -136,18 +136,18 @@
     @apply w-full py-24 md:py-40;
   }
 
-  /* ===== Fixed type scale (6 styles, max 3 weights: 400/500/700) ===== */
+  /* ===== Fixed type scale (6 styles, max 3 weights: 300/400/500) ===== */
   /* Headings: line-height 110-130% */
   .text-h1 {
-    @apply text-4xl sm:text-6xl md:text-7xl font-normal;
+    @apply text-4xl sm:text-5xl md:text-6xl font-light tracking-tight;
     line-height: 1.1;
   }
   .text-h2 {
-    @apply text-2xl md:text-4xl font-medium;
+    @apply text-2xl md:text-3xl font-normal tracking-tight;
     line-height: 1.2;
   }
   .text-section {
-    @apply text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground;
+    @apply text-xs font-medium tracking-[0.08em] text-muted-foreground;
     line-height: 1.3;
   }
   /* Body: >=16px, line-height 140-160% */
@@ -160,7 +160,7 @@
     line-height: 1.5;
   }
   .text-label {
-    @apply text-sm font-medium tracking-wide;
+    @apply text-sm font-medium;
     line-height: 1.2;
   }
 
