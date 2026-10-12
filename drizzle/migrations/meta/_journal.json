@@ -57,6 +57,13 @@
       "when": 1791810696489,
       "tag": "0007_replace_learnai_screens",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1791811084293,
+      "tag": "0008_replace_meshek27_logo_lossless",
+      "breakpoints": true
     }
   ]
 }
