@@ -279,6 +279,32 @@ const ProjectBlock = ({
   const hasDevices = Boolean(project.website_image || project.mobile_image);
   const colors = project.colors || [];
   const isWebsiteRedesign = project.displayType === 'website_redesign' && project.beforeWebsite && project.website_image;
+  const hasBothScreens = Boolean(project.website_image && project.mobile_image);
+
+  const logoBlock = (
+    <>
+      {project.displayType === 'rebranding' && project.beforeLogo && project.website_image && !isVideo(project.website_image) && (
+        <>
+          <SubLabel>הלוגו</SubLabel>
+          <RebrandCompare
+            beforeLogo={project.beforeLogo}
+            afterLogo={project.website_image}
+            changeReason={project.changeReason}
+          />
+        </>
+      )}
+      {project.displayType === 'rebranding' && project.beforeLogo && (!project.website_image || isVideo(project.website_image)) && project.images[0] && (
+        <>
+          <SubLabel>הלוגו</SubLabel>
+          <RebrandCompare
+            beforeLogo={project.beforeLogo}
+            afterLogo={project.images[0]}
+            changeReason={project.changeReason}
+          />
+        </>
+      )}
+    </>
+  );
 
   return (
     <motion.div
@@ -297,6 +323,8 @@ const ProjectBlock = ({
           <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{project.description}</p>
         )}
       </div>
+
+      {!hasBothScreens && logoBlock}
 
       {hasDevices && !isWebsiteRedesign && (
         <>
@@ -343,26 +371,7 @@ const ProjectBlock = ({
         </>
       )}
 
-      {project.displayType === 'rebranding' && project.beforeLogo && project.website_image && !isVideo(project.website_image) && (
-        <>
-          <SubLabel>הלוגו</SubLabel>
-          <RebrandCompare
-            beforeLogo={project.beforeLogo}
-            afterLogo={project.website_image}
-            changeReason={project.changeReason}
-          />
-        </>
-      )}
-      {project.displayType === 'rebranding' && project.beforeLogo && (!project.website_image || isVideo(project.website_image)) && project.images[0] && (
-        <>
-          <SubLabel>הלוגו</SubLabel>
-          <RebrandCompare
-            beforeLogo={project.beforeLogo}
-            afterLogo={project.images[0]}
-            changeReason={project.changeReason}
-          />
-        </>
-      )}
+      {hasBothScreens && logoBlock}
 
       {project.displayType === 'story' && (project.storyIntro || project.storySteps?.length) && (
         <>
