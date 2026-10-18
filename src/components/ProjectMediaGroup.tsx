@@ -1,3 +1,4 @@
+import LazyVideo from '@/components/LazyVideo';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { galleryColumns, type MediaGroup } from '@/lib/mediaGroups';
@@ -37,7 +38,7 @@ export function ProjectMediaGroup({ group, name, onOpen }: {
             <div className="relative rounded-[1.5rem] bg-gradient-to-b from-phone-frame to-phone-frame-soft p-[3px] shadow-[0_8px_30px_-8px_hsl(var(--foreground)/0.3)] transition-all duration-500 [@media(hover:hover)]:group-hover:-translate-y-2 sm:rounded-[2.5rem] sm:p-1">
               <div className="absolute left-1/2 top-2 z-10 h-4 w-14 -translate-x-1/2 rounded-full bg-phone-frame sm:h-5 sm:w-20" />
               <div className="aspect-[9/19.5] w-36 overflow-hidden rounded-[1.3rem] bg-card sm:w-32 sm:rounded-[2.25rem]">
-                <video src={image} autoPlay loop muted playsInline preload="metadata" className="h-full w-full object-cover object-top" />
+                <LazyVideo src={image} className="h-full w-full object-cover object-top" />
               </div>
             </div>
           </MotionButton>
@@ -64,7 +65,7 @@ export function ProjectMediaGroup({ group, name, onOpen }: {
           )}
         >
           {/\.(mp4|webm|mov)(\?|$)/i.test(image) ? (
-            <video src={image} autoPlay loop muted playsInline preload="metadata" className="h-full w-full object-contain sm:object-cover" />
+            <LazyVideo src={image} className="h-full w-full object-contain sm:object-cover" />
           ) : (
             <img src={image} alt={`${name} - ${group.label || name} - ${index + 1}`} className="h-full w-full object-contain sm:object-cover motion-reduce:transition-none" loading="lazy" decoding="async" />
           )}

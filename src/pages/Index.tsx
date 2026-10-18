@@ -1,3 +1,4 @@
+import LazyVideo from '@/components/LazyVideo';
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -131,7 +132,7 @@ const DesktopMockup = ({
       </div>
       <div className="overflow-hidden" style={{ aspectRatio }}>
         {isVideo(image) ? (
-          <video src={image} autoPlay loop muted playsInline preload="metadata" className="h-full w-full object-cover object-top" />
+          <LazyVideo src={image} className="h-full w-full object-cover object-top" />
         ) : (
         <img
           src={image}
@@ -168,7 +169,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
       </div>
       <div className="aspect-[9/19.5] w-36 overflow-hidden rounded-[1.3rem] bg-card sm:w-28 sm:rounded-[2.25rem] md:w-32">
         {isVideo(image) ? (
-          <video src={image} autoPlay loop muted playsInline preload="metadata" className="h-full w-full object-cover object-top" />
+          <LazyVideo src={image} className="h-full w-full object-cover object-top" />
         ) : (
         <img
           src={image}
