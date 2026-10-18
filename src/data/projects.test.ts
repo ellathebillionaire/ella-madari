@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { projects } from './projects';
-import taliLogo from '@/assets/media/TaliTar__final_logo.webp.asset.json';
+import taliLogo from '@/assets/media/TaliTer__logo_transparent.png';
 import meshekLogo from '@/assets/media/Meshek27__final_logo_color.png.asset.json';
 import siSenoraLogo from '@/assets/media/SiSenora__logo_clean_transparent.png';
 
 describe('portfolio logo assignments', () => {
   it('uses the supplied final Tali Ter logo rather than the branding collage', () => {
-    expect(projects.find((project) => project.slug === 'taliter')?.logo).toBe(taliLogo.url);
+    expect(projects.find((project) => project.slug === 'taliter')?.logo).toBe(taliLogo);
   });
 
   it('uses the full-quality supplied Meshek 27 logo', () => {

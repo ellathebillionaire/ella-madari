@@ -51,12 +51,12 @@ import learnaiPlatformHero from '@/assets/media/LearnAI__platform_hero_dotai_lea
 
 // Tali Ter - New organized assets
 import taliterBrandingSet from '@/assets/taliter/branding-set.jpg';
-import taliterFinalLogo from '@/assets/media/TaliTar__final_logo.webp.asset.json';
+import taliterFinalLogo from '@/assets/media/TaliTer__logo_transparent.png';
 import taliterWallSignage from '@/assets/taliter/wall-signage.jpg';
 import taliterBottleMockup from '@/assets/taliter/bottle-mockup.jpg';
 
 // EBrider
-import ebriderLogoNew from "@/assets/ebrider-logo-new.jpg";
+import ebriderLogoNew from "@/assets/media/EBrider__logo_transparent.png";
 import ebriderSymbol from "@/assets/ebrider-symbol.jpg";
 import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 import ebriderMobile from "@/assets/ebrider-mobile.png";
@@ -79,7 +79,7 @@ import aiCrisprLab from "@/assets/ai-crispr-lab.png";
 
 // Ascola Garden
 import ascolaWebsite from "@/assets/ascola/website-screen.png";
-import ascolaLogo from "@/assets/ascola/logo.jpg";
+import ascolaLogo from "@/assets/media/Ascola__logo_transparent.png";
 import ascolaBrandingMockup from "@/assets/ascola/branding-mockup.jpg";
 
 // NOMA - Custom dog collars brand (media served from CMS / CDN asset pointers)
@@ -316,11 +316,11 @@ export const projects: Project[] = [
     description: 'מיתוג למאמנת בר',
     values: ['אנרגטי', 'אישי', 'מזמין'],
     process: 'זהות חמה וצבעונית שמדברת אימון אישי ולא מכון כושר תעשייתי - מותאמת לביגוד, שילוט ואריזות.',
-    logo: taliterFinalLogo.url,
+    logo: taliterFinalLogo,
     heroImage: taliterBrandingSet,
     bgColor: '#FFFBF5',
     accentColor: '#5CC8B5',
-    colors: ['#DB6A2F', '#C7DBCF', '#FAFAF9'],
+    colors: ['#DB6A2F', '#C7DBCF', '#FAFAF9', '#1A1A1A'],
     images: [
       taliterBrandingSet,
       taliterWallSignage,
