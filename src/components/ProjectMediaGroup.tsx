@@ -28,9 +28,7 @@ export function ProjectMediaGroup({ group, name, onOpen }: {
           <MotionButton
             key={image}
             variant="ghost"
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={false}
             onClick={() => onOpen(image)}
             aria-label={`הגדלת ${name} - ${group.label} - ${index + 1}`}
             className="group h-auto p-0 hover:bg-transparent"
@@ -52,9 +50,7 @@ export function ProjectMediaGroup({ group, name, onOpen }: {
         <MotionButton
           key={image}
           variant="ghost"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial={false}
           transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.16) }}
           onClick={() => onOpen(image)}
           aria-label={`הגדלת ${name} - ${group.label || name} - ${index + 1}`}

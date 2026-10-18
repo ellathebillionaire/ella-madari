@@ -64,9 +64,7 @@ const SectionTitle = ({
   icon: ReactNode;
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 25 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
+    initial={false}
     transition={{ duration: 0.7, ease }}
     className="mb-6 border-t border-border pt-5 sm:mb-8 sm:pt-6"
   >
@@ -87,9 +85,7 @@ const SectionTitle = ({
 // Tiny in-project label so visitors always know what they are looking at.
 const SubLabel = ({ children }: { children: ReactNode }) => (
   <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
+    initial={false}
     transition={{ duration: 0.5, ease }}
     className="mb-2.5 flex items-center gap-3 sm:mb-3"
   >
@@ -114,9 +110,7 @@ const DesktopMockup = ({
   <MotionButton
     variant="ghost"
     aria-label={`הגדלת מסך ${name || "המחשב"}`}
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
+    initial={false}
     transition={{ duration: 0.6, ease }}
     onClick={onClick}
     className="group block h-auto w-full min-w-0 whitespace-normal p-0 hover:bg-transparent"
@@ -156,9 +150,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
   <MotionButton
     variant="ghost"
     aria-label={`הגדלת מסך ${name || "האייפון"}`}
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
+    initial={false}
     transition={{ duration: 0.6, ease }}
     onClick={onClick}
     className="group flex h-auto min-w-0 flex-col items-center whitespace-normal p-0 hover:bg-transparent"
@@ -199,9 +191,7 @@ const PaletteDots = ({ colors }: { colors: string[] }) => (
       {colors.map((color, index) => (
         <motion.div
           key={`${color}-${index}`}
-          initial={{ scale: 0, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
+          initial={false}
           transition={{ duration: 0.4, delay: index * 0.08, ease }}
           className="h-6 w-6 cursor-pointer rounded-full shadow-[0_2px_8px_-2px_hsl(var(--foreground)/0.15),inset_0_1px_2px_hsl(var(--background)/0.3)] ring-1 ring-foreground/5 transition-transform duration-300 hover:scale-110 sm:h-7 sm:w-7"
           style={{ backgroundColor: color }}
@@ -266,6 +256,8 @@ const ProjectBlock = ({
             {[project.logo as string, ...(project.extraLogos || [])].map((src, index) => (
               <img
                 key={src}
+                loading="lazy"
+                decoding="async"
                 src={src}
                 alt={`${project.name} logo${index ? ` ${index + 1}` : ''}`}
                 className={index ? "max-h-20 w-auto max-w-[45%] object-contain sm:max-h-16 sm:max-w-[140px]" : "max-h-28 w-auto max-w-full object-contain sm:max-h-20 sm:max-w-[240px]"}
@@ -279,9 +271,7 @@ const ProjectBlock = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
+      initial={false}
       transition={{ duration: 0.6 }}
       className="mb-12 min-w-0 sm:mb-14 last:mb-0"
       data-project={project.slug}
@@ -379,9 +369,7 @@ const ProjectBlock = ({
           <>
             {(hasAside || hasMain) && (
               <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                initial={false}
                 transition={{ duration: 0.5 }}
                 className={`mb-5 grid gap-5 sm:mb-6 sm:gap-8 ${hasAside && hasMain ? 'sm:grid-cols-[minmax(0,1fr)_220px]' : ''}`}
               >
@@ -395,6 +383,8 @@ const ProjectBlock = ({
                           {[project.logo as string, ...(project.extraLogos || [])].map((src, index) => (
                             <img
                               key={src}
+                loading="lazy"
+                decoding="async"
                               src={src}
                               alt={`${project.name} logo${index ? ` ${index + 1}` : ''}`}
                               className={index ? 'max-h-12 w-auto max-w-[40%] object-contain' : 'max-h-20 w-auto max-w-full object-contain'}
