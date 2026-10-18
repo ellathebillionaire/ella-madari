@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { projects } from './projects';
 import taliLogo from '@/assets/media/TaliTar__final_logo.webp.asset.json';
 import meshekLogo from '@/assets/media/Meshek27__final_logo_color.png.asset.json';
-import siSenoraLogo from '@/assets/media/SiSenora__brand_logo_transparent.png.asset.json';
+import siSenoraLogo from '@/assets/media/SiSenora__logo_clean_transparent.png';
 
 describe('portfolio logo assignments', () => {
   it('uses the supplied final Tali Ter logo rather than the branding collage', () => {
@@ -14,7 +14,7 @@ describe('portfolio logo assignments', () => {
   });
 
   it('uses the supplied Si Senora logo', () => {
-    expect(projects.find((project) => project.slug === 'sisenora')?.logo).toBe(siSenoraLogo.url);
+    expect(projects.find((project) => project.slug === 'sisenora')?.logo).toBe(siSenoraLogo);
   });
 
   it('does not assign a logo to BetterSeeds because Ella did not design one', () => {

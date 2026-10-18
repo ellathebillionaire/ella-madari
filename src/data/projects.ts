@@ -38,8 +38,7 @@ import meshek27BoxDesign from '@/assets/meshek27/box-design.jpg';
 
 // Si Señora
 import sisenoraWebsiteNew from "@/assets/sisenora-website-new.png";
-import sisenoraLogoAsset from '@/assets/media/SiSenora__brand_logo_transparent.png.asset.json';
-const sisenoraLogo = sisenoraLogoAsset.url;
+import sisenoraLogo from '@/assets/media/SiSenora__logo_clean_transparent.png';
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
 // Learn AI / DotAi

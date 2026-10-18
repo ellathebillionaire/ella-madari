@@ -1,3 +1,5 @@
+import siSenoraOriginalLogo from '@/assets/media/SiSenora__brand_logo_transparent.png.asset.json';
+import siSenoraCleanLogo from '@/assets/media/SiSenora__logo_clean_transparent.png';
 import betterseedsScientificPoster from '@/assets/media/BetterSeeds__agrinetica_scientific_poster_client_work.png.asset.json';
 import betterseedsScientificPosterMockup from '@/assets/media/BetterSeeds__scientific_poster_mockup.jpg';
 import betterseedsConferenceFlyer from '@/assets/media/BetterSeeds__conference_flyer_ongoing_client_work.png.asset.json';
@@ -8,6 +10,7 @@ import betterseedsMobileCapture from '@/assets/media/BetterSeeds__official_live_
 
 // Preserve CMS records while serving replacement media.
 const mediaReplacements: Record<string, string> = {
+  [siSenoraOriginalLogo.url]: siSenoraCleanLogo,
   [betterseedsConferenceFlyer.url]: betterseedsConferenceMockup,
   [betterseedsScientificPoster.url]: betterseedsScientificPosterMockup,
   '/assets/sfd/summer-course-2026.jpg': sfdSummerCourseCapture.url,
