@@ -9,8 +9,8 @@ const projectRules: Record<string, MediaGroupRule[]> = {
     { label: 'מדריך מידות', match: /size_chart/ },
   ],
   aurel: [
-    { label: 'עמודי האתר', match: /_page_desktop/ },
     { label: 'קמפיין צילום - נוצר ב-AI', match: /Aurel__(lifestyle_|atelier_client)/ },
+    { label: 'עמודי האתר', match: /_page_desktop/ },
     { label: 'תמונות מוצר - נוצרו ב-AI', match: /Aurel__(?!.*_page_desktop)(?!homepage)/ },
   ],
   betterseeds: [
