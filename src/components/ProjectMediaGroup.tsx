@@ -6,8 +6,9 @@ import { cn } from '@/lib/utils';
 
 const MotionButton = motion.create(Button);
 
-export function ProjectMediaGroup({ group, name, onOpen }: {
+export function ProjectMediaGroup({ group, name, onOpen, compact = false }: {
   group: MediaGroup;
+  compact?: boolean;
   name: string;
   onOpen: (image: string) => void;
 }) {
@@ -18,7 +19,7 @@ export function ProjectMediaGroup({ group, name, onOpen }: {
   // At most two rows: small counts stay on one row, larger ones split evenly across two.
   const count = group.images.length;
   const cols = galleryColumns(count);
-  const oddTail = count > 4 && count % 2 !== 0;
+  const oddTail = !compact && count > 4 && count % 2 !== 0;
   // Portrait page recordings (e.g. landing pages) play inside a phone frame, like the site screens.
   const isVid = (src: string) => /\.(mp4|webm|mov)(\?|$)/i.test(src);
   if (/דפי נחיתה/.test(group.label) && group.images.every(isVid)) {
@@ -45,7 +46,7 @@ export function ProjectMediaGroup({ group, name, onOpen }: {
     );
   }
   return (
-    <div className="grid gap-2.5 sm:gap-3" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+    <div className={cn("grid gap-2.5 sm:gap-3", compact && "grid-cols-3 sm:grid-cols-5")} style={compact ? undefined : { gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
       {group.images.map((image, index) => (
         <MotionButton
           key={image}

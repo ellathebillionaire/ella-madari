@@ -308,10 +308,11 @@ const ProjectBlock = ({
         const restGroups = leadGroup ? galleryGroups.slice(1) : galleryGroups;
 
         const renderGroup = (group: typeof galleryGroups[number], full = false, half = false) => (
-          <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={full ? 'col-span-2 sm:col-span-12' : half ? 'col-span-2 sm:col-span-7' : group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
+          <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={project.slug === 'betterseeds' && /נוצרו ב-AI/.test(group.label) ? 'col-span-2 w-full sm:col-span-12 sm:max-w-2xl' : full ? 'col-span-2 sm:col-span-12' : half ? 'col-span-2 sm:col-span-7' : group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
             {group.label ? <SubLabel>{group.label}</SubLabel> : null}
             <ProjectMediaGroup
               group={group}
+              compact={project.slug === 'betterseeds' && /נוצרו ב-AI/.test(group.label)}
               name={project.name}
               onOpen={(image) => onImageClick(image, `${project.name} - ${group.label}`, group.images)}
             />
