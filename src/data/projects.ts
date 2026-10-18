@@ -194,7 +194,7 @@ export const projects: Project[] = [
     storySteps: [
       {
         title: 'מיתוג',
-        text: 'קודם כל בנינו זהות מלאה - לוגו, פלטת צבעים (שחור, אפור כהה, לבן) וניסוח. הצבעים האלה הפכו אחר כך לקו המנחה של כל שלב בפרויקט.',
+        text: 'קודם כל בנינו זהות מלאה - לוגו, פלטת צבעים (שחור, אפור כהה, לבן שבור וכחול) וניסוח. הצבעים האלה הפכו אחר כך לקו המנחה של כל שלב בפרויקט.',
       },
       {
         title: 'ייבוא ממותג בתקציב מוגבל',
@@ -213,7 +213,7 @@ export const projects: Project[] = [
     heroImage: sfdRealHeroWeb,
     bgColor: '#F5F5F7',
     accentColor: '#1A1A1A',
-    colors: ['#1A1A1A', '#FFFFFF', '#4A5568'],
+    colors: ['#1A1A1A', '#FAFAF9', '#4A5568', '#5B6F8A'],
     images: [
       sfdMainLogo,
       sfdSecondaryLogo,
