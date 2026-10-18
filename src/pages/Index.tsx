@@ -1,3 +1,4 @@
+import { LearnAIAnimations } from '@/components/LearnAIAnimations';
 import LazyVideo from '@/components/LazyVideo';
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
@@ -368,6 +369,7 @@ const ProjectBlock = ({
 
         return (
           <>
+            {project.slug === 'learnai' && <LearnAIAnimations />}
             {(hasAside || hasMain) && (
               <motion.div
                 initial={false}
@@ -409,7 +411,7 @@ const ProjectBlock = ({
             {(restGroups.length > 0 || project.video) && (
               <div className="grid grid-cols-2 items-start gap-x-3 gap-y-4 sm:grid-cols-12 sm:gap-x-4 sm:gap-y-5">
                 {restGroups.map((group) => renderGroup(group))}
-                {project.video && (
+                {project.video && project.slug !== 'learnai' && (
                   <section aria-label={`${project.name} - אנימציה`} className="col-span-1 sm:col-span-4">
                     <SubLabel>אנימציה</SubLabel>
                     <ProjectMediaGroup
