@@ -1,3 +1,4 @@
+import { LogoImage } from '@/components/LogoImage';
 import { LearnAIAnimations } from '@/components/LearnAIAnimations';
 import LazyVideo from '@/components/LazyVideo';
 import { useMemo, useState } from 'react';
@@ -33,6 +34,7 @@ type DisplayProject = {
   mobile_image: string | null;
   logo?: string | null;
   extraLogos?: string[];
+  identityMarks?: string[];
   hiddenImages?: string[];
   aspect_ratio: string;
   colors: string[] | null;
@@ -220,6 +222,7 @@ const ProjectBlock = ({
     project.video,
     project.logo,
     ...(project.extraLogos || []),
+    ...(project.identityMarks || []),
     ...(project.hiddenImages || []),
   ]);
 
@@ -255,7 +258,7 @@ const ProjectBlock = ({
           {!hasBothScreens && <SubLabel>הלוגו</SubLabel>}
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             {[project.logo as string, ...(project.extraLogos || [])].map((src, index) => (
-              <img
+              <LogoImage
                 key={src}
                 loading="lazy"
                 decoding="async"
@@ -321,7 +324,7 @@ const ProjectBlock = ({
         );
 
         const main = (
-          <div className="min-w-0">
+          <div className="relative min-w-0">
             {hasRebrandLogo && logoBlock}
             {showScreens && (
               <>
@@ -362,10 +365,19 @@ const ProjectBlock = ({
               </>
             )}
             {leadGroup && <div className="grid grid-cols-2 gap-x-3 sm:grid-cols-12 sm:gap-x-4">{renderGroup(leadGroup, leadGroup.images.length >= 2, leadGroup.images.length === 1)}</div>}
+            {Boolean(project.identityMarks?.length) && (
+              <div aria-label={`${project.name} - סמלי המותג`} className="relative z-10 mt-2 flex items-end gap-3 sm:-mt-5 sm:me-5 sm:justify-end">
+                {project.identityMarks?.map((src, index) => (
+                  <button key={src} type="button" aria-label={`הגדלת סמל ${project.name} ${index + 1}`} onClick={() => onImageClick(src, `${project.name} - סמלי המותג`, project.identityMarks)} className={project.slug === 'meshek27' ? 'block h-24 w-52 overflow-hidden bg-transparent p-0 focus-visible:outline focus-visible:outline-2' : 'block h-20 w-20 bg-transparent p-0 focus-visible:outline focus-visible:outline-2'}>
+                    <LogoImage src={src} alt={`${project.name} - סמל ${index + 1}`} loading="lazy" decoding="async" className={project.slug === 'meshek27' ? 'h-full w-full object-cover' : 'h-full w-full object-contain'} />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         );
 
-        const hasMain = showScreens || isWebsiteRedesign || hasRebrandLogo || Boolean(leadGroup);
+        const hasMain = showScreens || isWebsiteRedesign || hasRebrandLogo || Boolean(leadGroup) || Boolean(project.identityMarks?.length);
 
         return (
           <>
@@ -384,7 +396,7 @@ const ProjectBlock = ({
                         <SubLabel>הלוגו</SubLabel>
                         <div className="flex flex-wrap items-center gap-4">
                           {[project.logo as string, ...(project.extraLogos || [])].map((src, index) => (
-                            <img
+                            <LogoImage
                               key={src}
                 loading="lazy"
                 decoding="async"
@@ -441,6 +453,7 @@ const fromStaticProject = (project: (typeof staticProjects)[number]): DisplayPro
   mobile_image: project.mobileImage || null,
   logo: project.logo || null,
   extraLogos: project.extraLogos,
+  identityMarks: project.identityMarks,
   hiddenImages: project.hiddenImages,
   aspect_ratio: '16/9',
   colors: project.colors || null,
@@ -477,6 +490,7 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
   mobile_image: assetUrl(project.mobile_image) || fallback?.mobileImage || null,
   logo: fallback?.logo || (project.slug === 'petplaypal' ? petPlayPalLogo.url : null),
     extraLogos: fallback?.extraLogos,
+    identityMarks: fallback?.identityMarks,
     hiddenImages: fallback?.hiddenImages,
     aspect_ratio: project.aspect_ratio || '16/9',
     colors: project.colors || fallback?.colors || null,

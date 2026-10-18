@@ -1,3 +1,4 @@
+import sfdDancerSymbol from '@/assets/media/SFD__rebrand_dancer_symbol.png.asset.json';
 import aurelStoneCluster from '@/assets/media/Aurel__select_your_stone_cluster.jpg.asset.json';
 import aurelCollectionFlatlay from '@/assets/media/Aurel__collection_flatlay_boxed.jpg.asset.json';
 import aurelRingPendantDetail from '@/assets/media/Aurel__product_detail_ring_pendant.jpg.asset.json';
@@ -110,6 +111,7 @@ export interface Project {
   logo: string;
   // Additional supplied logo versions shown beside the main logo
   extraLogos?: string[];
+  identityMarks?: string[];
   // Gallery items hidden because they duplicate a logo shown above
   hiddenImages?: string[];
   monogram?: string;
@@ -205,6 +207,7 @@ export const projects: Project[] = [
     ],
     logo: sfdLogoTransparent,
     extraLogos: [sfdShortLogo.url],
+    identityMarks: [sfdDancerSymbol.url],
     hiddenImages: [sfdFullLogoBoard.url],
     monogram: sfdSymbol,
     heroImage: sfdRealHeroWeb,
@@ -225,6 +228,7 @@ export const projects: Project[] = [
   // Meshek 27 - 6 images
   {
     slug: 'meshek27',
+    identityMarks: [meshek27AppIcons],
     name: 'משק 27',
     category: 'branding',
     displayType: 'branding',
@@ -326,6 +330,7 @@ export const projects: Project[] = [
   // EBrider - 3 images + mobile = 4 items
   {
     slug: 'ebrider',
+    identityMarks: [ebriderSymbol],
     name: 'EBrider',
     category: 'branding',
     displayType: 'website',

@@ -1,3 +1,4 @@
+import { LogoImage } from '@/components/LogoImage';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeftRight, Plus } from 'lucide-react';
@@ -139,8 +140,8 @@ export const RebrandCompare = ({
           <div className="mb-2 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.12em] text-muted-foreground/70 sm:text-[11px]">
             לפני
           </div>
-          <div className="flex aspect-square items-center justify-center overflow-hidden rounded-xl bg-muted p-6 shadow-inner sm:rounded-2xl sm:p-10">
-            <img src={beforeLogo} alt="לוגו קודם" className="max-h-full max-w-full object-contain opacity-80" loading="lazy" />
+          <div className="flex aspect-square items-center justify-center overflow-hidden bg-transparent p-6 sm:p-10">
+            <LogoImage src={beforeLogo} alt="לוגו קודם" className="max-h-full max-w-full object-contain opacity-80" loading="lazy" />
           </div>
         </div>
         <div>
@@ -148,8 +149,8 @@ export const RebrandCompare = ({
             <ArrowLeftRight className="h-3 w-3" />
             אחרי
           </div>
-          <div className="flex aspect-square items-center justify-center overflow-hidden rounded-xl bg-card p-6 shadow-[0_4px_20px_-4px_hsl(var(--foreground)/0.1)] sm:rounded-2xl sm:p-10">
-            <img src={afterLogo} alt="לוגו חדש" className="max-h-full max-w-full object-contain" loading="lazy" />
+          <div className="flex aspect-square items-center justify-center overflow-hidden bg-transparent p-6 sm:p-10">
+            <LogoImage src={afterLogo} alt="לוגו חדש" className="max-h-full max-w-full object-contain" loading="lazy" />
           </div>
         </div>
       </div>
