@@ -1,3 +1,7 @@
+import aurelStoneCluster from '@/assets/media/Aurel__select_your_stone_cluster.jpg.asset.json';
+import aurelCollectionFlatlay from '@/assets/media/Aurel__collection_flatlay_boxed.jpg.asset.json';
+import aurelRingPendantDetail from '@/assets/media/Aurel__product_detail_ring_pendant.jpg.asset.json';
+import aurelSketchProcess from '@/assets/media/Aurel__atelier_sketch_process.jpg.asset.json';
 import nomaLunaCollarCloseup from '@/assets/media/NOMA__product_closeup_luna_collar_tag.png.asset.json';
 // ============= BRANDING PROJECTS ============
 
@@ -399,6 +403,7 @@ export const projects: Project[] = [
   // Aurel Fine Jewelry - diamond & gemstone site from scratch (media comes from the CMS)
   {
     slug: 'aurel',
+    hiddenImages: [aurelStoneCluster.url, aurelCollectionFlatlay.url, aurelRingPendantDetail.url, aurelSketchProcess.url],
     name: 'Aurel Fine Jewelry',
     category: 'branding',
     displayType: 'story',
