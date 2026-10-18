@@ -1,3 +1,5 @@
+import betterseedsScientificPoster from '@/assets/media/BetterSeeds__agrinetica_scientific_poster_client_work.png.asset.json';
+import betterseedsScientificPosterMockup from '@/assets/media/BetterSeeds__scientific_poster_mockup.jpg';
 import betterseedsConferenceFlyer from '@/assets/media/BetterSeeds__conference_flyer_ongoing_client_work.png.asset.json';
 import betterseedsConferenceMockup from '@/assets/media/BetterSeeds__conference_flyer_mockup.jpg';
 import learnaiBrandLogo from '@/assets/media/LearnAI__brand_logo_full.jpg.asset.json';
@@ -7,6 +9,7 @@ import betterseedsMobileCapture from '@/assets/media/BetterSeeds__official_live_
 // Preserve CMS records while serving replacement media.
 const mediaReplacements: Record<string, string> = {
   [betterseedsConferenceFlyer.url]: betterseedsConferenceMockup,
+  [betterseedsScientificPoster.url]: betterseedsScientificPosterMockup,
   '/assets/sfd/summer-course-2026.jpg': sfdSummerCourseCapture.url,
   '/assets/videos/BetterSeeds__official_live_website_mobile_scroll_capture.mp4': betterseedsMobileCapture.url,
   '/__l5e/assets-v1/97820109-ead0-4366-8084-3d2e87370112/LearnAI__brand_logo_full.webp': learnaiBrandLogo.url,
