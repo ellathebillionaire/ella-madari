@@ -170,7 +170,7 @@ export const projects: Project[] = [
     heroImage: betterseedsHero,
     bgColor: '#F5F8F3',
     accentColor: '#3D7C3F',
-    colors: ['#3D7C3F', '#6AAF4A', '#FFFFFF'],
+    colors: ['#3D7C3F', '#6AAF4A', '#243F63', '#FFFFFF'],
     images: [
       betterseedsHero,
       aiGeneEditing,
@@ -241,7 +241,7 @@ export const projects: Project[] = [
     heroImage: meshek27BrandingFull,
     bgColor: '#F5F8F3',
     accentColor: '#4A7C3F',
-    colors: ['#4A7C3F', '#8BC34A', '#F5F5DC'],
+    colors: ['#3E6626', '#759827', '#FAFAF9'],
     images: [
       meshek27LogoClean,
       meshek27AppIcons,
@@ -320,7 +320,7 @@ export const projects: Project[] = [
     heroImage: taliterBrandingSet,
     bgColor: '#FFFBF5',
     accentColor: '#5CC8B5',
-    colors: ['#5CC8B5', '#F68B1F', '#FDF6E3'],
+    colors: ['#DB6A2F', '#C7DBCF', '#FAFAF9'],
     images: [
       taliterBrandingSet,
       taliterWallSignage,

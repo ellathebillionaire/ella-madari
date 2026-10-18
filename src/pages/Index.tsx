@@ -493,7 +493,7 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
     identityMarks: fallback?.identityMarks,
     hiddenImages: fallback?.hiddenImages,
     aspect_ratio: project.aspect_ratio || '16/9',
-    colors: project.slug === 'sfd' ? (fallback?.colors || project.colors || null) : (project.colors || fallback?.colors || null),
+    colors: ['sfd', 'meshek27', 'betterseeds', 'taliter'].includes(project.slug) ? (fallback?.colors || project.colors || null) : (project.colors || fallback?.colors || null),
     images: projectImages.length > 0 ? projectImages : fallback?.images || [],
     video: fallback?.video,
     needsReview: fallback?.needsReview,
