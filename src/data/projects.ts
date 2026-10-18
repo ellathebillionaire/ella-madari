@@ -1,3 +1,4 @@
+import nomaLunaCollarCloseup from '@/assets/media/NOMA__product_closeup_luna_collar_tag.png.asset.json';
 // ============= BRANDING PROJECTS ============
 
 // SFD - Strength For Dancers - New organized assets
@@ -383,6 +384,7 @@ export const projects: Project[] = [
         text: 'במקום צילומי סטודיו יקרים, ייצרתי סדרת דיוקנאות ותמונות לייף-סטייל ב-AI - כלבים מגזעים שונים עם הקולרים, שמאפשרת למותג להיראות גדול מיום ראשון.',
       },
     ],
+    hiddenImages: [nomaLunaCollarCloseup.url],
     logo: nomaLogoTagline.url,
     heroImage: nomaShopifyConfigurator.url,
     bgColor: '#F7F5F2',
