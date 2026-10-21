@@ -23,3 +23,7 @@
 - [ ] לוגואים לצד שמאל (ממתין להבהרה)
 - [x] SFD: סרטון גלילה של דף הנחיתה במסגרת טלפון
 - [x] שיפור מהירות האתר
+
+# Two-project desktop composition
+- [ ] Compact each project's opening and galleries to show two complete projects in one desktop viewport without hiding media.
+- [ ] Verify real project dimensions, media viewing, story dialogs, and narrow-screen overflow.
