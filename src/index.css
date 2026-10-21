@@ -366,3 +366,8 @@
   .showcase-devices { width: 100%; }
   .showcase-studio { gap: 10px; }
 }
+.showcase-devices .project-desktop > div { border: 6px solid #171717; border-bottom-width: 10px; border-radius: 14px 14px 4px 4px; box-shadow: 0 2px 5px #0002; }
+.showcase-devices .project-desktop > div > div:first-child { display: none; }
+.showcase-devices .project-desktop::after { content: ''; display: block; width: 106%; height: 8px; margin-left: -3%; border-radius: 1px 1px 60% 60%; background: linear-gradient(#dedede, #999 65%, #ddd); }
+.showcase-heading p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.showcase-details .project-heading { display: none; }

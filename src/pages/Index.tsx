@@ -590,7 +590,7 @@ const Index = () => {
         )}
       </AnimatePresence>
 
-      <div className="compact-portfolio min-h-screen bg-background">
+      <div className="min-h-screen bg-background">
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
