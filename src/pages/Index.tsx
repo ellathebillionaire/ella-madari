@@ -1,5 +1,5 @@
 import { LogoImage } from '@/components/LogoImage';
-import { LearnAIAnimations } from '@/components/LearnAIAnimations';
+import { LearnAIAvatars } from '@/components/LearnAIAvatars';
 import LazyVideo from '@/components/LazyVideo';
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
@@ -213,7 +213,7 @@ const ProjectBlock = ({
   onImageClick: (image: string, name: string, images?: string[]) => void;
 }) => {
   const hasDevices = Boolean(project.website_image || project.mobile_image);
-  const colors = project.colors || [];
+  const colors = project.slug === 'dresses2026' ? [] : (project.colors || []).map(color => ['#FAFAF9', '#F4F1EA', '#F5F5F0', '#F8FAFC', '#FDF6E3', '#F5F5DC', '#E8DCCB'].includes(color.toUpperCase()) ? '#FFFFFF' : color);
   const isWebsiteRedesign = project.displayType === 'website_redesign' && project.beforeWebsite && project.website_image;
   const hasBothScreens = Boolean(project.website_image && project.mobile_image);
   const galleryGroups = groupProjectMedia(project.slug, project.images, project.galleryGroups, [
@@ -283,7 +283,7 @@ const ProjectBlock = ({
       <div className="mb-3 sm:mb-4">
         <div className="flex items-start justify-between gap-3">
           <h3 className="flex flex-wrap items-center gap-y-2 text-2xl font-normal tracking-tight sm:text-3xl">
-            {project.name}
+            {project.slug === 'dresses2026' ? 'יצירת תמונות AI לעסקים' : project.name}
           </h3>
           {liveSites[project.slug] && (
             <a
@@ -298,18 +298,30 @@ const ProjectBlock = ({
           )}
         </div>
         {project.description && (
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">{project.description}</p>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">{project.slug === 'dresses2026' ? 'קמפיין הלבשה ותמונות מוצר על בסיס פריטי לבוש קיימים' : project.description}</p>
         )}
       </div>
 
       {(() => {
+        if (project.slug === 'dresses2026') {
+          return (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8" dir="rtl">
+              {galleryGroups.map(group => (
+                <section key={group.label} className="min-w-0" aria-label={group.label}>
+                  <SubLabel>{group.label}</SubLabel>
+                  <ProjectMediaGroup group={{ ...group, label: '' }} name={group.label} onOpen={image => onImageClick(image, group.label, group.images)} />
+                </section>
+              ))}
+            </div>
+          );
+        }
         const hasStory = project.displayType === 'story' && (project.storyIntro || project.storySteps?.length);
         const hasBranding = project.displayType === 'branding' && (project.values?.length || project.process);
         const hasAside = Boolean(plainLogo || colors.length > 0 || hasStory || hasBranding);
         const hasRebrandLogo = project.displayType === 'rebranding' && project.beforeLogo;
         const showScreens = hasDevices && !isWebsiteRedesign;
         const leadGroup = !showScreens && !isWebsiteRedesign && !hasRebrandLogo ? galleryGroups[0] : undefined;
-        const restGroups = leadGroup ? galleryGroups.slice(1) : galleryGroups;
+        const restGroups = (leadGroup ? galleryGroups.slice(1) : galleryGroups).filter(group => project.slug !== 'learnai' || group.label !== 'הדמות והבעות');
 
         const renderGroup = (group: typeof galleryGroups[number], full = false, half = false) => (
           <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={project.slug === 'betterseeds' && /נוצרו ב-AI/.test(group.label) ? 'col-span-2 w-full sm:col-span-12 sm:max-w-2xl' : full ? 'col-span-2 sm:col-span-12' : half ? 'col-span-2 sm:col-span-7' : group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
@@ -381,7 +393,6 @@ const ProjectBlock = ({
 
         return (
           <>
-            {project.slug === 'learnai' && <LearnAIAnimations />}
             {(hasAside || hasMain) && (
               <motion.div
                 initial={false}
@@ -420,6 +431,7 @@ const ProjectBlock = ({
               </motion.div>
             )}
 
+            {project.slug === 'learnai' && <LearnAIAvatars onOpen={(image, images) => onImageClick(image, project.name, images)} />}
             {(restGroups.length > 0 || project.video) && (
               <div className="grid grid-cols-2 items-start gap-x-3 gap-y-4 sm:grid-cols-12 sm:gap-x-4 sm:gap-y-5">
                 {restGroups.map((group) => renderGroup(group))}
@@ -486,15 +498,15 @@ const fromCmsProject = (project: ProjectWithImages): DisplayProject => {
     category: project.category,
     displayType: fallback?.displayType || 'website',
     description: project.description,
-    website_image: assetUrl(project.website_image) || fallback?.websiteImage || null,
-  mobile_image: assetUrl(project.mobile_image) || fallback?.mobileImage || null,
+    website_image: project.slug === 'petplaypal' ? fallback?.websiteImage || null : assetUrl(project.website_image) || fallback?.websiteImage || null,
+  mobile_image: project.slug === 'petplaypal' ? fallback?.mobileImage || null : assetUrl(project.mobile_image) || fallback?.mobileImage || null,
   logo: fallback?.logo || (project.slug === 'petplaypal' ? petPlayPalLogo.url : null),
     extraLogos: fallback?.extraLogos,
     identityMarks: fallback?.identityMarks,
     hiddenImages: fallback?.hiddenImages,
-    aspect_ratio: project.aspect_ratio || '16/9',
+    aspect_ratio: project.slug === 'petplaypal' ? '16/10' : project.aspect_ratio || '16/9',
     colors: ['sfd', 'meshek27', 'betterseeds', 'taliter'].includes(project.slug) ? (fallback?.colors || project.colors || null) : (project.colors || fallback?.colors || null),
-    images: projectImages.length > 0 ? projectImages : fallback?.images || [],
+    images: project.slug === 'petplaypal' ? [...(fallback?.images || []), ...projectImages.filter(image => !isVideo(image))] : projectImages.length > 0 ? projectImages : fallback?.images || [],
     video: fallback?.video,
     needsReview: fallback?.needsReview,
     values: fallback?.values,

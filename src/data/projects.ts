@@ -1,3 +1,7 @@
+import petDesktopCurrent from '@/assets/media/PlayPetPal__website_desktop_current.jpg';
+import petMobileCurrent from '@/assets/media/PlayPetPal__website_mobile_current.jpg';
+import petFeaturesCurrent from '@/assets/media/PlayPetPal__website_section_features_current.jpg';
+import petLogoCurrent from '@/assets/media/PlayPetPal__logo_color.webp.asset.json';
 import sfdDancerSymbol from '@/assets/media/SFD__rebrand_dancer_symbol.png.asset.json';
 import aurelStoneCluster from '@/assets/media/Aurel__select_your_stone_cluster.jpg.asset.json';
 import aurelCollectionFlatlay from '@/assets/media/Aurel__collection_flatlay_boxed.jpg.asset.json';
@@ -450,6 +454,21 @@ export const projects: Project[] = [
     accentColor: '#1A1A1A',
     colors: ['#E8DCCB', '#1A1A1A', '#FFFFFF'],
     images: [],
+  },
+  {
+    slug: 'petplaypal',
+    name: 'Play Pet Pal',
+    category: 'website',
+    displayType: 'website',
+    description: 'עיצוב ובניית אתר מכירה לצעצועים אינטראקטיביים לחיות מחמד',
+    logo: petLogoCurrent.url,
+    heroImage: petDesktopCurrent,
+    bgColor: '#FFFFFF',
+    accentColor: '#10B3C7',
+    colors: ['#10B3C7', '#F97316', '#1E2A44'],
+    websiteImage: petDesktopCurrent,
+    mobileImage: petMobileCurrent,
+    images: [petFeaturesCurrent],
   },
 ];
 

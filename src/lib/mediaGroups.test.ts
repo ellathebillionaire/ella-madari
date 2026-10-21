@@ -9,9 +9,14 @@ describe('project media grouping', () => {
     expect(groups.map((group) => group.images)).toEqual([portraits, [outdoor]]);
   });
 
-  it('renders Dresses as one flat compact gallery without topic labels', () => {
-    const images = ['/Dresses2026__ai_studio_a.webp', '/Dresses2026__ai_outdoor_a.webp', '/Dresses2026__white_background_product_a.webp', '/Dresses2026__ai_studio_b.webp'];
-    expect(groupProjectMedia('dresses2026', images)).toEqual([{ label: '', images }]);
+  it('separates white studio fashion and product images, excluding outdoor shoots', () => {
+    const studio = '/Dresses2026__ai_studio_model_floral_mini_dress.webp';
+    const product = '/Dresses2026__white_background_product_floral_mini_dress.webp';
+    const outdoor = '/Dresses2026__ai_outdoor_model_floral_mini_dress.webp';
+    expect(groupProjectMedia('dresses2026', [outdoor, product, studio])).toEqual([
+      { label: 'קמפיין הלבשה ב־AI', images: [studio] },
+      { label: 'תמונות מוצר בסטודיו', images: [product] },
+    ]);
   });
 
   it('keeps any gallery within two rows', () => {

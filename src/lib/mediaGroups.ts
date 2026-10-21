@@ -56,6 +56,7 @@ const projectRules: Record<string, MediaGroupRule[]> = {
     { label: 'עיצובי הדפסים', match: /quote_print/ },
   ],
   petplaypal: [
+    { label: 'עיצוב האתר — יתרונות המוצר', match: /website_section_/ },
     { label: 'זהות המותג', match: /logo/ },
     { label: 'עיצוב הדמויות', match: /character_/ },
     { label: 'אריזות', match: /packaging/ },
@@ -72,7 +73,7 @@ const sharedRules: MediaGroupRule[] = [
 ];
 
 // Flat compact galleries: the whole project renders as one small-image grid, no topic labels.
-const flatProjects = new Set(['dresses2026']);
+const flatProjects = new Set<string>();
 
 /** Cap any gallery at two rows: small counts keep one row, larger counts split evenly. */
 export const galleryColumns = (count: number) => (count <= 4 ? count : Math.ceil(count / 2));
@@ -84,6 +85,13 @@ export function groupProjectMedia(
   overrides: MediaGroupRule[] = [],
   excludedImages: (string | null | undefined)[] = [],
 ): MediaGroup[] {
+  if (slug === 'dresses2026') {
+    const unique = [...new Set(images)].filter(image => !excludedImages.includes(image));
+    return [
+      { label: 'קמפיין הלבשה ב־AI', images: unique.filter(image => /Dresses2026__ai_studio_model_/i.test(image)) },
+      { label: 'תמונות מוצר בסטודיו', images: unique.filter(image => /Dresses2026__white_background_product_/i.test(image)) },
+    ].filter(group => group.images.length > 0);
+  }
   const excluded = new Set(excludedImages.filter(Boolean));
   const visible = [...new Set(images)].filter((image) => !excluded.has(image));
   if (flatProjects.has(slug)) {
