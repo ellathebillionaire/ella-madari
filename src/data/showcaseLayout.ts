@@ -104,7 +104,7 @@ export const showcaseLayouts: Record<string, ShowcaseLayout> = {
   ascola: {
     description: 'לוגו ואתר תדמית למתחם אירועים טוסקני',
     tags: 'לוגו · אתר תדמית',
-    main: ['devices', { img: /branding-mockup/, ar: 2 * tall }],
+    main: ['devices', { img: /branding-mockup/, ar: tall }, { img: /Ascola__logo/, ar: tall }],
   },
   petplaypal: {
     description: 'דמויות, אריזה ודף מכירה לצעצוע לחיות מחמד',

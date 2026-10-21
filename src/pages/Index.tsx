@@ -196,7 +196,7 @@ const ProjectBlock = ({ project, index, onImageClick }: {
     ...(project.extraLogos || []), ...(project.identityMarks || []), ...(project.hiddenImages || []),
   ]);
   const pool = [...new Set([...groups.flatMap(group => group.images), ...project.images])].filter(src => !isVideo(src));
-  const find = (match: RegExp) => pool.find(src => match.test(decodeURIComponent(src)));
+  const find = (match: RegExp) => [...pool, project.logo].find(src => src && match.test(decodeURIComponent(src))) || undefined;
   const screen = (layout?.screen && find(layout.screen)) || project.website_image;
   const hasScreens = Boolean(screen);
   const slots = (layout?.main || (hasScreens ? ['devices' as const] : [{ img: /./, ar: 1.4 }]))
@@ -227,8 +227,11 @@ const ProjectBlock = ({ project, index, onImageClick }: {
     if (img?.naturalWidth && img.naturalHeight && !ratios[src]) setRatios(prev => prev[src] ? prev : { ...prev, [src]: img.naturalWidth / img.naturalHeight });
   };
   const open = (src: string) => onImageClick(src, project.name, allMedia);
+  // The strip never stands taller than ~2/3 of the opening: short strips crop wider instead.
+  const stripSum = topics.reduce((sum, topic) => sum + (topic.images.some(isBoardPiece) ? 1.4 : topic.images.reduce((t, src) => t + ratio(src), 0)), 0);
+  const widen = Math.max(1, 3.4 / (stripSum || 1));
   const stripItem = (src: string) => (
-    <button type="button" key={src} onClick={() => open(src)} className={`strip-item ${isCutoutAsset(src) ? 'is-cutout' : ''}`} style={{ flexGrow: ratio(src), aspectRatio: String(ratio(src)) }} aria-label={`הגדלת עבודה — ${project.name}`}>
+    <button type="button" key={src} onClick={() => open(src)} className={`strip-item ${isCutoutAsset(src) ? 'is-cutout' : ''}`} style={{ flexGrow: ratio(src) * widen, aspectRatio: String(ratio(src) * widen) }} aria-label={`הגדלת עבודה — ${project.name}`}>
       {isVideo(src) ? <video src={src} muted playsInline preload="metadata" /> : <img ref={img => record(src, img)} src={src} alt={`${project.name} — עבודה`} loading="lazy" decoding="async" onLoad={event => record(src, event.currentTarget)} />}
     </button>
   );
@@ -268,12 +271,12 @@ const ProjectBlock = ({ project, index, onImageClick }: {
         <div className="showcase-strip" dir="rtl">
           {topics.map(topic => {
             const cluster = topic.images.some(isBoardPiece);
-            const grow = cluster ? 1.4 : topic.images.reduce((sum, src) => sum + ratio(src), 0);
+            const grow = (cluster ? 1.4 : topic.images.reduce((sum, src) => sum + ratio(src), 0)) * widen;
             return (
               <section key={topic.label} className="strip-topic" style={{ flexGrow: grow }} aria-label={`${project.name} - ${topic.label}`}>
                 <h3><span>{topic.label}</span></h3>
                 {cluster ? (
-                  <div className="strip-cluster" style={{ gridTemplateColumns: `repeat(${Math.ceil(topic.images.length / 2)}, minmax(0, 1fr))` }}>
+                  <div className="strip-cluster" style={{ aspectRatio: String(1.4 * widen), gridTemplateColumns: `repeat(${Math.ceil(topic.images.length / 2)}, minmax(0, 1fr))` }}>
                     {topic.images.map(src => <button type="button" key={src} onClick={() => open(src)} aria-label={`הגדלת עבודה — ${project.name}`}><img src={src} alt={`${project.name} — ${topic.label}`} loading="lazy" decoding="async" /></button>)}
                   </div>
                 ) : <div className="strip-items" dir="ltr">{[...topic.images].reverse().map(stripItem)}</div>}
