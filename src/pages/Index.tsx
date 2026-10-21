@@ -1,6 +1,7 @@
 import { isCutoutAsset } from '@/data/cutoutAssets';
 import { LogoImage } from '@/components/LogoImage';
-import { LearnAIAvatars } from '@/components/LearnAIAvatars';
+import { LearnAIAvatars, learnAIAvatars } from '@/components/LearnAIAvatars';
+import { showcaseLayouts, showcaseOrder, stripLabel } from '@/data/showcaseLayout';
 import LazyVideo from '@/components/LazyVideo';
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
@@ -55,6 +56,8 @@ type DisplayProject = {
 const MotionButton = motion.create(Button);
 
 const isVideo = (url?: string | null) => Boolean(url && /\.(mp4|webm|mov)(\?|$)/i.test(url));
+// Pieces cut from one brand board stay grouped in that board's slot.
+const isBoardPiece = (src: string) => isCutoutAsset(src) && /brand_system_overview|brand_board/.test(src);
 
 const assetUrl = (url: string | null | undefined) => resolveImageUrl(url) || url || null;
 
@@ -178,67 +181,107 @@ const PaletteDots = ({ colors }: { colors: string[] }) => (
   </div>
 );
 
-// Each opening is curated from the project's own visible media; the complete work stays in details.
-const ProjectBlock = ({ project, onImageClick }: {
+// Each opening follows the approved reference: header, identity aside beside the main visual,
+// then a single strip of labelled topics. The complete work stays in details.
+const ProjectBlock = ({ project, index, onImageClick }: {
   project: DisplayProject;
+  index: number;
   onImageClick: (image: string, name: string, images?: string[]) => void;
 }) => {
   const [expanded, setExpanded] = useState(false);
+  const [ratios, setRatios] = useState<Record<string, number>>({});
+  const layout = showcaseLayouts[project.slug];
   const groups = groupProjectMedia(project.slug, project.images, project.galleryGroups, [
     project.website_image, project.mobile_image, project.logo, project.video,
     ...(project.extraLogos || []), ...(project.identityMarks || []), ...(project.hiddenImages || []),
   ]);
-  const candidates = groups.filter(group => !/זהות המותג|הדמות והבעות|מדריך מידות/.test(group.label)).flatMap(group => group.images).filter(src => !isVideo(src));
-  const preferred: Record<string, RegExp> = {
-    noma: /ai_dog_portrait/, aurel: /lifestyle_|atelier_client/,
-    taliter: /studio_mockup|wall/, meshek27: /box|signage/,
-    sisenora: /ai_campaign|ai_retail/, ebrider: /hero_product|mockup-hero/,
-  };
-  const hero = candidates.find(src => preferred[project.slug]?.test(src)) || candidates[0];
-  const supporting = candidates.filter(src => src !== hero).slice(0, 2);
-  const screensLead = Boolean(project.website_image) && !['noma', 'aurel', 'taliter', 'meshek27', 'sisenora'].includes(project.slug);
+  const pool = [...new Set([...groups.flatMap(group => group.images), ...project.images])].filter(src => !isVideo(src));
+  const find = (match: RegExp) => pool.find(src => match.test(decodeURIComponent(src)));
+  const screen = (layout?.screen && find(layout.screen)) || project.website_image;
+  const hasScreens = Boolean(screen);
+  const slots = (layout?.main || (hasScreens ? ['devices' as const] : [{ img: /./, ar: 1.4 }]))
+    .map(slot => slot === 'devices' ? (hasScreens ? slot : null)
+      : 'stack' in slot ? { ...slot, srcs: slot.stack.map(find).filter(Boolean) as string[] }
+      : { ...slot, srcs: [find(slot.img)].filter(Boolean) as string[] })
+    .filter(slot => slot && (slot === 'devices' || slot.srcs.length > 0));
+  const used = new Set(slots.flatMap(slot => slot && slot !== 'devices' ? slot.srcs : []));
+  if (screen) used.add(screen);
+  const merged = new Map<string, string[]>();
+  if (project.slug === 'learnai') merged.set('הדמויות', learnAIAvatars);
+  for (const group of groups) {
+    const label = stripLabel(group.label, layout);
+    if (layout?.dropTopics?.test(label)) continue;
+    const images = group.images.filter(src => !used.has(src));
+    if (images.length) merged.set(label, [...new Set([...(merged.get(label) || []), ...images])]);
+  }
+  if (project.slug === 'studioalef' && project.logo) merged.set('הלוגו', [project.logo]);
+  const rank = (label: string) => { const i = layout?.order?.findIndex(match => match.test(label)) ?? -1; return i < 0 ? 99 : i; };
+  const topics = [...merged].map(([label, images]) => ({ label, images })).sort((a, b) => rank(a.label) - rank(b.label))
+    .map(topic => ({ ...topic, images: topic.images.slice(0, topic.label === 'הדמויות' && project.slug === 'learnai' ? 6 : topic.images.some(isBoardPiece) ? undefined : 4) }));
+  const allMedia = [...used, ...topics.flatMap(topic => topic.images)].filter(src => !isVideo(src));
   const colors = project.slug === 'dresses2026' ? [] : (project.colors || []).map(color => ['#FAFAF9', '#F4F1EA', '#F5F5F0', '#F8FAFC', '#FDF6E3', '#F5F5DC', '#E8DCCB'].includes(color.toUpperCase()) ? '#FFFFFF' : color);
-  const title = project.slug === 'dresses2026' ? 'יצירת תמונות AI לעסקים' : project.name;
-  const imageTile = (src: string, className = '') => (
-    <button type="button" key={src} onClick={() => onImageClick(src, project.name, candidates)} className={`showcase-tile ${isCutoutAsset(src) ? 'cutout-asset-tile' : ''} ${className}`} aria-label={`הגדלת עבודה — ${project.name}`}>
-      <img src={src} alt={`${project.name} — עבודה נבחרת`} loading="lazy" decoding="async" />
+  const title = layout?.title || project.name;
+  // Clamped so a long scroll capture or a thin banner cannot collapse its row.
+  const ratio = (src: string) => isVideo(src) ? 0.75 : Math.min(2.6, Math.max(0.5, ratios[src] || 1));
+  const record = (src: string, img: HTMLImageElement | null) => {
+    if (img?.naturalWidth && img.naturalHeight && !ratios[src]) setRatios(prev => prev[src] ? prev : { ...prev, [src]: img.naturalWidth / img.naturalHeight });
+  };
+  const open = (src: string) => onImageClick(src, project.name, allMedia);
+  const stripItem = (src: string) => (
+    <button type="button" key={src} onClick={() => open(src)} className={`strip-item ${isCutoutAsset(src) ? 'is-cutout' : ''}`} style={{ flexGrow: ratio(src), aspectRatio: String(ratio(src)) }} aria-label={`הגדלת עבודה — ${project.name}`}>
+      {isVideo(src) ? <video src={src} muted playsInline preload="metadata" /> : <img ref={img => record(src, img)} src={src} alt={`${project.name} — עבודה`} loading="lazy" decoding="async" onLoad={event => record(src, event.currentTarget)} />}
     </button>
   );
   return (
     <article id={`project-${project.slug}`} data-project={project.slug} className="showcase-project">
       <header className="showcase-heading" dir="rtl">
+        <span className="showcase-index">{String(index + 1).padStart(2, '0')}</span>
         <h2>{title}</h2>
-        {project.description && <p>{project.slug === 'dresses2026' ? 'קמפיין הלבשה ותמונות מוצר על בסיס פריטי לבוש קיימים' : project.description}</p>}
+        <p>{layout?.description || project.description}</p>
+        {liveSites[project.slug] && <a className="showcase-link" href={liveSites[project.slug]} target="_blank" rel="noopener noreferrer">לצפייה באתר ↗</a>}
       </header>
       <div className="showcase-layout" dir="ltr">
-        <aside className="showcase-identity" aria-label={`${project.name} — זהות המותג`}>
-          {liveSites[project.slug] && <a className="showcase-link" href={liveSites[project.slug]} target="_blank" rel="noopener noreferrer">לצפייה באתר ↗</a>}
-          {project.logo && <LogoImage src={project.logo} alt={`${project.name} — לוגו`} className="showcase-logo" loading="lazy" />}
+        <aside className="showcase-identity" dir="rtl" aria-label={`${project.name} — זהות המותג`}>
+          {project.logo && !layout?.wordmark ? <LogoImage src={project.logo} alt={`${project.name} — לוגו`} className="showcase-logo" loading="lazy" /> : <p className="showcase-wordmark">{title}</p>}
           {colors.length > 0 && <div className="showcase-colors" aria-label="פלטת צבעים">{colors.map((color, i) => <span key={`${color}-${i}`} style={{ backgroundColor: color }} title={color} />)}</div>}
-          {Boolean(project.identityMarks?.length) && <div className="showcase-marks">{project.identityMarks?.map(src => <LogoImage key={src} src={src} alt={`${project.name} — סמל המותג`} loading="lazy" />)}</div>}
-          <p className="showcase-category" dir="rtl">{project.category}</p>
+          {layout?.tags && <p className="showcase-category">{layout.tags}</p>}
           <button type="button" className="showcase-link showcase-more" aria-expanded={expanded} aria-controls={`details-${project.slug}`} onClick={() => setExpanded(!expanded)}>על הפרויקט {expanded ? '−' : '+'}</button>
         </aside>
-        <div className={`showcase-composition ${screensLead ? 'showcase-with-screens' : ''}`}>
-          {project.slug === 'dresses2026' ? (
-            <div className="showcase-studio" dir="rtl">{groups.map(group => <section key={group.label}><h3>{group.label}</h3><div>{group.images.slice(0, 3).map(src => imageTile(src))}</div></section>)}</div>
-          ) : screensLead ? (
-            <>
-              {supporting.length > 0 && <div className="showcase-support">{(project.slug === 'sfd' ? [...candidates.filter(src => /bands|flatlay|kit_/i.test(src)), ...supporting].filter((src, i, all) => all.indexOf(src) === i).slice(0, 2) : supporting).map(src => imageTile(src))}</div>}
-              <div className="showcase-devices">
-                <DesktopMockup image={project.website_image as string} name="" aspectRatio={project.aspect_ratio} onClick={() => onImageClick(project.website_image as string, project.name)} />
-                {project.mobile_image && <div className="showcase-phone"><MobileMockup image={project.mobile_image} name="" onClick={() => onImageClick(project.mobile_image as string, project.name)} /></div>}
-              </div>
-            </>
-          ) : (
-            <>
-              {supporting.length > 0 && <div className="showcase-support">{supporting.map(src => imageTile(src))}</div>}
-              {hero ? imageTile(hero, 'showcase-hero') : project.website_image ? <DesktopMockup image={project.website_image} name="" onClick={() => onImageClick(project.website_image as string, project.name)} /> : null}
-            </>
-          )}
+        <div className="showcase-composition">
+          {slots.map((slot, i) => slot === 'devices' ? (
+            <div key="devices" className={`showcase-devices ${i === 0 ? 'phone-right' : ''}`}><div className="showcase-devices-inner">
+              <DesktopMockup image={screen as string} name="" aspectRatio={project.aspect_ratio} onClick={() => onImageClick(screen as string, project.name)} />
+              {project.mobile_image && <div className="showcase-phone"><MobileMockup image={project.mobile_image} name="" onClick={() => onImageClick(project.mobile_image as string, project.name)} /></div>}
+            </div></div>
+          ) : slot && (
+            <div key={i} className={`showcase-slot ${slot.srcs.length > 1 ? 'is-stack' : ''}`} style={{ aspectRatio: String(slot.ar) }}>
+              {slot.srcs.map(src => (
+                <button type="button" key={src} onClick={() => open(src)} className={`showcase-tile ${isCutoutAsset(src) ? 'cutout-asset-tile' : ''}`} aria-label={`הגדלת עבודה — ${project.name}`}>
+                  <img src={src} alt={`${project.name} — עבודה נבחרת`} loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
-      {project.slug === 'learnai' && <LearnAIAvatars onOpen={(image, images) => onImageClick(image, project.name, images)} />}
+      {topics.length > 0 && (
+        <div className="showcase-strip" dir="rtl">
+          {topics.map(topic => {
+            const cluster = topic.images.some(isBoardPiece);
+            const grow = cluster ? 1.4 : topic.images.reduce((sum, src) => sum + ratio(src), 0);
+            return (
+              <section key={topic.label} className="strip-topic" style={{ flexGrow: grow }} aria-label={`${project.name} - ${topic.label}`}>
+                <h3><span>{topic.label}</span></h3>
+                {cluster ? (
+                  <div className="strip-cluster" style={{ gridTemplateColumns: `repeat(${Math.ceil(topic.images.length / 2)}, minmax(0, 1fr))` }}>
+                    {topic.images.map(src => <button type="button" key={src} onClick={() => open(src)} aria-label={`הגדלת עבודה — ${project.name}`}><img src={src} alt={`${project.name} — ${topic.label}`} loading="lazy" decoding="async" /></button>)}
+                  </div>
+                ) : <div className="strip-items" dir="ltr">{[...topic.images].reverse().map(stripItem)}</div>}
+              </section>
+            );
+          })}
+        </div>
+      )}
       {expanded && <div id={`details-${project.slug}`} className="showcase-details"><ProjectDetails project={project} onImageClick={onImageClick} /></div>}
     </article>
   );
@@ -613,12 +656,12 @@ const Index = () => {
 
         <div className="h-4 sm:h-6" />
 
-        <main className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-9">
+        <main className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-[6.4vw]">
           <section id="projects" aria-label="עבודות נבחרות">
             {[...displayProjects].sort((a, b) => {
-              const rank = (slug: string) => slug === 'sfd' ? 0 : slug === 'noma' ? 1 : 2;
+              const rank = (slug: string) => { const i = showcaseOrder.indexOf(slug); return i < 0 ? showcaseOrder.length : i; };
               return rank(a.slug) - rank(b.slug);
-            }).map(project => <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />)}
+            }).map((project, index) => <ProjectBlock key={project.id} project={project} index={index} onImageClick={openLightbox} />)}
           </section>
         </main>
 
