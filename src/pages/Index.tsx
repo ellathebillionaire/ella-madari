@@ -4,7 +4,7 @@ import LazyVideo from '@/components/LazyVideo';
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Monitor, Palette, RefreshCw, BookOpen, ArrowUpLeft } from 'lucide-react';
+import { ArrowUpLeft } from 'lucide-react';
 import { projects as staticProjects, type DisplayType, type StoryStep } from '@/data/projects';
 import { liveSites } from '@/data/liveSites';
 import { useProjects, type ProjectWithImages } from '@/hooks/useProjects';
@@ -56,34 +56,6 @@ const MotionButton = motion.create(Button);
 const isVideo = (url?: string | null) => Boolean(url && /\.(mp4|webm|mov)(\?|$)/i.test(url));
 
 const assetUrl = (url: string | null | undefined) => resolveImageUrl(url) || url || null;
-
-const SectionTitle = ({
-  title,
-  subtitle,
-  icon,
-}: {
-  title: string;
-  subtitle: string;
-  icon: ReactNode;
-}) => (
-  <motion.div
-    initial={false}
-    transition={{ duration: 0.7, ease }}
-    className="portfolio-category mb-6 border-t border-border pt-5 sm:mb-8 sm:pt-6"
-  >
-    <div className="mb-4 flex items-center gap-3 sm:mb-5 sm:gap-4">
-      <div className="rounded-xl bg-muted p-2.5 text-muted-foreground shadow-[0_2px_8px_-2px_hsl(var(--foreground)/0.06)] sm:rounded-2xl sm:p-3">
-        {icon}
-      </div>
-      <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground/70 sm:text-[11px] sm:tracking-[0.12em]">
-        {subtitle}
-      </span>
-    </div>
-    <h2 className="text-xl font-normal tracking-tight text-foreground/90 sm:text-2xl md:text-3xl">
-      {title}
-    </h2>
-  </motion.div>
-);
 
 // Tiny in-project label so visitors always know what they are looking at.
 const SubLabel = ({ children }: { children: ReactNode }) => (
@@ -205,7 +177,73 @@ const PaletteDots = ({ colors }: { colors: string[] }) => (
   </div>
 );
 
-const ProjectBlock = ({
+// Each opening is curated from the project's own visible media; the complete work stays in details.
+const ProjectBlock = ({ project, onImageClick }: {
+  project: DisplayProject;
+  onImageClick: (image: string, name: string, images?: string[]) => void;
+}) => {
+  const [expanded, setExpanded] = useState(false);
+  const groups = groupProjectMedia(project.slug, project.images, project.galleryGroups, [
+    project.website_image, project.mobile_image, project.logo, project.video,
+    ...(project.extraLogos || []), ...(project.identityMarks || []), ...(project.hiddenImages || []),
+  ]);
+  const candidates = groups.filter(group => !/זהות המותג|הדמות והבעות|מדריך מידות/.test(group.label)).flatMap(group => group.images).filter(src => !isVideo(src));
+  const preferred: Record<string, RegExp> = {
+    noma: /ai_dog_portrait/, aurel: /lifestyle_|atelier_client/,
+    taliter: /studio_mockup|wall/, meshek27: /box|signage/,
+    sisenora: /ai_campaign|ai_retail/, ebrider: /hero_product|mockup-hero/,
+  };
+  const hero = candidates.find(src => preferred[project.slug]?.test(src)) || candidates[0];
+  const supporting = candidates.filter(src => src !== hero).slice(0, 2);
+  const screensLead = Boolean(project.website_image) && !['noma', 'aurel', 'taliter', 'meshek27', 'sisenora'].includes(project.slug);
+  const colors = project.slug === 'dresses2026' ? [] : (project.colors || []).map(color => ['#FAFAF9', '#F4F1EA', '#F5F5F0', '#F8FAFC', '#FDF6E3', '#F5F5DC', '#E8DCCB'].includes(color.toUpperCase()) ? '#FFFFFF' : color);
+  const title = project.slug === 'dresses2026' ? 'יצירת תמונות AI לעסקים' : project.name;
+  const imageTile = (src: string, className = '') => (
+    <button type="button" key={src} onClick={() => onImageClick(src, project.name, candidates)} className={`showcase-tile ${className}`} aria-label={`הגדלת עבודה — ${project.name}`}>
+      <img src={src} alt={`${project.name} — עבודה נבחרת`} loading="lazy" decoding="async" />
+    </button>
+  );
+  return (
+    <article id={`project-${project.slug}`} data-project={project.slug} className="showcase-project">
+      <header className="showcase-heading" dir="rtl">
+        <h2>{title}</h2>
+        {project.description && <p>{project.slug === 'dresses2026' ? 'קמפיין הלבשה ותמונות מוצר על בסיס פריטי לבוש קיימים' : project.description}</p>}
+      </header>
+      <div className="showcase-layout" dir="ltr">
+        <aside className="showcase-identity" aria-label={`${project.name} — זהות המותג`}>
+          {liveSites[project.slug] && <a className="showcase-link" href={liveSites[project.slug]} target="_blank" rel="noopener noreferrer">לצפייה באתר ↗</a>}
+          {project.logo && <LogoImage src={project.logo} alt={`${project.name} — לוגו`} className="showcase-logo" loading="lazy" />}
+          {colors.length > 0 && <div className="showcase-colors" aria-label="פלטת צבעים">{colors.map((color, i) => <span key={`${color}-${i}`} style={{ backgroundColor: color }} title={color} />)}</div>}
+          {Boolean(project.identityMarks?.length) && <div className="showcase-marks">{project.identityMarks?.map(src => <LogoImage key={src} src={src} alt={`${project.name} — סמל המותג`} loading="lazy" />)}</div>}
+          <p className="showcase-category" dir="rtl">{project.category}</p>
+          <button type="button" className="showcase-link showcase-more" aria-expanded={expanded} aria-controls={`details-${project.slug}`} onClick={() => setExpanded(!expanded)}>על הפרויקט {expanded ? '−' : '+'}</button>
+        </aside>
+        <div className={`showcase-composition ${screensLead ? 'showcase-with-screens' : ''}`}>
+          {project.slug === 'dresses2026' ? (
+            <div className="showcase-studio" dir="rtl">{groups.map(group => <section key={group.label}><h3>{group.label}</h3><div>{group.images.slice(0, 3).map(src => imageTile(src))}</div></section>)}</div>
+          ) : screensLead ? (
+            <>
+              {supporting.length > 0 && <div className="showcase-support">{(project.slug === 'sfd' ? [...candidates.filter(src => /bands|flatlay|kit_/i.test(src)), ...supporting].filter((src, i, all) => all.indexOf(src) === i).slice(0, 2) : supporting).map(src => imageTile(src))}</div>}
+              <div className="showcase-devices">
+                <DesktopMockup image={project.website_image as string} name="" aspectRatio={project.aspect_ratio} onClick={() => onImageClick(project.website_image as string, project.name)} />
+                {project.mobile_image && <div className="showcase-phone"><MobileMockup image={project.mobile_image} name="" onClick={() => onImageClick(project.mobile_image as string, project.name)} /></div>}
+              </div>
+            </>
+          ) : (
+            <>
+              {supporting.length > 0 && <div className="showcase-support">{supporting.map(src => imageTile(src))}</div>}
+              {hero ? imageTile(hero, 'showcase-hero') : project.website_image ? <DesktopMockup image={project.website_image} name="" onClick={() => onImageClick(project.website_image as string, project.name)} /> : null}
+            </>
+          )}
+        </div>
+      </div>
+      {project.slug === 'learnai' && <LearnAIAvatars onOpen={(image, images) => onImageClick(image, project.name, images)} />}
+      {expanded && <div id={`details-${project.slug}`} className="showcase-details"><ProjectDetails project={project} onImageClick={onImageClick} /></div>}
+    </article>
+  );
+};
+
+const ProjectDetails = ({
   project,
   onImageClick,
 }: {
@@ -534,14 +572,6 @@ const Index = () => {
     return staticProjects.map(fromStaticProject);
   }, [projects]);
 
-  // Group by the SERVICE that was actually performed, not a flat "branding/website" split.
-  const brandingProjects = displayProjects.filter((project) => project.displayType === 'branding');
-  const rebrandingProjects = displayProjects.filter((project) => project.displayType === 'rebranding');
-  const storyProjects = displayProjects.filter((project) => project.displayType === 'story');
-  const websiteTypeProjects = displayProjects.filter(
-    (project) => project.displayType === 'website' || project.displayType === 'website_redesign'
-  );
-
   const openLightbox = (image: string, name: string, images: string[] = [image]) => setLightbox({ image, name, images });
 
   if (loading && projects.length === 0) {
@@ -568,6 +598,12 @@ const Index = () => {
           className="sticky top-0 z-50 border-b border-border/60 bg-background/70 shadow-[0_1px_3px_hsl(var(--foreground)/0.04)] backdrop-blur-2xl"
         >
           <div className="mx-auto flex max-w-6xl items-center justify-center px-4 py-4 sm:px-6 sm:py-5 md:px-10">
+            <details className="absolute left-5 top-4 sm:left-9 sm:top-5">
+              <summary aria-label="פתיחת תפריט פרויקטים" className="cursor-pointer list-none text-xl leading-none">☰</summary>
+              <nav aria-label="פרויקטים" className="absolute left-0 top-9 max-h-[70vh] w-60 overflow-auto border bg-white p-4 shadow-sm" dir="rtl">
+                {displayProjects.map(project => <a className="block py-2 text-sm" key={project.id} href={`#project-${project.slug}`} onClick={event => event.currentTarget.closest('details')?.removeAttribute('open')}>{project.name}</a>)}
+              </nav>
+            </details>
             <h1 className="text-xs font-medium tracking-[0.15em] text-foreground/90 sm:text-sm sm:tracking-[0.12em]">
               ELLA MADARI
             </h1>
@@ -576,56 +612,12 @@ const Index = () => {
 
         <div className="h-4 sm:h-6" />
 
-        <main className="mx-auto max-w-6xl px-4 sm:px-6 md:px-10">
-          {storyProjects.length > 0 && (
-            <section id="projects" className="py-5 sm:py-8">
-              <SectionTitle
-                title="פרויקטים מקצה לקצה"
-                subtitle="Full Scope"
-                icon={<BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />}
-              />
-              {storyProjects.map((project) => (
-                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
-              ))}
-            </section>
-          )}
-
-          {brandingProjects.length > 0 && (
-            <section id="branding" className="py-5 sm:py-8">
-              <SectionTitle
-                title="מיתוג מאפס"
-                subtitle="Branding"
-                icon={<Palette className="h-4 w-4 sm:h-5 sm:w-5" />}
-              />
-              {brandingProjects.map((project) => (
-                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
-              ))}
-            </section>
-          )}
-
-          {rebrandingProjects.length > 0 && (
-            <section id="rebranding" className="py-5 sm:py-8">
-              <SectionTitle
-                title="ריברנד"
-                subtitle="Rebranding"
-                icon={<RefreshCw className="h-4 w-4 sm:h-5 sm:w-5" />}
-              />
-              {rebrandingProjects.map((project) => (
-                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
-              ))}
-            </section>
-          )}
-
-          <section id="websites" className="py-5 sm:py-8">
-            <SectionTitle
-              title="עיצוב אתרים"
-              subtitle="Web Design"
-              icon={<Monitor className="h-4 w-4" />}
-            />
-            {websiteTypeProjects
-              .map((project) => (
-                <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />
-              ))}
+        <main className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-9">
+          <section id="projects" aria-label="עבודות נבחרות">
+            {[...displayProjects].sort((a, b) => {
+              const rank = (slug: string) => slug === 'sfd' ? 0 : slug === 'noma' ? 1 : 2;
+              return rank(a.slug) - rank(b.slug);
+            }).map(project => <ProjectBlock key={project.id} project={project} onImageClick={openLightbox} />)}
           </section>
         </main>
 
