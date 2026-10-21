@@ -65,4 +65,9 @@ describe('isolated brand deliverables', () => {
     expect(groups[0].images).toHaveLength(8);
     expect(groups[1].images).toEqual(['/custom.jpg']);
   });
+  it('folds the original Tali logo into the primary cutout instead of a separate card', () => {
+    const groups = groupProjectMedia('taliter', ['/cms/TaliTar__final_logo.webp', '/cms/TaliTar__brand_board_final_direction.webp']);
+    expect(groups[0].images).toHaveLength(8);
+    expect(groups[0].images.every(image => /-cutout/.test(image))).toBe(true);
+  });
 });

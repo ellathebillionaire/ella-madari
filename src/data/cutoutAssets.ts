@@ -33,6 +33,8 @@ const cutoutSets: Record<string, string[]> = {
   'StudioAlef__logo_clean_presentation.webp': [cutout5],
   'Meshek27__brand_system_overview.webp': [meshek0, meshek1, meshek2, meshek3, meshek4, meshek5, meshek6, meshek7, meshek8, meshek9],
   'TaliTar__brand_board_final_direction.webp': [tali0, tali1, tali3, tali4, tali5, tali6, tali7, tali8],
+  // Same mark as the board's primary cutout; avoids a duplicate logo on a grey gallery card.
+  'TaliTar__final_logo.webp': [tali0],
 };
 const filename = (src: string) => {
   const name = src.split('?')[0].split('/').pop() || src;
