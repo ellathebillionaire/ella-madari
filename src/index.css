@@ -12,6 +12,64 @@
   display: none;
 }
 
+/* Compact desktop overview: screens, topic previews, and identity stay visible together.
+   Touch layouts retain their larger media and full-screen viewing. */
+@media (min-width: 768px) {
+  .compact-portfolio > header > div { padding-block: 10px; }
+  .compact-portfolio > header + div { height: 8px; }
+  .compact-portfolio main > section { padding-block: 12px; }
+  .portfolio-category { display: flex; align-items: center; gap: 12px; padding-top: 8px; margin-bottom: 12px; }
+  .portfolio-category > div { margin: 0; gap: 8px; }
+  .portfolio-category > div > div { padding: 6px; border-radius: 8px; }
+  .portfolio-category h2 { font-size: 16px; line-height: 1.3; }
+  .portfolio-project { padding-block: 10px 14px; margin-bottom: 8px; border-bottom: 1px solid hsl(var(--border)); }
+  .project-heading { margin-bottom: 10px; }
+  .project-heading h3 { font-size: 22px; line-height: 1.2; }
+  .project-heading p { margin-top: 4px; line-height: 1.4; }
+  .project-heading a { padding: 6px 12px; font-size: 12px; }
+  .project-composition { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr) 180px; gap: 16px; align-items: start; }
+  .project-opening { display: contents; }
+  .project-main { grid-column: 1; grid-row: 1; }
+  .project-identity { grid-column: 3; grid-row: 1; gap: 8px; }
+  .project-identity img { max-height: 36px; max-width: 100%; }
+  .project-identity > div > div { gap: 10px; }
+  .project-palette { gap: 4px; align-items: flex-start; }
+  .project-palette > div { gap: 7px; }
+  .project-palette > div > div { width: 18px; height: 18px; }
+  .project-story-row { min-height: 32px; padding: 6px 8px; gap: 6px; border-radius: 8px; }
+  .project-story-row > span:first-child { font-size: 12px; }
+  .project-story-row > span.flex-1 { font-size: 13px; }
+  .project-identity .grid { gap: 4px; }
+  .project-identity span.mb-2 { margin-bottom: 4px; }
+  .project-topic-label { margin-bottom: 5px; gap: 6px; }
+  .project-topic-label > span:first-child { letter-spacing: 0; line-height: 1.3; }
+  .project-main > div.grid { gap: 8px; align-items: start; }
+  .project-phone > div { padding: 2px; border-radius: 14px; }
+  .project-phone > div > div:nth-child(2) { width: 58px; border-radius: 12px; }
+  .project-phone > div > div:first-child { width: 25px; height: 7px; top: 5px; }
+  .project-phone > div > div:first-child > div { width: 4px; height: 4px; }
+  .project-phone > div > div:last-child { width: 20px; height: 2px; bottom: 5px; }
+  .project-desktop > div { border-radius: 8px; }
+  .project-desktop > div > div:first-child { height: 16px; }
+  .project-main [aria-label$="סמלי המותג"] { margin: 6px 0 0; }
+  .project-main [aria-label$="סמלי המותג"] button { width: 60px; height: 36px; }
+  .project-main [aria-label$="סמלי המותג"] img { object-fit: contain; }
+  .project-gallery { grid-column: 2; grid-row: 1; display: flex; flex-wrap: wrap; gap: 10px; }
+  .project-topic { flex: 1 1 44%; min-width: 0; max-width: 100%; }
+  .project-topic[data-media-count="1"] { flex: 0 1 28%; }
+  .topic-media-grid { gap: 5px; }
+  .topic-media-grid > button { height: 64px; aspect-ratio: auto; }
+  .topic-media-grid > button > img, .topic-media-grid > button > video { object-fit: contain; }
+  .topic-phone-media { gap: 6px; }
+  .topic-phone-media > button > div { padding: 2px; border-radius: 12px; }
+  .topic-phone-media > button > div > div:first-child { top: 4px; width: 20px; height: 6px; }
+  .topic-phone-media > button > div > div:last-child { width: 38px; border-radius: 10px; }
+  .project-avatars { grid-column: 2; grid-row: 2; margin: 0; padding: 0; gap: 4px; }
+  .project-avatars button { width: 36px; height: 36px; }
+  .project-flat-gallery { gap: 16px; }
+  .project-flat-gallery .topic-media-grid > button { height: 84px; }
+}
+
 /* Ella Madari Portfolio - Premium Apple-style Design System */
 
 @layer base {

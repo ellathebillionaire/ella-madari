@@ -63,11 +63,12 @@ const StoryRow = ({
   title: string;
   onClick: () => void;
 }) => (
-  <button
+  <Button
+    variant="ghost"
     type="button"
     onClick={onClick}
     aria-label={`הסבר על ${title}`}
-    className="group flex min-h-[46px] w-full cursor-pointer items-center gap-3 rounded-2xl border border-foreground/10 bg-background px-4 py-3 text-right shadow-[0_2px_10px_-6px_hsl(var(--foreground)/0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[0_10px_24px_-10px_hsl(var(--foreground)/0.25)]"
+    className="project-story-row group flex h-auto min-h-[46px] w-full cursor-pointer items-center gap-3 whitespace-normal rounded-2xl border border-foreground/10 bg-background px-4 py-3 text-right shadow-[0_2px_10px_-6px_hsl(var(--foreground)/0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[0_10px_24px_-10px_hsl(var(--foreground)/0.25)]"
   >
     {index && (
       <>
@@ -79,7 +80,7 @@ const StoryRow = ({
     )}
     <span className="flex-1 text-[13px] font-normal leading-snug text-foreground">{title}</span>
     <Plus className="h-3.5 w-3.5 shrink-0 text-muted-foreground/50 transition-all duration-300 group-hover:rotate-90 group-hover:text-foreground" />
-  </button>
+  </Button>
 );
 
 // ============ BRANDING FROM SCRATCH ============

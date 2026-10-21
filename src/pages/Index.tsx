@@ -69,7 +69,7 @@ const SectionTitle = ({
   <motion.div
     initial={false}
     transition={{ duration: 0.7, ease }}
-    className="mb-6 border-t border-border pt-5 sm:mb-8 sm:pt-6"
+    className="portfolio-category mb-6 border-t border-border pt-5 sm:mb-8 sm:pt-6"
   >
     <div className="mb-4 flex items-center gap-3 sm:mb-5 sm:gap-4">
       <div className="rounded-xl bg-muted p-2.5 text-muted-foreground shadow-[0_2px_8px_-2px_hsl(var(--foreground)/0.06)] sm:rounded-2xl sm:p-3">
@@ -90,7 +90,7 @@ const SubLabel = ({ children }: { children: ReactNode }) => (
   <motion.div
     initial={false}
     transition={{ duration: 0.5, ease }}
-    className="mb-2.5 flex items-center gap-3 sm:mb-3"
+    className="project-topic-label mb-2.5 flex items-center gap-3 sm:mb-3"
   >
     <span className="shrink-0 text-[11px] font-medium tracking-[0.12em] text-muted-foreground/70 sm:text-[11px]">
       {children}
@@ -116,7 +116,7 @@ const DesktopMockup = ({
     initial={false}
     transition={{ duration: 0.6, ease }}
     onClick={onClick}
-    className="group block h-auto w-full min-w-0 whitespace-normal p-0 hover:bg-transparent"
+    className="project-desktop group block h-auto w-full min-w-0 whitespace-normal p-0 hover:bg-transparent"
   >
     <div className="overflow-hidden rounded-xl bg-card shadow-[0_4px_20px_-4px_hsl(var(--foreground)/0.1)] transition-all duration-500 ease-out [@media(hover:hover)]:group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_hsl(var(--foreground)/0.2)] sm:rounded-2xl">
       <div className="flex h-5 items-center gap-1.5 border-b border-border bg-gradient-to-b from-muted to-muted/80 px-2.5 sm:h-6" dir="ltr">
@@ -156,7 +156,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
     initial={false}
     transition={{ duration: 0.6, ease }}
     onClick={onClick}
-    className="group flex h-auto min-w-0 flex-col items-center whitespace-normal p-0 hover:bg-transparent"
+    className="project-phone group flex h-auto min-w-0 flex-col items-center whitespace-normal p-0 hover:bg-transparent"
   >
     <div className="relative rounded-[1.5rem] bg-gradient-to-b from-phone-frame to-phone-frame-soft p-[3px] shadow-[0_8px_30px_-8px_hsl(var(--foreground)/0.3)] transition-all duration-500 ease-out [@media(hover:hover)]:group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_-12px_hsl(var(--foreground)/0.4)] sm:rounded-[2.5rem] sm:p-1">
       <div className="absolute left-1/2 top-2 z-10 flex h-4 w-14 -translate-x-1/2 items-center justify-center rounded-full bg-phone-frame sm:h-5 sm:w-20">
@@ -186,7 +186,7 @@ const MobileMockup = ({ image, name, onClick }: { image: string; name: string; o
 );
 
 const PaletteDots = ({ colors }: { colors: string[] }) => (
-  <div className="flex flex-col items-end gap-2">
+  <div className="project-palette flex flex-col items-end gap-2">
     <span className="whitespace-nowrap text-[11px] font-medium tracking-[0.18em] text-muted-foreground/70 sm:text-[11px]">
       צבעים
     </span>
@@ -277,10 +277,10 @@ const ProjectBlock = ({
     <motion.div
       initial={false}
       transition={{ duration: 0.6 }}
-      className="mb-12 min-w-0 sm:mb-14 last:mb-0"
+      className="portfolio-project mb-8 min-w-0 last:mb-0"
       data-project={project.slug}
     >
-      <div className="mb-3 sm:mb-4">
+      <div className="project-heading mb-3 sm:mb-4">
         <div className="flex items-start justify-between gap-3">
           <h3 className="flex flex-wrap items-center gap-y-2 text-2xl font-normal tracking-tight sm:text-3xl">
             {project.slug === 'dresses2026' ? 'יצירת תמונות AI לעסקים' : project.name}
@@ -305,7 +305,7 @@ const ProjectBlock = ({
       {(() => {
         if (project.slug === 'dresses2026') {
           return (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8" dir="rtl">
+            <div className="project-flat-gallery grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8" dir="rtl">
               {galleryGroups.map(group => (
                 <section key={group.label} className="min-w-0" aria-label={group.label}>
                   <SubLabel>{group.label}</SubLabel>
@@ -324,7 +324,7 @@ const ProjectBlock = ({
         const restGroups = (leadGroup ? galleryGroups.slice(1) : galleryGroups).filter(group => project.slug !== 'learnai' || group.label !== 'הדמות והבעות');
 
         const renderGroup = (group: typeof galleryGroups[number], full = false, half = false) => (
-          <section key={group.label} aria-label={`${project.name} - ${group.label}`} className={project.slug === 'betterseeds' && /נוצרו ב-AI/.test(group.label) ? 'col-span-2 w-full sm:col-span-12 sm:max-w-2xl' : full ? 'col-span-2 sm:col-span-12' : half ? 'col-span-2 sm:col-span-7' : group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}>
+          <section key={group.label} aria-label={`${project.name} - ${group.label}`} data-media-count={group.images.length} className={`project-topic ${project.slug === 'betterseeds' && /נוצרו ב-AI/.test(group.label) ? 'col-span-2 w-full sm:col-span-12 sm:max-w-2xl' : full ? 'col-span-2 sm:col-span-12' : half ? 'col-span-2 sm:col-span-7' : group.images.length === 1 ? 'col-span-1 sm:col-span-4' : group.images.length === 2 ? 'col-span-2 sm:col-span-8' : 'col-span-2 sm:col-span-12'}`}>
             {group.label ? <SubLabel>{group.label}</SubLabel> : null}
             <ProjectMediaGroup
               group={group}
@@ -336,7 +336,7 @@ const ProjectBlock = ({
         );
 
         const main = (
-          <div className="relative min-w-0">
+          <div className="project-main relative min-w-0">
             {hasRebrandLogo && logoBlock}
             {showScreens && (
               <>
@@ -392,16 +392,16 @@ const ProjectBlock = ({
         const hasMain = showScreens || isWebsiteRedesign || hasRebrandLogo || Boolean(leadGroup) || Boolean(project.identityMarks?.length);
 
         return (
-          <>
+          <div className="project-composition">
             {(hasAside || hasMain) && (
               <motion.div
                 initial={false}
                 transition={{ duration: 0.5 }}
-                className={`mb-5 grid gap-5 sm:mb-6 sm:gap-8 ${hasAside && hasMain ? 'sm:grid-cols-[minmax(0,1fr)_220px]' : ''}`}
+                className={`project-opening mb-5 grid gap-5 sm:mb-6 sm:gap-8 ${hasAside && hasMain ? 'sm:grid-cols-[minmax(0,1fr)_220px]' : ''}`}
               >
                 {hasMain && main}
                 {hasAside && (
-                  <aside className="order-first flex min-w-0 flex-col gap-5 sm:order-none" aria-label={`${project.name} - זהות`}>
+                  <aside className="project-identity order-first flex min-w-0 flex-col gap-5 sm:order-none" aria-label={`${project.name} - זהות`}>
                     {plainLogo && (
                       <div>
                         <SubLabel>הלוגו</SubLabel>
@@ -433,10 +433,10 @@ const ProjectBlock = ({
 
             {project.slug === 'learnai' && <LearnAIAvatars onOpen={(image, images) => onImageClick(image, project.name, images)} />}
             {(restGroups.length > 0 || project.video) && (
-              <div className="grid grid-cols-2 items-start gap-x-3 gap-y-4 sm:grid-cols-12 sm:gap-x-4 sm:gap-y-5">
+              <div className="project-gallery grid grid-cols-2 items-start gap-x-3 gap-y-4 sm:grid-cols-12 sm:gap-x-4 sm:gap-y-5">
                 {restGroups.map((group) => renderGroup(group))}
                 {project.video && project.slug !== 'learnai' && (
-                  <section aria-label={`${project.name} - אנימציה`} className="col-span-1 sm:col-span-4">
+                  <section aria-label={`${project.name} - אנימציה`} data-media-count="1" className="project-topic col-span-1 sm:col-span-4">
                     <SubLabel>אנימציה</SubLabel>
                     <ProjectMediaGroup
                       group={{ label: 'אנימציה', images: [project.video] }}
@@ -447,7 +447,7 @@ const ProjectBlock = ({
                 )}
               </div>
             )}
-          </>
+          </div>
         );
       })()}
     </motion.div>
@@ -560,7 +560,7 @@ const Index = () => {
         )}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-background">
+      <div className="compact-portfolio min-h-screen bg-background">
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -24,7 +24,7 @@ export function ProjectMediaGroup({ group, name, onOpen, compact = false }: {
   const isVid = (src: string) => /\.(mp4|webm|mov)(\?|$)/i.test(src);
   if (/דפי נחיתה/.test(group.label) && group.images.every(isVid)) {
     return (
-      <div className="flex flex-wrap justify-start gap-4">
+      <div className="topic-phone-media flex flex-wrap justify-start gap-4">
         {group.images.map((image, index) => (
           <MotionButton
             key={image}
@@ -46,7 +46,7 @@ export function ProjectMediaGroup({ group, name, onOpen, compact = false }: {
     );
   }
   return (
-    <div className={cn("grid gap-2.5 sm:gap-3", compact && "grid-cols-3 sm:grid-cols-5")} style={compact ? undefined : { gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+    <div className={cn("topic-media-grid grid gap-2.5 sm:gap-3", compact && "grid-cols-3 sm:grid-cols-5")} style={compact ? undefined : { gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
       {group.images.map((image, index) => (
         <MotionButton
           key={image}
