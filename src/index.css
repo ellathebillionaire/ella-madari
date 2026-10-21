@@ -18,9 +18,9 @@
   .compact-portfolio > header > div { padding-block: 6px; }
   .compact-portfolio > header + div { height: 0; }
   .compact-portfolio main > section { padding-block: 8px; }
-  .compact-portfolio .portfolio-category { display: flex; align-items: center; gap: 12px; padding-top: 8px; margin-bottom: 4px; }
+  .compact-portfolio .portfolio-category { display: flex; align-items: center; gap: 12px; padding-top: 4px; margin-bottom: 4px; }
   .compact-portfolio .portfolio-category > div { margin: 0; gap: 8px; }
-  .compact-portfolio .portfolio-category > div > div { padding: 6px; border-radius: 8px; }
+  .compact-portfolio .portfolio-category > div > div { padding: 2px; border-radius: 8px; }
   .compact-portfolio .portfolio-category h2 { font-size: 16px; line-height: 1.3; }
   .compact-portfolio .portfolio-project { padding-block: 6px 8px; margin-bottom: 6px; border-bottom: 1px solid hsl(var(--border)); }
   .compact-portfolio .project-heading { margin-bottom: 6px; }
