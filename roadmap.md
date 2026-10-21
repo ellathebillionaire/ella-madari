@@ -20,6 +20,10 @@
 - [x] Remove the two-dancers studio photo from SFD's "קיט המוצרים" section everywhere (database, CDN storage, migration record).
 - [x] Verify the section now shows only the two remaining product images.
 - [x] תגיות הסבר ברורות ללחיצה
-- [ ] לוגואים לצד שמאל (ממתין להבהרה)
+- [x] לוגואים לצד שמאל, עם הצבעים והשלבים בעמודת הזהות
 - [x] SFD: סרטון גלילה של דף הנחיתה במסגרת טלפון
 - [x] שיפור מהירות האתר
+
+# Two-project desktop composition
+- [x] Compact each project's opening and galleries to show two complete projects in one desktop viewport without hiding media.
+- [x] Verify real project dimensions, media viewing, story dialogs, and narrow-screen overflow.
