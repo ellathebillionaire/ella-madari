@@ -27,16 +27,18 @@
   .compact-portfolio .project-heading h3 { font-size: 22px; line-height: 1.2; }
   .compact-portfolio .project-heading p { margin-top: 4px; line-height: 1.4; }
   .compact-portfolio .project-heading a { padding: 6px 12px; font-size: 12px; }
-  .compact-portfolio .project-composition { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr) 180px; gap: 16px; align-items: start; }
+  .compact-portfolio .project-composition { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr) 220px; gap: 16px; align-items: start; }
   .compact-portfolio .project-opening { display: contents; }
   .compact-portfolio .project-main { grid-column: 1; grid-row: 1; }
-  .compact-portfolio .project-identity { grid-column: 3; grid-row: 1; gap: 8px; }
+  .compact-portfolio .project-identity { grid-column: 3; grid-row: 1; gap: 6px; }
   .compact-portfolio .project-identity img { max-height: 36px; max-width: 100%; }
-  .compact-portfolio .project-identity > div > div { gap: 10px; }
-  .compact-portfolio .project-palette { gap: 4px; align-items: flex-start; }
+  .compact-portfolio .project-identity > div > div { gap: 6px; }
+  .compact-portfolio .project-identity > div:first-child > div.flex { flex-wrap: nowrap; }
+  .compact-portfolio .project-identity > div:first-child img { max-width: 46%; }
+  .compact-portfolio .project-palette { flex-direction: row; gap: 10px; align-items: center; }
   .compact-portfolio .project-palette > div { gap: 7px; }
   .compact-portfolio .project-palette > div > div { width: 18px; height: 18px; }
-  .compact-portfolio .project-story-row { min-height: 32px; padding: 6px 8px; gap: 6px; border-radius: 8px; }
+  .compact-portfolio .project-story-row { min-height: 30px; padding: 4px 8px; gap: 6px; border-radius: 8px; }
   .compact-portfolio .project-story-row > span:first-child { font-size: 12px; }
   .compact-portfolio .project-story-row > span.flex-1 { font-size: 13px; }
   .compact-portfolio .project-identity .grid { gap: 4px; }
@@ -64,7 +66,8 @@
   .compact-portfolio .topic-phone-media > button > div { padding: 2px; border-radius: 12px; }
   .compact-portfolio .topic-phone-media > button > div > div:first-child { top: 4px; width: 20px; height: 6px; }
   .compact-portfolio .topic-phone-media > button > div > div:last-child { width: 38px; border-radius: 10px; }
-  .compact-portfolio .project-avatars { grid-column: 2; grid-row: 2; margin: 0; padding: 0; gap: 4px; }
+  .compact-portfolio .project-avatars { grid-column: 2; grid-row: 1; align-self: end; margin: 0; padding: 0; gap: 4px; }
+  .compact-portfolio .project-composition:has(.project-avatars) .project-gallery { padding-bottom: 44px; }
   .compact-portfolio .project-avatars button { width: 36px; height: 36px; }
   .compact-portfolio .project-flat-gallery { gap: 16px; }
   .compact-portfolio .project-flat-gallery .topic-media-grid > button { height: 84px; }
