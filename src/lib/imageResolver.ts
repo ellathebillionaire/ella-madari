@@ -1,3 +1,4 @@
+import { replaceSingleCutout } from '@/data/cutoutAssets';
 import taliOriginalLogo from '@/assets/media/TaliTar__final_logo.webp.asset.json';
 import taliTransparentLogo from '@/assets/media/TaliTer__logo_transparent.png';
 import ebriderTransparentLogo from '@/assets/media/EBrider__logo_transparent.png';
@@ -38,6 +39,9 @@ const assetModules = import.meta.glob<{ default: string }>('/src/assets/**/*.{jp
  */
 export function resolveImageUrl(url: string | null | undefined): string | null {
   if (!url) return null;
+
+  const cutout = replaceSingleCutout(url);
+  if (cutout) return cutout;
 
   const replacement = mediaReplacements[url];
   if (replacement) return replacement;

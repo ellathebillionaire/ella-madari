@@ -1,3 +1,4 @@
+import { isCutoutAsset } from '@/data/cutoutAssets';
 import LazyVideo from '@/components/LazyVideo';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -12,6 +13,18 @@ export function ProjectMediaGroup({ group, name, onOpen, compact = false }: {
   name: string;
   onOpen: (image: string) => void;
 }) {
+  const cutouts = group.images.filter(isCutoutAsset);
+  if (cutouts.length > 0) {
+    const remaining = group.images.filter(image => !isCutoutAsset(image));
+    return <>
+      {remaining.length > 0 && <ProjectMediaGroup group={{ ...group, images: remaining }} name={name} onOpen={onOpen} compact={compact} />}
+      <div className="transparent-assets-row" aria-label={`${name} - ${group.label}`}>
+        {cutouts.map((image, index) => <button type="button" key={image} onClick={() => onOpen(image)} aria-label={`הגדלת ${name} - ${group.label} - ${index + 1}`}>
+          <img src={image} alt={`${name} - ${group.label} - ${index + 1}`} loading="lazy" decoding="async" />
+        </button>)}
+      </div>
+    </>;
+  }
   // Portrait collections stay together; detailed branding and screens need full width.
   // An empty label marks a flat compact gallery (small images, no topic split).
   const portraits = group.label === '' || /דיוקנאות|סטודיו - נוצר|חוץ - נוצר|קמפיין/.test(group.label);

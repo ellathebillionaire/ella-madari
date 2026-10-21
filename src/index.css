@@ -371,3 +371,20 @@
 .showcase-devices .project-desktop::after { content: ''; display: block; width: 106%; height: 8px; margin-left: -3%; border-radius: 1px 1px 60% 60%; background: linear-gradient(#dedede, #999 65%, #ddd); }
 .showcase-heading p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .showcase-details .project-heading { display: none; }
+
+/* Isolated deliverables only: preserve the established layout of all other media. */
+.transparent-assets-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); align-items: end; gap: 18px; padding: 12px 0 28px; }
+.transparent-assets-row button, .transparent-avatar { border: 0; border-radius: 0; background: transparent; padding: 0; min-width: 0; align-self: end; overflow: visible; }
+.transparent-assets-row img { display: block; width: 100%; height: 180px; object-fit: contain; object-position: center bottom; }
+.transparent-assets-row img, .cutout-image, .showcase-tile.cutout-asset-tile img { filter: drop-shadow(0 18px 24px rgba(0,0,0,.12)); }
+.showcase-tile.cutout-asset-tile { background: transparent; border: 0; border-radius: 0; overflow: visible; }
+.showcase-tile.cutout-asset-tile img { object-fit: contain; object-position: center bottom; }
+.transparent-avatars-row { display: flex; align-items: flex-end; justify-content: space-evenly; gap: 12px; overflow-x: auto; padding: 20px 8px 40px; }
+.transparent-avatar { flex: 0 0 min(12%, 110px); }
+.transparent-avatar img { display: block; width: 100%; height: auto; object-fit: contain; }
+@media (max-width: 767px) {
+ .transparent-assets-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+ .transparent-assets-row img { height: 150px; }
+ .transparent-avatar { flex-basis: 80px; flex-shrink: 0; }
+ .transparent-avatars-row { justify-content: flex-start; }
+}

@@ -1,4 +1,5 @@
 import { useState, type ImgHTMLAttributes, type SyntheticEvent } from 'react';
+import { isCutoutAsset } from '@/data/cutoutAssets';
 import { clearLogoBackground } from '@/lib/logoTransparency';
 
 const cache = new Map<string, string>();
@@ -9,7 +10,7 @@ export function LogoImage({ src, onLoad, ...props }: ImgHTMLAttributes<HTMLImage
   const displaySrc = src && (cache.get(src) || (processed?.source === src ? processed.url : src));
   const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
     onLoad?.(event);
-    if (!src || cache.has(src) || processed?.source === src) return;
+    if (!src || isCutoutAsset(src) || cache.has(src) || processed?.source === src) return;
     const image = event.currentTarget;
     try {
       const canvas = document.createElement('canvas');
@@ -29,5 +30,5 @@ export function LogoImage({ src, onLoad, ...props }: ImgHTMLAttributes<HTMLImage
       // Unsupported or cross-origin sources retain the original logo.
     }
   };
-  return <img {...props} src={displaySrc || undefined} onLoad={handleLoad} />;
+  return <img {...props} style={isCutoutAsset(src) ? { ...props.style, objectFit: 'contain', borderRadius: 0, background: 'transparent', filter: 'drop-shadow(0 18px 24px rgba(0,0,0,.12))' } : props.style} src={displaySrc || undefined} onLoad={handleLoad} />;
 }

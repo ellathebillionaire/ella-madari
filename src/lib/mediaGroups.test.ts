@@ -49,3 +49,20 @@ describe('Aurel groups', () => {
     ]);
   });
 });
+
+
+describe('isolated brand deliverables', () => {
+  it('replaces a composite with all objects while retaining its original category', () => {
+    const groups = groupProjectMedia('meshek27', ['/cms/Meshek27__brand_system_overview.webp']);
+    expect(groups).toHaveLength(1);
+    expect(groups[0].label).toBe('זהות המותג');
+    expect(groups[0].images).toHaveLength(10);
+    expect(groups[0].images.every(image => /-cutout/.test(image))).toBe(true);
+  });
+  it('keeps the Tali components separate and retains unrelated original media', () => {
+    const groups = groupProjectMedia('taliter', ['/cms/TaliTar__brand_board_final_direction.webp', '/custom.jpg']);
+    expect(groups[0].label).toBe('זהות המותג');
+    expect(groups[0].images).toHaveLength(8);
+    expect(groups[1].images).toEqual(['/custom.jpg']);
+  });
+});

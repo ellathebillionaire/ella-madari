@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { projects } from './projects';
-import taliLogo from '@/assets/media/TaliTer__logo_transparent.png';
+import taliLogo from '@/assets/media/TaliTar__brand_board_final_direction-primary-cutout.webp';
 import meshekLogo from '@/assets/media/Meshek27__final_logo_color.png.asset.json';
 import siSenoraLogo from '@/assets/media/SiSenora__logo_clean_transparent.png';
 
@@ -23,8 +23,8 @@ describe('portfolio logo assignments', () => {
 });
 describe('logo versions', () => {
   it('uses the supplied LEARN AI logo, not the DotAi avatar', async () => {
-    const learnLogo = (await import('@/assets/media/LearnAI__brand_logo_full.jpg.asset.json')).default;
-    expect(projects.find((project) => project.slug === 'learnai')?.logo).toBe(learnLogo.url);
+    const learnLogo = (await import('@/assets/media/LearnAI__brand_logo_full-cutout.webp')).default;
+    expect(projects.find((project) => project.slug === 'learnai')?.logo).toBe(learnLogo);
   });
 
   it('shows the short SFD logo beside the full logo', async () => {

@@ -1,3 +1,4 @@
+import { isCutoutAsset } from '@/data/cutoutAssets';
 import { LogoImage } from '@/components/LogoImage';
 import { LearnAIAvatars } from '@/components/LearnAIAvatars';
 import LazyVideo from '@/components/LazyVideo';
@@ -199,7 +200,7 @@ const ProjectBlock = ({ project, onImageClick }: {
   const colors = project.slug === 'dresses2026' ? [] : (project.colors || []).map(color => ['#FAFAF9', '#F4F1EA', '#F5F5F0', '#F8FAFC', '#FDF6E3', '#F5F5DC', '#E8DCCB'].includes(color.toUpperCase()) ? '#FFFFFF' : color);
   const title = project.slug === 'dresses2026' ? 'יצירת תמונות AI לעסקים' : project.name;
   const imageTile = (src: string, className = '') => (
-    <button type="button" key={src} onClick={() => onImageClick(src, project.name, candidates)} className={`showcase-tile ${className}`} aria-label={`הגדלת עבודה — ${project.name}`}>
+    <button type="button" key={src} onClick={() => onImageClick(src, project.name, candidates)} className={`showcase-tile ${isCutoutAsset(src) ? 'cutout-asset-tile' : ''} ${className}`} aria-label={`הגדלת עבודה — ${project.name}`}>
       <img src={src} alt={`${project.name} — עבודה נבחרת`} loading="lazy" decoding="async" />
     </button>
   );

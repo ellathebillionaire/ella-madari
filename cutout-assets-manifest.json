@@ -1,0 +1,218 @@
+[
+  {
+    "key": "cutout-peanut",
+    "file": "src/assets/media/BetterSeeds__ai_crop_dna_peanut_illustration-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-fa53aefb-2563-498c-92ed-f4ef0ae969e1.png",
+    "size": [
+      1073,
+      1600
+    ]
+  },
+  {
+    "key": "cutout-cacao",
+    "file": "src/assets/media/BetterSeeds__ai_crop_dna_cacao_illustration-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-399667a1-2dcd-4fb2-9580-f5feb76034d7.png",
+    "size": [
+      1105,
+      1600
+    ]
+  },
+  {
+    "key": "cutout-learn-logo",
+    "file": "src/assets/media/LearnAI__brand_logo_full-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-c6c93ed5-e9d1-4f23-b0da-affc934195fd.png",
+    "size": [
+      1600,
+      516
+    ]
+  },
+  {
+    "key": "cutout-studio-logo",
+    "file": "src/assets/media/StudioAlef__logo_clean_presentation-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-700c950e-a80f-4d74-ba25-cff2e7e7a19f.png",
+    "size": [
+      1219,
+      1068
+    ]
+  },
+  {
+    "key": "pet-chuck",
+    "file": "src/assets/media/PlayPetPal__character_chuck_product_render-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-b72cfa33-c4a5-4585-be53-b30115696170.png",
+    "size": [
+      1355,
+      1263
+    ]
+  },
+  {
+    "key": "pet-tweet",
+    "file": "src/assets/media/PlayPetPal__character_tweet_product_render-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-ade81d51-37f4-4947-a65e-101f305c7b8b.png",
+    "size": [
+      1289,
+      1223
+    ]
+  },
+  {
+    "key": "meshek-van",
+    "file": "src/assets/media/Meshek27__brand_system_overview-van-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-c4639c4c-9499-4a28-aaa8-555d073a31dc.png",
+    "size": [
+      1600,
+      825
+    ]
+  },
+  {
+    "key": "meshek-box-tall",
+    "file": "src/assets/media/Meshek27__brand_system_overview-box-tall-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-e681c14f-8612-4b89-b2d5-f568019e37d0.png",
+    "size": [
+      1600,
+      1118
+    ]
+  },
+  {
+    "key": "meshek-box-wide",
+    "file": "src/assets/media/Meshek27__brand_system_overview-box-wide-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-83c5d9ef-7ba4-44d0-9956-e8ec7642d15c.png",
+    "size": [
+      1600,
+      1109
+    ]
+  },
+  {
+    "key": "meshek-box-open-front",
+    "file": "src/assets/media/Meshek27__brand_system_overview-box-open-front-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-fc4cc45c-09fc-488a-afd5-9a4a98d26af5.png",
+    "size": [
+      1600,
+      1104
+    ]
+  },
+  {
+    "key": "meshek-box-open-large",
+    "file": "src/assets/media/Meshek27__brand_system_overview-box-open-large-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-d7391d22-5a8f-45f9-9428-07d7e3feecd0.png",
+    "size": [
+      1600,
+      1115
+    ]
+  },
+  {
+    "key": "meshek-box-open-small",
+    "file": "src/assets/media/Meshek27__brand_system_overview-box-open-small-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-2ffb130e-2c04-410b-ae4d-e82197166061.png",
+    "size": [
+      1599,
+      1144
+    ]
+  },
+  {
+    "key": "meshek-box-small-top",
+    "file": "src/assets/media/Meshek27__brand_system_overview-box-small-top-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-2d7ee8ac-fa75-4be6-aab3-60b53925d3c1.png",
+    "size": [
+      1600,
+      1126
+    ]
+  },
+  {
+    "key": "meshek-box-small-bottom",
+    "file": "src/assets/media/Meshek27__brand_system_overview-box-small-bottom-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-ab9660db-710e-4409-b0e5-78fc3e95d771.png",
+    "size": [
+      1600,
+      1076
+    ]
+  },
+  {
+    "key": "meshek-bag-left",
+    "file": "src/assets/media/Meshek27__brand_system_overview-bag-left-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-9863ed5e-8f2a-422d-86e1-0d84b13aaeca.png",
+    "size": [
+      1230,
+      1474
+    ]
+  },
+  {
+    "key": "meshek-bag-right",
+    "file": "src/assets/media/Meshek27__brand_system_overview-bag-right-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-5753ab88-141f-48d2-9a9c-1fa64eff1021.png",
+    "size": [
+      1076,
+      1600
+    ]
+  },
+  {
+    "key": "tali-primary",
+    "file": "src/assets/media/TaliTar__brand_board_final_direction-primary-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-7deb33b0-cb29-4540-8c26-fc6491285b06.png",
+    "size": [
+      1523,
+      1082
+    ]
+  },
+  {
+    "key": "tali-symbol",
+    "file": "src/assets/media/TaliTar__brand_board_final_direction-symbol-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-8b3a204c-0b99-475d-8e70-4e880aeae28d.png",
+    "size": [
+      1465,
+      1033
+    ]
+  },
+  {
+    "key": "tali-wordmark",
+    "file": "src/assets/media/TaliTar__brand_board_final_direction-wordmark-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-dfd6067e-6509-41cb-9416-1bb7d69e4859.png",
+    "size": [
+      1549,
+      836
+    ]
+  },
+  {
+    "key": "tali-type",
+    "file": "src/assets/media/TaliTar__brand_board_final_direction-type-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-a55d0dd4-1d45-425f-94d2-782094e24e9a.png",
+    "size": [
+      1600,
+      836
+    ]
+  },
+  {
+    "key": "tali-strength",
+    "file": "src/assets/media/TaliTar__brand_board_final_direction-strength-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-a2bded25-447a-4dc9-8079-0c88f5a1d8b3.png",
+    "size": [
+      1326,
+      1273
+    ]
+  },
+  {
+    "key": "tali-balance",
+    "file": "src/assets/media/TaliTar__brand_board_final_direction-balance-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-b98dc7d0-a4b2-4d32-80cc-a3f7860fc063.png",
+    "size": [
+      991,
+      1040
+    ]
+  },
+  {
+    "key": "tali-energy",
+    "file": "src/assets/media/TaliTar__brand_board_final_direction-energy-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-e07a7a1d-0c71-4d3b-89ee-eaad68699138.png",
+    "size": [
+      1278,
+      1264
+    ]
+  },
+  {
+    "key": "tali-alignment",
+    "file": "src/assets/media/TaliTar__brand_board_final_direction-alignment-cutout.webp",
+    "generated": "/Users/ellamadari/.codex/generated_images/01a14e85-a92c-7882-a924-4905bf390f16/exec-e4331df3-a84c-43b6-898d-79d28ec99f04.png",
+    "size": [
+      1226,
+      1140
+    ]
+  }
+]

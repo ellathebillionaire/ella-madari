@@ -47,7 +47,7 @@ import sisenoraLogo from '@/assets/media/SiSenora__logo_clean_transparent.png';
 import mockupSisenoraShop from "@/assets/mockup-sisenora-shop.png";
 
 // Learn AI / DotAi
-import learnaiLogoFull from '@/assets/media/LearnAI__brand_logo_full.jpg.asset.json';
+import learnaiLogoFull from '@/assets/media/LearnAI__brand_logo_full-cutout.webp';
 import sfdShortLogo from '@/assets/media/SFD__rebrand_board_01.png.asset.json';
 import sfdFullLogoBoard from '@/assets/media/SFD__rebrand_board_02.png.asset.json';
 import learnaiAnimation from "@/assets/learnai-animation.mp4";
@@ -55,7 +55,7 @@ import learnaiPlatformHero from '@/assets/media/LearnAI__platform_hero_dotai_lea
 
 // Tali Ter - New organized assets
 import taliterBrandingSet from '@/assets/taliter/branding-set.jpg';
-import taliterFinalLogo from '@/assets/media/TaliTer__logo_transparent.png';
+import taliterFinalLogo from '@/assets/media/TaliTar__brand_board_final_direction-primary-cutout.webp';
 import taliterWallSignage from '@/assets/taliter/wall-signage.jpg';
 import taliterBottleMockup from '@/assets/taliter/bottle-mockup.jpg';
 
@@ -66,8 +66,7 @@ import ebriderMockupHero from "@/assets/ebrider-mockup-hero.jpg";
 import ebriderMobile from "@/assets/ebrider-mobile.png";
 
 // Studio Alef
-import studioalefLogoAsset from '@/assets/media/StudioAlef__logo_clean_presentation.webp.asset.json';
-const studioalefLogo = studioalefLogoAsset.url;
+import studioalefLogo from '@/assets/media/StudioAlef__logo_clean_presentation-cutout.webp';
 import studioalefWallMockup from "@/assets/studioalef-wall-mockup.png";
 
 
@@ -265,8 +264,8 @@ export const projects: Project[] = [
     description: 'מיתוג ואנימציה לפלטפורמת לימוד AI',
     values: ['נגישות', 'טכנולוגיה חדה', 'תנועה ובהירות'],
     process: 'זהות דיגיטלית קרה וחדה שמדברת טכנולוגיה, עם אנימציית לוגו שממחישה תנועה ולמידה מתמשכת.',
-    logo: learnaiLogoFull.url,
-    heroImage: learnaiLogoFull.url,
+    logo: learnaiLogoFull,
+    heroImage: learnaiLogoFull,
     bgColor: '#F0FAFB',
     accentColor: '#00D4E5',
     colors: ['#00D4E5', '#1A365D', '#F8FAFC'],

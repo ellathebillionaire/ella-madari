@@ -1,3 +1,4 @@
+import { expandCutoutMedia } from '@/data/cutoutAssets';
 export type MediaGroupRule = { label: string; match: RegExp };
 export type MediaGroup = { label: string; images: string[] };
 
@@ -107,7 +108,7 @@ export function groupProjectMedia(
       return match.test(filename);
     });
     const label = rule?.label || 'תוצרים נוספים';
-    buckets.set(label, [...(buckets.get(label) || []), image]);
+    buckets.set(label, [...new Set([...(buckets.get(label) || []), ...expandCutoutMedia(image)])]);
   }
   const labels = [...new Set([...rules.map(({ label }) => label), 'תוצרים נוספים'])];
   return labels.flatMap((label) => {

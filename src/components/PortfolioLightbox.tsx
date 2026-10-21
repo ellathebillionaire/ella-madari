@@ -1,3 +1,4 @@
+import { isCutoutAsset } from '@/data/cutoutAssets';
 import { useEffect, useRef } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
@@ -62,7 +63,7 @@ export function PortfolioLightbox({ selection, onChange, onClose }: {
             {/\.(mp4|webm|mov)(\?|$)/i.test(selection.image) ? (
               <video key={selection.image} src={selection.image} autoPlay loop muted playsInline controls className="max-h-full max-w-full object-contain" />
             ) : (
-              <img src={selection.image} alt={selection.name} className="max-h-full max-w-full select-none object-contain" draggable={false} />
+              <img src={selection.image} alt={selection.name} className={`max-h-full max-w-full select-none object-contain ${isCutoutAsset(selection.image) ? 'cutout-image' : ''}`} draggable={false} />
             )}
           </div>
           <div className="flex shrink-0 items-center justify-center gap-5 px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))]" dir="ltr">
