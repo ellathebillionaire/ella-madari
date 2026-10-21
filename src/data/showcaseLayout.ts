@@ -2,7 +2,7 @@
 // `main` lists the opening slots left to right; `ar` is the slot's width/height ratio.
 export type ShowcaseSlot =
   | 'devices'
-  | { img: RegExp; ar: number }
+  | { img: RegExp; ar: number; fit?: 'contain' | 'cover' }
   | { stack: [RegExp, RegExp]; ar: number };
 
 export type ShowcaseLayout = {
@@ -19,6 +19,8 @@ export type ShowcaseLayout = {
   screen?: RegExp;
   // Show the project name instead of the logo in the identity column.
   wordmark?: boolean;
+  // Redundant previews stay available in the full project details.
+  omitPreview?: RegExp;
 };
 
 export const showcaseOrder = ['sfd', 'betterseeds', 'noma', 'aurel', 'meshek27', 'learnai', 'taliter', 'studioalef', 'dresses2026', 'sisenora', 'ebrider', 'ascola', 'petplaypal'];
@@ -30,7 +32,8 @@ export const showcaseLayouts: Record<string, ShowcaseLayout> = {
   sfd: {
     description: 'מיתוג, אתר איקומרס ועולם מותג לרקדנים',
     tags: 'מיתוג · אתר · מוצרים · ייבוא',
-    wordmark: true,
+    wordmark: false,
+    omitPreview: /rebrand_color_palette/,
     main: [{ img: /studio_lifestyle/, ar: tall }, { img: /resistance_bands/, ar: tall }, 'devices'],
     rename: { 'זהות המותג': 'זהות וקיט מוצרים', 'קיט המוצרים': 'זהות וקיט מוצרים' },
     order: [/בסטודיו/, /זהות/, /נחיתה/],
@@ -66,19 +69,21 @@ export const showcaseLayouts: Record<string, ShowcaseLayout> = {
     tags: 'מיתוג · אנימציה · פלטפורמה',
     screen: /platform_lesson_interface/,
     main: ['devices', { img: /platform_hero_dotai/, ar: square }],
-    dropTopics: /הדמות והבעות/,
+    dropTopics: /הדמות והבעות|הלוגו/,
     rename: { 'זהות המותג': 'הלוגו', 'עיצוב הפלטפורמה': 'הפלטפורמה' },
     order: [/הדמויות/, /הפלטפורמה/, /הלוגו/],
   },
   taliter: {
     description: 'מיתוג לסטודיו בר ופילאטיס',
     tags: 'מיתוג · הדמיות',
+    omitPreview: /brand_board.*-(primary|palette)-cutout/,
     main: [{ img: /studio_mockup_03/, ar: 1.47 }, { stack: [/studio_mockup_01/, /brand_collateral/], ar: 0.89 }],
   },
   studioalef: {
     description: 'מיתוג וחנות דיגיטלית לסטודיו הדפסים',
     tags: 'מיתוג · חנות · הדפסים',
     screen: /digital_print_shop_website/,
+    dropTopics: /הלוגו|זהות המותג/,
     main: ['devices', { img: /framed_print/, ar: square }],
     order: [/הדפסים/, /הלוגו/],
   },
@@ -104,7 +109,7 @@ export const showcaseLayouts: Record<string, ShowcaseLayout> = {
   ascola: {
     description: 'לוגו ואתר תדמית למתחם אירועים טוסקני',
     tags: 'לוגו · אתר תדמית',
-    main: ['devices', { img: /branding-mockup/, ar: tall }, { img: /Ascola__logo/, ar: tall }],
+    main: ['devices', { img: /branding-mockup/, ar: tall }, { img: /Ascola__logo/, ar: tall, fit: 'contain' }],
   },
   petplaypal: {
     description: 'דמויות, אריזה ודף מכירה לצעצוע לחיות מחמד',

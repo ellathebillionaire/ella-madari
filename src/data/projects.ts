@@ -323,7 +323,7 @@ export const projects: Project[] = [
     heroImage: taliterBrandingSet,
     bgColor: '#FFFBF5',
     accentColor: '#5CC8B5',
-    colors: ['#DB6A2F', '#C7DBCF', '#FAFAF9', '#1A1A1A'],
+    colors: ['#F26C2E', '#D8E7DD', '#FFFFFF', '#0B1D3A', '#A9C5B7', '#1A1A1A'],
     images: [
       taliterBrandingSet,
       taliterWallSignage,

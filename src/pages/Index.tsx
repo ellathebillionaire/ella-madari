@@ -206,19 +206,21 @@ const ProjectBlock = ({ project, index, onImageClick }: {
     .filter(slot => slot && (slot === 'devices' || slot.srcs.length > 0));
   const used = new Set(slots.flatMap(slot => slot && slot !== 'devices' ? slot.srcs : []));
   if (screen) used.add(screen);
+  if (project.logo && !layout?.wordmark) used.add(project.logo);
   const merged = new Map<string, string[]>();
   if (project.slug === 'learnai') merged.set('הדמויות', learnAIAvatars);
   for (const group of groups) {
     const label = stripLabel(group.label, layout);
     if (layout?.dropTopics?.test(label)) continue;
-    const images = group.images.filter(src => !used.has(src));
+    const images = group.images.filter(src => !used.has(src) && !layout?.omitPreview?.test(src));
     if (images.length) merged.set(label, [...new Set([...(merged.get(label) || []), ...images])]);
   }
-  if (project.slug === 'studioalef' && project.logo) merged.set('הלוגו', [project.logo]);
   const rank = (label: string) => { const i = layout?.order?.findIndex(match => match.test(label)) ?? -1; return i < 0 ? 99 : i; };
   const topics = [...merged].map(([label, images]) => ({ label, images })).sort((a, b) => rank(a.label) - rank(b.label))
     .map(topic => ({ ...topic, images: topic.images.slice(0, topic.label === 'הדמויות' && project.slug === 'learnai' ? 6 : topic.images.some(isBoardPiece) ? undefined : 4) }));
-  const allMedia = [...used, ...topics.flatMap(topic => topic.images)].filter(src => !isVideo(src));
+  const boardTopics = topics.filter(topic => topic.images.some(isBoardPiece));
+  const stripTopics = topics.filter(topic => !topic.images.some(isBoardPiece));
+  const allMedia = [...new Set([...used, ...topics.flatMap(topic => topic.images)])];
   const colors = project.slug === 'dresses2026' ? [] : (project.colors || []).map(color => ['#FAFAF9', '#F4F1EA', '#F5F5F0', '#F8FAFC', '#FDF6E3', '#F5F5DC', '#E8DCCB'].includes(color.toUpperCase()) ? '#FFFFFF' : color);
   const title = layout?.title || project.name;
   // Clamped so a long scroll capture or a thin banner cannot collapse its row.
@@ -228,11 +230,11 @@ const ProjectBlock = ({ project, index, onImageClick }: {
   };
   const open = (src: string) => onImageClick(src, project.name, allMedia);
   // The strip never stands taller than ~2/3 of the opening: short strips crop wider instead.
-  const stripSum = topics.reduce((sum, topic) => sum + (topic.images.some(isBoardPiece) ? 1.4 : topic.images.reduce((t, src) => t + ratio(src), 0)), 0);
+  const stripSum = stripTopics.reduce((sum, topic) => sum + topic.images.reduce((t, src) => t + ratio(src), 0), 0);
   const widen = Math.max(1, 3.4 / (stripSum || 1));
   const stripItem = (src: string) => (
     <button type="button" key={src} onClick={() => open(src)} className={`strip-item ${isCutoutAsset(src) ? 'is-cutout' : ''}`} style={{ flexGrow: ratio(src) * widen, aspectRatio: String(ratio(src) * widen) }} aria-label={`הגדלת עבודה — ${project.name}`}>
-      {isVideo(src) ? <video src={src} muted playsInline preload="metadata" /> : <img ref={img => record(src, img)} src={src} alt={`${project.name} — עבודה`} loading="lazy" decoding="async" onLoad={event => record(src, event.currentTarget)} />}
+      {isVideo(src) ? <LazyVideo src={src} /> : <img ref={img => record(src, img)} src={src} alt={`${project.name} — עבודה`} loading="lazy" decoding="async" onLoad={event => record(src, event.currentTarget)} />}
     </button>
   );
   return (
@@ -259,7 +261,7 @@ const ProjectBlock = ({ project, index, onImageClick }: {
           ) : slot && (
             <div key={i} className={`showcase-slot ${slot.srcs.length > 1 ? 'is-stack' : ''}`} style={{ aspectRatio: String(slot.ar) }}>
               {slot.srcs.map(src => (
-                <button type="button" key={src} onClick={() => open(src)} className={`showcase-tile ${isCutoutAsset(src) ? 'cutout-asset-tile' : ''}`} aria-label={`הגדלת עבודה — ${project.name}`}>
+                <button type="button" key={src} onClick={() => open(src)} className={`showcase-tile ${isCutoutAsset(src) ? 'cutout-asset-tile' : ''} ${'fit' in slot && slot.fit === 'contain' ? 'showcase-tile-contain' : ''}`} aria-label={`הגדלת עבודה — ${project.name}`}>
                   <img src={src} alt={`${project.name} — עבודה נבחרת`} loading="lazy" decoding="async" />
                 </button>
               ))}
@@ -267,22 +269,24 @@ const ProjectBlock = ({ project, index, onImageClick }: {
           ))}
         </div>
       </div>
-      {topics.length > 0 && (
-        <div className="showcase-strip" dir="rtl">
-          {topics.map(topic => {
-            const cluster = topic.images.some(isBoardPiece);
-            const grow = (cluster ? 1.4 : topic.images.reduce((sum, src) => sum + ratio(src), 0)) * widen;
-            return (
-              <section key={topic.label} className="strip-topic" style={{ flexGrow: grow }} aria-label={`${project.name} - ${topic.label}`}>
+      {boardTopics.map(topic => (
+        <section key={topic.label} className="showcase-board-topic" data-brand={project.slug} aria-label={`${project.name} - ${topic.label}`}>
+          <h3>{topic.label}</h3>
+          <p className="showcase-swipe-hint" aria-hidden="true">החליקו לצפייה בכל התוצרים <span dir="ltr">← →</span></p>
+          <ProjectMediaGroup group={topic} name={project.name} onOpen={open} />
+        </section>
+      ))}
+      {stripTopics.length > 0 && (
+        <div className="showcase-strip-wrap">
+          <p className="showcase-swipe-hint" aria-hidden="true">החליקו לצפייה בעבודות נוספות <span dir="ltr">← →</span></p>
+          <div className="showcase-strip" dir="rtl" tabIndex={0} role="region" aria-label={`עבודות נוספות — ${project.name}`}>
+            {stripTopics.map(topic => (
+              <section key={topic.label} className="strip-topic" style={{ flexGrow: topic.images.reduce((sum, src) => sum + ratio(src), 0) * widen }} aria-label={`${project.name} - ${topic.label}`}>
                 <h3><span>{topic.label}</span></h3>
-                {cluster ? (
-                  <div className="strip-cluster" style={{ aspectRatio: String(1.4 * widen), gridTemplateColumns: `repeat(${Math.ceil(topic.images.length / 2)}, minmax(0, 1fr))` }}>
-                    {topic.images.map(src => <button type="button" key={src} onClick={() => open(src)} aria-label={`הגדלת עבודה — ${project.name}`}><img src={src} alt={`${project.name} — ${topic.label}`} loading="lazy" decoding="async" /></button>)}
-                  </div>
-                ) : <div className="strip-items" dir="ltr">{[...topic.images].reverse().map(stripItem)}</div>}
+                <div className="strip-items" dir="ltr">{[...topic.images].reverse().map(stripItem)}</div>
               </section>
-            );
-          })}
+            ))}
+          </div>
         </div>
       )}
       {expanded && <div id={`details-${project.slug}`} className="showcase-details"><ProjectDetails project={project} onImageClick={onImageClick} /></div>}

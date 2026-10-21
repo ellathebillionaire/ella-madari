@@ -108,7 +108,7 @@ export function groupProjectMedia(
       return match.test(filename);
     });
     const label = rule?.label || 'תוצרים נוספים';
-    buckets.set(label, [...new Set([...(buckets.get(label) || []), ...expandCutoutMedia(image)])]);
+    buckets.set(label, [...new Set([...(buckets.get(label) || []), ...expandCutoutMedia(image).filter(src => !excluded.has(src))])]);
   }
   const labels = [...new Set([...rules.map(({ label }) => label), 'תוצרים נוספים'])];
   return labels.flatMap((label) => {

@@ -1,3 +1,4 @@
+import { expandCutoutMedia } from '@/data/cutoutAssets';
 import { describe, expect, it } from 'vitest';
 import { galleryColumns, groupProjectMedia } from './mediaGroups';
 
@@ -70,4 +71,13 @@ describe('isolated brand deliverables', () => {
     expect(groups[0].images).toHaveLength(8);
     expect(groups[0].images.every(image => /-cutout/.test(image))).toBe(true);
   });
+});
+
+
+it('does not reintroduce an opening logo when expanding a composite brand board', () => {
+  const source = '/cms/TaliTar__brand_board_final_direction.webp';
+  const [openingLogo, ...otherComponents] = expandCutoutMedia(source);
+  const groups = groupProjectMedia('taliter', [source], [], [openingLogo]);
+  expect(groups.flatMap(group => group.images)).toEqual(otherComponents);
+  expect(groups.flatMap(group => group.images)).not.toContain(openingLogo);
 });
