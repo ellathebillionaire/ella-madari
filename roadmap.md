@@ -3,6 +3,7 @@
 # Site speed follow-up
 - [ ] Measure initial loading and identify unnecessary media or script work.
 - [ ] Reduce startup and scrolling costs without changing portfolio content or layout.
+- [ ] Prioritize fast media appearance on entry and while scrolling, using lighter files rather than downloading all originals at once.
 - [ ] Verify project viewing, lazy media, and relevant tests.
 
 # Compact portfolio layout
