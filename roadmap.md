@@ -1,10 +1,10 @@
 # Mobile portfolio
 
 # Site speed follow-up
-- [ ] Measure initial loading and identify unnecessary media or script work.
-- [ ] Reduce startup and scrolling costs without changing portfolio content or layout.
-- [ ] Prioritize fast media appearance on entry and while scrolling, using lighter files rather than downloading all originals at once.
-- [ ] Verify project viewing, lazy media, and relevant tests.
+- [x] Measure initial loading and identify unnecessary media or script work.
+- [x] Reduce startup and scrolling costs without changing portfolio content or layout.
+- [x] Prioritize fast media appearance on entry and while scrolling, using lighter files rather than downloading all originals at once.
+- [x] Verify project viewing, lazy media, and relevant tests (H.264 playback unavailable in sandbox Chromium; CDN video delivery and decoded frames checked separately).
 
 # Compact portfolio layout
 
