@@ -3,7 +3,7 @@ import { LogoImage } from '@/components/LogoImage';
 import { LearnAIAvatars, learnAIAvatars } from '@/components/LearnAIAvatars';
 import { showcaseLayouts, showcaseOrder, stripLabel } from '@/data/showcaseLayout';
 import LazyVideo from '@/components/LazyVideo';
-import { useMemo, useState } from 'react';
+import { lazy, memo, Suspense, useCallback, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpLeft } from 'lucide-react';
@@ -15,7 +15,7 @@ import { groupProjectMedia } from '@/lib/mediaGroups';
 import petPlayPalLogo from '@/assets/media/PlayPetPal__logo_color.webp.asset.json';
 import { Button } from '@/components/ui/button';
 import { ProjectMediaGroup } from '@/components/ProjectMediaGroup';
-import { PortfolioLightbox, type PortfolioSelection } from '@/components/PortfolioLightbox';
+import type { PortfolioSelection } from '@/components/PortfolioLightbox';
 import {
   BrandingStory,
   RebrandCompare,
@@ -24,6 +24,7 @@ import {
 } from '@/components/ProjectDisplays';
 
 const ease = [0.16, 1, 0.3, 1] as const;
+const PortfolioLightbox = lazy(() => import('@/components/PortfolioLightbox').then(module => ({ default: module.PortfolioLightbox })));
 
 type DisplayProject = {
   id: string;
@@ -183,7 +184,7 @@ const PaletteDots = ({ colors }: { colors: string[] }) => (
 
 // Each opening follows the approved reference: header, identity aside beside the main visual,
 // then a single strip of labelled topics. The complete work stays in details.
-const ProjectBlock = ({ project, index, onImageClick }: {
+const ProjectBlock = memo(({ project, index, onImageClick }: {
   project: DisplayProject;
   index: number;
   onImageClick: (image: string, name: string, images?: string[]) => void;
@@ -292,7 +293,7 @@ const ProjectBlock = ({ project, index, onImageClick }: {
       {expanded && <div id={`details-${project.slug}`} className="showcase-details"><ProjectDetails project={project} onImageClick={onImageClick} /></div>}
     </article>
   );
-};
+});
 
 const ProjectDetails = ({
   project,
@@ -623,7 +624,7 @@ const Index = () => {
     return staticProjects.map(fromStaticProject);
   }, [projects]);
 
-  const openLightbox = (image: string, name: string, images: string[] = [image]) => setLightbox({ image, name, images });
+  const openLightbox = useCallback((image: string, name: string, images: string[] = [image]) => setLightbox({ image, name, images }), []);
 
   if (loading && projects.length === 0) {
     return (
@@ -637,7 +638,7 @@ const Index = () => {
     <>
       <AnimatePresence>
         {lightbox && (
-          <PortfolioLightbox selection={lightbox} onChange={(image) => setLightbox((current) => current ? { ...current, image } : null)} onClose={() => setLightbox(null)} />
+          <Suspense fallback={null}><PortfolioLightbox selection={lightbox} onChange={(image) => setLightbox((current) => current ? { ...current, image } : null)} onClose={() => setLightbox(null)} /></Suspense>
         )}
       </AnimatePresence>
 

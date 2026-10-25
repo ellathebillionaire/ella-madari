@@ -21,7 +21,7 @@ const LazyVideo = ({ src, className }: { src: string; className?: string }) => {
         setLoad(true);
         warmup.disconnect();
       }
-    }, { rootMargin: '300px' });
+    }, { rootMargin: '100px' });
     const playback = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       syncPlayback();
@@ -46,7 +46,7 @@ const LazyVideo = ({ src, className }: { src: string; className?: string }) => {
       loop
       muted
       playsInline
-      preload={load ? 'auto' : 'none'}
+      preload={load ? 'metadata' : 'none'}
       className={className}
     />
   );
