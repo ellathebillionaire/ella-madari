@@ -12,9 +12,15 @@ import betterseedsConferenceMockup from '@/assets/media/BetterSeeds__conference_
 import learnaiBrandLogo from '@/assets/media/LearnAI__brand_logo_full.jpg.asset.json';
 import sfdSummerCourseCapture from '@/assets/media/SFD__summer_course_2026_mobile_scroll.mp4.asset.json';
 import betterseedsMobileCapture from '@/assets/media/BetterSeeds__official_live_website_mobile_scroll_capture.mp4.asset.json';
+import sfdDesktopOptimized from '@/assets/media/SFD__desktop_optimized.mp4.asset.json';
+import sfdMobileOptimized from '@/assets/media/SFD__mobile_optimized.mp4.asset.json';
+import betterseedsDesktopOptimized from '@/assets/media/BetterSeeds__desktop_optimized.mp4.asset.json';
 
 // Preserve CMS records while serving replacement media.
 const mediaReplacements: Record<string, string> = {
+  '/assets/videos/SFD__official_live_shopify_site_scroll_capture.mp4': sfdDesktopOptimized.url,
+  '/assets/videos/SFD__official_live_shopify_site_mobile_scroll_capture.mp4': sfdMobileOptimized.url,
+  '/assets/videos/BetterSeeds__official_live_website_scroll_capture.mp4': betterseedsDesktopOptimized.url,
   [taliOriginalLogo.url]: taliTransparentLogo,
   '/assets/ebrider-logo-new.jpg': ebriderTransparentLogo,
   '/assets/ascola/logo.jpg': ascolaTransparentLogo,
@@ -29,7 +35,8 @@ const mediaReplacements: Record<string, string> = {
 // Map of static asset paths to their imports
 // This is needed because Vite requires static imports for assets in src/assets
 
-const assetModules = import.meta.glob<{ default: string }>('/src/assets/**/*.{jpg,jpeg,png,gif,webp,svg,mp4}', { eager: true });
+// URL imports avoid fetching a JavaScript wrapper for every image during development.
+const assetModules = import.meta.glob<string>('/src/assets/**/*.{jpg,jpeg,png,gif,webp,svg,mp4}', { eager: true, query: '?url', import: 'default' });
 
 /**
  * Resolves an image URL that might be:
@@ -61,7 +68,7 @@ export function resolveImageUrl(url: string | null | undefined): string | null {
     const viteKey = `/src${url}`;
     const module = assetModules[viteKey];
     if (module) {
-      return module.default;
+      return module;
     }
     // Fallback - try without leading slash
     console.warn(`Asset not found: ${url}`);

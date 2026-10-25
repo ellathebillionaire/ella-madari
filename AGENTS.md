@@ -1,5 +1,7 @@
 # Project rules
 
+- Keep image source filenames intact for media classification; compress bundled PNG/JPEG assets to WebP with vite-imagetools at production build time, defer offscreen rendering, and preload only video metadata near the viewport to reduce competing downloads.
+
 - Classify portfolio gallery media in `src/lib/mediaGroups.ts` with project-specific filename rules and conservative shared fallbacks, then render contiguous topic groups. This keeps uploaded media organized without changing CMS records or inventing AI attribution.
 - Render topic media through `ProjectMediaGroup` and full-screen viewing through `PortfolioLightbox`; mobile compositions preserve complete assets and touch navigation while desktop keeps its existing grid.
 - Compose desktop projects as compact screen/topic/identity columns with all media previews visible; preserve larger touch compositions below the desktop breakpoint, reducing scroll without hiding assets.
