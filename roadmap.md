@@ -1,5 +1,10 @@
 # Mobile portfolio
 
+# Site speed follow-up
+- [ ] Measure initial loading and identify unnecessary media or script work.
+- [ ] Reduce startup and scrolling costs without changing portfolio content or layout.
+- [ ] Verify project viewing, lazy media, and relevant tests.
+
 # Compact portfolio layout
 
 - [x] Reduce vertical overhead and compose single-item topics side by side without mixing topics.
